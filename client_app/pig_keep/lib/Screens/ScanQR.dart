@@ -17,7 +17,6 @@ class _ScanQRState extends State<ScanQR> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text(
           'QR Scanner',
@@ -30,8 +29,40 @@ class _ScanQRState extends State<ScanQR> {
         centerTitle: true,
         backgroundColor: appPrimary,
       ),
-
-      body: MobileScanner(controller: camcontroller, onDetect: (capture) {}),
+      body: MobileScanner(
+        controller: camcontroller,
+        onDetect: (capture) {
+          final List<Barcode> barcodes = capture.barcodes;
+          for (final barcode in barcodes) {
+            final String? code = barcode.rawValue;
+            if (code != null) {
+              // Show a snackbar with the scanned QR code data
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Scanned Code: $code')),
+              );
+              // Optionally, you can stop scanning after the first successful scan
+              camcontroller.stop();
+              break; // Stop after the first successful scan
+            }
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          camcontroller.toggleTorch(); // Toggle the flashlight
+        },
+        child: Icon(
+          Icons.flash_on,
+          color: Colors.white,
+        ),
+        backgroundColor: appPrimary,
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    camcontroller.dispose();
+    super.dispose();
   }
 }

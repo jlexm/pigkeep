@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pig_keep/Components/BottomNav.dart';
+import 'package:pig_keep/Components/Layout.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 void main() {
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           ).copyWith(
             colorScheme: ThemeData().colorScheme.copyWith(primary: appPrimary),
           ),
-          home: const BottomNav(),
+          home: const Layout(),
         );
       },
     );

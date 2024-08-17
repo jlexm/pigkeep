@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
-import 'package:pig_keep/Screens/Home.dart';
-import 'package:pig_keep/Screens/Profile.dart';
-import 'package:pig_keep/Screens/Records.dart';
-import 'package:pig_keep/Screens/ScanQR.dart';
-import 'package:pig_keep/Screens/Events.dart';
 
 class BottomNav extends StatefulWidget {
-  const BottomNav({super.key});
+
+  final Function(int)? onNavItemTap;
+
+  const BottomNav({super.key, this.onNavItemTap});
 
   @override
   _BottomNavState createState() => _BottomNavState();
@@ -17,54 +15,36 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int index = 0;
 
-  final screens = [
-    Home(),
-    Records(),
-    ScanQR(),
-    Events(),
-    Profile(),
-  ];
-
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: appSecondary,
-        body: Stack(
+  Widget build(BuildContext context) => 
+    Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          color: appSecondary,
+        ),
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            IndexedStack(
-              index: index,
-              children: screens,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildNavItem(0, 'Home', 'assets/icons/Home.png'),
+                buildNavItem(1, 'Records', 'assets/icons/Records.png'),
+                40.horizontalSpace,
+                buildNavItem(3, 'Events', 'assets/icons/Events.png'),
+                buildNavItem(4, 'Profile', 'assets/icons/Profile.png'),
+              ],
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 120,
-                decoration: BoxDecoration(
-                  color: appSecondary,
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        buildNavItem(0, 'Home', 'assets/icons/Home.png'),
-                        buildNavItem(1, 'Records', 'assets/icons/Records.png'),
-                        40.horizontalSpace,
-                        buildNavItem(3, 'Events', 'assets/icons/Events.png'),
-                        buildNavItem(4, 'Profile', 'assets/icons/Profile.png'),
-                      ],
-                    ),
-                    Positioned(
-                      top: 0.r,
-                      child: buildNavItem(2, 'QR', 'assets/icons/ScanQR.png'),
-                    ),
-                  ],
-                ),
-              ),
+            Positioned(
+              top: 0.r,
+              child: buildNavItem(2, 'QR', 'assets/icons/ScanQR.png'),
             ),
           ],
-        ),  
-      );
+        ),
+      ),
+    );
 
   Widget buildNavItem(int idx, String label, String iconPath) {
     double iconSize = idx == 2 ? 48.r : 36.r;
@@ -75,6 +55,9 @@ class _BottomNavState extends State<BottomNav> {
         setState(() {
           index = idx;
         });
+        if(widget.onNavItemTap != null) {
+          widget.onNavItemTap!(idx);
+        }
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
