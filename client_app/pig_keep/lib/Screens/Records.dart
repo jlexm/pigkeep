@@ -26,21 +26,6 @@ class _RecordsState extends State<Records> {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              height: 30.h,
-              child: Builder(
-                builder: (context) => Container(
-                  padding: EdgeInsets.only(left: 10.w),
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: Icon(Icons.menu, color: appPrimary, size: 30),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                ),
-              ),
-            ),
             Row(
               children: [
                 FarmName(), //FarmName.dart

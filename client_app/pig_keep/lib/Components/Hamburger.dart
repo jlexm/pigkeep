@@ -115,10 +115,10 @@ class Hamburger extends StatelessWidget {
                 ),
                 onTap: () {},
               ),
-
+              
               // Divider(),
               SizedBox(
-                height: 320.h,
+                height: 350.h,
               ),
               ListTile(
                 //Change password

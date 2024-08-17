@@ -1,23 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-<<<<<<< Updated upstream
 import 'package:pig_keep/Components/Hamburger.dart';
-=======
-<<<<<<< HEAD
+
 import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Carousel_PigCount.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Components/Notifications.dart';
-=======
 import 'package:pig_keep/Components/Hamburger.dart';
->>>>>>> Stashed changes
 import 'package:pig_keep/Constants/color.constants.dart';
 
 // ExpansionTile for dropdown
->>>>>>> 74be76ace25a177e57fe360663c52798d7fe37e0
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -31,31 +26,10 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
       drawer: Hamburger(),
-=======
->>>>>>> 74be76ace25a177e57fe360663c52798d7fe37e0
->>>>>>> Stashed changes
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              height: 30.h,
-              child: Builder(
-                builder: (context) => Container(
-                  padding: EdgeInsets.only(left: 10.w),
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: Icon(Icons.menu, color: appPrimary, size: 30),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  ),
-                ),
-              ),
-            ),
             Row(
               children: [
                 FarmName(), //FarmName.dart
@@ -226,7 +200,8 @@ class _HomeState extends State<Home> {
                       height: 11.h,
                     ),
                     Notifications(), //Notifications.dart
-                    SizedBox(                                        //remove this later
+                    SizedBox(
+                      //remove this later
                       height: 600.h,
                     ),
                     Text('Hello'),
