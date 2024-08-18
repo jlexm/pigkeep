@@ -17,22 +17,22 @@ class _FarmNameState extends State<FarmName> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.start, // Align children to the left
-          crossAxisAlignment: CrossAxisAlignment.center, // Center vertically
+          mainAxisAlignment: MainAxisAlignment.start, 
+          crossAxisAlignment: CrossAxisAlignment.center, 
           children: [
             Text(
-              _selectedValue ?? 'Alex Pig Farm', // Default text value
+              _selectedValue ?? 'Alex Pig Farm', 
               style: TextStyle(
-                fontSize: 3.sp, // Increased font size
-                fontWeight: FontWeight.w700,
-                color: appSecondary, // Optional: set text color
+                fontSize: 3.sp, 
+                fontWeight: FontWeight.w300,
+                color: appSecondary, 
               ),
             ),
-            SizedBox(width: 6.w), // Space between the text and dropdown
+            SizedBox(width: 6.w), 
             DropdownButton<String>(
               value: _selectedValue,
               items: <String>[
-                'Alex Pig Farm', // Updated dropdown item
+                'Alex Pig Farm', 
                 'Dominic', 
                 'Den'
               ].map((String value) {
@@ -41,7 +41,7 @@ class _FarmNameState extends State<FarmName> {
                   child: Text(
                     value,
                     style: TextStyle(
-                      fontSize: 23.sp, // Match the text size in the dropdown
+                      fontSize: 23.sp, 
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -52,8 +52,8 @@ class _FarmNameState extends State<FarmName> {
                   _selectedValue = newValue;
                 });
               },
-              underline: SizedBox(), // Remove the underline
-              icon: Icon(Icons.arrow_drop_down, color: appPrimary), // Dropdown arrow icon
+              underline: SizedBox(), 
+              icon: Icon(Icons.arrow_drop_down, color: appPrimary), 
             ),
           ],
         ),

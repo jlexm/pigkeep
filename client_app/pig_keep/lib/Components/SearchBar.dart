@@ -1,54 +1,37 @@
-// import 'package:flutter/material.dart';
-
-// class SearchBar extends StatefulWidget {
-//   const SearchBar({super.key});
-
-//   @override
-//   State<SearchBar> createState() => _SearchBarState();
-// }
-
-// class _SearchBarState extends State<SearchBar> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Constants/color.constants.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
-
-  @override
-  State<SearchBar> createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
+class SearchBar_ extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // margin: EdgeInsets.all(8.0), // Margin around the search bar
-      // padding: EdgeInsets.symmetric(horizontal: 8.0), // Padding inside the container
-      // width: 10.0, // Fixed width for the search bar
-      // decoration: BoxDecoration(
-      //   color: Colors.grey[200], // Background color of the search bar
-      //   borderRadius: BorderRadius.circular(8.0), // Rounded corners
-      //   border: Border.all(color: Colors.grey), // Border color
-      // ),
+      width: 185.w, 
+      height: 34.h, 
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          color: appTertiary,
+          width: 1.w,
+        ),
+      ),
       child: Row(
         children: [
-          Icon(
-            Icons.search, // Search icon
-            color: Colors.grey, // Icon color
-            size: 20.0, // Icon size
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Icon(Icons.search, color: appTertiary),
           ),
-          SizedBox(width: 6.0), // Space between icon and text field
           Expanded(
-            child: TextFormField(
+            child: TextField(
               decoration: InputDecoration(
-                hintText: 'Search', // Placeholder text
-                border: InputBorder.none, // Remove the border of the text field
-                contentPadding: EdgeInsets.symmetric(vertical: 8.0), // Padding inside the text field
+                border: InputBorder.none,
+                hintText: 'Search',
+                iconColor: appTertiary,
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
               ),
+              style: TextStyle(fontSize: 12.sp),
             ),
           ),
         ],

@@ -15,23 +15,23 @@ class Chips extends StatefulWidget {
 }
 
 class _ChipsState extends State<Chips> {
-  int? _selectedChoiceIndex = 0; // Set to 0 by default for the first chip
+  int? _selectedChoiceIndex = 0; 
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal, // Added horizontal scrolling
+        scrollDirection: Axis.horizontal, 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(padding: EdgeInsets.only(left: 20.w)),
             Container(
               width: 70.w,
-              padding: EdgeInsets.symmetric(horizontal: 0.w), // Reduced gap
+              padding: EdgeInsets.symmetric(horizontal: 0.w), 
               child: ChoiceChip(
                 label: Container(
-                  width: 40.w, // Adjust width as needed
+                  width: 40.w, 
                   alignment: Alignment.center,
                   child: Text(
                     'Pig List',
@@ -51,15 +51,15 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, // Remove checkmark
+                showCheckmark: false, 
               ),
             ),
             Container(
               width: 125.w,
-              padding: EdgeInsets.symmetric(horizontal: 5.w), // Reduced gap
+              padding: EdgeInsets.symmetric(horizontal: 5.w), 
               child: ChoiceChip(
                 label: Container(
-                  width: 90.w, // Adjust width as needed
+                  width: 90.w, 
                   alignment: Alignment.center,
                   child: Text(
                     'Feed Inventory',
@@ -79,15 +79,15 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, // Remove checkmark
+                showCheckmark: false, 
               ),
             ),
             Container(
               width: 130.w,
-              padding: EdgeInsets.symmetric(horizontal: 0.w), // Reduced gap
+              padding: EdgeInsets.symmetric(horizontal: 0.w), 
               child: ChoiceChip(
                 label: Container(
-                  width: 125.w, // Adjust width as needed
+                  width: 125.w, 
                   alignment: Alignment.center,
                   child: Text(
                     'Medical Records',
@@ -107,15 +107,15 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, // Remove checkmark
+                showCheckmark: false, 
               ),
             ),
             Container(
               width: 82.w,
-              padding: EdgeInsets.symmetric(horizontal: 5.w), // Reduced gap
+              padding: EdgeInsets.symmetric(horizontal: 5.w), 
               child: ChoiceChip(
                 label: Container(
-                  width: 45.w, // Adjust width as needed
+                  width: 45.w, 
                   alignment: Alignment.center,
                   child: Text(
                     'Pig Pen',
@@ -135,7 +135,7 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, // Remove checkmark
+                showCheckmark: false, 
               ),
             ),
           ],

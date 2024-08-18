@@ -121,7 +121,7 @@ class Hamburger extends StatelessWidget {
                 height: 350.h,
               ),
               ListTile(
-                //Change password
+                //Logout
                 leading: Image.asset(
                   'assets/icons/Logout.png',
                   width: 29.w,

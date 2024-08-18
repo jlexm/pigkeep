@@ -4,6 +4,7 @@ import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Carousel_PigCount.dart';
 import 'package:pig_keep/Components/Chip.dart';
 import 'package:pig_keep/Components/FarmName.dart';
+import 'package:pig_keep/Components/SearchBar.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Components/Notifications.dart';
@@ -26,39 +27,6 @@ class _RecordsState extends State<Records> {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                FarmName(), //FarmName.dart
-                Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.sync,
-                      color: appTertiary,
-                      size: 30.0,
-                    )),
-                SizedBox(
-                  width: 10.w,
-                ),
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Check and update your pig farm records to keep you \non track with your pig farm management experience.',
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  )
-                ],
-              ),
-            ),
-
             // Scroll starts here
             Expanded(
               child: SingleChildScrollView(
@@ -66,6 +34,27 @@ class _RecordsState extends State<Records> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Row(
+                      children: [
+                        FarmName(), //FarmName.dart
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 20.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Check and update your pig farm records to keep you \non track with your pig farm management experience.',
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: 6.h,
                     ),
@@ -148,6 +137,7 @@ class _RecordsState extends State<Records> {
                                           Icon(
                                             Icons.add_circle_rounded,
                                             color: appTertiary,
+                                            size: 20.h,
                                           ),
                                           SizedBox(width: 3.h),
                                           Text(
@@ -217,10 +207,19 @@ class _RecordsState extends State<Records> {
                             )
                           ],
                         ),
-                        //Spacer(),
-                        SearchBar(),
+                        Spacer(),
+                        SearchBar_(), //SearcBar.dart
+                        InkWell(
+                          //Filter
+                          onTap: () {},
+                          child: Icon(
+                            Icons.filter_alt_outlined,
+                            size: 35,
+                            color: appTertiary,
+                          ),
+                        ),
                         SizedBox(
-                          width: 20.w,
+                          width: 17.w,
                         ),
                       ],
                     ),

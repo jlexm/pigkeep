@@ -30,45 +30,33 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: [
-                FarmName(), //FarmName.dart
-                Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.sync,
-                      color: appTertiary,
-                      size: 30.0,
-                    )),
-                SizedBox(
-                  width: 10.w,
-                ),
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Manage your pig farm with PigKeep’s record \nkeeping feature and QR scanner.',
-                    style: TextStyle(
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  )
-                ],
-              ),
-            ),
-
             // Scroll starts here
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Row(
+                      children: [
+                        FarmName(), //FarmName.dart
+                      ],
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 20.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Manage your pig farm with PigKeep’s record \nkeeping feature and QR scanner.',
+                            style: TextStyle(
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: 30.h,
                     ),

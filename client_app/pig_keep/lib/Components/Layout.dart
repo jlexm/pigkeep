@@ -32,19 +32,37 @@ class _LayoutState extends State<Layout> {
         backgroundColor: appSecondary,
         appBar: index == 2
             ? null // Hide the AppBar if index is 2
-            : AppBar(
-              leading: Builder(
-                builder: (context) {
-                  return IconButton(
-                    icon: Icon(Icons.menu, color: appPrimary, size: 30),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                  );
-                },
-            ),
-            backgroundColor: appSecondary, // Set your desired color for the AppBar
-          ),
+            : PreferredSize(
+                preferredSize: Size.fromHeight(35.0),
+                child: AppBar(
+                  actions: [
+                    IconButton(
+                        //Sync
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.sync,
+                          color: appTertiary,
+                          size: 30.0,
+                        )),
+                        SizedBox(width: 10,)
+                  ],
+                  leading: Padding(
+                    padding: const EdgeInsets.only(left: 13),
+                    child: Builder(
+                      builder: (context) {
+                        return IconButton(
+                          icon: Icon(Icons.menu, color: appPrimary, size: 30),
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                  backgroundColor:
+                      appSecondary, // Set your desired color for the AppBar
+                ),
+              ),
         drawer: Hamburger(),
         body: Stack(
           children: [
@@ -52,12 +70,14 @@ class _LayoutState extends State<Layout> {
               index: index,
               children: screens,
             ),
-            BottomNav(onNavItemTap: (int idx) {
-              setState(() {
-                index = idx;
-              });
-            },)
+            BottomNav(
+              onNavItemTap: (int idx) {
+                setState(() {
+                  index = idx;
+                });
+              },
+            )
           ],
-        ),  
+        ),
       );
 }
