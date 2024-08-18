@@ -6,6 +6,7 @@ import 'package:pig_keep/Components/Chip.dart';
 import 'package:pig_keep/Components/DataTable.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/FeedInventory.dart';
+import 'package:pig_keep/Components/MedicalRecords.dart';
 import 'package:pig_keep/Components/PigList.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
@@ -76,16 +77,21 @@ class _RecordsState extends State<Records> {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Column(
-                      children: [
-                        PigList(), //PigList.dart
-                      ],
-                    ),
                     // Column(
                     //   children: [
-                    //     FeedInventory(), //PigList.dart
+                    //     PigList(), //PigList.dart
                     //   ],
                     // ),
+                    // Column(
+                    //   children: [
+                    //     FeedInventory(), //FeedInventory.dart
+                    //   ],
+                    // ),
+                    Column(
+                      children: [
+                        MedicalRecords(), //MedicalRecords.dart
+                      ],
+                    ),
                   ],
                 ),
               ),

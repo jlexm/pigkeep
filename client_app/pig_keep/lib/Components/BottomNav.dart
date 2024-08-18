@@ -20,7 +20,7 @@ class _BottomNavState extends State<BottomNav> {
     Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 120,
+        height: 105,
         decoration: BoxDecoration(
           color: appSecondary,
         ),
