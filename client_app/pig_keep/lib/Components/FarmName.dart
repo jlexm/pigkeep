@@ -17,31 +17,28 @@ class _FarmNameState extends State<FarmName> {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.start, 
-          crossAxisAlignment: CrossAxisAlignment.center, 
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              _selectedValue ?? 'Alex Pig Farm', 
+              _selectedValue ?? 'Alex Pig Farm',
               style: TextStyle(
-                fontSize: 3.sp, 
+                fontSize: 3.sp,
                 fontWeight: FontWeight.w300,
-                color: appSecondary, 
+                color: appSecondary,
               ),
             ),
-            SizedBox(width: 6.w), 
+            SizedBox(width: 6.w),
             DropdownButton<String>(
               value: _selectedValue,
-              items: <String>[
-                'Alex Pig Farm', 
-                'Dominic', 
-                'Den'
-              ].map((String value) {
+              items: <String>['Alex Pig Farm', 'Dominic', 'Den']
+                  .map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Text(
                     value,
                     style: TextStyle(
-                      fontSize: 23.sp, 
+                      fontSize: 23.sp,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -52,8 +49,8 @@ class _FarmNameState extends State<FarmName> {
                   _selectedValue = newValue;
                 });
               },
-              underline: SizedBox(), 
-              icon: Icon(Icons.arrow_drop_down, color: appPrimary), 
+              underline: SizedBox(),
+              icon: Icon(Icons.arrow_drop_down, color: appPrimary),
             ),
           ],
         ),

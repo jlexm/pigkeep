@@ -58,7 +58,7 @@ class Hamburger extends StatelessWidget {
                   "Farm",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w300,
                     fontSize: 16.sp,
                   ),
                 ),
@@ -75,7 +75,7 @@ class Hamburger extends StatelessWidget {
                   "Profile Details",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w300,
                     fontSize: 16.sp,
                   ),
                 ),
@@ -92,7 +92,7 @@ class Hamburger extends StatelessWidget {
                   "Caretakers",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w300,
                     fontSize: 16.sp,
                   ),
                 ),
@@ -109,7 +109,7 @@ class Hamburger extends StatelessWidget {
                   "Change Password",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w300,
                     fontSize: 16.sp,
                   ),
                 ),
@@ -131,7 +131,7 @@ class Hamburger extends StatelessWidget {
                   "Logout",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w300,
                     fontSize: 16.sp,
                   ),
                 ),

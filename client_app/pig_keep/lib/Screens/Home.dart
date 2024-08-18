@@ -33,16 +33,17 @@ class _HomeState extends State<Home> {
             // Scroll starts here
             Expanded(
               child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         FarmName(), //FarmName.dart
                       ],
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 20.w),
+                      padding: EdgeInsets.only(left: 20.w, right: 20.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
                           Text(
                             'Manage your pig farm with PigKeep’s record \nkeeping feature and QR scanner.',
                             style: TextStyle(
-                              fontSize: 11.sp,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           )
@@ -96,10 +97,11 @@ class _HomeState extends State<Home> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Padding(padding: EdgeInsets.only(left: 20)),
+                        SizedBox(
+                          width: 20.w,
+                        ),
                         Column(
                           children: [
-                            Padding(padding: EdgeInsets.only(left: 30)),
                             Text(
                               'Pig Count',
                               style: TextStyle(
@@ -127,7 +129,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         SizedBox(
-                          width: 20.0,
+                          width: 20.w,
                         ),
                       ],
                     ),
@@ -141,7 +143,9 @@ class _HomeState extends State<Home> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Padding(padding: EdgeInsets.only(left: 20)),
+                        SizedBox(
+                          width: 20.w,
+                        ),
                         Column(
                           children: [
                             Image.asset('assets/icons/Notification.png')
@@ -180,19 +184,27 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         SizedBox(
-                          width: 20.0,
+                          width: 20.w,
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 11.h,
                     ),
-                    Notifications(), //Notifications.dart
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Notifications(),
+                    
                     SizedBox(
                       //remove this later
                       height: 600.h,
                     ),
-                    Text('Hello'),
+                    Text('-End of SCSV-'),
+                    SizedBox(
+                      //remove this later
+                      height: 110.h,
+                    ),
                   ],
                 ),
               ),

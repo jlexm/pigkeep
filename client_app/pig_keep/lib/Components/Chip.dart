@@ -15,23 +15,22 @@ class Chips extends StatefulWidget {
 }
 
 class _ChipsState extends State<Chips> {
-  int? _selectedChoiceIndex = 0; 
+  int? _selectedChoiceIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal, 
+        scrollDirection: Axis.horizontal,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(padding: EdgeInsets.only(left: 20.w)),
             Container(
               width: 70.w,
-              padding: EdgeInsets.symmetric(horizontal: 0.w), 
+              padding: EdgeInsets.symmetric(horizontal: 0.w),
               child: ChoiceChip(
                 label: Container(
-                  width: 40.w, 
+                  width: 40.w,
                   alignment: Alignment.center,
                   child: Text(
                     'Pig List',
@@ -51,15 +50,15 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, 
+                showCheckmark: false,
               ),
             ),
             Container(
               width: 125.w,
-              padding: EdgeInsets.symmetric(horizontal: 5.w), 
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
               child: ChoiceChip(
                 label: Container(
-                  width: 90.w, 
+                  width: 90.w,
                   alignment: Alignment.center,
                   child: Text(
                     'Feed Inventory',
@@ -79,15 +78,15 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, 
+                showCheckmark: false,
               ),
             ),
             Container(
               width: 130.w,
-              padding: EdgeInsets.symmetric(horizontal: 0.w), 
+              padding: EdgeInsets.symmetric(horizontal: 0.w),
               child: ChoiceChip(
                 label: Container(
-                  width: 125.w, 
+                  width: 125.w,
                   alignment: Alignment.center,
                   child: Text(
                     'Medical Records',
@@ -107,15 +106,15 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, 
+                showCheckmark: false,
               ),
             ),
             Container(
               width: 82.w,
-              padding: EdgeInsets.symmetric(horizontal: 5.w), 
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
               child: ChoiceChip(
                 label: Container(
-                  width: 45.w, 
+                  width: 45.w,
                   alignment: Alignment.center,
                   child: Text(
                     'Pig Pen',
@@ -135,9 +134,10 @@ class _ChipsState extends State<Chips> {
                 },
                 selectedColor: appPrimary,
                 backgroundColor: appSecondary,
-                showCheckmark: false, 
+                showCheckmark: false,
               ),
             ),
+            SizedBox(width: 20.w,),
           ],
         ),
       ),

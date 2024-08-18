@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
-class SearchBar_ extends StatelessWidget {
+class SearchBar_FeedInventory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 185.w, 
       height: 34.h, 
       decoration: BoxDecoration(
         color: Colors.white,
@@ -26,7 +25,7 @@ class SearchBar_ extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Search',
+                hintText: 'Search by Feed Name',
                 iconColor: appTertiary,
                 isDense: true,
                 contentPadding: EdgeInsets.zero,

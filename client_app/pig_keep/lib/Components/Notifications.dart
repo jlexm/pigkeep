@@ -31,7 +31,7 @@ class _NotificationsState extends State<Notifications> {
         itemBuilder: (context, index) {
           final notification = notifications[index];
           return Padding(
-            padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.h),
+            padding: EdgeInsets.only(bottom: 20.h, left: 20.w, right: 20.w),
             child: InkWell(
               onTap: () => _onNotificationTap(
                 notification['id']!,
@@ -58,20 +58,25 @@ class _NotificationsState extends State<Notifications> {
                               text: 'Pig ',
                               style: TextStyle(
                                   fontSize: 14.sp,
+                                  fontWeight: FontWeight.w400,
                                   color: appTertiary),
                             ),
                             TextSpan(
                               text: notification['id'],
                               style: TextStyle(
+                                  fontWeight: FontWeight.w400,
                                   fontSize: 14.sp,
-                                  color: appPrimary), 
+                                  color: appPrimary),
                             ),
                           ],
                         ),
                       ),
                       Text(
                         notification['textId']!,
-                        style: TextStyle(fontSize: 14.sp),
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ],
                   ),

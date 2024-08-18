@@ -3,8 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Carousel_PigCount.dart';
 import 'package:pig_keep/Components/Chip.dart';
+import 'package:pig_keep/Components/DataTable.dart';
 import 'package:pig_keep/Components/FarmName.dart';
-import 'package:pig_keep/Components/SearchBar.dart';
+import 'package:pig_keep/Components/FeedInventory.dart';
+import 'package:pig_keep/Components/PigList.dart';
+import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Components/Notifications.dart';
@@ -32,7 +35,6 @@ class _RecordsState extends State<Records> {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Row(
                       children: [
@@ -40,18 +42,23 @@ class _RecordsState extends State<Records> {
                       ],
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 20.w),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            width: 20.w,
+                          ),
                           Text(
-                            'Check and update your pig farm records to keep you \non track with your pig farm management experience.',
+                            'Update your pig farm records to keep you on \ntrack with your pig farm management experience.',
                             style: TextStyle(
-                              fontSize: 11.sp,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
                         ],
                       ),
                     ),
@@ -60,174 +67,25 @@ class _RecordsState extends State<Records> {
                     ),
                     Row(
                       children: [
+                        SizedBox(
+                          width: 20.w,
+                        ),
                         Chips(), //Chip.dart
                       ],
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
+                    Column(
                       children: [
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Container(
-                          height: 95.h,
-                          width: 320.w,
-                          padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: appPrimary),
-                            color: appPrimary,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '42',
-                                    style: TextStyle(
-                                      color: appSecondary,
-                                      fontSize: 70.sp,
-                                      fontWeight: FontWeight.bold,
-                                      height: 0.9.h,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                width: 9.w,
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Total \nLiving Pig',
-                                    style: TextStyle(
-                                        color: appSecondary,
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w300),
-                                  )
-                                ],
-                              ),
-                              Spacer(),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: 36.h,
-                                    width: 93.w,
-                                    padding:
-                                        EdgeInsets.only(left: 9.w, right: 9.w),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(color: appPrimary),
-                                      color: appSecondary,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: InkWell(
-                                      onTap: () {},
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.add_circle_rounded,
-                                            color: appTertiary,
-                                            size: 20.h,
-                                          ),
-                                          SizedBox(width: 3.h),
-                                          Text(
-                                            'Add Pig',
-                                            style: TextStyle(
-                                              color: appTertiary,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12.sp,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20.w,
-                        ),
+                        PigList(), //PigList.dart
                       ],
                     ),
-                    SizedBox(
-                      height: 11.h,
-                    ),
-                    Row(
-                      //QR code & Search
-                      children: [
-                        SizedBox(
-                          width: 20.w,
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              height: 34.h,
-                              width: 98.w,
-                              padding: EdgeInsets.only(left: 6.w, right: 8.w),
-                              decoration: BoxDecoration(
-                                color: appOrange,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.download,
-                                      color: appSecondary,
-                                    ),
-                                    SizedBox(
-                                      width: 2.w,
-                                    ),
-                                    Text(
-                                      'QR Codes',
-                                      style: TextStyle(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: appSecondary),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        Spacer(),
-                        SearchBar_(), //SearcBar.dart
-                        InkWell(
-                          //Filter
-                          onTap: () {},
-                          child: Icon(
-                            Icons.filter_alt_outlined,
-                            size: 35,
-                            color: appTertiary,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 17.w,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      //remove this later
-                      height: 900.h,
-                    ),
-                    Text('Hello'),
+                    // Column(
+                    //   children: [
+                    //     FeedInventory(), //PigList.dart
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
