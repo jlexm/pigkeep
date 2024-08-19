@@ -12,30 +12,27 @@ class Hamburger extends StatelessWidget {
       child: Column(children: [
         Container(
           color: appPrimary,
-          padding: EdgeInsets.zero, 
-          margin: EdgeInsets.zero, 
+          padding: EdgeInsets.zero,
+          margin: EdgeInsets.zero,
           child: Column(
             children: [
               SizedBox(height: 60.h),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                      width: 16.w), 
+                  SizedBox(width: 16.w),
                   CircleAvatar(
-                    backgroundImage: AssetImage(
-                        'assets/images/junmar.png'), 
-                    radius: 25.0, 
+                    backgroundImage: AssetImage('assets/images/junmar.png'),
+                    radius: 25.0,
                   ),
-                  SizedBox(width: 11.w), 
+                  SizedBox(width: 11.w),
                   Expanded(
                     child: Text(
                       'Junmar Fajardo',
                       style: TextStyle(
-                        fontSize: 16.sp, 
-                        fontWeight: FontWeight.w200,
-                        color: Colors
-                            .white, 
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -46,91 +43,96 @@ class Hamburger extends StatelessWidget {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(
-              left: 8.w), 
+          margin: EdgeInsets.only(left: 5.w),
           child: Column(
-            crossAxisAlignment:
-                CrossAxisAlignment.start, 
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(                        //FARM
+              ListTile(
+                //FARM
                 leading: Image.asset(
                   'assets/icons/Farm_white.png',
-                  width: 33.w, 
-                  height: 33.h, 
+                  width: 30.w,
+                  height: 30.h,
                 ),
                 title: Text(
                   "Farm",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w200,
-                    fontSize: 16.sp, 
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16.sp,
                   ),
                 ),
                 onTap: () {},
               ),
-              ListTile(                                //Profile Details
+              ListTile(
+                //Profile Details
                 leading: Image.asset(
                   'assets/icons/Profile_Details.png',
-                  width: 29.w, 
-                  height: 29.h, 
+                  width: 30.w,
+                  height: 30.h,
                 ),
                 title: Text(
                   "Profile Details",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w200,
-                    fontSize: 16.sp, 
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16.sp,
                   ),
                 ),
                 onTap: () {},
               ),
-              ListTile(                               //Caretakers
+              ListTile(
+                //Caretakers
                 leading: Image.asset(
                   'assets/icons/Caretaker.png',
-                  width: 30.w, 
-                  height: 30.h, 
+                  width: 30.w,
+                  height: 30.h,
                 ),
                 title: Text(
                   "Caretakers",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w200,
-                    fontSize: 16.sp, 
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16.sp,
                   ),
                 ),
                 onTap: () {},
               ),
-              ListTile(                                 //Change password
+              ListTile(
+                //Change password
                 leading: Image.asset(
                   'assets/icons/Change_Password.png',
-                  width: 29.w, 
-                  height: 29.h, 
+                  width: 30.w,
+                  height: 30.h,
                 ),
                 title: Text(
                   "Change Password",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w200,
-                    fontSize: 16.sp, 
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16.sp,
                   ),
                 ),
                 onTap: () {},
               ),
-
-              Divider(),
-
-              ListTile(                                 //Change password
+              
+              // Divider(),
+              SizedBox(
+                height: 350.h,
+              ),
+              ListTile(
+                //Logout
                 leading: Image.asset(
                   'assets/icons/Logout.png',
-                  width: 29.w, 
-                  height: 29.h, 
+                  width: 29.w,
+                  height: 29.h,
                 ),
                 title: Text(
                   "Logout",
                   style: TextStyle(
                     color: appSecondary,
-                    fontWeight: FontWeight.w200,
-                    fontSize: 16.sp, 
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16.sp,
                   ),
                 ),
                 onTap: () {},
