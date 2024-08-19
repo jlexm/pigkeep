@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
+import 'package:pig_keep/Components/Layout.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Screens/Events.dart';
 import 'package:pig_keep/Screens/Home.dart';
@@ -30,10 +31,7 @@ class MyApp extends StatelessWidget {
         // bottomnav bar routes
         ShellRoute(
           builder: (context, state, child) {
-            return Scaffold(
-              body: child,
-              bottomNavigationBar: BottomNav(),
-            );
+            return Layout(child: child);
           },
           routes: [
             GoRoute(
