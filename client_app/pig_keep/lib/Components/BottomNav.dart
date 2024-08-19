@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class BottomNav extends StatefulWidget {
-
   final Function(int)? onNavItemTap;
 
   const BottomNav({super.key, this.onNavItemTap});
@@ -16,10 +16,7 @@ class _BottomNavState extends State<BottomNav> {
   int index = 0;
 
   @override
-  Widget build(BuildContext context) => 
-    Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
+  Widget build(BuildContext context) => Container(
         height: 120,
         decoration: BoxDecoration(
           color: appSecondary,
@@ -30,32 +27,39 @@ class _BottomNavState extends State<BottomNav> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildNavItem(0, 'Home', 'assets/icons/Home.png'),
-                buildNavItem(1, 'Records', 'assets/icons/Records.png'),
+                buildNavItem(0, 'Home', '/home', 'assets/icons/Home.png'),
+                buildNavItem(
+                    1, 'Records', '/records', 'assets/icons/Records.png'),
                 40.horizontalSpace,
-                buildNavItem(3, 'Events', 'assets/icons/Events.png'),
-                buildNavItem(4, 'Profile', 'assets/icons/Profile.png'),
+                buildNavItem(3, 'Events', '/events', 'assets/icons/Events.png'),
+                buildNavItem(
+                    4, 'Profile', '/profile', 'assets/icons/Profile.png'),
               ],
             ),
             Positioned(
               top: 0.r,
-              child: buildNavItem(2, 'QR', 'assets/icons/ScanQR.png'),
+              child:
+                  buildNavItem(2, 'QR', '/scan-qr', 'assets/icons/ScanQR.png'),
             ),
           ],
         ),
-      ),
-    );
+      );
 
-  Widget buildNavItem(int idx, String label, String iconPath) {
+  Widget buildNavItem(int idx, String label, String route, String iconPath) {
     double iconSize = idx == 2 ? 48.r : 36.r;
-    Color iconColor =
-        idx == 2 ? appPrimary : (index == idx ? appPrimary : appTertiary);
+    Color iconColor = idx == 2
+        ? appPrimary
+        : (GoRouter.of(context).routeInformationProvider.value.uri.toString() ==
+                route
+            ? appPrimary
+            : appTertiary);
     return GestureDetector(
       onTap: () {
+        context.go(route);
         setState(() {
           index = idx;
         });
-        if(widget.onNavItemTap != null) {
+        if (widget.onNavItemTap != null) {
           widget.onNavItemTap!(idx);
         }
       },
