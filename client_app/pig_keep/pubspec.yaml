@@ -1,5 +1,5 @@
 name: pig_keep
-description: "A new Flutter project."
+description: 'A new Flutter project.'
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -36,14 +36,11 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_screenutil: ^5.9.3
   mobile_scanner: ^5.1.1
-<<<<<<< HEAD
   go_router: ^14.2.3
-=======
   carousel_slider: ^5.0.0
   smooth_page_indicator: ^1.2.0+3
   font_awesome_flutter: ^10.7.0
   dropdown_button2: ^2.3.8
->>>>>>> fa2cc790987d134060321b1b5027b4fb8aceedb3
 
 dev_dependencies:
   flutter_test:
@@ -61,7 +58,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -102,7 +98,6 @@ flutter:
           weight: 700
         - asset: assets/fonts/Poppins-Extrabold.ttf
           weight: 800
-
 
   #
   # For details regarding fonts from package dependencies,
