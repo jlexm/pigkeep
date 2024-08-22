@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Constants/color.constants.dart';
 
 class MyDataTable extends StatefulWidget {
   const MyDataTable({super.key});
@@ -9,70 +10,181 @@ class MyDataTable extends StatefulWidget {
 }
 
 class _MyDataTableState extends State<MyDataTable> {
+  final List<Map<String, String>> _data = [
+    {
+      'number': '001',
+      'category': 'Sow',
+      'feed': 'Uno Grower',
+      'pen': '001',
+      'status': 'alive'
+    },
+    {
+      'number': '002',
+      'category': 'Weaner',
+      'feed': 'Uno Starter',
+      'pen': '002',
+      'status': 'sold'
+    },
+    {
+      'number': '003',
+      'category': 'Sow',
+      'feed': 'Uno Grower',
+      'pen': '002',
+      'status': 'deceased'
+    },
+    {
+      'number': '004',
+      'category': 'Sow',
+      'feed': 'Uno Starter',
+      'pen': '004',
+      'status': 'alive'
+    },
+  ];
+
+  Color _getStatusColor(String status) {
+    switch (status) {
+      case 'alive':
+        return appBlue;
+      case 'sold':
+        return appPrimary;
+      case 'deceased':
+        return appRed;
+      default:
+        return Colors.grey;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(
+        top: 20.h,
+      ),
       child: Center(
-        child: DataTable(
-          columnSpacing: 8,
-          columns: [
-            DataColumn(
-                headingRowAlignment: MainAxisAlignment.start,
-                label: Text(
-              'Number',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: DataTable(
+            columnSpacing: 30.w,
+            dividerThickness: 0,
+            columns: [
+              DataColumn(
+                headingRowAlignment: MainAxisAlignment.center,
+                label: Center(
+                  child: Text(
+                    'Number',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ),
-            )),
-            DataColumn(
-              headingRowAlignment: MainAxisAlignment.center,
-                label: Text(
-              'Category',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
+              DataColumn(
+                headingRowAlignment: MainAxisAlignment.center,
+                label: Center(
+                  child: Text(
+                    'Age \nCategory',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ),
-            )),
-            DataColumn(
-              headingRowAlignment: MainAxisAlignment.center,
-                label: Text(
-              'Feed',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
+              DataColumn(
+                headingRowAlignment: MainAxisAlignment.center,
+                label: Center(
+                  child: Text(
+                    'Current \nFeed',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ),
-            )),
-            DataColumn(
-              headingRowAlignment: MainAxisAlignment.end,
-                label: Text(
-              'Pen Number',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w500,
+              DataColumn(
+                headingRowAlignment: MainAxisAlignment.center,
+                label: Center(
+                  child: Text(
+                    'Pen \nNumber',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
               ),
-            )),
-          ],
-          rows: [
-            DataRow(cells: [
-              DataCell(Text('Row 1, Col 1')),
-              DataCell(Text('Row 1, Col 2')),
-              DataCell(Text('Row 1, Col 3')),
-              DataCell(Text('Row 1, Col 4')),
-            ]),
-            DataRow(cells: [
-              DataCell(Text('Row 2, Col 1')),
-              DataCell(Text('Row 2, Col 2')),
-              DataCell(Text('Row 2, Col 3')),
-              DataCell(Text('Row 2, Col 4')),
-            ]),
-            DataRow(cells: [
-              DataCell(Text('Row 3, Col 1')),
-              DataCell(Text('Row 3, Col 2')),
-              DataCell(Text('Row 3, Col 3')),
-              DataCell(Text('Row 3, Col 4')),
-            ]),
-          ],
+            ],
+            rows: _data.map((row) {
+              return DataRow(
+                cells: [
+                  DataCell(
+                    Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            width: 12.w,
+                            height: 12.h,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _getStatusColor(row['status']!),
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Text(
+                            row['number']!,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 11.5.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  DataCell(
+                    Center(
+                      child: Text(
+                        row['category']!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 11.5.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                  DataCell(
+                    Center(
+                      child: Text(
+                        row['feed']!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 11.5.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                  DataCell(
+                    Center(
+                      child: Text(
+                        row['pen']!,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 11.5.sp,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
         ),
       ),
     );

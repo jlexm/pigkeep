@@ -80,7 +80,7 @@ class MedicalRecords extends StatelessWidget {
                           SizedBox(
                             width: 2.w,
                           ),
-                          Text('Add Feed',
+                          Text('Add Meds',
                               style: TextStyle(
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,

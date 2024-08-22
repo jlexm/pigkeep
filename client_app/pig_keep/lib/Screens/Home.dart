@@ -197,10 +197,6 @@ class _HomeState extends State<Home> {
                       height: 600.h,
                     ),
                     Text('-End of SCSV-'),
-                    SizedBox(
-                      //remove this later
-                      height: 110.h,
-                    ),
                   ],
                 ),
               ),

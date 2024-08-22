@@ -126,7 +126,7 @@ class _PigListState extends State<PigList> {
               children: [
                 Container(
                   height: 34.h,
-                  width: 98.w,
+                  width: 100.w,
                   padding: EdgeInsets.only(left: 6.w, right: 8.w),
                   decoration: BoxDecoration(
                     color: appOrange,

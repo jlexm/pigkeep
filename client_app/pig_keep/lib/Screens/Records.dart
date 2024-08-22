@@ -79,7 +79,7 @@ class _RecordsState extends State<Records> {
                     ),
                     SizedBox(height: 10.h),
                     //Display the pages
-                    if (_selectedChoiceIndex == 0) QRCodeStatus(),//PigList(), // PigList.dart
+                    if (_selectedChoiceIndex == 0) PigList(), //QRCodeStatus()
                     if (_selectedChoiceIndex == 1) FeedInventory(), // FeedInventory.dart
                     if (_selectedChoiceIndex == 2) MedicalRecords(), // MedicalRecords.dart
                     if (_selectedChoiceIndex == 3) PigPen(), // PigPen.dart
