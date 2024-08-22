@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Layout.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Screens/Events.dart';
 import 'package:pig_keep/Screens/Home.dart';
+import 'package:pig_keep/Screens/Ledger.dart';
+import 'package:pig_keep/Screens/Login.dart';
 import 'package:pig_keep/Screens/Profile.dart';
 import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Screens/ScanQR.dart';
+import 'package:pig_keep/Screens/Signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,13 +53,25 @@ class MyApp extends StatelessWidget {
               builder: (context, state) => Events(),
             ),
             GoRoute(
-              path: '/profile',
-              builder: (context, state) => Profile(),
+              path: '/ledger',
+              builder: (context, state) => Ledger(),
             ),
           ],
-        )
+        ),
 
         // add custom routes here
+        GoRoute(
+          path: '/login',
+          builder: (context, state) => Login(),
+        ),
+        GoRoute(
+          path: '/sign-up',
+          builder: (context, state) => Signup(),
+        ),
+        GoRoute(
+          path: '/profile',
+          builder: (context, state) => Profile(),
+        ),
       ],
     );
 

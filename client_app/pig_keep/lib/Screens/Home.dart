@@ -2,15 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
-
 import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Carousel_PigCount.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
-import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Components/Notifications.dart';
-import 'package:pig_keep/Components/Hamburger.dart';
-import 'package:pig_keep/Constants/color.constants.dart';
 
 // ExpansionTile for dropdown
 

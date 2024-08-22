@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class Ledger extends StatefulWidget {
+  const Ledger({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<Ledger> createState() => _LedgerState();
 }
 
-class _ProfileState extends State<Profile> {
+class _LedgerState extends State<Ledger> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _ProfileState extends State<Profile> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Column(
               children: [
-                Text('Profile Works'),
+                Text('Ledger Works'),
               ],
             ),
           ),

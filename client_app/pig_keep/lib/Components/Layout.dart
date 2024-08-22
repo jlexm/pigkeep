@@ -52,7 +52,7 @@ class _LayoutState extends State<Layout> {
                         ),
                       ),
                       backgroundColor:
-                          appSecondary, // Set your desired color for the AppBar
+                          appSecondary,
                     ),
                   )
                 : null,

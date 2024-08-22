@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class Hamburger extends StatelessWidget {
@@ -115,7 +116,7 @@ class Hamburger extends StatelessWidget {
                 ),
                 onTap: () {},
               ),
-              
+
               // Divider(),
               SizedBox(
                 height: 350.h,
@@ -135,7 +136,9 @@ class Hamburger extends StatelessWidget {
                     fontSize: 16.sp,
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  context.go('/login');
+                },
               ),
             ],
           ),
