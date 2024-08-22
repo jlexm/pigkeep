@@ -217,7 +217,7 @@ class _TransactionMedicalrecordsState extends State<TransactionMedicalrecords> {
         itemBuilder: (context, index) {
           final transaction = transactionMedcaTransactionMedicalrecords[index];
           final isAddFeed = transaction['status'] == 'Add Medicine';
-          final statusColor = isAddFeed ? appBlue : Colors.red;
+          final statusColor = isAddFeed ? appBlue : appRed;
 
           final weightDisplay = isAddFeed
               ? '+${transaction['weight']} kg'

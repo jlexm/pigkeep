@@ -40,7 +40,7 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
             decoration: BoxDecoration(
               border: Border.all(color: appBlue, width: 1.5.w),
               color: appSecondary,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
               child: Column(

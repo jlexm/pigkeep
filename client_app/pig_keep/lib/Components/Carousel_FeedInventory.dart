@@ -17,10 +17,6 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.only(
-      //   left: 10.w,
-      //   right: 10.w,
-      //),
       child: CarouselSlider.builder(
         options: CarouselOptions(
           padEnds: false,
@@ -44,7 +40,7 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
             decoration: BoxDecoration(
               border: Border.all(color: appPrimary, width: 1.5.w),
               color: appSecondary,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
               child: Column(

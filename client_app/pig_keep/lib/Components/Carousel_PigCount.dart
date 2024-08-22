@@ -38,7 +38,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
                 decoration: BoxDecoration(
                   border: Border.all(color: appPrimary, width: 1.5.w),
                   color: appSecondary,
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
                   child: Column(

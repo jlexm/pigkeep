@@ -59,7 +59,7 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
         itemBuilder: (context, index) {
           final transaction = transactionFeedInventory[index];
           final isAddFeed = transaction['status'] == 'Add Feed';
-          final statusColor = isAddFeed ? appPrimary : Colors.red;
+          final statusColor = isAddFeed ? appPrimary : appRed;
 
           final weightDisplay = isAddFeed
               ? '+${transaction['weight']} kg'

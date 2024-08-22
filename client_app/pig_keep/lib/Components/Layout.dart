@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
@@ -25,19 +26,15 @@ class _LayoutState extends State<Layout> {
                         .toString() !=
                     '/scan-qr'
                 ? PreferredSize(
-                    preferredSize: Size.fromHeight(35.0),
+                    preferredSize: Size.fromHeight(40.0),
                     child: AppBar(
                       actions: [
-                        IconButton(
-                            //Sync
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.sync,
-                              color: appTertiary,
-                              size: 30.0,
-                            )),
+                        InkWell(
+                          onTap: () {},
+                          child: Image.asset('assets/icons/Sync.png', width: 25.w, height: 25.h,),
+                        ),
                         SizedBox(
-                          width: 10,
+                          width: 25,
                         )
                       ],
                       leading: Padding(
@@ -46,7 +43,7 @@ class _LayoutState extends State<Layout> {
                           builder: (context) {
                             return IconButton(
                               icon:
-                                  Icon(Icons.menu, color: appPrimary, size: 30),
+                                  Icon(Icons.menu, color: appPrimary, size: 35.h),
                               onPressed: () {
                                 Scaffold.of(context).openDrawer();
                               },
