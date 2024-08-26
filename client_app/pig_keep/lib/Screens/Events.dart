@@ -95,6 +95,7 @@ class _EventsState extends State<Events> {
                                         child: Text(
                                           'Events',
                                           style: TextStyle(
+                                              
                                               height: 1.0,
                                               color: appSecondary,
                                               fontSize: 50.sp,
@@ -155,7 +156,8 @@ class _EventsState extends State<Events> {
                   ),
                   SizedBox(
                     height: 14.h,
-                  )
+                  ), 
+                  Container() //rest of code
                 ],
               ),
             ))

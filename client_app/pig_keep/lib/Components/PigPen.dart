@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pig_keep/Components/DataTable.dart';
+import 'package:pig_keep/Components/DataTable_PigList.dart';
+import 'package:pig_keep/Components/DataTable_PigPen.dart';
 import 'package:pig_keep/Components/SearchBar_PigPen.dart';
 //import 'package:pig_keep/Components/SearchBar_PigPen.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
@@ -125,16 +126,13 @@ class _PigPenState extends State<PigPen> {
           child: SearchBarPigPen(), //SearchBar_PigPen.dart
         ),
         SizedBox(
-          height: 30.h,
+          height: 10.h,
         ),
-        // Container(
-        //   padding: EdgeInsets.only(
-        //     left: 20.w,
-        //     right: 20.w,
-        //   ),
-        //   child: 
-        //   //MyDataTable(),
-        // ),
+        Column(
+          children: [
+            MyDataTable_Pigpen(),
+          ],
+        ),
         SizedBox(
           //remove this later
           height: 600.h,
