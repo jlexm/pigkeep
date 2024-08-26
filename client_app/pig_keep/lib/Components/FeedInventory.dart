@@ -96,20 +96,21 @@ class FeedInventory extends StatelessWidget {
           height: 10.h,
         ),
         Container(
-            padding: EdgeInsets.only(
-              left: 20.w,
-              right: 20.w,
-            ),
-            child: SearchBar_FeedInventory()), //Searchbar_FeedInventory.dart
+          padding: EdgeInsets.only(
+            left: 20.w,
+            right: 20.w,
+          ),
+          child: SearchBar_FeedInventory(),
+        ), //Searchbar_FeedInventory.dart
         SizedBox(
           height: 18.h,
         ),
         Container(
           padding: EdgeInsets.only(left: 15.w),
           child: CarouselFeedInventory(//Carousel_FeedIventory.dart
-              items: [125, 125, 130, 200, 259]// Dynamic list of items
+              items: [125, 125, 130, 200, 259] // Dynamic list of items
               ),
-        ), 
+        ),
         SizedBox(
           height: 17.h,
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/FarmName.dart';
+import 'package:pig_keep/Components/SearchBar_Events.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -154,18 +155,31 @@ class _EventsState extends State<Events> {
                         SizedBox(width: 20.w),
                       ],
                     ),
-                    SizedBox(height: 14.h),
+                    SizedBox(height: 5.h),
                     Container(
                       child: Column(
                         children: [
                           Row(
                             children: [
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.calendar_month,
-                                    size: 45.w,
-                                  )),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: Icon(
+                                      Icons.calendar_month,
+                                      size: 45.w,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  SearchBar_Events(),
+                                ],
+                              ),
                             ],
                           ),
                           Padding(
