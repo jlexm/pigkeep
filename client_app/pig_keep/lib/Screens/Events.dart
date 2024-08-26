@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Components/Current_Events.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/SearchBar_Events.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
@@ -47,7 +48,7 @@ class _EventsState extends State<Events> {
                         children: [
                           SizedBox(width: 20.w),
                           Text(
-                            'Set events for your pig farm to be updated \nand notified.',
+                            'Set events to be updated and notified.',
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
@@ -155,7 +156,6 @@ class _EventsState extends State<Events> {
                         SizedBox(width: 20.w),
                       ],
                     ),
-                    SizedBox(height: 5.h),
                     Container(
                       child: Column(
                         children: [
@@ -170,24 +170,36 @@ class _EventsState extends State<Events> {
                                     onPressed: () {},
                                     icon: Icon(
                                       Icons.calendar_month,
-                                      size: 45.w,
+                                      size: 40.w,
+                                      color: appTertiary,
                                     ),
                                   ),
                                 ],
                               ),
-                              Column(
-                                children: [
-                                  SearchBar_Events(),
-                                ],
+                              Spacer(),
+                              SearchBar_Events(), //SearchBar_Events.dart
+                              SizedBox(
+                                width: 20.w,
                               ),
                             ],
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 18.w),
+                            padding: EdgeInsets.only(
+                              left: 15.w,
+                              right: 15.w,
+                            ),
                             child: TableCalendar(
                               locale: "en_US",
-                              rowHeight: 40.h,
+                              rowHeight: 35.h,
                               headerStyle: HeaderStyle(
+                                headerMargin: EdgeInsets.only(
+                                  top: 1.h,
+                                  bottom: 1.h,
+                                ),
+                                headerPadding: EdgeInsets.only(
+                                  top: 1.h,
+                                  bottom: 1.h,
+                                ),
                                 leftChevronIcon: Icon(
                                   Icons.chevron_left,
                                   color: appPrimary,
@@ -223,6 +235,43 @@ class _EventsState extends State<Events> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 17.h,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Text(
+                                "Current Events",
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: appTertiary,
+                                ),
+                              ),
+                              Spacer(),
+                              InkWell(
+                                onTap: () {},
+                                child: Text(
+                                  "See history",
+                                  style: TextStyle(
+                                    fontSize: 11.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: appPrimary,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          CurrentEvents(),
                         ],
                       ),
                     ),
