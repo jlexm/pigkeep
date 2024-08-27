@@ -7,6 +7,7 @@ class SearchBar_Events extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 34.h, 
+      width: 275.w,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
