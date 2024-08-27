@@ -33,13 +33,7 @@ class _MyDataTableState extends State<MyDataTable> {
       'pen': '002',
       'status': 'deceased'
     },
-    {
-      'number': '004',
-      'category': 'Sow',
-      'feed': 'Uno Starter',
-      'pen': '004',
-      'status': 'alive'
-    },
+    
   ];
 
   Color _getStatusColor(String status) {

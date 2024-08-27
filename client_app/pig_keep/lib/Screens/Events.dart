@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/Current_Events.dart';
+import 'package:pig_keep/Components/EventsHistory.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/SearchBar_Events.dart';
+import 'package:pig_keep/Components/UpcomingEvents.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -16,10 +18,24 @@ class Events extends StatefulWidget {
 
 class _EventsState extends State<Events> {
   DateTime today = DateTime.now();
+  bool showUpcomingEvents = false;
+  bool showEventsHistory = false;
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
+    });
+  }
+
+  void _toggleView() {
+    setState(() {
+      showUpcomingEvents = !showUpcomingEvents;
+    });
+  }
+
+  void _toggleHistoryView() {
+    setState(() {
+      showEventsHistory = !showEventsHistory;
     });
   }
 
@@ -38,7 +54,7 @@ class _EventsState extends State<Events> {
                   children: [
                     Row(
                       children: [
-                        FarmName(), //FarmName.dart
+                        FarmName(),
                       ],
                     ),
                     Container(
@@ -48,7 +64,7 @@ class _EventsState extends State<Events> {
                         children: [
                           SizedBox(width: 20.w),
                           Text(
-                            'Set events to be updated and notified.',
+                            'Set events for your pig farm to be updated \nand notified.',
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,
@@ -89,7 +105,7 @@ class _EventsState extends State<Events> {
                                             color: appSecondary,
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w300,
-                                            height: 1.h,
+                                            height: 1.2.h,
                                           ),
                                         ),
                                       ],
@@ -156,125 +172,140 @@ class _EventsState extends State<Events> {
                         SizedBox(width: 20.w),
                       ],
                     ),
-                    Container(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Column(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.calendar_month,
-                                      size: 40.w,
-                                      color: appTertiary,
+                    if (showUpcomingEvents)
+                      UpcomingEvents(
+                        onReturn: _toggleView, // Pass the toggle function
+                      )
+                    else if (showEventsHistory)
+                      EventsHistory(
+                        onReturn: _toggleHistoryView, // Pass the toggle function
+                      )
+                    else
+                      Container(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: _toggleView,
+                                      icon: Icon(
+                                        Icons.calendar_month,
+                                        size: 40.w,
+                                        color: appTertiary,
+                                      ),
                                     ),
+                                  ],
+                                ),
+                                Spacer(),
+                                SearchBar_Events(),
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: 15.w,
+                                right: 15.w,
+                              ),
+                              child: TableCalendar(
+                                locale: "en_US",
+                                rowHeight: 35.h,
+                                headerStyle: HeaderStyle(
+                                  headerMargin: EdgeInsets.only(
+                                    top: 1.h,
+                                    bottom: 1.h,
                                   ),
-                                ],
-                              ),
-                              Spacer(),
-                              SearchBar_Events(), //SearchBar_Events.dart
-                              SizedBox(
-                                width: 20.w,
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 15.w,
-                              right: 15.w,
-                            ),
-                            child: TableCalendar(
-                              locale: "en_US",
-                              rowHeight: 35.h,
-                              headerStyle: HeaderStyle(
-                                headerMargin: EdgeInsets.only(
-                                  top: 1.h,
-                                  bottom: 1.h,
-                                ),
-                                headerPadding: EdgeInsets.only(
-                                  top: 1.h,
-                                  bottom: 1.h,
-                                ),
-                                leftChevronIcon: Icon(
-                                  Icons.chevron_left,
-                                  color: appPrimary,
-                                ),
-                                rightChevronIcon: Icon(
-                                  Icons.chevron_right,
-                                  color: appTertiary,
-                                ),
-                                titleTextStyle: TextStyle(
-                                    fontSize: 13.sp, color: appPrimary),
-                                formatButtonVisible: false,
-                                titleCentered: true,
-                              ),
-                              daysOfWeekHeight: 30.h,
-                              availableGestures: AvailableGestures.all,
-                              selectedDayPredicate: (day) =>
-                                  isSameDay(day, today),
-                              firstDay: DateTime.utc(2010, 10, 16),
-                              lastDay: DateTime.utc(2040, 10, 16),
-                              onDaySelected: _onDaySelected,
-                              focusedDay: today,
-                              startingDayOfWeek: StartingDayOfWeek.sunday,
-                              calendarStyle: CalendarStyle(
-                                selectedDecoration: BoxDecoration(
-                                  color: appPrimary,
-                                  shape: BoxShape.circle,
-                                ),
-                                todayTextStyle: TextStyle(color: appTertiary),
-                                weekendTextStyle: TextStyle(color: appPrimary),
-                                defaultTextStyle: TextStyle(color: appPrimary),
-                                selectedTextStyle:
-                                    TextStyle(color: appSecondary),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 17.h,
-                          ),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 20.w,
-                              ),
-                              Text(
-                                "Current Events",
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: appTertiary,
-                                ),
-                              ),
-                              Spacer(),
-                              InkWell(
-                                onTap: () {},
-                                child: Text(
-                                  "See history",
-                                  style: TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w400,
+                                  headerPadding: EdgeInsets.only(
+                                    top: 1.h,
+                                    bottom: 1.h,
+                                  ),
+                                  leftChevronIcon: Icon(
+                                    Icons.chevron_left,
                                     color: appPrimary,
                                   ),
+                                  rightChevronIcon: Icon(
+                                    Icons.chevron_right,
+                                    color: appTertiary,
+                                  ),
+                                  titleTextStyle: TextStyle(
+                                      fontSize: 13.sp, color: appPrimary),
+                                  formatButtonVisible: false,
+                                  titleCentered: true,
+                                ),
+                                daysOfWeekHeight: 30.h,
+                                availableGestures: AvailableGestures.all,
+                                selectedDayPredicate: (day) =>
+                                    isSameDay(day, today),
+                                firstDay: DateTime.utc(2010, 10, 16),
+                                lastDay: DateTime.utc(2040, 10, 16),
+                                onDaySelected: _onDaySelected,
+                                focusedDay: today,
+                                startingDayOfWeek: StartingDayOfWeek.sunday,
+                                calendarStyle: CalendarStyle(
+                                  selectedDecoration: BoxDecoration(
+                                    color: appPrimary,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  todayTextStyle: TextStyle(color: appTertiary),
+                                  weekendTextStyle:
+                                      TextStyle(color: appPrimary),
+                                  defaultTextStyle:
+                                      TextStyle(color: appPrimary),
+                                  selectedTextStyle:
+                                      TextStyle(color: appSecondary),
                                 ),
                               ),
-                              SizedBox(
-                                width: 20.w,
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          CurrentEvents(),
-                        ],
+                            ),
+                            SizedBox(
+                              height: 17.h,
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                                Text(
+                                  "Current Events",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: appTertiary,
+                                  ),
+                                ),
+                                Spacer(),
+                                InkWell(
+                                  onTap: _toggleHistoryView, // Toggle history view
+                                  child: Text(
+                                    "See history",
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: appPrimary,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            if (showUpcomingEvents)
+                              UpcomingEvents(
+                                onReturn: _toggleView,
+                              )
+                            else
+                              CurrentEvents(),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

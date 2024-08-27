@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
                             Text(
                               'Pig Count',
                               style: TextStyle(
-                                fontSize: 15.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
                                 color: appTertiary,
                               ),
@@ -156,7 +156,7 @@ class _HomeState extends State<Home> {
                             Text(
                               'Notifications',
                               style: TextStyle(
-                                fontSize: 15.sp,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
                                 color: appTertiary,
                               ),
@@ -191,7 +191,6 @@ class _HomeState extends State<Home> {
                       width: 20.w,
                     ),
                     Notifications(),
-                    
                   ],
                 ),
               ),

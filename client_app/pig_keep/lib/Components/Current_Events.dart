@@ -4,7 +4,7 @@ import 'package:pig_keep/Constants/color.constants.dart';
 
 class CurrentEvents extends StatefulWidget {
   const CurrentEvents({super.key});
-
+ 
   @override
   State<CurrentEvents> createState() => _CurrentEventsState();
 }
@@ -18,6 +18,7 @@ class _CurrentEventsState extends State<CurrentEvents> {
       'event': 'Vaccination',
       'status': 'In Progress',
     },
+
     {
       'date': 'Jul 24, 2024',
       'time': '09:30 AM',
