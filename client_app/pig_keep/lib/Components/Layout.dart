@@ -31,9 +31,13 @@ class _LayoutState extends State<Layout> {
                       actions: [
                         InkWell(
                           onTap: () {},
-                          child: Image.asset('assets/icons/Sync.png', width: 25.w, height: 25.h,),
+                          child: Image.asset(
+                            'assets/icons/Sync.png',
+                            width: 25.w,
+                            height: 25.h,
+                          ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 25,
                         )
                       ],
@@ -42,8 +46,8 @@ class _LayoutState extends State<Layout> {
                         child: Builder(
                           builder: (context) {
                             return IconButton(
-                              icon:
-                                  Icon(Icons.menu, color: appPrimary, size: 35.h),
+                              icon: Icon(Icons.menu,
+                                  color: appPrimary, size: 35.h),
                               onPressed: () {
                                 Scaffold.of(context).openDrawer();
                               },
@@ -51,13 +55,12 @@ class _LayoutState extends State<Layout> {
                           },
                         ),
                       ),
-                      backgroundColor:
-                          appSecondary,
+                      backgroundColor: appSecondary,
                     ),
                   )
                 : null,
-        drawer: Hamburger(),
+        drawer: const Hamburger(),
         body: widget.child,
-        bottomNavigationBar: BottomNav(),
+        bottomNavigationBar: const BottomNav(),
       );
 }

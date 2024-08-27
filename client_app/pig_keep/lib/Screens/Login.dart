@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pig_keep/Api/auth_api.dart';
 import 'package:pig_keep/Components/IconInputForm.dart';
 import 'package:pig_keep/Components/ImageInputForm.dart';
 import 'package:pig_keep/Components/myButton.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Store/auth_storage.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,6 +18,8 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool isLoginAPILoading = false;
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   bool _isChecked = false;
@@ -31,7 +37,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 200.h,
                 ),
-                Row(
+                const Row(
                   children: [
                     Text(
                       'Log in',
@@ -45,7 +51,7 @@ class _LoginState extends State<Login> {
                 SizedBox(
                   height: 10.h,
                 ),
-                Column(
+                const Column(
                   children: [
                     Text(
                       'Welcome back! Log in to your account to continue your pig farm management experience.',
@@ -116,8 +122,42 @@ class _LoginState extends State<Login> {
                 ),
                 MyButton(
                   name: 'Login',
-                  onPressed: () {
-                    context.go('/home');
+                  onPressed: () async {
+                    if (isLoginAPILoading) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('API is still loading.'),
+                        ),
+                      );
+                      return;
+                    }
+                    try {
+                      isLoginAPILoading = true;
+                      // call login api and store to body variable
+                      final body = await AuthApi.login(
+                          _usernameController.text, _passController.text);
+
+                      // update localStorage token that was rcved from login api
+                      await AuthStorage.updateToken(body['token']);
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (mounted) {
+                          context.go('/home');
+                        }
+                      });
+                    } catch (e) {
+                      // Handle the error properly here, e.g., show an error message
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(e.toString()),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      });
+                    } finally {
+                      // set loading state to false.
+                      isLoginAPILoading = false;
+                    }
                   },
                 ),
                 SizedBox(

@@ -1,4 +1,10 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  UnauthorizedException,
+} from '@nestjs/common'
 import { LoginDto } from './auth.dto'
 import { AuthService } from './auth.service'
 import { UserService } from 'src/user/user.service'
@@ -11,6 +17,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
+  @HttpCode(200)
   async login(@Body() body: LoginDto) {
     const { username, password } = body
     const user = await this.userSvc.getUserCredentials(username)
