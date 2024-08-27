@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
 
     // check role decorator
     const roles = this.reflector.get(Roles, context.getHandler())
-    if (roles && roles.includes(decoded.role_id)) {
+    if (roles && !roles.includes(decoded.role_id)) {
       throw new ForbiddenException(
         'You do not have the required role to access this resource'
       )
