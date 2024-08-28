@@ -17,7 +17,6 @@ class _PigListState extends State<PigList> {
     return Column(
       children: [
         Row(
-          //Greenbox
           children: [
             SizedBox(
               width: 20.w,
@@ -179,40 +178,35 @@ class _PigListState extends State<PigList> {
             MyDataTable(), //DatarTable.dart
           ],
         ),
-        SizedBox(
-          //remove this later
-          height: 600.h,
-        ),
-        Text('-End of SCSV-'),
-        SizedBox(
-          //remove this later
-          height: 110.h,
-        ),
+        
       ],
     );
   }
 }
 
+
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:pig_keep/Components/DataTable.dart';
+// import 'package:pig_keep/Components/DataTable_PigList.dart';
 // import 'package:pig_keep/Components/SearchBar_PigList.dart';
+// import 'package:pig_keep/Components/QRCodeStatus.dart'; // Import the QRCodeStatus component
 // import 'package:pig_keep/Constants/color.constants.dart';
 
 // class PigList extends StatefulWidget {
-//   const PigList({super.key, Map<String, String>? selectedPig});
+//   const PigList({super.key});
 
 //   @override
 //   State<PigList> createState() => _PigListState();
 // }
 
 // class _PigListState extends State<PigList> {
-//   Map<String, String>? _selectedRow;
-
-//   void _onRowSelected(Map<String, String> selectedRow) {
-//     setState(() {
-//       _selectedRow = selectedRow;
-//     });
+//   void _navigateToQRCodeStatus() {
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => QRCodeStatus(), // Navigate to QRCodeStatus
+//       ),
+//     );
 //   }
 
 //   @override
@@ -221,9 +215,7 @@ class _PigListState extends State<PigList> {
 //       children: [
 //         Row(
 //           children: [
-//             SizedBox(
-//               width: 20.w,
-//             ),
+//             SizedBox(width: 20.w),
 //             Expanded(
 //               child: Container(
 //                 height: 95.h,
@@ -252,9 +244,7 @@ class _PigListState extends State<PigList> {
 //                         ),
 //                       ],
 //                     ),
-//                     SizedBox(
-//                       width: 9.w,
-//                     ),
+//                     SizedBox(width: 9.w),
 //                     Column(
 //                       mainAxisAlignment: MainAxisAlignment.center,
 //                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -262,10 +252,11 @@ class _PigListState extends State<PigList> {
 //                         Text(
 //                           'Total \nLiving Pig',
 //                           style: TextStyle(
-//                               color: appSecondary,
-//                               fontSize: 12.sp,
-//                               fontWeight: FontWeight.w300),
-//                         )
+//                             color: appSecondary,
+//                             fontSize: 12.sp,
+//                             fontWeight: FontWeight.w300,
+//                           ),
+//                         ),
 //                       ],
 //                     ),
 //                     Spacer(),
@@ -305,24 +296,18 @@ class _PigListState extends State<PigList> {
 //                           ),
 //                         ),
 //                       ],
-//                     )
+//                     ),
 //                   ],
 //                 ),
 //               ),
 //             ),
-//             SizedBox(
-//               width: 20.w,
-//             ),
+//             SizedBox(width: 20.w),
 //           ],
 //         ),
-//         SizedBox(
-//           height: 11.h,
-//         ),
+//         SizedBox(height: 11.h),
 //         Row(
 //           children: [
-//             SizedBox(
-//               width: 20.w,
-//             ),
+//             SizedBox(width: 20.w),
 //             Column(
 //               children: [
 //                 Container(
@@ -343,24 +328,23 @@ class _PigListState extends State<PigList> {
 //                           Icons.download,
 //                           color: appSecondary,
 //                         ),
-//                         SizedBox(
-//                           width: 2.w,
-//                         ),
+//                         SizedBox(width: 2.w),
 //                         Text(
 //                           'QR Codes',
 //                           style: TextStyle(
-//                               fontSize: 12.sp,
-//                               fontWeight: FontWeight.w500,
-//                               color: appSecondary),
-//                         )
+//                             fontSize: 12.sp,
+//                             fontWeight: FontWeight.w500,
+//                             color: appSecondary,
+//                           ),
+//                         ),
 //                       ],
 //                     ),
 //                   ),
-//                 )
+//                 ),
 //               ],
 //             ),
 //             Spacer(),
-//             SearchBar_PigList(), // SearchBar_PigList.dart
+//             SearchBar_PigList(),
 //             InkWell(
 //               onTap: () {},
 //               child: Icon(
@@ -369,52 +353,15 @@ class _PigListState extends State<PigList> {
 //                 color: appTertiary,
 //               ),
 //             ),
-//             SizedBox(
-//               width: 18.w,
-//             ),
+//             SizedBox(width: 18.w),
 //           ],
 //         ),
 //         Column(
 //           children: [
-//             MyDataTable(onRowSelected: _onRowSelected), // Passing the callback
-//           ],
-//         ),
-//         if (_selectedRow != null)
-//           Padding(
-//             padding: EdgeInsets.all(20.w),
-//             child: Container(
-//               padding: EdgeInsets.all(12.w),
-//               decoration: BoxDecoration(
-//                 color: appPrimary.withOpacity(0.1),
-//                 borderRadius: BorderRadius.circular(10),
-//               ),
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.start,
-//                 children: [
-//                   Text(
-//                     'Selected Pig Details',
-//                     style: TextStyle(
-//                       fontSize: 16.sp,
-//                       fontWeight: FontWeight.bold,
-//                       color: appPrimary,
-//                     ),
-//                   ),
-//                   SizedBox(height: 10.h),
-//                   Text('Number: ${_selectedRow!['number']}'),
-//                   Text('Category: ${_selectedRow!['category']}'),
-//                   Text('Feed: ${_selectedRow!['feed']}'),
-//                   Text('Pen: ${_selectedRow!['pen']}'),
-//                   Text('Status: ${_selectedRow!['status']}'),
-//                 ],
-//               ),
+//             MyDataTable(
+//               onRowSelected: _navigateToQRCodeStatus, // Pass the callback
 //             ),
-//           ),
-//         SizedBox(
-//           height: 600.h,
-//         ),
-//         Text('-End of SCSV-'),
-//         SizedBox(
-//           height: 110.h,
+//           ],
 //         ),
 //       ],
 //     );

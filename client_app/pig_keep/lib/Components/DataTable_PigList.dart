@@ -195,14 +195,13 @@ class _MyDataTableState extends State<MyDataTable> {
   }
 }
 
-
-
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
+// import 'package:pig_keep/Components/QRCodeStatus.dart';
 // import 'package:pig_keep/Constants/color.constants.dart';
 
 // class MyDataTable extends StatefulWidget {
-//   final void Function(Map<String, String>) onRowSelected;
+//   final Function() onRowSelected; // Callback to handle row selection
 
 //   const MyDataTable({super.key, required this.onRowSelected});
 
@@ -233,13 +232,6 @@ class _MyDataTableState extends State<MyDataTable> {
 //       'pen': '002',
 //       'status': 'deceased'
 //     },
-//     {
-//       'number': '004',
-//       'category': 'Sow',
-//       'feed': 'Uno Starter',
-//       'pen': '004',
-//       'status': 'alive'
-//     },
 //   ];
 
 //   Color _getStatusColor(String status) {
@@ -258,9 +250,7 @@ class _MyDataTableState extends State<MyDataTable> {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
-//       padding: EdgeInsets.only(
-//         top: 20.h,
-//       ),
+//       padding: EdgeInsets.only(top: 20.h),
 //       child: Center(
 //         child: SingleChildScrollView(
 //           scrollDirection: Axis.horizontal,
@@ -325,7 +315,7 @@ class _MyDataTableState extends State<MyDataTable> {
 //             rows: _data.map((row) {
 //               return DataRow(
 //                 onSelectChanged: (_) {
-//                   widget.onRowSelected(row); // Pass selected row data
+//                   widget.onRowSelected(); // Call the callback when a row is selected
 //                 },
 //                 cells: [
 //                   DataCell(

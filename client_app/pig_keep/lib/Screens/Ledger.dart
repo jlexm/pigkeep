@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Components/DisposalLedger.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
+import 'package:pig_keep/Components/SearchBar_DisposalLedger.dart';
+import 'package:pig_keep/Components/SearchBar_MedicalRecords.dart';
+import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class Ledger extends StatefulWidget {
@@ -60,7 +64,7 @@ class _LedgerState extends State<Ledger> {
                         "Disposal Ledger",
                         style: TextStyle(
                           fontSize: 20.sp,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                           color: appPrimary,
                         ),
                       )
@@ -126,8 +130,7 @@ class _LedgerState extends State<Ledger> {
                                 Container(
                                   height: 33.h,
                                   width: 100.w,
-                                  padding:
-                                      EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: appSecondary),
                                     color: appSecondary,
@@ -136,8 +139,10 @@ class _LedgerState extends State<Ledger> {
                                   child: InkWell(
                                     onTap: () {},
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           'assets/icons/Add.png',
@@ -161,11 +166,10 @@ class _LedgerState extends State<Ledger> {
                                 SizedBox(
                                   height: 8.h,
                                 ),
-                               Container(
+                                Container(
                                   height: 33.h,
                                   width: 100.w,
-                                  padding:
-                                      EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: appSecondary),
                                     color: appPrimary,
@@ -203,6 +207,41 @@ class _LedgerState extends State<Ledger> {
                     SizedBox(width: 20.w),
                   ],
                 ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 14.h,
+                    bottom: 20.h,
+                    left: 20.w,
+                    right: 20.w,
+                  ),
+                  child: SearchBar_DisposalLedger(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Text(
+                      'Transaction History',
+                      style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 14.h,
+                ),
+                Column(
+                  children: [
+                    DisposalLedger(),
+                  ],
+                )
               ],
             ),
           ))

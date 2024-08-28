@@ -63,13 +63,13 @@ class _IconInputFormState extends State<IconInputForm> {
       decoration: InputDecoration(
         prefixIcon: Icon(
           widget.prefixIcon,
-          color: _isFocused ? appPrimary : appGray,
+          color: _isFocused ? appPrimary : appTertiary,
         ),
         suffixIcon: widget.suffixIcon != null
             ? IconButton(
                 icon: Icon(
                   _obscureText ? widget.suffixIcon : Icons.visibility_rounded,
-                  color: _isFocused ? appPrimary : appGray,
+                  color: _isFocused ? appPrimary : appTertiary,
                 ),
                 onPressed: () {
                   if (widget.suffixIcon != null) {
@@ -85,7 +85,7 @@ class _IconInputFormState extends State<IconInputForm> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: appGray,
+            color: appTertiary,
           ),
         ),
         labelText: widget.labelText,

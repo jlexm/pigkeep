@@ -107,7 +107,7 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
                           transaction['textId']!,
                           style: TextStyle(
                             fontSize: 14.sp,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         Text(
@@ -137,7 +137,7 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
                             child: Text(
                               '\₱${transaction['price']}',
                               style: TextStyle(
-                                fontSize: 10.sp,
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.w500,
                                 color: statusColor,
                               ),

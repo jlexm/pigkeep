@@ -14,7 +14,7 @@ class ImageInputForm extends StatefulWidget {
     required this.labelText,
     required this.controller,
     this.validator,
-    this.enable,
+    this.enable, required TextStyle textStyle,
   });
 
   @override
@@ -59,7 +59,7 @@ class _ImageInputFormState extends State<ImageInputForm> {
         prefixIcon: widget.prefixIcon != null
             ? ColorFiltered(
                 colorFilter: ColorFilter.mode(
-                  _isFocused ? appPrimary : appGray, // Change color based on focus
+                  _isFocused ? appPrimary : appTertiary,
                   BlendMode.srcIn,
                 ),
                 child: widget.prefixIcon,
@@ -72,7 +72,7 @@ class _ImageInputFormState extends State<ImageInputForm> {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(
-            color: appGray,
+            color: appTertiary,
           ),
         ),
         labelText: widget.labelText,
