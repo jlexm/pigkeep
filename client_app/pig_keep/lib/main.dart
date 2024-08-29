@@ -4,11 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/Layout.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Screens/Caretakers.dart';
+import 'package:pig_keep/Screens/ChangePassword.dart';
 import 'package:pig_keep/Screens/Events.dart';
 import 'package:pig_keep/Screens/Home.dart';
 import 'package:pig_keep/Screens/Ledger.dart';
 import 'package:pig_keep/Screens/Login.dart';
 import 'package:pig_keep/Screens/Profile.dart';
+import 'package:pig_keep/Screens/ProfileDetails.dart';
 import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Screens/ScanQR.dart';
 import 'package:pig_keep/Screens/Signup.dart';
@@ -64,6 +67,18 @@ class MyApp extends StatelessWidget {
                 GoRoute(
                   path: '/ledger',
                   builder: (context, state) => const Ledger(),
+                ),
+                GoRoute(
+                  path: '/profiledetails',
+                  builder: (context, state) => const ProfileDetails(),
+                ),
+                GoRoute(
+                  path: '/caretakers',
+                  builder: (context, state) => const Caretakers(),
+                ),
+                GoRoute(
+                  path: '/changepassword',
+                  builder: (context, state) => const ChangePassword(),
                 ),
               ],
             ),
