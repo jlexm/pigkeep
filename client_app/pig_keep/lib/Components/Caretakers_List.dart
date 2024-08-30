@@ -66,7 +66,7 @@ class _CaretakersListState extends State<CaretakersList> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            GestureDetector(
+            InkWell(
               onTap: () {},
               child: Container(
                 height: 32.h,
@@ -83,7 +83,7 @@ class _CaretakersListState extends State<CaretakersList> {
                     style: TextStyle(
                       color: appSecondary,
                       fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),

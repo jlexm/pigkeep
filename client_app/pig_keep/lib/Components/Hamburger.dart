@@ -36,7 +36,7 @@ class Hamburger extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                          color: appSecondary,
                         ),
                       ),
                     ),

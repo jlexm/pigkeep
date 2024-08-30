@@ -25,7 +25,7 @@ class SearchBar_DisposalLedger extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Search by Medicine Name',
+                hintText: 'Search',
                 iconColor: appTertiary,
                 isDense: true,
                 contentPadding: EdgeInsets.zero,

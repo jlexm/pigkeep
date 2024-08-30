@@ -3,25 +3,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class PigPenPenNumber extends StatefulWidget {
-  const PigPenPenNumber({super.key});
-  
+  final String number;
+  final String type;
+  final String pigCount;
+  final String maxPigs;
+
+  const PigPenPenNumber({
+    Key? key,
+    required this.number,
+    required this.type,
+    required this.pigCount,
+    required this.maxPigs,
+  }) : super(key: key);
 
   @override
   State<PigPenPenNumber> createState() => _PigPenPenNumberState();
 }
 
 class _PigPenPenNumberState extends State<PigPenPenNumber> {
-  // List of integers for the pen numbers
-  final List<int> penNumbers = [1, 2, 3, 4, 5];
-  int selectedPenNumber = 1; // Default selected pen number
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 20.h,
-        ),
+        SizedBox(height: 20.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,41 +34,33 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
               children: [
                 Row(
                   children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
+                    SizedBox(height: 20.h),
                     Text(
-                      "P-${selectedPenNumber.toString().padLeft(2, '0')}",
+                      widget.number,
                       style: TextStyle(
                         fontSize: 85.sp,
                         fontWeight: FontWeight.w700,
                         height: 0.9.h,
                       ),
-                    )
+                    ),
                   ],
                 ),
-                SizedBox(
-                  height: 15.h,
-                ),
+                SizedBox(height: 15.h),
                 Row(
                   children: [
                     Text(
                       "Pen Number",
                       style: TextStyle(color: appPrimary, fontSize: 16.sp),
-                    )
+                    ),
                   ],
                 ),
               ],
-            )
+            ),
           ],
         ),
-        SizedBox(
-          height: 30.w,
-        ),
+        SizedBox(height: 30.w),
         Container(
-          padding: EdgeInsets.only(
-            left: 20.w,
-          ),
+          padding: EdgeInsets.only(left: 20.w),
           child: Column(
             children: [
               Row(
@@ -78,9 +74,7 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 8.h,
-              ),
+              SizedBox(height: 8.h),
               Row(
                 children: [
                   Container(
@@ -90,55 +84,43 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              SizedBox(height: 10.h),
               Row(
                 children: [
+                  Text("Type:  "),
                   Text(
-                    "Type:  ",
-                  ),
-                  Text(
-                    "Nursery",
+                    widget.type,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
                     ),
-                  )
+                  ),
                 ],
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              SizedBox(height: 10.h),
               Row(
                 children: [
+                  Text("Pig Count:  "),
                   Text(
-                    "Pig Count:  ",
-                  ),
-                  Text(
-                    "2",
+                    widget.pigCount,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
                     ),
-                  )
+                  ),
                 ],
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              SizedBox(height: 10.h),
               Row(
                 children: [
+                  Text("Max Pigs:  "),
                   Text(
-                    "Max Pigs:  ",
-                  ),
-                  Text(
-                    "5",
+                    widget.maxPigs,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
                     ),
-                  )
+                  ),
                 ],
               ),
             ],
@@ -270,7 +252,7 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
               width: 20.w,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {Navigator.of(context).pop();},
               child: Container(
                 height: 32.h,
                 width: 72.w,
@@ -347,11 +329,7 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
             )
           ],
         ),
-        SizedBox(
-          //remove this later
-          height: 600.h,
-        ),
-        Text('-End of SCSV-'),
+        
       ],
     );
   }

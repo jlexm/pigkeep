@@ -6,6 +6,7 @@ class Chips extends StatefulWidget {
   final ValueChanged<int?> onChipSelected;
 
   const Chips({super.key, required this.onChipSelected});
+  
 
   @override
   State<Chips> createState() => _ChipsState();
@@ -49,7 +50,7 @@ class _ChipsState extends State<Chips> {
           ),
         ),
         selected: _selectedChoiceIndex == index,
-        onSelected: (bool selected) {  // Prevent unselecting a selected chip
+        onSelected: (bool selected) {  
           if (selected && _selectedChoiceIndex != index) {
             setState(() {
               _selectedChoiceIndex = index;

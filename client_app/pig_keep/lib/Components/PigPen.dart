@@ -7,7 +7,9 @@ import 'package:pig_keep/Components/SearchBar_PigPen.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class PigPen extends StatefulWidget {
-  const PigPen({super.key});
+  final void Function(Map<String, String>) onRowSelected;
+
+  const PigPen({super.key, required this.onRowSelected});
 
   @override
   State<PigPen> createState() => _PigPenState();
@@ -128,16 +130,13 @@ class _PigPenState extends State<PigPen> {
         SizedBox(
           height: 10.h,
         ),
-        Column(
-          children: [
-            MyDataTable_Pigpen(),
-          ],
+        Container( //changable to PigPem
+          child: Column(
+            children: [
+              MyDataTable_Pigpen(onRowSelected: widget.onRowSelected),
+            ],
+          ),
         ),
-        SizedBox(
-          //remove this later
-          height: 600.h,
-        ),
-        Text('-End of SCSV-'),
       ],
     );
   }
