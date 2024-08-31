@@ -5,6 +5,7 @@ import 'package:pig_keep/Components/DataTable_PigPen.dart';
 import 'package:pig_keep/Components/SearchBar_PigPen.dart';
 //import 'package:pig_keep/Components/SearchBar_PigPen.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
 class PigPen extends StatefulWidget {
   final void Function(Map<String, String>) onRowSelected;
@@ -85,7 +86,51 @@ class _PigPenState extends State<PigPen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ReusableDialogBox(
+                                    title: 'Add Pigpen',
+                                    description:
+                                        'Fill up the necessary information.',
+                                    formFields: [
+                                      RecyclableTextFormField(
+                                        controller: TextEditingController(),
+                                        labelText: 'Pen Type',
+                                        showDropdown: true,
+                                        dropdownItems: [
+                                          'Stall',
+                                          'Nursery',
+                                          'Farrowing'
+                                        ],
+                                        hintText: 'Pen Type',
+                                        hintTextSize: 14.sp,
+                                        icon: Icons.email,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                      RecyclableTextFormField(
+                                        controller: TextEditingController(),
+                                        labelText: 'Max Number',
+                                        hintText: 'Max Number',
+                                        hintTextSize: 14.sp,
+                                        icon: Icons.email,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                    ],
+                                    onSave: () {
+                                      // Handle the save action, e.g., validate and save data
+                                      print('Form saved');
+                                      Navigator.of(context).pop();
+                                    },
+                                    saveButtonText: 'Add Pen',
+                                    saveButtonColor: appPrimary,
+                                  );
+                                },
+                              );
+                            },
                             child: Row(
                               children: [
                                 Icon(
@@ -130,7 +175,8 @@ class _PigPenState extends State<PigPen> {
         SizedBox(
           height: 10.h,
         ),
-        Container( //changable to PigPem
+        Container(
+          //changable to PigPem
           child: Column(
             children: [
               MyDataTable_Pigpen(onRowSelected: widget.onRowSelected),
@@ -141,3 +187,5 @@ class _PigPenState extends State<PigPen> {
     );
   }
 }
+
+

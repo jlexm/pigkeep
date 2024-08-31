@@ -4,6 +4,7 @@ import 'package:pig_keep/Components/Carousel_FeedInventory.dart';
 import 'package:pig_keep/Components/SearchBar_FeedInventory.dart';
 import 'package:pig_keep/Components/Transaction_FeedInventory.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
 class FeedInventory extends StatelessWidget {
   const FeedInventory({super.key});
@@ -31,7 +32,50 @@ class FeedInventory extends StatelessWidget {
                     ),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ReusableDialogBox(
+                            title: 'Consume Feed',
+                            description: 'Fill up the necessary information.',
+                            formFields: [
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Feed Type',
+                                showDropdown: true,
+                                dropdownItems: [
+                                  'Feed 1',
+                                  'Feed 2',
+                                  'Feed 3'
+                                ],
+                                hintText: 'Feed Type',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Weight in kg',
+                                hintText: 'Weight in kg',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                            ],
+                            onSave: () {
+                              // Handle the save action, e.g., validate and save data
+                              print('Form saved');
+                              Navigator.of(context).pop();
+                            },
+                            saveButtonText: 'Consume',
+                            saveButtonColor: appRed,
+                          );
+                        },
+                      );
+                    },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +109,53 @@ class FeedInventory extends StatelessWidget {
                     ),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ReusableDialogBox(
+                            title: 'Add Feed',
+                            description: 'Fill up the necessary information.',
+                            formFields: [
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Feed Type',
+                                hintText: 'Feed Type',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Weight in kg',
+                                hintText: 'Weight in kg',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Cost',
+                                hintText: 'Cost',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                            ],
+                            onSave: () {
+                              // Handle the save action, e.g., validate and save data
+                              print('Form saved');
+                              Navigator.of(context).pop();
+                            },
+                            saveButtonText: 'Add Feed',
+                            saveButtonColor: appPrimary,
+                          );
+                        },
+                      );
+                    },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

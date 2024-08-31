@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/CenterReusableDialogBox.dart';
 
 class CurrentEvents extends StatefulWidget {
   const CurrentEvents({super.key});
- 
+
   @override
   State<CurrentEvents> createState() => _CurrentEventsState();
 }
@@ -18,7 +19,6 @@ class _CurrentEventsState extends State<CurrentEvents> {
       'event': 'Vaccination',
       'status': 'In Progress',
     },
-
     {
       'date': 'Jul 24, 2024',
       'time': '09:30 AM',
@@ -45,17 +45,30 @@ class _CurrentEventsState extends State<CurrentEvents> {
         itemCount: CurrentEvents.length,
         itemBuilder: (context, index) {
           final event = CurrentEvents[index];
-
           return Padding(
             padding: EdgeInsets.only(bottom: 21.h),
             child: InkWell(
-              onTap: () => _onNotificationTap(
-                event['id']!,
-                event['event']!,
-              ),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CenterReusableDialogBox(
+                      title: 'Accomplished?',
+                      description:
+                          'Verify if the event has been \naccomplished by clicking the button.',
+                      onSave: () {
+                        // Define what should happen when the save button is pressed
+                        Navigator.of(context).pop();
+                      },
+                      saveButtonText: 'Mark as Done',
+                      saveButtonColor: appPrimary,
+                    );
+                  },
+                );
+              },
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: appSecondary,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Column(
@@ -96,7 +109,9 @@ class _CurrentEventsState extends State<CurrentEvents> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 3.h),
+                    SizedBox(
+                      height: 3.h,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

@@ -88,79 +88,73 @@ class _EventsHistoryState extends State<EventsHistory> {
 
               return Padding(
                 padding: EdgeInsets.only(bottom: 21.h),
-                child: InkWell(
-                  onTap: () => _onNotificationTap(
-                    event['id']!,
-                    event['event']!,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: appSecondary,
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 2.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Pig ',
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.black,
-                                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 2.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Pig ',
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black,
                                   ),
-                                  TextSpan(
-                                    text: event['id'],
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: appPrimary,
-                                    ),
+                                ),
+                                TextSpan(
+                                  text: event['id'],
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: appPrimary,
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              event['event']!,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          ),
+                          Text(
+                            event['event']!,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 3.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              event['date']!,
-                              style: TextStyle(
-                                fontSize: 10.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 3.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            event['date']!,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
                             ),
-                            Text(
-                              event['status']!,
-                              style: TextStyle(
-                                fontSize: 10.sp,
-                                fontWeight: FontWeight.w400,
-                                color: event['status'] == 'Done'
-                                    ? appPrimary
-                                    : appTertiary,
-                              ),
+                          ),
+                          Text(
+                            event['status']!,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w400,
+                              color: event['status'] == 'Done'
+                                  ? appPrimary
+                                  : appTertiary,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               );

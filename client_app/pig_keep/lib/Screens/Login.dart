@@ -51,31 +51,31 @@ class _LoginState extends State<Login> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 20),
+                              padding:  EdgeInsets.only(left: 30, right: 30),
                               child: Column(
                                 children: [
-                                  const Row(
+                                   Row(
                                     children: [
                                       Text(
                                         'Log in',
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color: appTertiary,
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 30),
+                                            fontSize: 30.sp),
                                       ),
                                     ],
                                   ),
                                   SizedBox(
                                     height: 3.h,
                                   ),
-                                  const Column(
+                                   Column(
                                     children: [
                                       Text(
                                         'Welcome back! Log in to your account to continue your pig farm management experience.',
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color: appTertiary,
                                             fontWeight: FontWeight.w300,
-                                            fontSize: 12),
+                                            fontSize: 12.sp,),
                                       )
                                     ],
                                   ),
@@ -124,16 +124,16 @@ class _LoginState extends State<Login> {
                                       Text(
                                         'Remember me',
                                         style: TextStyle(
-                                          fontSize: 10.sp,
+                                          fontSize: 11.sp,
                                           fontWeight: FontWeight.w300,
-                                          color: Colors.black,
+                                          color: appTertiary,
                                         ),
                                       ),
                                       Spacer(),
                                       Text(
                                         'Forgot Password?',
                                         style: TextStyle(
-                                          fontSize: 10.sp,
+                                          fontSize: 11.sp,
                                           fontWeight: FontWeight.w300,
                                           color: appPrimary,
                                         ),
@@ -173,7 +173,7 @@ class _LoginState extends State<Login> {
                                           ScaffoldMessenger.of(context).showSnackBar(
                                             SnackBar(
                                               content: Text(e.toString()),
-                                              backgroundColor: Colors.red,
+                                              backgroundColor: appRed,
                                             ),
                                           );
                                         });
@@ -195,9 +195,9 @@ class _LoginState extends State<Login> {
                                           Text(
                                             'Don\'t have an account? ',
                                             style: TextStyle(
-                                              fontSize: 10.sp,
+                                              fontSize: 11.sp,
                                               fontWeight: FontWeight.w300,
-                                              color: Colors.black,
+                                              color: appTertiary,
                                             ),
                                           ),
                                           GestureDetector(
@@ -207,7 +207,7 @@ class _LoginState extends State<Login> {
                                             child: Text(
                                               'Sign-Up',
                                               style: TextStyle(
-                                                fontSize: 10.sp,
+                                                fontSize: 11.sp,
                                                 fontWeight: FontWeight.w300,
                                                 color: appPrimary,
                                               ),

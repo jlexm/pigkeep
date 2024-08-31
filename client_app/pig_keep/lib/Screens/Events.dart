@@ -7,6 +7,7 @@ import 'package:pig_keep/Components/SearchBar_Events.dart';
 import 'package:pig_keep/Components/UpcomingEvents.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Events extends StatefulWidget {
@@ -142,7 +143,63 @@ class _EventsState extends State<Events> {
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return ReusableDialogBox(
+                                                title: 'Set Events',
+                                                description:
+                                                    'Fill up the form to set an event for your \npig farm.',
+                                                formFields: [
+                                                  RecyclableTextFormField(
+                                                    controller:
+                                                        TextEditingController(),
+                                                    labelText: 'Date',
+                                                    hintText: 'Date',
+                                                    hintTextSize: 14.sp,
+                                                    icon: Icons.email,
+                                                    textSize: 14.sp,
+                                                    height: 43.h,
+                                                  ),
+                                                  RecyclableTextFormField(
+                                                    controller:
+                                                        TextEditingController(),
+                                                    labelText: 'Pig Number',
+                                                    hintText: 'Pig Number',
+                                                    hintTextSize: 14.sp,
+                                                    icon: Icons.email,
+                                                    textSize: 14.sp,
+                                                    height: 43.h,
+                                                  ),
+                                                  RecyclableTextFormField(
+                                                    controller:
+                                                        TextEditingController(),
+                                                    labelText: 'Event Name',
+                                                    showDropdown: true,
+                                                    dropdownItems: [
+                                                      'Event 1 Link this',
+                                                      'Event 2 Link this',
+                                                      'Event 3 Link this',
+                                                    ],
+                                                    hintText: 'Event Name',
+                                                    hintTextSize: 14.sp,
+                                                    icon: Icons.email,
+                                                    textSize: 14.sp,
+                                                    height: 43.h,
+                                                  ),
+                                                ],
+                                                onSave: () {
+                                                  // Handle the save action, e.g., validate and save data
+                                                  print('Form saved');
+                                                  Navigator.of(context).pop();
+                                                },
+                                                saveButtonText: 'Set',
+                                                saveButtonColor: appPrimary,
+                                              );
+                                            },
+                                          );
+                                        },
                                         child: Row(
                                           children: [
                                             Icon(
@@ -178,7 +235,8 @@ class _EventsState extends State<Events> {
                       )
                     else if (showEventsHistory)
                       EventsHistory(
-                        onReturn: _toggleHistoryView, // Pass the toggle function
+                        onReturn:
+                            _toggleHistoryView, // Pass the toggle function
                       )
                     else
                       Container(
@@ -280,7 +338,7 @@ class _EventsState extends State<Events> {
                                 ),
                                 Spacer(),
                                 InkWell(
-                                  onTap: _toggleHistoryView, // Toggle history view
+                                  onTap: _toggleHistoryView,
                                   child: Text(
                                     "See history",
                                     style: TextStyle(

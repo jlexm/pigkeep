@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Screens/Records.dart';
 
 class QRCodeStatus extends StatefulWidget {
@@ -160,7 +161,80 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                   color: Colors.transparent,
                   borderColor: appBlue,
                   textColor: appBlue,
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ReusableDialogBox(
+                          title: 'Edit Pig ${widget.pigData['number']}',
+                          description:
+                              'Fill up the form to update the pig’s \ninformation.',
+                          formFields: [
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Date of Birth',
+                              hintText: 'Date of Birth',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Sex',
+                              showDropdown: true,
+                              dropdownItems: ['Male', 'Female'],
+                              hintText: 'Sex',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Parent Number',
+                              hintText: 'Parent Number',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Pen Number',
+                              showDropdown: true,
+                              dropdownItems: [
+                                'PenNumber 1 Link this',
+                                'PenNumber 2 Link this',
+                                'PenNumber 3 Link this',
+                              ],
+                              hintText: 'Pen Number',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Weight in kg',
+                              hintText: 'Weight in kg',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                          ],
+                          onSave: () {
+                            // Handle the save action, e.g., validate and save data
+                            print('Form saved');
+                            Navigator.of(context).pop();
+                          },
+                          saveButtonText: 'Save',
+                          saveButtonColor: appBlue,
+                        );
+                      },
+                    );
+                  },
                 ),
                 SizedBox(width: 5.w),
                 _ActionButton(
@@ -210,7 +284,6 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
     );
   }
 
-  // Widget for detail rows
   Widget _DetailRow({required String label, required String value}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 5.0),
@@ -236,7 +309,6 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
     );
   }
 
-  // Widget for action buttons
   Widget _ActionButton({
     required String text,
     required Color color,
@@ -244,13 +316,13 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
     required Color textColor,
     IconData? icon,
     required VoidCallback onTap,
-    double? width, // Added width parameter to allow custom widths
+    double? width,
   }) {
     return InkWell(
       onTap: onTap,
       child: Container(
         height: 35.h,
-        width: width ?? (icon == null ? 83.w : 95.w), // Default or custom width
+        width: width ?? (icon == null ? 83.w : 95.w),
         decoration: BoxDecoration(
           border: Border.all(color: borderColor),
           borderRadius: BorderRadius.circular(10.r),

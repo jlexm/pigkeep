@@ -14,7 +14,6 @@ import 'package:pig_keep/Components/QRCodeStatus.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
-import 'package:pig_keep/Components/Notifications.dart';
 
 class Records extends StatefulWidget {
   const Records({super.key});
@@ -52,6 +51,7 @@ class _RecordsState extends State<Records> {
           type: rowData['type']!,
           pigCount: rowData['pig count']!,
           maxPigs: rowData['max pigs']!,
+          pigNumbers: []
         ),
       ),
     );
@@ -92,13 +92,18 @@ class _RecordsState extends State<Records> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 6.h),
+                    SizedBox(
+                      height: 6.h,
+                    ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
                       child: Chips(onChipSelected: _onChipSelected),
                     ),
-                    SizedBox(height: 10.h),
-                    Container( //Container containing Screens
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Container(
+                      //Container containing Screens
                       child: Column(
                         children: [
                           if (_selectedRowData != null && _showPigPenPenNumber)
@@ -107,6 +112,7 @@ class _RecordsState extends State<Records> {
                               type: _selectedRowData!['type']!,
                               pigCount: _selectedRowData!['pig count']!,
                               maxPigs: _selectedRowData!['max pigs']!,
+                              pigNumbers: [],
                             )
                           else if (_selectedRowData != null)
                             QRCodeStatus(pigData: _selectedRowData!)

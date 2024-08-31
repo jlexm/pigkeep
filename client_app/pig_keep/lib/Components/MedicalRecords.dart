@@ -6,6 +6,7 @@ import 'package:pig_keep/Components/SearchBar_MedicalRecords.dart';
 import 'package:pig_keep/Components/Transaction_FeedInventory.dart';
 import 'package:pig_keep/Components/Transaction_MedicalRecords.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
 class MedicalRecords extends StatelessWidget {
   const MedicalRecords({super.key});
@@ -33,7 +34,59 @@ class MedicalRecords extends StatelessWidget {
                     ),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ReusableDialogBox(
+                            title: 'Consume Medicine',
+                            description: 'Fill up the necessary information.',
+                            formFields: [
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Medicine Name',
+                                showDropdown: true,
+                                        dropdownItems: [
+                                          'Medicine 1',
+                                          'Medicine 2',
+                                          'Medicine 3'
+                                        ],
+                                hintText: 'Medicine Name',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Quantity',
+                                hintText: 'Quantity',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Pig Number',
+                                hintText: 'Pig Number',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                            ],
+                            onSave: () {
+                              // Handle the save action, e.g., validate and save data
+                              print('Form saved');
+                              Navigator.of(context).pop();
+                            },
+                            saveButtonText: 'Consume',
+                            saveButtonColor: appRed,
+                          );
+                        },
+                      );
+                    },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,7 +120,68 @@ class MedicalRecords extends StatelessWidget {
                     ),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ReusableDialogBox(
+                            title: 'Add Medicine',
+                            description: 'Fill up the necessary information.',
+                            formFields: [
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Medicine Name',
+                                hintText: 'Medicine Name',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Unit',
+                                showDropdown: true,
+                                dropdownItems: [
+                                  'Grams (g)',
+                                  'milli-grams (mg)',
+                                  'milli-liters (mL)'
+                                ],
+                                hintText: 'Unit',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Quantity',
+                                hintText: 'Quantity',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                              RecyclableTextFormField(
+                                controller: TextEditingController(),
+                                labelText: 'Cost',
+                                hintText: 'Cost',
+                                hintTextSize: 14.sp,
+                                icon: Icons.email,
+                                textSize: 14.sp,
+                                height: 43.h,
+                              ),
+                            ],
+                            onSave: () {
+                              // Handle the save action, e.g., validate and save data
+                              print('Form saved');
+                              Navigator.of(context).pop();
+                            },
+                            saveButtonText: 'Add Medicine',
+                            saveButtonColor: appBlue,
+                          );
+                        },
+                      );
+                    },
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,9 +223,9 @@ class MedicalRecords extends StatelessWidget {
         Container(
           padding: EdgeInsets.only(left: 15.w),
           child: CarouselMedicalrecords(//Carousel_MedicalRecords.dart
-              items: [125, 125, 130, 200, 259]// Dynamic list of items
+              items: [125, 125, 130, 200, 259] // Dynamic list of items
               ),
-        ), 
+        ),
         SizedBox(
           height: 17.h,
         ),

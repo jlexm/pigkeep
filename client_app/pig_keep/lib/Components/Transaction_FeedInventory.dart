@@ -74,7 +74,7 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: appSecondary,
                   borderRadius: BorderRadius.circular(10.r),
                 ),
                 child: Column(

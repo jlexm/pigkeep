@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
 class UpcomingEvents extends StatefulWidget {
   final VoidCallback onReturn;
@@ -16,7 +17,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
     {
       'date': 'Aug 23, 2024',
       'time': '08:00 AM',
-      'id': '002', // Pig ID 002
+      'id': '002',
       'event': 'Vaccination',
       'status': 'Upcoming',
     },
@@ -28,10 +29,6 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
       'status': 'Upcoming',
     },
   ];
-
-  void _onNotificationTap(String id, String event) {
-    // Routing logic here
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,17 +91,65 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
             itemCount: CurrentEvents.length,
             itemBuilder: (context, index) {
               final event = CurrentEvents[index];
-
               return Padding(
                 padding: EdgeInsets.only(bottom: 21.h),
                 child: InkWell(
-                  onTap: () => _onNotificationTap(
-                    event['id']!,
-                    event['event']!,
-                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ReusableDialogBox(
+                          title: 'Update Event',
+                          description: 'Fill up the form to update the event.',
+                          formFields: [
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Date',
+                              hintText: 'Date',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Pig Number',
+                              hintText: 'Pig Number',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                            RecyclableTextFormField(
+                              controller: TextEditingController(),
+                              labelText: 'Event Name',
+                              showDropdown: true,
+                              dropdownItems: [
+                                'Event 1 Link this',
+                                'Event 2 Link this',
+                                'Event 3 Link this',
+                              ],
+                              hintText: 'Event Name',
+                              hintTextSize: 14.sp,
+                              icon: Icons.email,
+                              textSize: 14.sp,
+                              height: 43.h,
+                            ),
+                          ],
+                          onSave: () {
+                            // Handle the save action, e.g., validate and save data
+                            print('Form saved');
+                            Navigator.of(context).pop();
+                          },
+                          saveButtonText: 'Save',
+                          saveButtonColor: appBlue,
+                        );
+                      },
+                    );
+                  },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: appSecondary,
                       borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Column(

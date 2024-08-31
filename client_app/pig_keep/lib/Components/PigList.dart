@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/DataTable_PigList.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
 class PigList extends StatefulWidget {
   final void Function(Map<String, String> rowData) onRowSelected;
@@ -82,7 +83,74 @@ class _PigListState extends State<PigList> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return ReusableDialogBox(
+                                    title: 'Add Pig',
+                                    description:
+                                        'Fill up the necessary information.',
+                                    formFields: [
+                                      RecyclableTextFormField(
+                                        controller: TextEditingController(),
+                                        labelText: 'Date of Birth',
+                                        hintText: 'Date of Birth',
+                                        hintTextSize: 14.sp,
+                                        icon: Icons.email,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                      RecyclableTextFormField(
+                                        controller: TextEditingController(),
+                                        labelText: 'Parent Number',
+                                        hintText: 'Parent Number',
+                                        hintTextSize: 14.sp,
+                                        icon: Icons.email,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                      RecyclableTextFormField(
+                                        controller: TextEditingController(),
+                                        labelText: 'Sex',
+                                        showDropdown: true,
+                                        dropdownItems: [
+                                          'Male',
+                                          'Female',
+                                        ],
+                                        hintText: 'Sex',
+                                        hintTextSize: 14.sp,
+                                        icon: Icons.email,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                      RecyclableTextFormField(
+                                        controller: TextEditingController(),
+                                        labelText: 'Pen Number',
+                                        showDropdown: true,
+                                        dropdownItems: [
+                                          'EditPen 1',
+                                          'EditPen 2',
+                                          'EditPen 3'
+                                        ],
+                                        hintText: 'Pen Number',
+                                        hintTextSize: 14.sp,
+                                        icon: Icons.email,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                    ],
+                                    onSave: () {
+                                      // Handle the save action, e.g., validate and save data
+                                      print('Form saved');
+                                      Navigator.of(context).pop();
+                                    },
+                                    saveButtonText: 'Add Pig',
+                                    saveButtonColor: appPrimary,
+                                  );
+                                },
+                              );
+                            },
                             child: Row(
                               children: [
                                 Icon(
@@ -177,7 +245,7 @@ class _PigListState extends State<PigList> {
         ),
         Column(
           children: [
-            MyDataTable(onRowSelected: widget.onRowSelected), 
+            MyDataTable(onRowSelected: widget.onRowSelected),
           ],
         ),
       ],

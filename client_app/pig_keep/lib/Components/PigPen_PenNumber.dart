@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/CenterReusableDialogBox.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
-class PigPenPenNumber extends StatefulWidget {
+class PigPenPenNumber extends StatelessWidget {
   final String number;
   final String type;
   final String pigCount;
   final String maxPigs;
+  final List<String> pigNumbers;
 
   const PigPenPenNumber({
     Key? key,
@@ -14,15 +17,19 @@ class PigPenPenNumber extends StatefulWidget {
     required this.type,
     required this.pigCount,
     required this.maxPigs,
+    required this.pigNumbers,
   }) : super(key: key);
 
   @override
-  State<PigPenPenNumber> createState() => _PigPenPenNumberState();
-}
-
-class _PigPenPenNumberState extends State<PigPenPenNumber> {
-  @override
   Widget build(BuildContext context) {
+    // Determine the number of rows needed
+    int itemsPerRow = 3;
+    int numRows = (pigNumbers.length / itemsPerRow).ceil();
+
+    List<List<String>> rows = List.generate(numRows, (index) {
+      return pigNumbers.skip(index * itemsPerRow).take(itemsPerRow).toList();
+    });
+
     return Column(
       children: [
         SizedBox(height: 20.h),
@@ -36,7 +43,7 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                   children: [
                     SizedBox(height: 20.h),
                     Text(
-                      widget.number,
+                      number,
                       style: TextStyle(
                         fontSize: 85.sp,
                         fontWeight: FontWeight.w700,
@@ -60,7 +67,10 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
         ),
         SizedBox(height: 30.w),
         Container(
-          padding: EdgeInsets.only(left: 20.w),
+          padding: EdgeInsets.only(
+            left: 20.w,
+            right: 20.w,
+          ),
           child: Column(
             children: [
               Row(
@@ -89,7 +99,7 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                 children: [
                   Text("Type:  "),
                   Text(
-                    widget.type,
+                    type,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -102,7 +112,7 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                 children: [
                   Text("Pig Count:  "),
                   Text(
-                    widget.pigCount,
+                    pigCount,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -115,7 +125,7 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                 children: [
                   Text("Max Pigs:  "),
                   Text(
-                    widget.maxPigs,
+                    maxPigs,
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -123,23 +133,11 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 45.h,
-        ),
-        Container(
-          padding: EdgeInsets.only(
-            left: 20.w,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
+              SizedBox(height: 30.h),
               Row(
                 children: [
                   Text(
-                    "Pigs List",
+                    'Pigs',
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
@@ -148,111 +146,57 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 20.h,
+              SizedBox(height: 20.h),
+              // Pigs List Matrix
+              Column(
+                children: rows.map((row) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: row.map((pig) {
+                      return Container(
+                        width: 50.w,
+                        padding: EdgeInsets.only(
+                          left: 3.w,
+                          bottom: 15.h,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.circle,
+                              color: appBlue,
+                              size: 15.h,
+                            ),
+                            SizedBox(width: 4.w),
+                            Text(
+                              pig,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }).toList(),
               ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(vertical: 8.h),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       // Column 1
-              //       Expanded(
-              //         flex: 1,
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: column1Items.map((item) {
-              //             return Row(
-              //               children: [
-              //                 Icon(
-              //                   Icons.circle,
-              //                   color: appBlue,
-              //                   size: 15.h,
-              //                 ),
-              //                 SizedBox(width: 4.w),
-              //                 Text(
-              //                   item['text'],
-              //                   style: TextStyle(
-              //                     fontSize: 14.sp,
-              //                     fontWeight: FontWeight.w400,
-              //                   ),
-              //                 ),
-              //               ],
-              //             );
-              //           }).toList(),
-              //         ),
-              //       ),
-              //       // Column 2
-              //       Expanded(
-              //         flex: 1,
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.center,
-              //           children: column2Items.map((item) {
-              //             return Row(
-              //               children: [
-              //                 Icon(
-              //                   Icons.circle,
-              //                   color: appBlue,
-              //                   size: 15.h,
-              //                 ),
-              //                 SizedBox(width: 4.w),
-              //                 Text(
-              //                   item['text'],
-              //                   style: TextStyle(
-              //                     fontSize: 14.sp,
-              //                     fontWeight: FontWeight.w400,
-              //                   ),
-              //                 ),
-              //               ],
-              //             );
-              //           }).toList(),
-              //         ),
-              //       ),
-              //       // Column 3
-              //       Expanded(
-              //         flex: 1,
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.end,
-              //           children: column3Items.map((item) {
-              //             return Row(
-              //               children: [
-              //                 Icon(
-              //                   Icons.circle,
-              //                   color: appBlue,
-              //                   size: 15.h,
-              //                 ),
-              //                 SizedBox(width: 4.w),
-              //                 Text(
-              //                   item['text'],
-              //                   style: TextStyle(
-              //                     fontSize: 14.sp,
-              //                     fontWeight: FontWeight.w400,
-              //                   ),
-              //                 ),
-              //               ],
-              //             );
-              //           }).toList(),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // )
             ],
           ),
         ),
-        // Container(
-        //   child: Expanded(
-        //       child: Column(
-        //     children: [],
-        //   )),
-        // ),
+        SizedBox(
+          height: 30.h,
+        ),
         Row(
           children: [
             SizedBox(
               width: 20.w,
             ),
             InkWell(
-              onTap: () {Navigator.of(context).pop();},
+              onTap: () {
+                Navigator.of(context).pop();
+              },
               child: Container(
                 height: 32.h,
                 width: 72.w,
@@ -269,14 +213,53 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                         fontSize: 12.sp,
                         color: appTertiary,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
             Spacer(),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ReusableDialogBox(
+                      title: 'Edit Pigpen',
+                      description: 'Fill up the necessary information.',
+                      formFields: [
+                        RecyclableTextFormField(
+                          controller: TextEditingController(),
+                          labelText: 'Pen Type',
+                          showDropdown: true,
+                          dropdownItems: ['Stall', 'Nursery', 'Farrowing'],
+                          hintText: 'Pen Type',
+                          hintTextSize: 14.sp,
+                          icon: Icons.email,
+                          textSize: 14.sp,
+                          height: 43.h,
+                        ),
+                        RecyclableTextFormField(
+                          controller: TextEditingController(),
+                          labelText: 'Max Number',
+                          hintText: 'Max Number',
+                          hintTextSize: 14.sp,
+                          icon: Icons.email,
+                          textSize: 14.sp,
+                          height: 43.h,
+                        ),
+                      ],
+                      onSave: () {
+                        // Handle the save action, e.g., validate and save data
+                        print('Form saved');
+                        Navigator.of(context).pop();
+                      },
+                      saveButtonText: 'Save',
+                      saveButtonColor: appBlue,
+                    );
+                  },
+                );
+              },
               child: Container(
                 height: 32.h,
                 width: 72.w,
@@ -293,21 +276,35 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                         fontSize: 12.sp,
                         color: appBlue,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
-            SizedBox(
-              width: 10.w,
-            ),
+            SizedBox(width: 10.w),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CenterReusableDialogBox(
+                      title: 'Delete Pigpen',
+                      description: 'Confirm to delete pigpen.',
+                      onSave: () {
+                        // Define what should happen when the save button is pressed
+                        Navigator.of(context).pop();
+                      },
+                      saveButtonText: 'Delete',
+                      saveButtonColor: appRed,
+                    );
+                  },
+                );
+              },
               child: Container(
                 height: 32.h,
                 width: 72.w,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.red, width: 1.5),
+                    border: Border.all(color: appRed, width: 1.5),
                     color: appSecondary,
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
@@ -317,19 +314,16 @@ class _PigPenPenNumberState extends State<PigPenPenNumber> {
                       "Delete",
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color: Colors.red,
+                        color: appRed,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
             ),
-            SizedBox(
-              width: 20.w,
-            )
+            SizedBox(width: 20.w),
           ],
         ),
-        
       ],
     );
   }

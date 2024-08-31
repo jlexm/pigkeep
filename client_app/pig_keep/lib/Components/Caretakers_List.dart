@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
 class CaretakersList extends StatefulWidget {
   const CaretakersList({super.key});
@@ -67,7 +68,71 @@ class _CaretakersListState extends State<CaretakersList> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             InkWell(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ReusableDialogBox(
+                      title: 'Add Caretaker',
+                      description: 'Fill up the form to add a caretaker to your farm.',
+                      formFields: [
+                        RecyclableTextFormField(
+                          controller: TextEditingController(),
+                          labelText: 'Email',
+                          hintText: 'Email',
+                          hintTextSize: 14.sp,
+                          icon: Icons.email,
+                          textSize: 14.sp,
+                          height: 43.h,
+                        ),
+                        RecyclableTextFormField(
+                          controller: TextEditingController(),
+                          labelText: 'Username',
+                          hintText: 'Username',
+                          hintTextSize: 14.sp,
+                          icon: Icons.email,
+                          textSize: 14.sp,
+                          height: 43.h,
+                        ),
+                        RecyclableTextFormField(
+                          controller: TextEditingController(),
+                          labelText: 'Phone Number',
+                          hintText: 'Phone Number',
+                          hintTextSize: 14.sp,
+                          icon: Icons.email,
+                          textSize: 14.sp,
+                          height: 43.h,
+                        ),
+                        RecyclableTextFormField(
+                          controller: TextEditingController(),
+                          labelText: 'Password',
+                          hintText: 'Password',
+                          hintTextSize: 14.sp,
+                          icon: Icons.email,
+                          textSize: 14.sp,
+                          height: 43.h,
+                        ),
+                        RecyclableTextFormField(
+                          controller: TextEditingController(),
+                          labelText: 'Confirm Password',
+                          hintText: 'Confirm Password',
+                          hintTextSize: 14.sp,
+                          icon: Icons.email,
+                          textSize: 14.sp,
+                          height: 43.h,
+                        ),
+                      ],
+                      onSave: () {
+                        // Handle the save action, e.g., valiEmail and save data
+                        print('Form saved');
+                        Navigator.of(context).pop();
+                      },
+                      saveButtonText: 'Add',
+                      saveButtonColor: appPrimary,
+                    );
+                  },
+                );
+              },
               child: Container(
                 height: 32.h,
                 width: 106.w,

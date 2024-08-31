@@ -7,6 +7,7 @@ import 'package:pig_keep/Components/SearchBar_DisposalLedger.dart';
 import 'package:pig_keep/Components/SearchBar_MedicalRecords.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
 class Ledger extends StatefulWidget {
   const Ledger({super.key});
@@ -137,7 +138,57 @@ class _LedgerState extends State<Ledger> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ReusableDialogBox(
+                                            title: 'Sell Pig',
+                                            description:
+                                                'Fill up the necessary information.',
+                                            formFields: [
+                                              RecyclableTextFormField(
+                                                controller:
+                                                    TextEditingController(),
+                                                labelText: 'Pig Number',
+                                                hintText: 'Pig Number',
+                                                hintTextSize: 14.sp,
+                                                icon: Icons.email,
+                                                textSize: 14.sp,
+                                                height: 43.h,
+                                              ),
+                                              RecyclableTextFormField(
+                                                controller:
+                                                    TextEditingController(),
+                                                labelText: 'Weight in kg',
+                                                hintText: 'Weight in kg',
+                                                hintTextSize: 14.sp,
+                                                icon: Icons.email,
+                                                textSize: 14.sp,
+                                                height: 43.h,
+                                              ),
+                                              RecyclableTextFormField(
+                                                controller:
+                                                    TextEditingController(),
+                                                labelText: 'Price',
+                                                hintText: 'Price',
+                                                hintTextSize: 14.sp,
+                                                icon: Icons.email,
+                                                textSize: 14.sp,
+                                                height: 43.h,
+                                              ),
+                                            ],
+                                            onSave: () {
+                                              // Handle the save action, e.g., validate and save data
+                                              print('Form saved');
+                                              Navigator.of(context).pop();
+                                            },
+                                            saveButtonText: 'Sell Pig',
+                                            saveButtonColor: appPrimary,
+                                          );
+                                        },
+                                      );
+                                    },
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -176,7 +227,35 @@ class _LedgerState extends State<Ledger> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: () {showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return ReusableDialogBox(
+                                            title: 'Deceased Pig',
+                                            description:
+                                                'Fill up the necessary information.',
+                                            formFields: [
+                                              RecyclableTextFormField(
+                                                controller:
+                                                    TextEditingController(),
+                                                labelText: 'Pig Number',
+                                                hintText: 'Pig Number',
+                                                hintTextSize: 14.sp,
+                                                icon: Icons.email,
+                                                textSize: 14.sp,
+                                                height: 43.h,
+                                              ),
+                                            ],
+                                            onSave: () {
+                                              // Handle the save action, e.g., validate and save data
+                                              print('Form saved');
+                                              Navigator.of(context).pop();
+                                            },
+                                            saveButtonText: 'Remove',
+                                            saveButtonColor: appRed,
+                                          );
+                                        },
+                                      );},
                                     child: Row(
                                       children: [
                                         Image.asset(

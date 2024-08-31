@@ -45,7 +45,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Manage your profile details. Fill and update your \ninformation to let people know who you are.',
+                            'Change your password regularly to protect \nyour data from any unauthorized access.',
                             style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.w400,

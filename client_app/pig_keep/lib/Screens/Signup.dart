@@ -48,31 +48,31 @@ class _SignupState extends State<Signup> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 20),
+                              padding:  EdgeInsets.only(left: 30, right: 30),
                               child: Column(
                                 children: [
-                                  const Row(
+                                   Row(
                                     children: [
                                       Text(
                                         'Sign up',
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color: appTertiary,
                                             fontWeight: FontWeight.w700,
-                                            fontSize: 30),
+                                            fontSize: 30.sp,),
                                       ),
                                     ],
                                   ),
                                   SizedBox(
                                     height: 3.h,
                                   ),
-                                  const Row(
+                                   Row(
                                     children: [
                                       Text(
-                                        'Create an account to start managing your pig farm.',
+                                        'Create an account to start managing your \npig farm.',
                                         style: TextStyle(
-                                            color: Colors.black,
+                                            color: appTertiary,
                                             fontWeight: FontWeight.w300,
-                                            fontSize: 12),
+                                            fontSize: 12.sp),
                                       )
                                     ],
                                   ),
@@ -162,9 +162,9 @@ class _SignupState extends State<Signup> {
                                           Text(
                                             'Already have an account? ',
                                             style: TextStyle(
-                                              fontSize: 10.sp,
+                                              fontSize: 11.sp,
                                               fontWeight: FontWeight.w300,
-                                              color: Colors.black,
+                                              color: appTertiary,
                                             ),
                                           ),
                                           GestureDetector(
@@ -174,7 +174,7 @@ class _SignupState extends State<Signup> {
                                             child: Text(
                                               'Log-in',
                                               style: TextStyle(
-                                                fontSize: 10.sp,
+                                                fontSize: 11.sp,
                                                 fontWeight: FontWeight.w300,
                                                 color: appPrimary,
                                               ),

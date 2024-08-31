@@ -27,7 +27,6 @@ class _ChipsState extends State<Chips> {
             _buildChip('Feed Inventory', 1, 95.w), 
             _buildChip('Medical Records', 2, 100.w), 
             _buildChip('Pig Pen', 3, 50.w), 
-            SizedBox(width: 15.w),
           ],
         ),
       ),
