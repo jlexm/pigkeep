@@ -26,7 +26,7 @@ class CenterReusableDialogBox extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 30.w,
+          horizontal: 20.w,
           vertical: 20.h,
         ),
         child: Column(
@@ -40,7 +40,7 @@ class CenterReusableDialogBox extends StatelessWidget {
                 fontWeight: FontWeight.w700,
                 color: appTertiary,
               ),
-              textAlign: TextAlign.center, 
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 6.h),
             Text(
@@ -49,21 +49,21 @@ class CenterReusableDialogBox extends StatelessWidget {
                 fontSize: 12.sp,
                 color: appTertiary,
               ),
-              textAlign: TextAlign.center, 
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 20.h),
             ElevatedButton(
               onPressed: onSave,
               style: ElevatedButton.styleFrom(
-                backgroundColor: saveButtonColor, 
+                backgroundColor: saveButtonColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0), 
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               child: Text(
                 saveButtonText,
                 style: TextStyle(
-                  color: appSecondary, 
+                  color: appSecondary,
                 ),
               ),
             ),

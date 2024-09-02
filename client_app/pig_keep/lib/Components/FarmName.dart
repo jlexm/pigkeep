@@ -28,7 +28,9 @@ class _FarmNameState extends State<FarmName> {
                 color: appSecondary,
               ),
             ),
-            SizedBox(width: 6.w),
+            SizedBox(
+              width: 6.w,
+            ),
             DropdownButton<String>(
               value: _selectedValue,
               items: <String>['Alex Pig Farm', 'Dominic', 'Den']
@@ -50,7 +52,10 @@ class _FarmNameState extends State<FarmName> {
                 });
               },
               underline: SizedBox(),
-              icon: Icon(Icons.arrow_drop_down, color: appPrimary),
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: appPrimary,
+              ),
             ),
           ],
         ),

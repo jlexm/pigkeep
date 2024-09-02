@@ -150,7 +150,7 @@ class _EventsState extends State<Events> {
                                               return ReusableDialogBox(
                                                 title: 'Set Events',
                                                 description:
-                                                    'Fill up the form to set an event for your \npig farm.',
+                                                    'Fill up the form to set an event for your pig farm.',
                                                 formFields: [
                                                   RecyclableTextFormField(
                                                     controller:

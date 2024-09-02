@@ -32,8 +32,7 @@ class _BottomNavState extends State<BottomNav> {
                     1, 'Records', '/records', 'assets/icons/Records.png'),
                 40.horizontalSpace,
                 buildNavItem(3, 'Events', '/events', 'assets/icons/Events.png'),
-                buildNavItem(
-                    4, 'Ledger', '/ledger', 'assets/icons/Ledger.png'),
+                buildNavItem(4, 'Ledger', '/ledger', 'assets/icons/Ledger.png'),
               ],
             ),
             Positioned(
