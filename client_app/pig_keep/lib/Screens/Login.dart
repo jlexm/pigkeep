@@ -51,10 +51,10 @@ class _LoginState extends State<Login> {
                         child: Column(
                           children: [
                             Padding(
-                              padding:  EdgeInsets.only(left: 30, right: 30),
+                              padding: EdgeInsets.only(left: 30, right: 30),
                               child: Column(
                                 children: [
-                                   Row(
+                                  Row(
                                     children: [
                                       Text(
                                         'Log in',
@@ -68,14 +68,15 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     height: 3.h,
                                   ),
-                                   Column(
+                                  Column(
                                     children: [
                                       Text(
                                         'Welcome back! Log in to your account to continue your pig farm management experience.',
                                         style: TextStyle(
-                                            color: appTertiary,
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 12.sp,),
+                                          color: appTertiary,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 12.sp,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -92,7 +93,8 @@ class _LoginState extends State<Login> {
                                         scale: 12.w,
                                       ),
                                       textStyle: TextStyle(
-                                        fontSize: 14.sp, // Adjust the font size as needed
+                                        fontSize: 14
+                                            .sp, // Adjust the font size as needed
                                       ),
                                     ),
                                   ),
@@ -104,6 +106,7 @@ class _LoginState extends State<Login> {
                                     child: IconInputForm(
                                       prefixIcon: Icons.lock_rounded,
                                       labelText: 'Password',
+                                      obscureText: true,
                                       controller: _passController,
                                       suffixIcon: Icons.visibility_off_rounded,
                                     ),
@@ -147,9 +150,11 @@ class _LoginState extends State<Login> {
                                     name: 'Login',
                                     onPressed: () async {
                                       if (isLoginAPILoading) {
-                                        ScaffoldMessenger.of(context).showSnackBar(
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
                                           const SnackBar(
-                                            content: Text('API is still loading.'),
+                                            content:
+                                                Text('API is still loading.'),
                                           ),
                                         );
                                         return;
@@ -158,29 +163,42 @@ class _LoginState extends State<Login> {
                                         isLoginAPILoading = true;
                                         // call login api and store to body variable
                                         final body = await AuthApi.login(
-                                            _usernameController.text, _passController.text);
-                            
+                                            _usernameController.text,
+                                            _passController.text);
+
+                                        print(body);
+
                                         // update localStorage token that was rcved from login api
-                                        await AuthStorage.updateToken(body['token']);
-                                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                                        await AuthStorage.updateToken(
+                                            body['token']);
+
+                                        // update localStorage username that was rcved from login api
+                                        await AuthStorage.updateName(
+                                            body['first_name'] +
+                                                " " +
+                                                body['last_name']);
+
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
                                           if (mounted) {
                                             context.go('/home');
                                           }
                                         });
                                       } catch (e) {
                                         // Handle the error properly here, e.g., show an error message
-                                        WidgetsBinding.instance.addPostFrameCallback((_) {
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback((_) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
                                             SnackBar(
                                               content: Text(e.toString()),
                                               backgroundColor: appRed,
                                             ),
                                           );
                                         });
-                                      } finally {
-                                        // set loading state to false.
-                                        isLoginAPILoading = false;
                                       }
+                                      // set loading state to false.
+                                      isLoginAPILoading = false;
                                     },
                                   ),
                                   SizedBox(

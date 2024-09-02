@@ -15,6 +15,8 @@ class API {
       dynamic errMessage = body['message'];
       if (errMessage is String) {
         throw ErrorDescription(errMessage);
+      } else {
+        throw ErrorDescription(errMessage[0]);
       }
     }
   }

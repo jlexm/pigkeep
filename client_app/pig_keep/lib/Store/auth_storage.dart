@@ -14,4 +14,12 @@ class AuthStorage {
   static Future<void> clearToken() async {
     await storage.delete(key: 'token');
   }
+
+  static Future<void> updateName(String name) async {
+    await storage.write(key: 'name', value: name);
+  }
+
+  static Future<String?> getName() async {
+    return await storage.read(key: 'name');
+  }
 }

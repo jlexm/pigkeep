@@ -18,13 +18,13 @@ export class User {
   @Prop({ maxlength: 255 })
   email: string
 
-  @Prop({ maxlength: 10 })
+  @Prop({ maxlength: 11 })
   phone_number: string
 
   @Prop({ maxlength: 255 })
   profile_pic: string
 
-  @Prop({ required: true, enum: [Gender.Male, Gender.Female, Gender.Other] })
+  @Prop({ enum: [Gender.Male, Gender.Female, Gender.Other] })
   gender: string
 
   @Prop({ required: true, maxlength: 100 })

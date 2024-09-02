@@ -5,8 +5,30 @@ import 'package:pig_keep/Api/api.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 
-class Hamburger extends StatelessWidget {
+class Hamburger extends StatefulWidget {
   const Hamburger({super.key});
+
+  @override
+  _HamburgerState createState() => _HamburgerState();
+}
+
+class _HamburgerState extends State<Hamburger> {
+  String name = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadName();
+  }
+
+  Future<void> _loadName() async {
+    String? fetchedName = await AuthStorage.getName();
+    if (fetchedName != null) {
+      setState(() {
+        name = fetchedName;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +54,7 @@ class Hamburger extends StatelessWidget {
                     SizedBox(width: 11.w),
                     Expanded(
                       child: Text(
-                        'Junmar Fajardo',
+                        name,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
@@ -67,7 +89,7 @@ class Hamburger extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop(); 
+                    Navigator.of(context).pop();
                     context.go('/home');
                   },
                 ),
@@ -87,7 +109,7 @@ class Hamburger extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop(); 
+                    Navigator.of(context).pop();
                     context.go('/profiledetails');
                   },
                 ),
@@ -107,7 +129,7 @@ class Hamburger extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop(); 
+                    Navigator.of(context).pop();
                     context.go('/caretakers');
                   },
                 ),
@@ -127,7 +149,7 @@ class Hamburger extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop(); 
+                    Navigator.of(context).pop();
                     context.go('/changepassword');
                   },
                 ),
@@ -150,7 +172,7 @@ class Hamburger extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pop(); 
+                    Navigator.of(context).pop();
                     AuthStorage.clearToken();
                     context.go('/login');
                   },

@@ -10,6 +10,9 @@ import { UserController } from './user/user.controller'
 import { UserService } from './user/user.service'
 import { User, UserSchema } from 'schemas/user.schema'
 import { JwtModule } from '@nestjs/jwt'
+import { UserRole, UserRoleSchema } from 'schemas/user-role.schema'
+import { FarmController } from './farm/farm.controller';
+import { FarmService } from './farm/farm.service';
 
 @Module({
   imports: [
@@ -23,9 +26,9 @@ import { JwtModule } from '@nestjs/jwt'
       },
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }, { name: UserRole.name, schema: UserRoleSchema }]),
   ],
-  controllers: [AppController, AuthController, UserController],
-  providers: [AppService, AuthService, UserService],
+  controllers: [AppController, AuthController, UserController, FarmController],
+  providers: [AppService, AuthService, UserService, FarmService],
 })
 export class AppModule {}

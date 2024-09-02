@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsEnum, IsOptional, Length } from 'class-validator'
+import { IsString, IsEmail, IsEnum, IsOptional, Length, IsStrongPassword } from 'class-validator'
 import { Gender, Role } from 'constants/app.constant' // Adjust the import path as needed
 
 export class CreateUserDto {
@@ -37,4 +37,45 @@ export class CreateUserDto {
 
   @IsEnum(Role)
   role_id: Role // Ensure this matches the type of your role reference
+}
+
+export class RegisterUserDto{
+
+  @IsEmail()
+  @Length(0, 255)
+  email: string
+
+  @IsString()
+  @Length(1, 100)
+  first_name: string
+
+  @IsString()
+  @Length(1, 100)
+  last_name: string
+
+  @IsString()
+  @Length(1, 50)
+  username: string
+
+  @IsOptional()
+  @IsString()
+  @Length(11)
+  phone_number?: string
+
+  @IsString()
+  @Length(6, 16)
+  password: string
+
+  @IsString()
+  @Length(6, 16)
+  confirm_password: string
+
+}
+
+export class GetUserParamsDto{
+
+  @IsString()
+  @Length(1, 50)
+  username: string
+
 }

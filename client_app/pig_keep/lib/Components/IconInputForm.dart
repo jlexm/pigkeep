@@ -7,12 +7,16 @@ class IconInputForm extends StatefulWidget {
   final String labelText;
   final IconData? suffixIcon;
   final TextEditingController controller;
+  bool obscureText;
+  final int? maxLength;
 
   IconInputForm({
     required this.prefixIcon,
     required this.labelText,
     this.suffixIcon,
     required this.controller,
+    this.obscureText = false,
+    this.maxLength,
   });
 
   @override
@@ -21,7 +25,6 @@ class IconInputForm extends StatefulWidget {
 
 class _IconInputFormState extends State<IconInputForm> {
   bool _isFocused = false;
-  bool _obscureText = true;
 
   late FocusNode _focusNode = FocusNode();
 
@@ -45,13 +48,14 @@ class _IconInputFormState extends State<IconInputForm> {
 
   void _toggleObscureText() {
     setState(() {
-      _obscureText = !_obscureText;
+      widget.obscureText = !widget.obscureText;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLength: widget.maxLength,
       controller: widget.controller,
       style: TextStyle(
         fontSize: 12.sp,
@@ -59,8 +63,9 @@ class _IconInputFormState extends State<IconInputForm> {
         color: appTertiary,
       ),
       focusNode: _focusNode,
-      obscureText: _obscureText,
+      obscureText: widget.obscureText,
       decoration: InputDecoration(
+        counterText: '',
         prefixIcon: Icon(
           widget.prefixIcon,
           color: _isFocused ? appPrimary : appTertiary,
@@ -68,7 +73,9 @@ class _IconInputFormState extends State<IconInputForm> {
         suffixIcon: widget.suffixIcon != null
             ? IconButton(
                 icon: Icon(
-                  _obscureText ? widget.suffixIcon : Icons.visibility_rounded,
+                  widget.obscureText
+                      ? widget.suffixIcon
+                      : Icons.visibility_rounded,
                   color: _isFocused ? appPrimary : appTertiary,
                 ),
                 onPressed: () {
