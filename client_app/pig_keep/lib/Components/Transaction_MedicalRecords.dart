@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
@@ -42,13 +41,13 @@ class _TransactionMedicalrecordsState extends State<TransactionMedicalrecords> {
     },
   ];
 
-  void _onNotificationTap(String id, String textId) {
-  }
+  void _onNotificationTap(String id, String textId) {}
 
   @override
   Widget build(BuildContext context) {
     final double itemHeight = 80.h;
-    final double containerHeight = transactionMedcaTransactionMedicalrecords.length * itemHeight;
+    final double containerHeight =
+        transactionMedcaTransactionMedicalrecords.length * itemHeight;
 
     return Container(
       padding: EdgeInsets.only(left: 20.w, right: 20.w),
@@ -145,12 +144,30 @@ class _TransactionMedicalrecordsState extends State<TransactionMedicalrecords> {
                         if (isAddFeed)
                           Padding(
                             padding: EdgeInsets.only(left: 8.w),
-                            child: Text(
-                              '\₱${transaction['price']}',
-                              style: TextStyle(
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w500,
-                                color: statusColor,
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '₱',
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: statusColor,
+                                      fontFamily:
+                                          'Roboto', 
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '${transaction['price']}',
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: statusColor,
+                                      fontFamily:
+                                          'Poppins', 
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

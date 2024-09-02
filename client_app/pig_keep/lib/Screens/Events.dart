@@ -53,7 +53,9 @@ class _EventsState extends State<Events> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FarmName(),
                       ],

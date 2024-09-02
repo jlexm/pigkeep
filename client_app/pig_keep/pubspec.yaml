@@ -104,6 +104,18 @@ flutter:
           weight: 700
         - asset: assets/fonts/Poppins-Extrabold.ttf
           weight: 800
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 200
+        - asset: assets/fonts/Roboto-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 500
 
   #
   # For details regarding fonts from package dependencies,

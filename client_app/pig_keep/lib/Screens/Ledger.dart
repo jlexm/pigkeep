@@ -110,15 +110,35 @@ class _LedgerState extends State<Ledger> {
                                 Row(
                                   children: [
                                     Container(
-                                      child: Text(
-                                        '₱230,000',
-                                        style: TextStyle(
-                                            height: 1.2,
-                                            color: appSecondary,
-                                            fontSize: 35.sp,
-                                            fontWeight: FontWeight.w700),
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: '₱',
+                                              style: TextStyle(
+                                                fontSize: 33.sp,
+                                                fontWeight: FontWeight
+                                                    .w500, 
+                                                color: appSecondary,
+                                                fontFamily:
+                                                    'Roboto', 
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '230,000',
+                                              style: TextStyle(
+                                                fontSize: 33.sp,
+                                                fontWeight: FontWeight
+                                                    .w700, 
+                                                color: appSecondary,
+                                                fontFamily:
+                                                    'Poppins', 
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ],
@@ -227,7 +247,8 @@ class _LedgerState extends State<Ledger> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: InkWell(
-                                    onTap: () {showDialog(
+                                    onTap: () {
+                                      showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return ReusableDialogBox(
@@ -255,7 +276,8 @@ class _LedgerState extends State<Ledger> {
                                             saveButtonColor: appRed,
                                           );
                                         },
-                                      );},
+                                      );
+                                    },
                                     child: Row(
                                       children: [
                                         Image.asset(

@@ -54,7 +54,7 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
       padding: EdgeInsets.only(left: 20.w, right: 20.w),
       height: containerHeight,
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(), 
+        physics: NeverScrollableScrollPhysics(),
         itemCount: transactionFeedInventory.length,
         itemBuilder: (context, index) {
           final transaction = transactionFeedInventory[index];
@@ -134,12 +134,32 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
                         if (isAddFeed)
                           Padding(
                             padding: EdgeInsets.only(left: 8.w),
-                            child: Text(
-                              '\₱${transaction['price']}',
-                              style: TextStyle(
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.w500,
-                                color: statusColor,
+                            child: RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '₱', 
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight
+                                          .w400, 
+                                      color: statusColor,
+                                      fontFamily:
+                                          'Roboto', 
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '${transaction['price']}', 
+                                    style: TextStyle(
+                                      fontSize: 11.sp,
+                                      fontWeight: FontWeight
+                                          .w500, 
+                                      color: statusColor,
+                                      fontFamily:
+                                          'Poppins', 
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),

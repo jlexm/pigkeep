@@ -91,11 +91,30 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                             ),
                           ),
                           if (isSold)
-                            Text(
-                              '\₱${transaction['price']}',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '₱',
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w300,
+                                      fontFamily:
+                                          'YourPesoFontFamily', 
+                                          color: appTertiary,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '${transaction['price']}',
+                                    style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w400,
+                                      fontFamily:
+                                          'YourPriceFontFamily', 
+                                          color: appTertiary,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                         ],
