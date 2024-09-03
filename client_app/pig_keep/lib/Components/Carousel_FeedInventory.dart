@@ -17,6 +17,7 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(right: 15.h,),
       child: CarouselSlider.builder(
         options: CarouselOptions(
           padEnds: false,

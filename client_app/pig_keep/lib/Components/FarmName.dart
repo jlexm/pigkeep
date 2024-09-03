@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
@@ -84,17 +82,15 @@ class _FarmNameState extends State<FarmName> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: 250
-                    .w, 
+                width: 250.w,
                 child: DropdownButton<String>(
                   value: _selectedValue,
-                  isExpanded: true, 
+                  isExpanded: true,
                   items: _farmNames.map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Align(
-                        alignment:
-                            Alignment.centerLeft, 
+                        alignment: Alignment.centerLeft,
                         child: Text(
                           value,
                           style: TextStyle(
@@ -117,7 +113,7 @@ class _FarmNameState extends State<FarmName> {
                                 'assets/icons/Add.png',
                                 color: appPrimary,
                                 width: 20.w,
-                                height: 20.h,
+                                height: 10.h,
                               ),
                               SizedBox(width: 5.w),
                               Text(

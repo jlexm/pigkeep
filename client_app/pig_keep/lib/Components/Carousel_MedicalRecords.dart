@@ -17,6 +17,7 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(right: 15.h,),
       child: CarouselSlider.builder(
         options: CarouselOptions(
           padEnds: false,

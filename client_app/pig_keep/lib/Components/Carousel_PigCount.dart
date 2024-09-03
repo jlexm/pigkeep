@@ -13,27 +13,37 @@ class CarouselPigCount extends StatefulWidget {
 }
 
 class _CarouselPigCountState extends State<CarouselPigCount> {
+  // Define the array for numbers and texts
+  final List<Map<String, String>> data = [
+    {'number': '12', 'text': 'Weaner'},
+    {'number': '2', 'text': 'Piglet'},
+    {'number': '3', 'text': 'Grower'},
+    {'number': '4', 'text': 'Sow'},
+    {'number': '1', 'text': 'Boar'},
+    {'number': '3', 'text': 'Matured'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 10.w),
+      padding: EdgeInsets.only(left: 10.w, right: 10.h),
       child: CarouselSlider(
         options: CarouselOptions(
           padEnds: false,
           height: 120.h,
           aspectRatio: 16 / 9,
-          viewportFraction: 0.40,
-          initialPage: 1,
+          viewportFraction: 0.32,
+          initialPage: 0,
           enableInfiniteScroll: false,
           reverse: false,
           enlargeFactor: 0.01,
           scrollDirection: Axis.horizontal,
         ),
-        items: [12, 2, 3, 4, 5].map((i) {
+        items: data.map((item) {
           return Builder(
             builder: (BuildContext context) {
               return Container(
-                width: MediaQuery.of(context).size.width * 0.35.w,
+                width: MediaQuery.of(context).size.width * 0.30.w,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: appPrimary, width: 1.5.w),
@@ -45,7 +55,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '$i',
+                        item['number']!,
                         style: TextStyle(
                             height: 0.9.h,
                             fontSize: 70.h,
@@ -53,7 +63,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
                             fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        'Weaner',
+                        item['text']!,
                         style: TextStyle(fontSize: 16.sp),
                       ),
                     ],

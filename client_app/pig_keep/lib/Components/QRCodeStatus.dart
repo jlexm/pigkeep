@@ -4,6 +4,7 @@ import 'package:pig_keep/Components/PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Screens/Records.dart';
+import 'package:pig_keep/Modals/QRCodeDownload.dart';
 
 class QRCodeStatus extends StatefulWidget {
   final Map<String, String> pigData;
@@ -149,7 +150,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                 text: 'Return',
                 color: Colors.transparent,
                 borderColor: appTertiary,
-                textColor: Colors.black,
+                textColor: appTertiary,
                 onTap: () {
                   _navigateToRecords(context);
                 },
@@ -243,7 +244,25 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                   borderColor: appOrange,
                   textColor: appSecondary,
                   icon: Icons.download,
-                  onTap: () {},
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return QRCodeDownload(
+                          title: 'Download QR Code',
+                          saveButtonText: 'QR Code',
+                          saveButtonIcon: Icons.download,
+                          saveButtonColor: appOrange,
+                          number: int.parse(widget.pigData['number'] ?? '0'),
+                          imagePath: 'assets/images/qrsample.png', //QR code
+                          onSave: () {
+                            // Perform your save action here
+                            Navigator.of(context).pop(); 
+                          },
+                        );
+                      },
+                    );
+                  },
                   width: 103.w,
                 ),
               ],
@@ -277,7 +296,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
           style: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w400,
-            color: isSelected ? Colors.white : Colors.black,
+            color: isSelected ? appSecondary : appTertiary,
           ),
         ),
       ),
@@ -350,3 +369,6 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
     );
   }
 }
+
+
+
