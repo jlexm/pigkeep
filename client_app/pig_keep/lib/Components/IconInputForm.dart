@@ -9,6 +9,7 @@ class IconInputForm extends StatefulWidget {
   final TextEditingController controller;
   bool obscureText;
   final int? maxLength;
+  final TextInputType keyboardType;
 
   IconInputForm({
     required this.prefixIcon,
@@ -17,6 +18,7 @@ class IconInputForm extends StatefulWidget {
     required this.controller,
     this.obscureText = false,
     this.maxLength,
+    this.keyboardType =TextInputType.text,
   });
 
   @override
@@ -64,6 +66,7 @@ class _IconInputFormState extends State<IconInputForm> {
       ),
       focusNode: _focusNode,
       obscureText: widget.obscureText,
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         counterText: '',
         prefixIcon: Icon(

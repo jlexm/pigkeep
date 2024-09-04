@@ -11,12 +11,12 @@ Widget MyGreenBtn({
     width: double.infinity,
     child: TextButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(appPrimary),
-        foregroundColor: MaterialStateProperty.all(appSecondary),
-        padding: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(appPrimary),
+        foregroundColor: WidgetStateProperty.all(appSecondary),
+        padding: WidgetStateProperty.all(
           EdgeInsets.symmetric(vertical: 12.h),
         ),
-        shape: MaterialStateProperty.all(
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius), // Apply borderRadius
           ),

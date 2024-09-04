@@ -158,6 +158,7 @@ class _SignupState extends State<Signup> {
                                       labelText: 'Phone Number',
                                       maxLength: 11,
                                       controller: _phoneController,
+                                      keyboardType: TextInputType.phone,
                                     ),
                                   ),
                                   SizedBox(

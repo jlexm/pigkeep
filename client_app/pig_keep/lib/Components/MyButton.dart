@@ -8,14 +8,14 @@ Widget MyButton({required String name, required VoidCallback onPressed}) {
     width: double.infinity,
     child: TextButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(appPrimary),
-        foregroundColor: MaterialStateProperty.all(appSecondary),
-        shape: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(appPrimary),
+        foregroundColor: WidgetStateProperty.all(appSecondary),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r), 
           ),
         ),
-        minimumSize: MaterialStateProperty.all(
+        minimumSize: WidgetStateProperty.all(
           Size(double.infinity, 50.h), 
         ),
       ),

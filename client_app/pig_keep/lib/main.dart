@@ -6,11 +6,11 @@ import 'package:pig_keep/Components/Layout.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Screens/Caretakers.dart';
 import 'package:pig_keep/Screens/ChangePassword.dart';
+import 'package:pig_keep/Screens/CreateFarm.dart';
 import 'package:pig_keep/Screens/Events.dart';
 import 'package:pig_keep/Screens/Home.dart';
 import 'package:pig_keep/Screens/Ledger.dart';
 import 'package:pig_keep/Screens/Login.dart';
-import 'package:pig_keep/Screens/Profile.dart';
 import 'package:pig_keep/Screens/ProfileDetails.dart';
 import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Screens/ScanQR.dart';
@@ -80,6 +80,10 @@ class MyApp extends StatelessWidget {
                   path: '/changepassword',
                   builder: (context, state) => const ChangePassword(),
                 ),
+                GoRoute(
+                  path: '/create-farm',
+                  builder: (context, state) => const Createfarm(),
+                ),
               ],
             ),
             GoRoute(
@@ -89,10 +93,6 @@ class MyApp extends StatelessWidget {
             GoRoute(
               path: '/sign-up',
               builder: (context, state) => const Signup(),
-            ),
-            GoRoute(
-              path: '/profile',
-              builder: (context, state) => const Profile(),
             ),
           ],
         );
