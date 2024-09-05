@@ -1,8 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pig_keep/Constants/color.constants.dart';
 
-class QRCodeDownload extends StatelessWidget {
+
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:flutter/services.dart';
+
+class QRCodeDownload extends StatefulWidget {
   final String title;
   final String saveButtonText;
   final IconData saveButtonIcon;
@@ -23,9 +32,44 @@ class QRCodeDownload extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<QRCodeDownload> createState() => _QRCodeDownloadState();
+}
+
+class _QRCodeDownloadState extends State<QRCodeDownload> {
+  GlobalKey _globalKey = GlobalKey();
+
+  Future<void> _captureAndSave() async {
+    try {
+      // Capture the widget
+      RenderRepaintBoundary boundary = _globalKey.currentContext
+          ?.findRenderObject() as RenderRepaintBoundary;
+      var image = await boundary.toImage(pixelRatio: 3.0);
+      ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List pngBytes = byteData!.buffer.asUint8List();
+
+      // Get the directory to save the file
+      final directory = (await getApplicationDocumentsDirectory()).path;
+      String filePath = '$directory/qr_code_image.png';
+
+      // Save the image to the file system
+      final File imgFile = File(filePath);
+      await imgFile.writeAsBytes(pngBytes);
+
+      // Optionally, save to the user's gallery
+      final result = await ImageGallerySaver.saveFile(imgFile.path);
+      print(result);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Image saved to your gallery!'),
+      ));
+    } catch (e) {
+      print("Error capturing image: $e");
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Format number with leading zeros
-    String formattedNumber = number.toString().padLeft(3, '0');
+    String formattedNumber = widget.number.toString().padLeft(3, '0');
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -38,7 +82,7 @@ class QRCodeDownload extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              title,
+              widget.title,
               style: TextStyle(
                 fontSize: 23.sp,
                 fontWeight: FontWeight.w700,
@@ -46,59 +90,70 @@ class QRCodeDownload extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20.h),
-            Container(
-              // Downloadable PNG for QR code
-              child: Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: formattedNumber
-                        .split('')
-                        .reversed
-                        .map((digit) => RotatedBox(
-                              quarterTurns: 3,
-                              child: Container(
-                                height: 70.h,
-                                child: Text(
-                                  digit,
-                                  style: TextStyle(
-                                    height: 1.h,
-                                    fontSize: 70.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: appTertiary,
+            RepaintBoundary(
+              key: _globalKey,
+              child: Container(
+                decoration:
+                    BoxDecoration(border: Border.all(color: appTertiary)),
+                padding: EdgeInsets.all(3.0),
+                // Downloadable PNG for QR code, size set to 5cm x 3.7cm
+                width: 188, 
+                height: 141, 
+                child: Row(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: formattedNumber
+                          .split('')
+                          .reversed
+                          .map((digit) => RotatedBox(
+                                quarterTurns: 3,
+                                child: Container(
+                                  height: 40.h,
+                                  child: Text(
+                                    digit,
+                                    style: TextStyle(
+                                      height: 1.h,
+                                      fontSize: 40.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: appTertiary,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                  Container(
-                    constraints: BoxConstraints(
-                      maxHeight: 430.h,
-                      maxWidth: 170.w,
+                              ))
+                          .toList(),
                     ),
-                    child: Image.asset(
-                      imagePath,
-                      fit: BoxFit.contain,
+                    Container(
+                      constraints: BoxConstraints(
+                        maxHeight: 141, 
+                        maxWidth: 180, 
+                      ),
+                      child: Image.asset(
+                        widget.imagePath,
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 20.h),
             Align(
               alignment: Alignment.bottomRight,
               child: ElevatedButton.icon(
-                onPressed: onSave,
+                onPressed: () async {
+                  await _captureAndSave();
+                  widget.onSave();
+                },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: appSecondary,
-                  backgroundColor: saveButtonColor,
+                  backgroundColor: widget.saveButtonColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                icon: Icon(saveButtonIcon),
-                label: Text(saveButtonText),
+                icon: Icon(widget.saveButtonIcon),
+                label: Text(widget.saveButtonText),
               ),
             ),
           ],

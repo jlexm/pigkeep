@@ -113,7 +113,7 @@ class _FarmNameState extends State<FarmName> {
                                 'assets/icons/Add.png',
                                 color: appPrimary,
                                 width: 20.w,
-                                height: 10.h,
+                                height: 20.h,
                               ),
                               SizedBox(width: 5.w),
                               Text(
