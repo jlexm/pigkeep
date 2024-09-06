@@ -16,6 +16,18 @@ import { FarmService } from './farm/farm.service';
 import { Farm, FarmSchema } from 'schemas/farm.schema'
 import { PenController } from './pen/pen.controller';
 import { PenService } from './pen/pen.service';
+import { PigService } from './pig/pig.service';
+import { PigController } from './pig/pig.controller';
+import { FeedsController } from './feeds/feeds.controller';
+import { FeedsService } from './feeds/feeds.service';
+import { MedicineService } from './medicine/medicine.service';
+import { MedicineController } from './medicine/medicine.controller';
+import { EventsController } from './events/events.controller';
+import { EventsService } from './events/events.service';
+import { Pen, PenSchema } from 'schemas/pen.schema'
+import { Feeds, FeedsSchema } from 'schemas/feeds.schema'
+import { Medicine, MedicineSchema } from 'schemas/medicine.schema'
+import { Pig, PigSchema } from 'schemas/pig.schema'
 
 @Module({
   imports: [
@@ -29,9 +41,9 @@ import { PenService } from './pen/pen.service';
       },
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }, { name: UserRole.name, schema: UserRoleSchema } , { name: Farm.name, schema: FarmSchema}]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }, { name: UserRole.name, schema: UserRoleSchema } , { name: Farm.name, schema: FarmSchema} , { name: Pen.name, schema: PenSchema} , { name: Feeds.name, schema: FeedsSchema} , { name: Medicine.name, schema: MedicineSchema} , { name: Pig.name, schema: PigSchema} ]),
   ],
-  controllers: [AppController, AuthController, UserController, FarmController, PenController],
-  providers: [AppService, AuthService, UserService, FarmService, PenService],
+  controllers: [AppController, AuthController, UserController, FarmController, PenController, PigController, FeedsController, MedicineController, EventsController],
+  providers: [AppService, AuthService, UserService, FarmService, PenService, PigService, FeedsService, MedicineService, EventsService],
 })
 export class AppModule {}

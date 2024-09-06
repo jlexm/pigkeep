@@ -7,7 +7,7 @@ export class CreateFarmDto {
     farm_name: string
   
     @IsString()
-    @Length(1, 50)
+    @Length(1, 100)
     farm_address: string
   
 }
