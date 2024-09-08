@@ -1,8 +1,11 @@
+import SimpleContainer from "../Components/HomeContainer"
+
 const Home = () => {
   return (
-    <h1 className="mt-600" style={{ color: 'black' }}>
-      Home Works
-    </h1>
+    <div>
+      <SimpleContainer />
+    </div>
+
   )
 }
 

@@ -9,16 +9,18 @@ import Caretaker from './pages/Caretaker'
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/records" element={<Records />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/disposal" element={<Disposal />} />
-        <Route path="/caretaker" element={<Caretaker />} />
-      </Routes>
-    </Router>
+    <div>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/records" element={<Records />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/disposal" element={<Disposal />} />
+          <Route path="/caretaker" element={<Caretaker />} />
+        </Routes>
+      </Router>
+    </div>
   )
 }
 
