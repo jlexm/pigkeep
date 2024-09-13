@@ -37,6 +37,10 @@
     align-content: space-between;
 }
 
+.notif {
+    padding: 5;
+}
+
 .black {
     color: black;
 }

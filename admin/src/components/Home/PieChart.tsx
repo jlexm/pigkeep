@@ -1,11 +1,11 @@
-import * as React from 'react'
-import { PieChart } from '@mui/x-charts/PieChart'
-import { Grid2 } from '@mui/material'
-import './HomeScreen.css'
+import * as React from 'react';
+import { PieChart } from '@mui/x-charts/PieChart';
+import { Grid2 } from '@mui/material';
+import './HomeScreen.css';
 
 export default function BasicPie() {
   return (
-    (<Grid2 container spacing={1}>
+    <Grid2 container spacing={1}>
       <Grid2 size={12}>
         <h1 className="pigCount">Pig Count</h1>
       </Grid2>
@@ -16,7 +16,7 @@ export default function BasicPie() {
           being the least numerous.
         </p>
       </Grid2>
-      <Grid2 size={12}>
+      <Grid2 size={12} sx={{ ml: -8 }}> {/* Move the chart left by setting a negative margin */}
         <PieChart
           series={[
             {
@@ -36,10 +36,11 @@ export default function BasicPie() {
               ],
             },
           ]}
+          colors={['#11703B', '#11703B', '#29A358', '#32BE67']} // Customize slice colors here
           width={620}
           height={400}
         />
       </Grid2>
-    </Grid2>)
+    </Grid2>
   );
 }
