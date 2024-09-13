@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { BarChart } from '@mui/x-charts/BarChart'
 import { Grid2 } from '@mui/material'
+import MonthPagination from './PaginationControl'
 
 // format peso sign
 const formatCurrency = (amount: number) => {
@@ -12,6 +13,9 @@ export default function BarGraph() {
     <Grid2 container spacing={3}>
       <Grid2 size={12}>
         <h1 className="finHead">Financial Report</h1>
+      </Grid2>
+      <Grid2 size={12}>
+        <MonthPagination/>
       </Grid2>
 
       {/* Pig Sales Section */}
