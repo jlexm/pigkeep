@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pig_keep/Components/QRCodeStatus.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 class MyDataTable extends StatefulWidget {
   final void Function(Map<String, String>) onRowSelected;

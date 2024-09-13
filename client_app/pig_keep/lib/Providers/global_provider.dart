@@ -13,13 +13,13 @@ class GlobalProvider with ChangeNotifier {
       _farms = [];
 
       final List<dynamic> farms = await FarmApi.getMyFarms();
-      farms.forEach((farm) {
+      for (var farm in farms) {
         _farms.add(Farm(
             ID: farm['_id'],
             farmName: farm['farm_name'],
             farmAddress: farm['farm_address'],
             ownerID: farm['owner_id']));
-      });
+      }
 
       // when farm is empty show create farm screen
       if (farms.isEmpty) {

@@ -1,0 +1,145 @@
+.parag {
+    text-align: start;
+    font-size: 18px;
+    color: black;
+    margin: 1;
+}
+
+.pigCount {
+    text-align: start;
+    font-weight: 700;
+    color: black;
+    margin: 0;
+}
+
+.notifHead {
+    color: black;
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0;
+    text-align: start;
+}
+
+.seeEventsLink {
+    font-size: 18px;
+    font-weight: 200;
+    margin: 0;
+    text-align: end;
+    margin-bottom: revert-layer;
+}
+
+.listBox {
+    width: 100%;
+}
+
+.listRow1 {
+    display: flex;
+    align-content: space-between;
+}
+
+.black {
+    color: black;
+}
+
+.finHead {
+    color: black;
+    margin-top: 0;
+}
+
+.pigSalesBox {
+    align-self: center;
+    justify-content: center;
+}
+
+.pigSales {
+    display: flex;
+    background-color: #11703b;
+    height: 110px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.pigSalesTitle {
+    font-size: 35px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.totalSales {
+    color: #11703b;
+    font-size: 60px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.pigSales1 {
+    display: flex;
+    background-color: #3B4DE1;
+    height: 110px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.meds {
+    color: #3B4DE1;
+    font-size: 60px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.guideCard {
+    align-content: start;
+    justify-content: center;
+}
+
+.number {
+    color: #11703b;
+}
+
+.numberGuide {
+    color: black;
+}
+
+.quote {
+    color: black;
+    font-size: 20px;
+}
+
+.footer {
+    color: black;
+    font-size: 18px;
+    margin: 0;
+}
+
+
+/* Scrollbar for WebKit browsers (Chrome, Safari) */
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+}
+
+
+/* Hover effect */
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(95, 95, 95);
+}

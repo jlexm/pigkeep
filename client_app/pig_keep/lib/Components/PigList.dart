@@ -68,7 +68,7 @@ class _PigListState extends State<PigList> {
                         )
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +114,7 @@ class _PigListState extends State<PigList> {
                                         controller: TextEditingController(),
                                         labelText: 'Sex',
                                         showDropdown: true,
-                                        dropdownItems: [
+                                        dropdownItems: const [
                                           'Male',
                                           'Female',
                                         ],
@@ -128,7 +128,7 @@ class _PigListState extends State<PigList> {
                                         controller: TextEditingController(),
                                         labelText: 'Pen Number',
                                         showDropdown: true,
-                                        dropdownItems: [
+                                        dropdownItems: const [
                                           'EditPen 1',
                                           'EditPen 2',
                                           'EditPen 3'
@@ -227,7 +227,7 @@ class _PigListState extends State<PigList> {
                 )
               ],
             ),
-            Spacer(),
+            const Spacer(),
             SearchBar_PigList(), // SearchBar_PigList.dart
             InkWell(
               // Filter

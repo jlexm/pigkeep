@@ -54,7 +54,7 @@ class _SignupState extends State<Signup> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 30, right: 30),
+                              padding: const EdgeInsets.only(left: 30, right: 30),
                               child: Column(
                                 children: [
                                   Row(

@@ -21,7 +21,7 @@ class _LedgerState extends State<Ledger> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: Hamburger(),
+      drawer: const Hamburger(),
       body: SafeArea(
           child: Column(
         children: [
@@ -30,7 +30,7 @@ class _LedgerState extends State<Ledger> {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-                Row(
+                const Row(
                   children: [
                     FarmName(),
                   ],
@@ -143,7 +143,7 @@ class _LedgerState extends State<Ledger> {
                                 ),
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,7 +151,7 @@ class _LedgerState extends State<Ledger> {
                                 Container(
                                   height: 33.h,
                                   width: 100.w,
-                                  padding: EdgeInsets.all(5),
+                                  padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: appSecondary),
                                     color: appSecondary,
@@ -240,7 +240,7 @@ class _LedgerState extends State<Ledger> {
                                 Container(
                                   height: 33.h,
                                   width: 100.w,
-                                  padding: EdgeInsets.all(5),
+                                  padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: appSecondary),
                                     color: appPrimary,
@@ -338,7 +338,7 @@ class _LedgerState extends State<Ledger> {
                 SizedBox(
                   height: 14.h,
                 ),
-                Column(
+                const Column(
                   children: [
                     DisposalLedger(),
                   ],

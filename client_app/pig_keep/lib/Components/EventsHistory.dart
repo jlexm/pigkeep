@@ -81,7 +81,7 @@ class _EventsHistoryState extends State<EventsHistory> {
           padding: EdgeInsets.symmetric(horizontal: 20.w),
           height: containerHeight,
           child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: currentEvents.length,
             itemBuilder: (context, index) {
               final event = currentEvents[index];

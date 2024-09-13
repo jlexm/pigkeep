@@ -23,7 +23,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: Hamburger(),
+      drawer: const Hamburger(),
       body: SafeArea(
         child: Column(
           children: [

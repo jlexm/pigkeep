@@ -193,7 +193,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MyDataTable_Pigpen extends StatefulWidget {
   final void Function(Map<String, dynamic>) onRowSelected;
 
-  const MyDataTable_Pigpen({Key? key, required this.onRowSelected}) : super(key: key);
+  const MyDataTable_Pigpen({super.key, required this.onRowSelected});
 
   @override
   State<MyDataTable_Pigpen> createState() => _MyDataTable_PigpenState();

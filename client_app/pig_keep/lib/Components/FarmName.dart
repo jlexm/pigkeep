@@ -150,7 +150,7 @@ class _FarmNameState extends State<FarmName> {
                       context.read<GlobalProvider>().setSelectedFarm(newValue);
                     }
                   },
-                  underline: SizedBox(),
+                  underline: const SizedBox(),
                   icon: Icon(
                     Icons.arrow_drop_down,
                     color: appPrimary,

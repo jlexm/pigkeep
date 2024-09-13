@@ -53,7 +53,7 @@ class _LoginState extends State<Login> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 30, right: 30),
+                              padding: const EdgeInsets.only(left: 30, right: 30),
                               child: Column(
                                 children: [
                                   Row(
@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
                                           color: appTertiary,
                                         ),
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Text(
                                         'Forgot Password?',
                                         style: TextStyle(

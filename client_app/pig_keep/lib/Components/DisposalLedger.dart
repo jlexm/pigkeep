@@ -44,7 +44,7 @@ class _DisposalLedgerState extends State<DisposalLedger> {
         Container(
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
           child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: transactionMedcaDisposalLedger.length,
             itemBuilder: (context, index) {

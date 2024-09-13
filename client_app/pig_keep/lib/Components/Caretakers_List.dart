@@ -52,7 +52,7 @@ class _CaretakersListState extends State<CaretakersList> {
                     color: appPrimary,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Text(
                   caretaker['phone']!,
                   style: TextStyle(

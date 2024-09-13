@@ -27,7 +27,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: Hamburger(),
+      drawer: const Hamburger(),
       body: SafeArea(
         child: Column(
           children: [

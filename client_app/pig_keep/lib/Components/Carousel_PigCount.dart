@@ -44,7 +44,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
             builder: (BuildContext context) {
               return Container(
                 width: MediaQuery.of(context).size.width * 0.30.w,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: appPrimary, width: 1.5.w),
                   color: appSecondary,

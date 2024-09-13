@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     if (!isInitialized) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
       );
     }
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Flexible(child: FarmName()), //FarmName.dart
@@ -132,14 +132,14 @@ class _HomeState extends State<Home> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         InkWell(
                           onTap: () {
                             context.push('/records');
                           },
                           child: Column(
                             children: [
-                              Padding(padding: EdgeInsets.only(right: 30)),
+                              const Padding(padding: EdgeInsets.only(right: 30)),
                               Text(
                                 'See all',
                                 style: TextStyle(
@@ -158,7 +158,7 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 11.h,
                     ),
-                    CarouselPigCount(), //Carousel_PigCount.dart
+                    const CarouselPigCount(), //Carousel_PigCount.dart
                     SizedBox(
                       height: 20.h,
                     ),
@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
                         ),
                         Column(
                           children: [
-                            Padding(padding: EdgeInsets.only(left: 30)),
+                            const Padding(padding: EdgeInsets.only(left: 30)),
                             Text(
                               'Notifications',
                               style: TextStyle(
@@ -189,14 +189,14 @@ class _HomeState extends State<Home> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         InkWell(
                           onTap: () {
                             context.push('/events');
                           },
                           child: Column(
                             children: [
-                              Padding(padding: EdgeInsets.only(right: 30)),
+                              const Padding(padding: EdgeInsets.only(right: 30)),
                               Text(
                                 'See events',
                                 style: TextStyle(
@@ -218,7 +218,7 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       width: 20.w,
                     ),
-                    CurrentEvents(),
+                    const CurrentEvents(),
                   ],
                 ),
               ),

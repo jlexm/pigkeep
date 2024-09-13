@@ -1,0 +1,47 @@
+.homeContainer {
+    margin-top: 100px;
+    background-color: #11703b;
+    height: 530px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+}
+
+.hugePig {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.col1 {
+    padding-left: 50px;
+    align-content: space-evenly;
+    max-height: 100%;
+}
+
+.pigNumber {
+    font-size: 220px;
+    font-weight: bold;
+    color: white;
+    z-index: 0;
+    margin: 0;
+    position: relative;
+}
+
+.totalPigs {
+    font-size: 45px;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    position: relative;
+    margin-bottom: revert-layer;
+    align-content: flex-end;
+}
+
+.descrip {
+    text-align: start;
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0;
+}

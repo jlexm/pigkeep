@@ -11,7 +11,7 @@ class IconInputForm extends StatefulWidget {
   final int? maxLength;
   final TextInputType keyboardType;
 
-  IconInputForm({
+  IconInputForm({super.key, 
     required this.prefixIcon,
     required this.labelText,
     this.suffixIcon,
@@ -28,7 +28,7 @@ class IconInputForm extends StatefulWidget {
 class _IconInputFormState extends State<IconInputForm> {
   bool _isFocused = false;
 
-  late FocusNode _focusNode = FocusNode();
+  late final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {

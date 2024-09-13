@@ -10,13 +10,13 @@ class CenterReusableDialogBox extends StatelessWidget {
   final Color saveButtonColor; // Parameter for save button background color
 
   const CenterReusableDialogBox({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.onSave,
     this.saveButtonText = 'Save',
     this.saveButtonColor = Colors.green, // Default to green
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

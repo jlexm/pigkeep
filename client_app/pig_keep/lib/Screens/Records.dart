@@ -183,7 +183,7 @@ class _RecordsState extends State<Records> {
           type: _selectedRowData!['type']!,
           pigCount: _selectedRowData!['pig count']!,
           maxPigs: _selectedRowData!['max pigs']!,
-          pigNumbers: [], // Fetch and pass actual pig numbers if needed
+          pigNumbers: const [], // Fetch and pass actual pig numbers if needed
         );
       }
       return QRCodeStatus(pigData: _selectedRowData!);
@@ -192,9 +192,9 @@ class _RecordsState extends State<Records> {
         case 0:
           return PigList(onRowSelected: _showQRCodeStatus);
         case 1:
-          return FeedInventory();
+          return const FeedInventory();
         case 2:
-          return MedicalRecords();
+          return const MedicalRecords();
         case 3:
           return PigPen(onRowSelected: _showPigPenPenNumberScreen);
         default:
@@ -228,7 +228,7 @@ class _RecordsState extends State<Records> {
         type: rowData['type']!,
         pigCount: rowData['pig count']!,
         maxPigs: rowData['max pigs']!,
-        pigNumbers: [], // Fetch and pass actual pig numbers if needed
+        pigNumbers: const [], // Fetch and pass actual pig numbers if needed
       );
     });
   }
@@ -237,7 +237,7 @@ class _RecordsState extends State<Records> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: Hamburger(),
+      drawer: const Hamburger(),
       body: SafeArea(
         child: Column(
           children: [
@@ -246,7 +246,7 @@ class _RecordsState extends State<Records> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         FarmName(),
                       ],

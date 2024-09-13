@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class SearchBar_PigList extends StatelessWidget {
+  const SearchBar_PigList({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

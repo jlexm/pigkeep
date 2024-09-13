@@ -44,7 +44,7 @@ class _EventsState extends State<Events> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: Hamburger(),
+      drawer: const Hamburger(),
       body: SafeArea(
         child: Column(
           children: [
@@ -129,7 +129,7 @@ class _EventsState extends State<Events> {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,7 +179,7 @@ class _EventsState extends State<Events> {
                                                         TextEditingController(),
                                                     labelText: 'Event Name',
                                                     showDropdown: true,
-                                                    dropdownItems: [
+                                                    dropdownItems: const [
                                                       'Event 1 Link this',
                                                       'Event 2 Link this',
                                                       'Event 3 Link this',
@@ -261,7 +261,7 @@ class _EventsState extends State<Events> {
                                     ),
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 SearchBar_Events(),
                                 SizedBox(
                                   width: 20.w,
@@ -338,7 +338,7 @@ class _EventsState extends State<Events> {
                                     color: appTertiary,
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 InkWell(
                                   onTap: _toggleHistoryView,
                                   child: Text(
@@ -362,7 +362,7 @@ class _EventsState extends State<Events> {
                                 onReturn: _toggleView,
                               )
                             else
-                              CurrentEvents(),
+                              const CurrentEvents(),
                           ],
                         ),
                       ),

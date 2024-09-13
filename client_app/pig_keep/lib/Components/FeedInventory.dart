@@ -26,7 +26,7 @@ class FeedInventory extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: appPrimary, width: 1.5),
                     color: appSecondary,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10),
                     ),
@@ -44,7 +44,7 @@ class FeedInventory extends StatelessWidget {
                                 controller: TextEditingController(),
                                 labelText: 'Feed Type',
                                 showDropdown: true,
-                                dropdownItems: [
+                                dropdownItems: const [
                                   'Feed 1',
                                   'Feed 2',
                                   'Feed 3'
@@ -103,7 +103,7 @@ class FeedInventory extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: appPrimary, width: 1.5),
                     color: appPrimary,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     ),
@@ -197,7 +197,7 @@ class FeedInventory extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.only(left: 15.w),
-          child: CarouselFeedInventory(//Carousel_FeedIventory.dart
+          child: const CarouselFeedInventory(//Carousel_FeedIventory.dart
               items: [125, 125, 130, 200, 259] // Dynamic list of items
               ),
         ),
@@ -225,12 +225,12 @@ class FeedInventory extends StatelessWidget {
         SizedBox(
           height: 14.h,
         ),
-        TransactionFeedInventory(), //Transaction_FeedInventory.dart
+        const TransactionFeedInventory(), //Transaction_FeedInventory.dart
         SizedBox(
           //remove this later
           height: 600.h,
         ),
-        Text('-End of SCSV-'),
+        const Text('-End of SCSV-'),
         SizedBox(
           //remove this later
           height: 110.h,

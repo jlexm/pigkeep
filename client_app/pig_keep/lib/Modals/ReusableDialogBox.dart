@@ -11,14 +11,14 @@ class ReusableDialogBox extends StatelessWidget {
   final Color saveButtonColor;
 
   const ReusableDialogBox({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.formFields,
     required this.onSave,
     this.saveButtonText = 'Save',
     this.saveButtonColor = Colors.green,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +102,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final bool showIcon;
 
   const RecyclableTextFormField({
-    Key? key,
+    super.key,
     required this.controller,
     this.labelText,
     this.hintText,
@@ -123,11 +123,11 @@ class RecyclableTextFormField extends StatelessWidget {
     this.dropdownItems,
     this.showDropdown = false,
     this.showIcon = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: height,
       child: Stack(
         children: [
@@ -178,7 +178,7 @@ class RecyclableTextFormField extends StatelessWidget {
                 padding: EdgeInsets.only(right: 10.w), 
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    icon: Icon(Icons.arrow_drop_down),
+                    icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? newValue) {
                       controller.text = newValue!;
                       if (onChanged != null) {

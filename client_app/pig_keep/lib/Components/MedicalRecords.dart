@@ -28,7 +28,7 @@ class MedicalRecords extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: appBlue, width: 1.5),
                     color: appSecondary,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       bottomLeft: Radius.circular(10),
                     ),
@@ -46,7 +46,7 @@ class MedicalRecords extends StatelessWidget {
                                 controller: TextEditingController(),
                                 labelText: 'Medicine Name',
                                 showDropdown: true,
-                                        dropdownItems: [
+                                        dropdownItems: const [
                                           'Medicine 1',
                                           'Medicine 2',
                                           'Medicine 3'
@@ -114,7 +114,7 @@ class MedicalRecords extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: appBlue, width: 1.5),
                     color: appBlue,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     ),
@@ -141,7 +141,7 @@ class MedicalRecords extends StatelessWidget {
                                 controller: TextEditingController(),
                                 labelText: 'Unit',
                                 showDropdown: true,
-                                dropdownItems: [
+                                dropdownItems: const [
                                   'Grams (g)',
                                   'milli-grams (mg)',
                                   'milli-liters (mL)'
@@ -222,7 +222,7 @@ class MedicalRecords extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.only(left: 15.w),
-          child: CarouselMedicalrecords(//Carousel_MedicalRecords.dart
+          child: const CarouselMedicalrecords(//Carousel_MedicalRecords.dart
               items: [125, 125, 130, 200, 259] // Dynamic list of items
               ),
         ),
@@ -250,12 +250,12 @@ class MedicalRecords extends StatelessWidget {
         SizedBox(
           height: 14.h,
         ),
-        TransactionMedicalrecords(), //Transaction_Medicalrecords.dart
+        const TransactionMedicalrecords(), //Transaction_Medicalrecords.dart
         SizedBox(
           //remove this later
           height: 600.h,
         ),
-        Text('-End of SCSV-'),
+        const Text('-End of SCSV-'),
         SizedBox(
           //remove this later
           height: 110.h,

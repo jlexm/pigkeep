@@ -12,13 +12,13 @@ class PigPenPenNumber extends StatelessWidget {
   final List<String> pigNumbers;
 
   const PigPenPenNumber({
-    Key? key,
+    super.key,
     required this.number,
     required this.type,
     required this.pigCount,
     required this.maxPigs,
     required this.pigNumbers,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +97,7 @@ class PigPenPenNumber extends StatelessWidget {
               SizedBox(height: 10.h),
               Row(
                 children: [
-                  Text("Type:  "),
+                  const Text("Type:  "),
                   Text(
                     type,
                     style: TextStyle(
@@ -110,7 +110,7 @@ class PigPenPenNumber extends StatelessWidget {
               SizedBox(height: 10.h),
               Row(
                 children: [
-                  Text("Pig Count:  "),
+                  const Text("Pig Count:  "),
                   Text(
                     pigCount,
                     style: TextStyle(
@@ -123,7 +123,7 @@ class PigPenPenNumber extends StatelessWidget {
               SizedBox(height: 10.h),
               Row(
                 children: [
-                  Text("Max Pigs:  "),
+                  const Text("Max Pigs:  "),
                   Text(
                     maxPigs,
                     style: TextStyle(
@@ -218,7 +218,7 @@ class PigPenPenNumber extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             InkWell(
               onTap: () {
                 showDialog(
@@ -232,7 +232,7 @@ class PigPenPenNumber extends StatelessWidget {
                           controller: TextEditingController(),
                           labelText: 'Pen Type',
                           showDropdown: true,
-                          dropdownItems: ['Stall', 'Nursery', 'Farrowing'],
+                          dropdownItems: const ['Stall', 'Nursery', 'Farrowing'],
                           hintText: 'Pen Type',
                           hintTextSize: 14.sp,
                           icon: Icons.email,

@@ -21,7 +21,7 @@ class QRCodeDownload extends StatefulWidget {
   final VoidCallback onSave;
 
   const QRCodeDownload({
-    Key? key,
+    super.key,
     required this.title,
     required this.saveButtonText,
     required this.saveButtonIcon,
@@ -29,14 +29,14 @@ class QRCodeDownload extends StatefulWidget {
     required this.number,
     required this.imagePath,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   State<QRCodeDownload> createState() => _QRCodeDownloadState();
 }
 
 class _QRCodeDownloadState extends State<QRCodeDownload> {
-  GlobalKey _globalKey = GlobalKey();
+  final GlobalKey _globalKey = GlobalKey();
 
   Future<void> _captureAndSave() async {
     try {
@@ -59,7 +59,7 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
       final result = await ImageGallerySaver.saveFile(imgFile.path);
       print(result);
 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Image saved to your gallery!'),
       ));
     } catch (e) {
@@ -95,7 +95,7 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
               child: Container(
                 decoration:
                     BoxDecoration(border: Border.all(color: appTertiary)),
-                padding: EdgeInsets.all(3.0),
+                padding: const EdgeInsets.all(3.0),
                 // Downloadable PNG for QR code, size set to 5cm x 3.7cm
                 width: 188, 
                 height: 141, 
@@ -108,7 +108,7 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
                           .reversed
                           .map((digit) => RotatedBox(
                                 quarterTurns: 3,
-                                child: Container(
+                                child: SizedBox(
                                   height: 40.h,
                                   child: Text(
                                     digit,
@@ -124,7 +124,7 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
                           .toList(),
                     ),
                     Container(
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         maxHeight: 141, 
                         maxWidth: 180, 
                       ),

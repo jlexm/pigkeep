@@ -51,11 +51,11 @@ class _ScanQRState extends State<ScanQR> {
         onPressed: () {
           camcontroller.toggleTorch(); // Toggle the flashlight
         },
+        backgroundColor: appPrimary,
         child: Icon(
           Icons.flash_on,
           color: Colors.white,
         ),
-        backgroundColor: appPrimary,
       ),
     );
   }

@@ -81,7 +81,7 @@ class _PigPenState extends State<PigPen> {
                         )
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -109,7 +109,7 @@ class _PigPenState extends State<PigPen> {
                                         controller: TextEditingController(),
                                         labelText: 'Pen Type',
                                         showDropdown: true,
-                                        dropdownItems: [
+                                        dropdownItems: const [
                                           'Stall',
                                           'Nursery',
                                           'Farrowing'

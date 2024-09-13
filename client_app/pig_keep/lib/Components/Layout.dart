@@ -26,7 +26,7 @@ class _LayoutState extends State<Layout> {
                         .toString() !=
                     '/scan-qr'
                 ? PreferredSize(
-                    preferredSize: Size.fromHeight(40.0),
+                    preferredSize: const Size.fromHeight(40.0),
                     child: AppBar(
                       actions: [
                         InkWell(

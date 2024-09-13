@@ -18,7 +18,7 @@ class _CaretakersState extends State<Caretakers> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: Hamburger(),
+      drawer: const Hamburger(),
       body: SafeArea(
         child: Column(
           children: [

@@ -54,7 +54,7 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
       padding: EdgeInsets.only(left: 20.w, right: 20.w),
       height: containerHeight,
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: transactionFeedInventory.length,
         itemBuilder: (context, index) {
           final transaction = transactionFeedInventory[index];

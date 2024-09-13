@@ -9,7 +9,7 @@ class ImageInputForm extends StatefulWidget {
   final FormFieldValidator<String>? validator;
   final bool? enable;
 
-  ImageInputForm({
+  const ImageInputForm({super.key, 
     this.prefixIcon,
     required this.labelText,
     required this.controller,
@@ -24,7 +24,7 @@ class ImageInputForm extends StatefulWidget {
 class _ImageInputFormState extends State<ImageInputForm> {
   bool _isFocused = false;
 
-  late FocusNode _focusNode = FocusNode();
+  late final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {

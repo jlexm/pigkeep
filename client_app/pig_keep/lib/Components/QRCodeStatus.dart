@@ -26,7 +26,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
 
   void _navigateToRecords(BuildContext context) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (context) => Records()),
+      MaterialPageRoute(builder: (context) => const Records()),
     );
   }
 
@@ -42,7 +42,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
               _StatusContainer(
                 text: 'Alive',
                 color: pigStatus == 'alive' ? appBlue : appSecondary,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
                   bottomLeft: Radius.circular(10),
                 ),
@@ -57,7 +57,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
               _StatusContainer(
                 text: 'Deceased',
                 color: pigStatus == 'deceased' ? appRed : appSecondary,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(10),
                   bottomRight: Radius.circular(10),
                 ),
@@ -70,7 +70,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              SizedBox(
                 height: 135.h,
                 child: Text(
                   widget.pigData['number'] ?? '--',
@@ -122,7 +122,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                     _DetailRow(
                         label: 'Recorded Weight(Kg): ',
                         value: '${widget.pigData['weight'] ?? '--'} '),
-                    Spacer(),
+                    const Spacer(),
                     _DetailRow(
                         label: 'Date: ',
                         value: '${widget.pigData['weightdate'] ?? '--'} '),
@@ -133,7 +133,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                     _DetailRow(
                         label: 'Price Sold: ',
                         value: '${widget.pigData['priceSold'] ?? '--'} '),
-                    Spacer(),
+                    const Spacer(),
                     _DetailRow(
                         label: 'Date: ',
                         value: '${widget.pigData['selldate'] ?? '--'} '),
@@ -155,7 +155,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                   _navigateToRecords(context);
                 },
               ),
-              Spacer(),
+              const Spacer(),
               if (pigStatus == 'alive') ...[
                 _ActionButton(
                   text: 'Update',
@@ -184,7 +184,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                               controller: TextEditingController(),
                               labelText: 'Sex',
                               showDropdown: true,
-                              dropdownItems: ['Male', 'Female'],
+                              dropdownItems: const ['Male', 'Female'],
                               hintText: 'Sex',
                               hintTextSize: 14.sp,
                               icon: Icons.email,
@@ -204,7 +204,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                               controller: TextEditingController(),
                               labelText: 'Pen Number',
                               showDropdown: true,
-                              dropdownItems: [
+                              dropdownItems: const [
                                 'PenNumber 1 Link this',
                                 'PenNumber 2 Link this',
                                 'PenNumber 3 Link this',
@@ -305,7 +305,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
 
   Widget _DetailRow({required String label, required String value}) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
           Text(

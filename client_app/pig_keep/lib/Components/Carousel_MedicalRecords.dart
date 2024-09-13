@@ -37,7 +37,7 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
           return Container(
             padding: EdgeInsets.only(left: 10.w,),
             width: MediaQuery.of(context).size.width * 0.35.w,
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
+            margin: const EdgeInsets.symmetric(horizontal: 5.0),
             decoration: BoxDecoration(
               border: Border.all(color: appBlue, width: 1.5.w),
               color: appSecondary,

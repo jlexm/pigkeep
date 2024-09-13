@@ -37,7 +37,7 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
           return Container(
             padding: EdgeInsets.only(left: 10.w,),
             width: MediaQuery.of(context).size.width * 0.35.w,
-            margin: EdgeInsets.symmetric(horizontal: 5.0),
+            margin: const EdgeInsets.symmetric(horizontal: 5.0),
             decoration: BoxDecoration(
               border: Border.all(color: appPrimary, width: 1.5.w),
               color: appSecondary,

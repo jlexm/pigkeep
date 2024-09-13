@@ -18,7 +18,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final double? iconSize;
 
   const RecyclableTextFormField({
-    Key? key,
+    super.key,
     required this.controller,
     this.labelText,
     this.hintText,
@@ -34,11 +34,11 @@ class RecyclableTextFormField extends StatelessWidget {
     this.textSize,
     this.height,
     this.iconSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: height,
       child: TextFormField(
         controller: controller,

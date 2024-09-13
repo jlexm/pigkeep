@@ -112,7 +112,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
           height: containerHeight,
           child: ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: UpcomingEvents.length,
             itemBuilder: (context, index) {
               final event = UpcomingEvents[index];
@@ -210,7 +210,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                                 controller: TextEditingController(),
                                 labelText: 'Event Name',
                                 showDropdown: true,
-                                dropdownItems: [
+                                dropdownItems: const [
                                   'Event 1 Link this',
                                   'Event 2 Link this',
                                   'Event 3 Link this',
