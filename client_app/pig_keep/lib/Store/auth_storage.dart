@@ -22,4 +22,12 @@ class AuthStorage {
   static Future<String?> getName() async {
     return await storage.read(key: 'name');
   }
+
+  static Future<String?> getSelectedFarmName() async {
+    return await storage.read(key: 'selected-farm');
+  }
+
+  static Future<void> setSelectedFarmName(String? farmName) async {
+    await storage.write(key: 'selected-farm', value: farmName);
+  }
 }

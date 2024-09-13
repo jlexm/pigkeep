@@ -30,9 +30,7 @@ class _LayoutState extends State<Layout> {
                     child: AppBar(
                       actions: [
                         InkWell(
-                          onTap: () {
-                            context.go('/create-farm');
-                          },
+                          onTap: () {},
                           child: Image.asset(
                             'assets/icons/Sync.png',
                             width: 25.w,

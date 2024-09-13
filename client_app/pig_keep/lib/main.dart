@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/Layout.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Screens/Caretakers.dart';
 import 'package:pig_keep/Screens/ChangePassword.dart';
 import 'package:pig_keep/Screens/CreateFarm.dart';
@@ -15,23 +16,44 @@ import 'package:pig_keep/Screens/ProfileDetails.dart';
 import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Screens/ScanQR.dart';
 import 'package:pig_keep/Screens/Signup.dart';
+import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+        providers: [ChangeNotifierProvider(create: (_) => GlobalProvider())],
+        child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future<String?> init(BuildContext context) async {
+    String? token = await AuthStorage.getToken();
+    if (token != null) {
+      //await globalProvider.fetchFarms();
+      await context.read<GlobalProvider>().fetchFarms();
+    }
+    return token;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<String?>(
-      future: AuthStorage.getToken(),
+      future: init(context),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator(); // or some loading screen
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            ),
+          );
         }
 
         final bool isAuth = snapshot.data != null && snapshot.data!.isNotEmpty;
@@ -96,6 +118,8 @@ class MyApp extends StatelessWidget {
             ),
           ],
         );
+
+        navigationService.setRouter(router);
 
         return ScreenUtilInit(
           designSize: const Size(360, 800),

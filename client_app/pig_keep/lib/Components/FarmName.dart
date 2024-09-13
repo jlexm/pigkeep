@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pig_keep/Api/farm_api.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/navigation-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
+import 'package:provider/provider.dart';
 
 class FarmName extends StatefulWidget {
   const FarmName({super.key});
@@ -11,19 +17,27 @@ class FarmName extends StatefulWidget {
 }
 
 class _FarmNameState extends State<FarmName> {
-  String? _selectedValue = 'Alex Pig Farm';
-  List<String> _farmNames = [
-    'Alex Pig Farm',
-    'Dominic Pig Farm',
-    'Den\'s Farm'
-  ];
+  void createFarm(String farmName, String farmAdress) async {
+    try {
+      await FarmApi.createFarm(farmName, farmAdress);
+      await context.read<GlobalProvider>().fetchFarms();
+      ToastService().showSuccessToast('Farm successfully created!');
+      context.pop();
+      navigationService.replaceTo('/home');
+    } catch (err) {
+      ToastService().showErrorToast(err.toString());
+    }
+  }
+
+  String? _selectedValue;
+  List<String> _farmNames = [];
 
   void _addNewFarm() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        TextEditingController farmNameController = TextEditingController();
-        TextEditingController addressController = TextEditingController();
+        final farmNameController = TextEditingController(text: '');
+        final farmAddressController = TextEditingController(text: '');
 
         return ReusableDialogBox(
           title: 'Add Farm',
@@ -34,12 +48,12 @@ class _FarmNameState extends State<FarmName> {
               labelText: 'Farm Name',
               hintText: 'Farm Name',
               hintTextSize: 14.sp,
-              icon: Icons.add,
+              icon: Icons.house_siding_rounded,
               textSize: 14.sp,
               height: 43.h,
             ),
             RecyclableTextFormField(
-              controller: addressController,
+              controller: farmAddressController,
               labelText: 'Address',
               hintText: 'Address',
               hintTextSize: 14.sp,
@@ -49,17 +63,8 @@ class _FarmNameState extends State<FarmName> {
             ),
           ],
           onSave: () {
-            String farmName = farmNameController.text;
-            String address = addressController.text;
-
-            if (farmName.isNotEmpty && address.isNotEmpty) {
-              setState(() {
-                _farmNames.add(farmName);
-                _selectedValue = farmName;
-                // store the address here
-              });
-              Navigator.of(context).pop();
-            }
+            // Handle the save action, e.g., validate and save data
+            createFarm(farmNameController.text, farmAddressController.text);
           },
           saveButtonText: 'Add',
           saveButtonColor: appPrimary,
@@ -70,6 +75,13 @@ class _FarmNameState extends State<FarmName> {
 
   @override
   Widget build(BuildContext context) {
+    _farmNames = context
+        .watch<GlobalProvider>()
+        .getFarms()
+        .map((farm) => farm.farmName)
+        .toList();
+    _selectedValue = context.watch<GlobalProvider>().getSelectedFarm();
+
     return Container(
       padding: EdgeInsets.only(
         left: 20.w,
@@ -84,7 +96,9 @@ class _FarmNameState extends State<FarmName> {
               SizedBox(
                 width: 250.w,
                 child: DropdownButton<String>(
-                  value: _selectedValue,
+                  value: _farmNames.contains(_selectedValue)
+                      ? _selectedValue
+                      : null,
                   isExpanded: true,
                   items: _farmNames.map((String value) {
                     return DropdownMenuItem<String>(
@@ -104,7 +118,7 @@ class _FarmNameState extends State<FarmName> {
                   }).toList()
                     ..add(
                       DropdownMenuItem<String>(
-                        value: 'Add New Farm',
+                        value: null,
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Row(
@@ -130,12 +144,10 @@ class _FarmNameState extends State<FarmName> {
                       ),
                     ),
                   onChanged: (String? newValue) {
-                    if (newValue == 'Add New Farm') {
+                    if (newValue == null) {
                       _addNewFarm();
                     } else {
-                      setState(() {
-                        _selectedValue = newValue;
-                      });
+                      context.read<GlobalProvider>().setSelectedFarm(newValue);
                     }
                   },
                   underline: SizedBox(),

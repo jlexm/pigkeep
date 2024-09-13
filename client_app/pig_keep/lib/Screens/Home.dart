@@ -8,7 +8,10 @@ import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Carousel_PigCount.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Screens/Records.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 
 // ExpansionTile for dropdown
 
@@ -20,8 +23,28 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // fetchfarm
+    Future.microtask(() async {
+      await context.read<GlobalProvider>().fetchFarms();
+      setState(() {
+        isInitialized = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!isInitialized) {
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       backgroundColor: appSecondary,
       body: SafeArea(
@@ -36,7 +59,7 @@ class _HomeState extends State<Home> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        FarmName(), //FarmName.dart
+                        Flexible(child: FarmName()), //FarmName.dart
                       ],
                     ),
                     Container(
@@ -111,7 +134,9 @@ class _HomeState extends State<Home> {
                         ),
                         Spacer(),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            context.push('/records');
+                          },
                           child: Column(
                             children: [
                               Padding(padding: EdgeInsets.only(right: 30)),
@@ -166,7 +191,9 @@ class _HomeState extends State<Home> {
                         ),
                         Spacer(),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            context.push('/events');
+                          },
                           child: Column(
                             children: [
                               Padding(padding: EdgeInsets.only(right: 30)),

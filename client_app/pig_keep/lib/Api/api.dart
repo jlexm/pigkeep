@@ -6,7 +6,7 @@ import 'package:pig_keep/Store/auth_storage.dart';
 
 class API {
   static handleHTTPResponse(dynamic response) {
-    Map<String, dynamic> body = jsonDecode(response.body);
+    dynamic body = jsonDecode(response.body);
     // Check for successful responses (2xx range)
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return body;

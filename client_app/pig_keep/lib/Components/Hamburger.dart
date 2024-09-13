@@ -90,7 +90,7 @@ class _HamburgerState extends State<Hamburger> {
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
-                    context.go('/home');
+                    context.push('/home');
                   },
                 ),
                 ListTile(
@@ -110,7 +110,7 @@ class _HamburgerState extends State<Hamburger> {
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
-                    context.go('/profiledetails');
+                    context.push('/profiledetails');
                   },
                 ),
                 ListTile(
@@ -130,7 +130,7 @@ class _HamburgerState extends State<Hamburger> {
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
-                    context.go('/caretakers');
+                    context.push('/caretakers');
                   },
                 ),
                 ListTile(
@@ -150,7 +150,7 @@ class _HamburgerState extends State<Hamburger> {
                   ),
                   onTap: () {
                     Navigator.of(context).pop();
-                    context.go('/changepassword');
+                    context.push('/changepassword');
                   },
                 ),
                 SizedBox(
@@ -174,6 +174,7 @@ class _HamburgerState extends State<Hamburger> {
                   onTap: () {
                     Navigator.of(context).pop();
                     AuthStorage.clearToken();
+                    AuthStorage.setSelectedFarmName(null);
                     context.go('/login');
                   },
                 ),

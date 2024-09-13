@@ -11,13 +11,13 @@ export class UserService {
   createUser(createUserDto: CreateUserDto) {
     const newUser = new this.userModel(createUserDto)
     newUser.save()
-    return newUser.toObject() 
+    return newUser.toObject()
   }
 
   registerUser(registerUserDto: RegisterUserDto) {
     const newUser = new this.userModel(registerUserDto)
     newUser.save()
-    return newUser.toObject() 
+    return newUser.toObject()
   }
 
   async getUser(filter: Partial<User>) {
@@ -27,8 +27,16 @@ export class UserService {
   async getUserCredentials(username: string) {
     return this.userModel
       .findOne(
-        { username },
-        { _id: 0, email: 1, password: 1, username: 1, role_id: 1, first_name: 1, last_name: 1 }
+        { username: { $regex: new RegExp(username, 'i') } },
+        {
+          _id: 1,
+          email: 1,
+          password: 1,
+          username: 1,
+          role_id: 1,
+          first_name: 1,
+          last_name: 1,
+        }
       )
       .exec()
   }

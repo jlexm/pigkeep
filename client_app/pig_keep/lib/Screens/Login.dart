@@ -7,6 +7,8 @@ import 'package:pig_keep/Components/IconInputForm.dart';
 import 'package:pig_keep/Components/ImageInputForm.dart';
 import 'package:pig_keep/Components/myButton.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Services/navigation-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 
 class Login extends StatefulWidget {
@@ -181,21 +183,16 @@ class _LoginState extends State<Login> {
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) {
                                           if (mounted) {
-                                            context.go('/home');
+                                            //context.go('/home');
+                                            navigationService
+                                                .replaceTo('/home');
                                           }
                                         });
                                       } catch (e) {
                                         // Handle the error properly here, e.g., show an error message
-                                        WidgetsBinding.instance
-                                            .addPostFrameCallback((_) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(e.toString()),
-                                              backgroundColor: appRed,
-                                            ),
-                                          );
-                                        });
+
+                                        ToastService()
+                                            .showErrorToast(e.toString());
                                       }
                                       // set loading state to false.
                                       isLoginAPILoading = false;
@@ -220,7 +217,7 @@ class _LoginState extends State<Login> {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              context.go('/sign-up');
+                                              context.push('/sign-up');
                                             },
                                             child: Text(
                                               'Sign-Up',

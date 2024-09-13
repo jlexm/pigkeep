@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pig_keep/Api/farm_api.dart';
 import 'package:pig_keep/Components/Greenbtn.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Services/navigation-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 
 class Createfarm extends StatefulWidget {
   const Createfarm({super.key});
@@ -12,8 +16,22 @@ class Createfarm extends StatefulWidget {
 }
 
 class _CreatefarmState extends State<Createfarm> {
+  void createFarm(String farmName, String farmAdress) async {
+    try {
+      await FarmApi.createFarm(farmName, farmAdress);
+      ToastService().showSuccessToast('Farm successfully created!');
+      context.pop();
+      navigationService.replaceTo('/home');
+    } catch (err) {
+      ToastService().showErrorToast(err.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final farmNameController = TextEditingController(text: '');
+    final farmAddressController = TextEditingController(text: '');
+
     return Scaffold(
       backgroundColor: appSecondary,
       body: SafeArea(
@@ -50,28 +68,28 @@ class _CreatefarmState extends State<Createfarm> {
                           description: 'Enter the name of your pig farm.',
                           formFields: [
                             RecyclableTextFormField(
-                              controller: TextEditingController(),
+                              controller: farmNameController,
                               labelText: 'Farm Name',
                               hintText: 'Farm Name',
                               hintTextSize: 14.sp,
-                              icon: Icons.house,
+                              icon: Icons.house_siding_rounded,
                               textSize: 14.sp,
                               height: 43.h,
                             ),
                             RecyclableTextFormField(
-                              controller: TextEditingController(),
-                              labelText: 'Farm Address',
-                              hintText: 'Farm Address',
+                              controller: farmAddressController,
+                              labelText: 'Address',
+                              hintText: 'Address',
                               hintTextSize: 14.sp,
-                              icon: Icons.house,
+                              icon: Icons.location_on,
                               textSize: 14.sp,
                               height: 43.h,
                             ),
                           ],
                           onSave: () {
                             // Handle the save action, e.g., validate and save data
-                            print('Form saved');
-                            Navigator.of(context).pop();
+                            createFarm(farmNameController.text,
+                                farmAddressController.text);
                           },
                           saveButtonText: 'Create',
                           saveButtonColor: appPrimary,

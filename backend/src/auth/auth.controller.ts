@@ -40,9 +40,10 @@ export class AuthController {
     // if user authorized, generate jwt token so user can use it for verifying authenticity
     // check at jwt.io the token to see decoded value
     const token = this.authSvc.generateJWT({
+      _id: user._id,
       username: user.username,
       role_id: user.role_id,
     })
-    return { token , first_name: user.first_name, last_name: user.last_name}
+    return { token, first_name: user.first_name, last_name: user.last_name }
   }
 }
