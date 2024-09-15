@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { VariableSizeList, ListChildComponentProps } from 'react-window';
+import { FixedSizeList, ListChildComponentProps } from 'react-window';
 import { Grid2, Link } from '@mui/material';
 import './HomeScreen.css'; // Ensure this file includes the scrollbar styling
 
@@ -25,12 +25,17 @@ const generateEvents = (count: number) => {
   return events;
 };
 
-const allEvents = generateEvents(50); 
+// Generate a larger set of events
+const allEvents = generateEvents(50); // Generate 50 example events
+
+
 const events = allEvents.slice(0, 20);
 
 function formatEventDate(dateString: string) {
   const eventDate = new Date(dateString);
   const today = new Date();
+
+
   today.setHours(0, 0, 0, 0);
   eventDate.setHours(0, 0, 0, 0);
 
@@ -42,17 +47,18 @@ function formatEventDate(dateString: string) {
   } else if (diffDays === 1) {
     return 'Yesterday';
   } else {
+    // Format dates older than 1 day
     return eventDate.toLocaleDateString('en-US', { 
       month: 'short', day: 'numeric', year: 'numeric' 
     });
   }
 }
 
-const RowRenderer = React.memo(({ index, style }: ListChildComponentProps) => {
+const RenderRow = React.memo(({ index }: ListChildComponentProps) => {
   const event = events[index];
   
   return (
-    <ListItem style={{ ...style, paddingBottom: 15}} key={index} component="div" disablePadding>
+    <ListItem style={{ paddingBottom: 15 }} key={index} component="div" disablePadding>
       <ListItemButton>
         <Box className="listBox">
           <Box className="listRow1">
@@ -78,8 +84,8 @@ const RowRenderer = React.memo(({ index, style }: ListChildComponentProps) => {
               sx={{ flex: '1' }} 
             />
             <Link 
-              href="#" underline="hover" sx={{ flex: '1', textAlign: 'right', color: 'green', fontSize: 14 }}>
-              In Progress
+              href="#" underline="hover" sx={{ flex: '1', textAlign: 'right', color: 'green', fontSize: 16 }}>
+              See details
             </Link>
           </Box>
         </Box>
@@ -89,8 +95,6 @@ const RowRenderer = React.memo(({ index, style }: ListChildComponentProps) => {
 });
 
 export default function VirtualizedList() {
-  const getItemSize = () => 82; 
-
   return (
     <Grid2 container size={12} spacing={1}>
       <Grid2 size={6}>
@@ -101,16 +105,16 @@ export default function VirtualizedList() {
           {'See Events'}
         </Link>
       </Grid2>
-      <Box className="notif" sx={{ width: '100%', height: 580, maxWidth: 595, overflowY: 'auto' }}>
-        <VariableSizeList
-          height={580}
-          width={595}
+      <Box sx={{ width: '100%', height: 580, maxWidth: 605, overflowY: 'auto' }}>
+        <FixedSizeList
+          height={560}
+          width={590}
+          itemSize={82} 
           itemCount={events.length} 
-          itemSize={getItemSize}
           overscanCount={5}
         >
-          {RowRenderer}
-        </VariableSizeList>
+          {RenderRow}
+        </FixedSizeList>
       </Box>
     </Grid2>
   );
