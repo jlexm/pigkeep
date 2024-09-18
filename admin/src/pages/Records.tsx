@@ -1,9 +1,110 @@
-const Records = () => {
-  return (
-    <h1 className="mt-600" style={{ color: 'black' }}>
-      Records Works
-    </h1>
-  )
-}
+import { Box, Chip, Grid2 } from '@mui/material';
+import PigList_Screen from '../components/Records/PigList_Folder/PigList';
+import FeedInventory_Screen from '../components/Records/FeedInventory_Folder/FeedInventory';
+import MedicalRecords_Screen from '../components/Records/MedicalRecords_Folder/MedicalRecords';
+import Pigpen_Screen from '../components/Records/PigPen_Folder/PigPen';
+import React from 'react';
+import '../components/Records/PigList_Folder/PigList.css'
 
-export default Records
+const Records = () => {
+  const [selectedChip, setSelectedChip] = React.useState('Pig List'); // Default selected chip
+
+  const handleChipClick = (chip: string) => {
+    setSelectedChip(chip);
+  };
+
+  return (
+    <Grid2 container spacing={5} sx={{ marginTop: 5 }}>
+      <Grid2 size={12}>
+        <Grid2 container spacing={3}>
+          <Grid2 container size={12} style={{ color: 'black', textAlign: 'start' }}>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <Chip
+                label="Pig List"
+                clickable
+                onClick={() => handleChipClick('Pig List')}
+                sx={{
+                  backgroundColor: selectedChip === 'Pig List' ? '#11703b' : 'transparent',
+                  color: selectedChip === 'Pig List' ? 'white' : 'black',
+                  borderColor: '#11703b',
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  padding: '10px 50px',
+                  borderRadius: '10px',
+                  fontSize: '16px',
+                  '&:hover': {
+                    backgroundColor: selectedChip === 'Pig List' ? '#11703b' : 'rgba(46, 125, 50, 0.1)',
+                  },
+                }}
+              />
+              <Chip
+                label="Feed Inventory"
+                clickable
+                onClick={() => handleChipClick('Feed Inventory')}
+                sx={{
+                  backgroundColor: selectedChip === 'Feed Inventory' ? '#11703b' : 'transparent',
+                  color: selectedChip === 'Feed Inventory' ? 'white' : 'black',
+                  borderColor: '#11703b',
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  padding: '10px 50px',
+                  borderRadius: '10px',
+                  fontSize: '16px',
+                  '&:hover': {
+                    backgroundColor: selectedChip === 'Feed Inventory' ? '#11703b' : 'rgba(46, 125, 50, 0.1)',
+                  },
+                }}
+              />
+              <Chip
+                label="Medical Records"
+                clickable
+                onClick={() => handleChipClick('Medical Records')}
+                sx={{
+                  backgroundColor: selectedChip === 'Medical Records' ? '#11703b' : 'transparent',
+                  color: selectedChip === 'Medical Records' ? 'white' : 'black',
+                  borderColor: '#11703b',
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  padding: '10px 50px',
+                  borderRadius: '10px',
+                  fontSize: '16px',
+                  '&:hover': {
+                    backgroundColor: selectedChip === 'Medical Records' ? '#11703b' : 'rgba(46, 125, 50, 0.1)',
+                  },
+                }}
+              />
+              <Chip
+                label="Pigpen"
+                clickable
+                onClick={() => handleChipClick('Pigpen')}
+                sx={{
+                  backgroundColor: selectedChip === 'Pigpen' ? '#11703b' : 'transparent',
+                  color: selectedChip === 'Pigpen' ? 'white' : 'black',
+                  borderColor: '#11703b',
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  padding: '10px 50px',
+                  borderRadius: '10px',
+                  fontSize: '16px',
+                  '&:hover': {
+                    backgroundColor: selectedChip === 'Pigpen' ? '#11703b' : 'rgba(46, 125, 50, 0.1)',
+                  },
+                }}
+              />
+            </Box>
+          </Grid2>
+        </Grid2>
+      </Grid2>
+      <Grid2 container size={12} spacing={3}>
+        <Grid2 size={12}>
+          {selectedChip === 'Pig List' && <PigList_Screen />}
+          {selectedChip === 'Feed Inventory' && <FeedInventory_Screen />}
+          {selectedChip === 'Medical Records' && <MedicalRecords_Screen />}
+          {selectedChip === 'Pigpen' && <Pigpen_Screen />}
+        </Grid2>
+      </Grid2>
+    </Grid2>
+  );
+};
+
+export default Records;

@@ -11,7 +11,7 @@ import './HomeScreen.css'; // Ensure this file includes the scrollbar styling
 const generateEvents = (count: number) => {
   const events = [];
   const today = new Date();
-  
+
   for (let i = 0; i < count; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() - i); // Make each event date progressively earlier
@@ -21,20 +21,17 @@ const generateEvents = (count: number) => {
       pigNumber: String(i + 1).padStart(3, '0'), // Starting from 001
     });
   }
-  
+
   return events;
 };
 
 // Generate a larger set of events
 const allEvents = generateEvents(50); // Generate 50 example events
-
-
 const events = allEvents.slice(0, 20);
 
 function formatEventDate(dateString: string) {
   const eventDate = new Date(dateString);
   const today = new Date();
-
 
   today.setHours(0, 0, 0, 0);
   eventDate.setHours(0, 0, 0, 0);
@@ -47,44 +44,54 @@ function formatEventDate(dateString: string) {
   } else if (diffDays === 1) {
     return 'Yesterday';
   } else {
-    // Format dates older than 1 day
-    return eventDate.toLocaleDateString('en-US', { 
-      month: 'short', day: 'numeric', year: 'numeric' 
+    return eventDate.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
     });
   }
 }
 
-const RenderRow = React.memo(({ index }: ListChildComponentProps) => {
+// Memoized row component to avoid unnecessary re-renders
+const RenderRow = React.memo(({ index, style }: ListChildComponentProps) => {
   const event = events[index];
-  
+
   return (
-    <ListItem style={{ paddingBottom: 15 }} key={index} component="div" disablePadding>
+    <ListItem
+      style={{ ...style, paddingBottom: 15 }}
+      key={index}
+      component="div"
+      disablePadding
+    >
       <ListItemButton>
         <Box className="listBox">
           <Box className="listRow1">
-            <ListItemText 
-              className='black'
-              primary={formatEventDate(event.date)} 
-              sx={{ flex: '1' }} 
+            <ListItemText
+              className="black"
+              primary={formatEventDate(event.date)}
+              sx={{ flex: '1' }}
             />
-            <ListItemText 
-              className='black'
-              primary={event.name} 
-              sx={{ flex: '1', textAlign: 'right', fontSize: 18, fontWeight: 800 }} 
+            <ListItemText
+              className="black"
+              primary={event.name}
+              sx={{ flex: '1', textAlign: 'right', fontSize: 18, fontWeight: 800 }}
             />
           </Box>
           <Box className="listRow1">
-            <ListItemText 
-              className='black'
+            <ListItemText
+              className="black"
               primary={
                 <span>
                   Pig <span style={{ color: 'green' }}>{event.pigNumber}</span>
                 </span>
-              } 
-              sx={{ flex: '1' }} 
+              }
+              sx={{ flex: '1' }}
             />
-            <Link 
-              href="#" underline="hover" sx={{ flex: '1', textAlign: 'right', color: 'green', fontSize: 16 }}>
+            <Link
+              href="#"
+              underline="hover"
+              sx={{ flex: '1', textAlign: 'right', color: 'green', fontSize: 16 }}
+            >
               See details
             </Link>
           </Box>
@@ -105,13 +112,13 @@ export default function VirtualizedList() {
           {'See Events'}
         </Link>
       </Grid2>
-      <Box sx={{ width: '100%', height: 580, maxWidth: 605, overflowY: 'auto' }}>
+      <Box sx={{ width: '100%', height: 580, maxWidth: 890, overflowY: 'auto' }}>
         <FixedSizeList
           height={560}
-          width={590}
-          itemSize={82} 
-          itemCount={events.length} 
-          overscanCount={5}
+          width={795}
+          itemSize={82}
+          itemCount={events.length}
+          overscanCount={5} // Adds some buffer to prevent flickering
         >
           {RenderRow}
         </FixedSizeList>

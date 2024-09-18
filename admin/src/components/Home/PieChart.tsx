@@ -5,7 +5,7 @@ import './HomeScreen.css'
 
 export default function BasicPie() {
   return (
-    (<Grid2 container spacing={1}>
+    <Grid2 container spacing={1}>
       <Grid2 size={12}>
         <h1 className="pigCount">Pig Count</h1>
       </Grid2>
@@ -24,22 +24,22 @@ export default function BasicPie() {
                 {
                   id: 1,
                   value: 15,
-                  label: '15 series B'
+                  label: '15 series B',
                 },
                 {
                   id: 0,
                   value: 10,
-                  label: '10 series A'
+                  label: '10 series A',
                 },
                 { id: 2, value: 20, label: '20 series C' },
                 { id: 3, value: 20, label: '20 series D' },
               ],
             },
           ]}
-          width={620}
-          height={400}
+          width={690}
+          height={450}
         />
       </Grid2>
-    </Grid2>)
-  );
+    </Grid2>
+  )
 }

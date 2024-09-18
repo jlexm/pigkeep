@@ -1,0 +1,42 @@
+.left {
+    text-align: start;
+    color: black;
+    font-size: 25px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.penHeadTitle {
+    text-align: start;
+}
+
+.penTitle {
+    font-size: 60px;
+    margin: 0;
+    font-weight: 700;
+}
+
+.center {
+    align-self: center;
+}
+
+.sidePen {
+    color: white;
+    font-size: 20px;
+    font-weight: 300;
+    margin: 0;
+    text-align: start;
+}
+
+.penContainer {
+    display: flex;
+    background-color: #11703b;
+    height: 100px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+    display: flex;
+    justify-content: start;
+    padding-left: 20px;
+    padding-right: 20px;
+}

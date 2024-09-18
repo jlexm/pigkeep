@@ -20,15 +20,15 @@ export default function BarGraph() {
 
       {/* Pig Sales Section */}
 
-      <Grid2 container size={4} className="pigSalesBox">
-        <Grid2 container size={10} className="pigSales">
+      <Grid2 container size={6} className="pigSalesBox">
+        <Grid2 container size={6} className="pigSales">
           <p className="pigSalesTitle">Pig Sales</p>
         </Grid2>
         <Grid2 size={10}>
           <p className="totalSales">{formatCurrency(200000)}</p>
         </Grid2>
       </Grid2>
-      <Grid2 size={8}>
+      <Grid2 size={6}>
         <BarChart
           xAxis={[
             {
@@ -56,8 +56,8 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#11703b' }]}
-          width={850}
-          height={450}
+          width={700}
+          height={500}
           sx={{
             '& .MuiChartsAxis-y': {
               marginRight: '10px',
@@ -70,15 +70,15 @@ export default function BarGraph() {
 
       {/* Feed Expense Section */}
 
-      <Grid2 container size={4} className="pigSalesBox">
-        <Grid2 container size={10} className="pigSales">
+      <Grid2 container size={6} className="pigSalesBox">
+        <Grid2 container size={6} className="pigSales">
           <p className="pigSalesTitle">Total Feed Expense </p>
         </Grid2>
         <Grid2 size={10}>
           <p className="totalSales">{formatCurrency(200000)}</p>
         </Grid2>
       </Grid2>
-      <Grid2 size={8}>
+      <Grid2 size={6}>
         <BarChart
           xAxis={[
             {
@@ -106,8 +106,8 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#11703b' }]}
-          width={850}
-          height={450}
+          width={700}
+          height={500}
           sx={{
             '& .MuiChartsAxis-y': {
               marginRight: '10px',
@@ -120,15 +120,15 @@ export default function BarGraph() {
 
       {/* Medicine Expense Section */}
 
-      <Grid2 container size={4} className="pigSalesBox">
-        <Grid2 container size={10} className="pigSales1">
+      <Grid2 container size={6} className="pigSalesBox">
+        <Grid2 container size={6} className="pigSales1">
           <p className="pigSalesTitle">Total Medicine Expense </p>
         </Grid2>
         <Grid2 size={10}>
           <p className="meds">{formatCurrency(200000)}</p>
         </Grid2>
       </Grid2>
-      <Grid2 size={8}>
+      <Grid2 size={6}>
         <BarChart
           xAxis={[
             {
@@ -156,8 +156,8 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#3B4DE1' }]}
-          width={850}
-          height={450}
+          width={700}
+          height={500}
           sx={{
             '& .MuiChartsAxis-y': {
               marginRight: '10px',
