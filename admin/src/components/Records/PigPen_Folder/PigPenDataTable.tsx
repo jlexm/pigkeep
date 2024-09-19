@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import Paper from '@mui/material/Paper'
+import Grid2 from '@mui/material/Grid2'
 import { Box, TextField } from '@mui/material'
 
 import '../PigList_Folder/PigList.css'
 
+// Define the columns for the DataGrid
 const columns: GridColDef[] = [
   { field: 'number', headerName: 'Number', flex: 1 },
   {
@@ -38,6 +39,7 @@ const columns: GridColDef[] = [
   },
 ]
 
+// Define the initial rows with pig arrays (to be passed to another component)
 const initialRows = [
   {
     id: 1,
@@ -45,6 +47,7 @@ const initialRows = [
     type: 'Nursery',
     pigCount: '7',
     maxPigs: '7',
+    pigs: ['001', '002', '003', '004', '005', '006', '007'], // Pig numbers array
   },
   {
     id: 2,
@@ -52,6 +55,7 @@ const initialRows = [
     type: 'Stall',
     pigCount: '3',
     maxPigs: '5',
+    pigs: ['008', '009', '010'], // Pig numbers array
   },
   {
     id: 3,
@@ -59,6 +63,7 @@ const initialRows = [
     type: 'Farrowing',
     pigCount: '1',
     maxPigs: '1',
+    pigs: ['011'], // Pig numbers array
   },
   {
     id: 4,
@@ -66,6 +71,7 @@ const initialRows = [
     type: 'Nursery',
     pigCount: '7',
     maxPigs: '7',
+    pigs: ['012', '013', '014', '015', '016', '017', '018'], // Pig numbers array
   },
   {
     id: 5,
@@ -73,6 +79,7 @@ const initialRows = [
     type: 'Stall',
     pigCount: '3',
     maxPigs: '6',
+    pigs: ['019', '020', '021'], // Pig numbers array
   },
   {
     id: 6,
@@ -80,10 +87,12 @@ const initialRows = [
     type: 'Farrowing',
     pigCount: '1',
     maxPigs: '2',
+    pigs: ['022'], // Pig numbers array
   },
   
 ]
 
+// Define the pagination model
 const paginationModel = { page: 0, pageSize: 5 }
 
 export default function PigpenDataTable() {
@@ -93,11 +102,12 @@ export default function PigpenDataTable() {
   // Function to handle filtering based on searchText
   const handleFilter = React.useCallback(() => {
     const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter((row) =>
-      row.number.toLowerCase().includes(lowerSearchText) ||
-      row.type.toLowerCase().includes(lowerSearchText) ||
-      row.pigCount.toLowerCase().includes(lowerSearchText) ||
-      row.maxPigs.toLowerCase().includes(lowerSearchText)
+    const filtered = initialRows.filter(
+      (row) =>
+        row.number.toLowerCase().includes(lowerSearchText) ||
+        row.type.toLowerCase().includes(lowerSearchText) ||
+        row.pigCount.toLowerCase().includes(lowerSearchText) ||
+        row.maxPigs.toLowerCase().includes(lowerSearchText)
     )
     setFilteredRows(filtered)
   }, [searchText])
@@ -108,11 +118,11 @@ export default function PigpenDataTable() {
   }, [searchText, handleFilter])
 
   return (
-    <Paper sx={{ height: '100%', width: '100%', position: 'relative' }}>
+    <Grid2 size={12}>
       <Box
         sx={{
-          margin: 2,
-          width: 590,
+          marginBottom: 2,
+          minWidth: 50,
           paddingTop: 2,
           display: 'flex',
           alignItems: 'center',
@@ -122,7 +132,6 @@ export default function PigpenDataTable() {
           label="Search"
           variant="outlined"
           size="small"
-          fullWidth
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
@@ -153,6 +162,8 @@ export default function PigpenDataTable() {
           }}
         />
       </Box>
-    </Paper>
+    </Grid2>
   )
 }
+
+

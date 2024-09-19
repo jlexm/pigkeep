@@ -40,3 +40,71 @@
     padding-left: 20px;
     padding-right: 20px;
 }
+
+.penInfoBg {
+    display: flex;
+    background-color: #F0F0F0;
+    min-height: 650px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.miniPenInfoBg {
+    display: flex;
+    background-color: #11703b;
+    height: 250px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+    display: flex;
+    justify-content: start;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+.leftSide {
+    text-align: start;
+    color: black;
+}
+
+.rightSide {
+    text-align: end;
+    color: black;
+}
+
+.green {
+    color: #11703b;
+}
+
+.pigInfo {
+    font-size: 20px;
+}
+
+.size100 {
+    font-size: 100px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.right {
+    justify-content: end;
+}
+
+.addButton {
+    align-content: center;
+    text-align: right;
+}
+
+.itemAlign {
+    place-content: flex-start;
+}

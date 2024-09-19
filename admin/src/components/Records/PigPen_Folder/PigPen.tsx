@@ -1,6 +1,7 @@
 import { Grid2 } from '@mui/material'
 
 import AddPenComp from './AddPen'
+import PenInfo from './PenInfo'
 
 export default function Pigpen_Screen() {
   return (
@@ -8,7 +9,9 @@ export default function Pigpen_Screen() {
       <Grid2 container size={6}>
         <AddPenComp/>
       </Grid2>
-      <Grid2 container size={6}></Grid2>
+      <Grid2 container size={6} className='itemAlign'>
+        <PenInfo />
+      </Grid2>
     </Grid2>
   )
 }

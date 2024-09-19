@@ -4,7 +4,6 @@ import Cards from './DynamicCard'
 import PigStatusLegend from './Legend'
 import QRCode from './DLQrcode'
 import DataTable from './PigListDataTable'
-
 export default function PigList_Screen() {
   return (
     <Grid2 container size={12} spacing={2}>
@@ -23,6 +22,7 @@ export default function PigList_Screen() {
       <Grid2 size={12}>
         <DataTable />{' '}
       </Grid2>
+      
     </Grid2>
   )
 }

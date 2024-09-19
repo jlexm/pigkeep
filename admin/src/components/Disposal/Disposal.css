@@ -1,0 +1,59 @@
+.paddingTop {
+    padding-top: 40px;
+}
+
+.itemAlign {
+    place-content: flex-start;
+}
+
+.disposeTitle {
+    font-size: 50px;
+    margin: 0;
+}
+
+.disposeInfoBg {
+    display: flex;
+    background-color: #11703b;
+    min-height: 270px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.innerBoxBg {
+    display: flex;
+    background-color: #f0f0f0;
+    height: 80px;
+    position: relative;
+    border-radius: 10px;
+    align-content: center;
+    display: flex;
+    justify-content: start;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.size50 {
+    font-size: 35px;
+    color: #11703b;
+    font-weight: 500;
+    margin: 0;
+}
+
+.sales {
+    font-size: 70px;
+    font-weight: bold;
+}
+
+.center {
+    justify-content: center;
+    padding-top: 10px;
+}

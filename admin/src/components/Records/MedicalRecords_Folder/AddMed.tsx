@@ -13,7 +13,7 @@ export default function AddMedComp() {
       <Grid2 size={12}>
         <MonthPagination />
       </Grid2>
-      <Grid2 container size={12} className="feedContainer" spacing={0}>
+      <Grid2 container size={12} className="medContainer" spacing={0}>
         <Grid2 size={7} className="expenseTitle">
           <p className="expenseTitle">929,000</p>
         </Grid2>

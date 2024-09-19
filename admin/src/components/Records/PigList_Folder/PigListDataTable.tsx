@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import Paper from '@mui/material/Paper'
+import Grid2 from '@mui/material/Grid2'
 import Button from '@mui/material/Button'
 import { Box, IconButton, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
@@ -310,8 +310,8 @@ export default function DataTable() {
   })
 
   return (
-    <Paper sx={{ height: '100%', width: '100%', position: 'relative' }}>
-      <Box sx={{ margin: 2, width: 590, paddingTop: 2, display: 'flex', alignItems: 'center' }}>
+    <Grid2 size={12}>
+      <Box sx={{ marginBottom: 2, width: 590, paddingTop: 2, display: 'flex', alignItems: 'center' }}>
         
         <TextField
           label="Search"
@@ -372,6 +372,6 @@ export default function DataTable() {
           }}
         />
       </Box>
-    </Paper>
+    </Grid2>
   )
 }

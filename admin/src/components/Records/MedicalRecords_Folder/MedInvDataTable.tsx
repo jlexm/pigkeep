@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import Paper from '@mui/material/Paper'
+import Grid2 from '@mui/material/Grid2'
 import {
   Box,
   TextField,
@@ -96,6 +96,7 @@ const initialRows = [
     date: 'Jun 18, 2024',
     cost: 'Php75',
   },
+
 ]
 
 const paginationModel = { page: 0, pageSize: 5 }
@@ -127,10 +128,10 @@ export default function FeedInvDataTable() {
   }, [searchText, statusFilter])
 
   return (
-    <Paper sx={{ height: '100%', width: '100%', position: 'relative' }}>
+    <Grid2 size={12}>
       <Box
         sx={{
-          margin: 2,
+          marginBottom: 2,
           width: 590,
           paddingTop: 2,
           display: 'flex',
@@ -193,6 +194,6 @@ export default function FeedInvDataTable() {
           }}
         />
       </Box>
-    </Paper>
+    </Grid2>
   )
 }

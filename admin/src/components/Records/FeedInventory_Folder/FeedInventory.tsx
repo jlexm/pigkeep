@@ -9,8 +9,8 @@ export default function FeedInventory_Screen() {
         <Grid2 size={12}>
           <AddFeedComp />
         </Grid2>
-      </Grid2>{' '}
-      <Grid2 container size={8}>
+      </Grid2>
+      <Grid2 container size={8} className='itemAlign'>
         <Grid2 size={12}>
           <p className='feedHistory'>Feed History</p>
           <FeedInvDataTable />
