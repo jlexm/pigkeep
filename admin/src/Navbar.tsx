@@ -1,3 +1,4 @@
+import { Grid2 } from '@mui/material'
 import './Navbar.css'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -5,12 +6,12 @@ const Navbar = () => {
   const location = useLocation()
 
   return (
-    <div>
+    <Grid2>
       <nav className="navbar">
-        <div className="navbar-logo">
+        <Grid2 className="navbar-logo">
           <img src="src/assets/GreenLogo.png" alt="Pigkeep Logo" />
           <span>PIGKEEP</span>
-        </div>
+        </Grid2>
         <ul className="navbar-links">
           <li
             className={`nav-item ${location.pathname === '/' ? 'active' : ''}`}
@@ -56,12 +57,13 @@ const Navbar = () => {
             </Link>
           </li>
         </ul>
-        <button className="navbar-profile">
+        <button className="navbar-profile" >
           <span>Alexander</span>
           <img src="src/assets/ProfileIcon.png" alt="Profile" />
+          
         </button>
       </nav>
-    </div>
+    </Grid2>
   )
 }
 

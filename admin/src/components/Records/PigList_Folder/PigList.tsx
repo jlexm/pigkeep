@@ -13,7 +13,7 @@ export default function PigList_Screen() {
       <Grid2 size={5} className="legendGrid">
         <Cards />
       </Grid2>
-      <Grid2 size={2.6} className="qrButton">
+      <Grid2 size={2.6} className="itemsAlign">
         <PigStatusLegend statuses={['Alive', 'Sold', 'Deceased']} />
       </Grid2>
       <Grid2 size={1.4} className="qrButton">

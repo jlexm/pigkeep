@@ -8,7 +8,10 @@ import Guide from '../components/Home/Guide'
 
 const Home = () => {
   return (
-    <Grid2 container spacing={10} sx={{marginLeft:15, marginRight:15}}>
+    <Grid2 container spacing={10} sx={{marginLeft:10, marginRight:10}}>
+      {/* <Grid2 container size={12}>
+        <Dropdown />
+      </Grid2> */}
       <Grid2 size={12}>
         <SimpleContainer />
       </Grid2>

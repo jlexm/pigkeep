@@ -6,6 +6,7 @@ import Records from './pages/Records'
 import Events from './pages/Events'
 import Disposal from './pages/Disposal'
 import Caretaker from './pages/Caretaker'
+// import Profile from './pages/Profile'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/events" element={<Events />} />
           <Route path="/disposal" element={<Disposal />} />
           <Route path="/caretaker" element={<Caretaker />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
         </Routes>
       </Router>
     </div>

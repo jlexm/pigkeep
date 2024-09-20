@@ -58,7 +58,8 @@
 
 .legend {
     display: flex;
-    justify-content: start;
+    justify-content: end;
+    width: 380px;
 }
 
 .even-row {
@@ -67,4 +68,8 @@
 
 .odd-row {
     background-color: white;
+}
+
+.itemsAlign {
+    align-content: center;
 }

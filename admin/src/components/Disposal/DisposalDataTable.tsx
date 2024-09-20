@@ -221,7 +221,7 @@ export default function DisposalDataTable() {
   }, [searchText, handleFilter])
 
   // Function to handle pagination changes
-  const handlePaginationChange = (newModel) => {
+  const handlePaginationChange = (newModel: React.SetStateAction<{ page: number; pageSize: number }>) => {
     setPaginationModel(newModel)
   }
 
@@ -270,12 +270,6 @@ export default function DisposalDataTable() {
             },
             '& .red-text': {
               color: 'red',
-            },
-            '& .even-row': {
-              backgroundColor: '#f5f5f5',
-            },
-            '& .odd-row': {
-              backgroundColor: '#ffffff',
             },
           }}
         />
