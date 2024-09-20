@@ -6,8 +6,7 @@ import Records from './pages/Records'
 import Events from './pages/Events'
 import Disposal from './pages/Disposal'
 import Caretaker from './pages/Caretaker'
-import Footer from './Footer'
-import { Grid2 } from '@mui/material'
+
 
 function App() {
   return (
@@ -21,9 +20,6 @@ function App() {
           <Route path="/disposal" element={<Disposal />} />
           <Route path="/caretaker" element={<Caretaker />} />
         </Routes>
-        <Grid2 className="footerBott">
-          <Footer />
-        </Grid2>
       </Router>
     </div>
   )

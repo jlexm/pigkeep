@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { Box, Grid2, TextField } from '@mui/material'
+import { Box, TextField } from '@mui/material'
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
@@ -92,14 +92,112 @@ const initialRows = [
     weight: 109,
     price: 9000,
   },
+  {
+    id: 1,
+    number: '005',
+    status: 'Sold',
+    date: 'Jul 2, 2024',
+    weight: 105,
+    price: 12000,
+  },
+  {
+    id: 2,
+    number: '002',
+    status: 'Deceased',
+    date: 'Jul 3, 2024',
+    weight: null,
+    price: null,
+  },
+  {
+    id: 3,
+    number: '006',
+    status: 'Sold',
+    date: 'Jul 4, 2024',
+    weight: 101,
+    price: 11000,
+  },
+  {
+    id: 4,
+    number: '001',
+    status: 'Deceased',
+    date: 'Jul 6, 2024',
+    weight: null,
+    price: null,
+  },
+  {
+    id: 5,
+    number: '009',
+    status: 'Sold',
+    date: 'Jul 21, 2024',
+    weight: 108,
+    price: 10000,
+  },
+  {
+    id: 6,
+    number: '008',
+    status: 'Sold',
+    date: 'Jul 23, 2024',
+    weight: 109,
+    price: 9000,
+  },
+  {
+    id: 1,
+    number: '005',
+    status: 'Sold',
+    date: 'Jul 2, 2024',
+    weight: 105,
+    price: 12000,
+  },
+  {
+    id: 2,
+    number: '002',
+    status: 'Deceased',
+    date: 'Jul 3, 2024',
+    weight: null,
+    price: null,
+  },
+  {
+    id: 3,
+    number: '006',
+    status: 'Sold',
+    date: 'Jul 4, 2024',
+    weight: 101,
+    price: 11000,
+  },
+  {
+    id: 4,
+    number: '001',
+    status: 'Deceased',
+    date: 'Jul 6, 2024',
+    weight: null,
+    price: null,
+  },
+  {
+    id: 5,
+    number: '009',
+    status: 'Sold',
+    date: 'Jul 21, 2024',
+    weight: 108,
+    price: 10000,
+  },
+  {
+    id: 6,
+    number: '008',
+    status: 'Sold',
+    date: 'Jul 23, 2024',
+    weight: 109,
+    price: 9000,
+  },
 ]
 
 // Define the pagination model
-const paginationModel = { page: 0, pageSize: 5 }
-
 export default function DisposalDataTable() {
   const [searchText, setSearchText] = React.useState('')
   const [filteredRows, setFilteredRows] = React.useState(initialRows)
+  const [paginationModel, setPaginationModel] = React.useState({
+    page: 0,
+    pageSize: 5,
+  })
 
   // Function to handle filtering based on searchText
   const handleFilter = React.useCallback(() => {
@@ -122,61 +220,66 @@ export default function DisposalDataTable() {
     handleFilter()
   }, [searchText, handleFilter])
 
+  // Function to handle pagination changes
+  const handlePaginationChange = (newModel) => {
+    setPaginationModel(newModel)
+  }
+
   return (
-    <Grid2 container size={12}>
-      <Grid2 size={12}>
-        <Box sx={{
-            marginBottom: 2,
-            minWidth: 50,
-            paddingTop: 2,
-            display: 'flex',
-            alignItems: 'center',
-          }}>
-
-          <TextField
-            label="Search"
-            variant="outlined"
-            size="small"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </Box>
-
-        <Box sx={{ height: 400, width: '100%' }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            pagination
-            paginationModel={paginationModel}
-            pageSizeOptions={[5, 10, 25, 50, 100]}
-            rowSelection={false}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0
-                ? 'even-row'
-                : 'odd-row'
-            }
-            sx={{
-              '& .MuiDataGrid-columnHeaders': {
-                fontWeight: 'bold',
-                fontSize: '15px',
-                color: '#11703B',
-              },
-              '& .green-text': {
-                color: 'green',
-              },
-              '& .red-text': {
-                color: 'red',
-              },
-              '& .even-row': {
-                backgroundColor: '#f5f5f5',
-              },
-              '& .odd-row': {
-                backgroundColor: '#ffffff',
-              },
-            }}
-          />
-        </Box>
-      </Grid2>
-    </Grid2>
+    <Box sx={{ width: '100%' }}>
+      <Box
+        sx={{
+          marginBottom: 2,
+          minWidth: 50,
+          paddingTop: 2,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <TextField
+          label="Search"
+          variant="outlined"
+          size="small"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+      </Box>
+      <Box sx={{ width: '100%' }}>
+        <DataGrid
+          autoHeight
+          rows={filteredRows}
+          columns={columns}
+          pagination
+          paginationModel={paginationModel}
+          onPaginationModelChange={handlePaginationChange}
+          pageSizeOptions={[5, 10, 25, 50, 100]}
+          rowSelection={false}
+          getRowClassName={(params) =>
+            params.indexRelativeToCurrentPage % 2 === 0
+              ? 'even-row'
+              : 'odd-row'
+          }
+          sx={{
+            '& .MuiDataGrid-columnHeaders': {
+              fontWeight: 'bold',
+              fontSize: '15px',
+              color: '#11703B',
+            },
+            '& .green-text': {
+              color: 'green',
+            },
+            '& .red-text': {
+              color: 'red',
+            },
+            '& .even-row': {
+              backgroundColor: '#f5f5f5',
+            },
+            '& .odd-row': {
+              backgroundColor: '#ffffff',
+            },
+          }}
+        />
+      </Box>
+    </Box>
   )
 }

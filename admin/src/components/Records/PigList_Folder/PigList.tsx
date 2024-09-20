@@ -20,7 +20,7 @@ export default function PigList_Screen() {
         <QRCode />
       </Grid2>
       <Grid2 size={12}>
-        <DataTable />{' '}
+        <DataTable />
       </Grid2>
       
     </Grid2>

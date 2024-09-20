@@ -8,7 +8,7 @@ import Guide from '../components/Home/Guide'
 
 const Home = () => {
   return (
-    <Grid2 container spacing={10}>
+    <Grid2 container spacing={10} sx={{marginLeft:15, marginRight:15}}>
       <Grid2 size={12}>
         <SimpleContainer />
       </Grid2>
@@ -26,6 +26,17 @@ const Home = () => {
       </Grid2>
       <Grid2 size={12}>
         <p className="quote">PigKeep. Pig management, done in your pocket.</p>
+      </Grid2>
+      <Grid2 container size={12} spacing={0}>
+        <Grid2  size={6} sx={{ textAlign: 'start' }}>
+          <p className="footer">Developed by Maravilla & Talagtag</p>
+        </Grid2>
+        <Grid2  size={6} sx={{ textAlign: 'end' }}>
+          <p className="footer">Naga City, Philippines</p>
+        </Grid2>
+        <Grid2  size={6} sx={{ textAlign: 'start' }}>
+          <p className="footer">2024-All Rights Reserved.</p>
+        </Grid2>
       </Grid2>
     </Grid2>
   )

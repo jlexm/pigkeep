@@ -6,7 +6,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function Dispose() {
   return (
-    <Grid2 container size={12} spacing={3}>
+    <Grid2 container size={12} spacing={3} >
       <Grid2 size={12} className="miniTitle">
         <p className="disposeTitle">Disposal Ledger</p>
       </Grid2>
