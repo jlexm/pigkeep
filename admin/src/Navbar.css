@@ -13,18 +13,18 @@
   z-index: 1000;
 }
 
-.navbar-logo {
+.logo-container {
   display: flex;
   align-items: center;
 }
 
-.navbar-logo img {
-  height: 40px;
+.logo-container img {
   margin-right: 10px;
+  height: 45px;
 }
 
-.navbar-logo span {
-  font-size: 24px;
+.logo-container span {
+  font-size: 30px;
   font-weight: 700;
   color: #11703b;
 }
@@ -33,8 +33,8 @@
   list-style: none;
   display: flex;
   gap: 30px;
-  margin-left: auto; /* Align links to the right */
-  margin-right: 150px; /* Adjust this value to control spacing between links and profile */
+  margin-left: auto;
+  margin-right: 150px;
   padding: 0;
 }
 
@@ -48,7 +48,7 @@
 
 .nav-item .nav-link {
   text-decoration: none;
-  color: inherit; /* Inherits the color of the parent */
+  color: inherit;
 }
 
 .nav-item.active .nav-link {
@@ -62,7 +62,7 @@
   height: 2px;
   background-color: #11703b;
   position: absolute;
-  bottom: -5px; /* Adjust to control position of the underline */
+  bottom: -5px;
   left: 0;
 }
 
