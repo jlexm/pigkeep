@@ -1,10 +1,11 @@
 import { SetStateAction, useState } from 'react'
-import { Button, Chip, Grid2 } from '@mui/material'
+import {  Button, Chip, Grid2 } from '@mui/material'
 import '../components/Events/Events.css'
 import EventIcon from '@mui/icons-material/Event'
 import CurrentDataTable from '../components/Events/CurrentDataTable'
 import UpcomingDataTable from '../components/Events/UpcomingDataTable'
 import HistoryDataTable from '../components/Events/HistoryDataTable'
+
 
 const Events = () => {
   const [selectedChip, setSelectedChip] = useState('upcoming')
@@ -92,6 +93,9 @@ const Events = () => {
           </Grid2>
         </Grid2>
       </Grid2>
+
+
+     
     </Grid2>
   )
 }

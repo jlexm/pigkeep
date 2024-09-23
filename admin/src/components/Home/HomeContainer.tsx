@@ -6,7 +6,7 @@ import { Grid2, Stack } from '@mui/material'
 
 export default function SimpleContainer() {
   return (
-    <Grid2 container size={12} className="homeContainer">
+    <Grid2 container size={12} className="homeContainer"  >
       <Grid2 size={6} className="col1">
         <Grid2>
           <Stack
@@ -38,7 +38,7 @@ export default function SimpleContainer() {
             src={hugepig}
             alt="Huge Pig"
             className="responsiveImage"
-            sx={{ width: { xs: 200, sm: 300, md: 430, lg: 510, xl: 599 } }}
+            sx={{ width:700 }}
           />
         </Box>
       </Grid2>

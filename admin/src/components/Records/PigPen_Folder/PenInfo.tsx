@@ -35,7 +35,8 @@ export default function PenInfo() {
           <p className="size100">P-01</p>
         </Grid2>
         <Grid2  size={12}>
-          <text style={{ fontSize: 20 }}>Pen Number</text>
+          
+          <text style={{ fontSize: 20 }}>{/* number */}Pen Number</text>
         </Grid2>
       </Grid2>
       <Grid2 size={12} container sx={{ marginLeft: 4, marginRight: 4 }}>
@@ -46,17 +47,17 @@ export default function PenInfo() {
           <Grid2 container sx={{ height: 15 }}></Grid2>
           <Grid2  size={12} sx={{height:30}}>
             <text>
-              Type: <span className="green">Nursery</span>
+              Type: <span className="green"> {/* type */} Nursery</span>
             </text>
           </Grid2>
           <Grid2 size={12} sx={{height:30}}>
             <text>
-              Pig Count: <span className="green">2</span>
+              Pig Count: <span className="green"> {/* pigCount */} 2</span>
             </text>
           </Grid2>
           <Grid2 size={12} sx={{height:30}}>
             <text>
-              Max Pig: <span className="green">5</span>
+              Max Pig: <span className="green"> {/* maxPigs */} 5</span>
             </text>
           </Grid2>
         </Grid2>
@@ -69,7 +70,7 @@ export default function PenInfo() {
             {pigs.map((pig, index) => (
               <Grid2 size={6} key={index} > 
                 <ListItem sx={{ paddingLeft: 2 }}>
-                  <ListItemIcon sx={{ minWidth: 30 }}> {/* Reduced gap */}
+                  <ListItemIcon sx={{ minWidth: 30 }}>
                     <CircleIcon sx={{ color: getStatusColor(pig.status) }} />
                   </ListItemIcon>
                   <ListItemText primary={pig.number} />
