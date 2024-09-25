@@ -7,7 +7,6 @@ class FarmApi {
   }
 
   static getMyFarms() {
-    print('TEST FARM API');
     return API.get('/farms/my-farms');
   }
 }

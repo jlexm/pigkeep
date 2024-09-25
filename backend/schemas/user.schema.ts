@@ -33,6 +33,9 @@ export class User {
   @Prop({ required: true, maxlength: 100 })
   last_name: string
 
+  @Prop({ type: Date, default: null, maxlength: 100 })
+  last_sync: Date | null
+
   @Prop({
     enum: [Role.Superadmin, Role.Admin, Role.User],
     default: Role.User,

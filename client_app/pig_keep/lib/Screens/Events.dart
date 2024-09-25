@@ -44,7 +44,6 @@ class _EventsState extends State<Events> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: const Hamburger(),
       body: SafeArea(
         child: Column(
           children: [

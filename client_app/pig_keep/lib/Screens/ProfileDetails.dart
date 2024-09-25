@@ -36,28 +36,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        FarmName(), //FarmName.dart
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Manage your profile details. Fill and update your \ninformation to let people know who you are.',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
                     SizedBox(
                       height: 30.h,
                     ),
@@ -199,7 +177,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             controller: _phonenumberController,
                             labelText: 'Phone Number',
                             hintText: 'Enter your Phone Number',
-                            icon: Icons.phone_outlined ,
+                            icon: Icons.phone_outlined,
                             textSize: 14.sp,
                             height: 43.h,
                             validator: (value) {
@@ -212,7 +190,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           SizedBox(
                             height: 15.h,
                           ),
-                         
                           SizedBox(
                             height: 40.h,
                           ),

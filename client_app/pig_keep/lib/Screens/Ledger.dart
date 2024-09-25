@@ -21,7 +21,6 @@ class _LedgerState extends State<Ledger> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: const Hamburger(),
       body: SafeArea(
           child: Column(
         children: [
@@ -117,22 +116,18 @@ class _LedgerState extends State<Ledger> {
                                               text: '₱',
                                               style: TextStyle(
                                                 fontSize: 33.sp,
-                                                fontWeight: FontWeight
-                                                    .w500, 
+                                                fontWeight: FontWeight.w500,
                                                 color: appSecondary,
-                                                fontFamily:
-                                                    'Roboto', 
+                                                fontFamily: 'Roboto',
                                               ),
                                             ),
                                             TextSpan(
                                               text: '230,000',
                                               style: TextStyle(
                                                 fontSize: 33.sp,
-                                                fontWeight: FontWeight
-                                                    .w700, 
+                                                fontWeight: FontWeight.w700,
                                                 color: appSecondary,
-                                                fontFamily:
-                                                    'Poppins', 
+                                                fontFamily: 'Poppins',
                                               ),
                                             ),
                                           ],

@@ -3,15 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/CenterReusableDialogBox.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/main.dart';
 
 class PigPenPenNumber extends StatelessWidget {
   final String number;
   final String type;
-  final String pigCount;
-  final String maxPigs;
+  final int pigCount;
+  final int maxPigs;
   final List<String> pigNumbers;
 
-  const PigPenPenNumber({
+  PigPenPenNumber({
     super.key,
     required this.number,
     required this.type,
@@ -19,6 +21,15 @@ class PigPenPenNumber extends StatelessWidget {
     required this.maxPigs,
     required this.pigNumbers,
   });
+
+  // pigPen db
+  final pigPenService = globalLocator.get<PigPenService>();
+
+  // functions
+  void getPenDetails() {}
+  void getPigs() {}
+  void editPen() {}
+  void deletePen() {}
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +87,7 @@ class PigPenPenNumber extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Pigpen Information",
+                    "Pig Pen Information",
                     style: TextStyle(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w400,
@@ -112,7 +123,7 @@ class PigPenPenNumber extends StatelessWidget {
                 children: [
                   const Text("Pig Count:  "),
                   Text(
-                    pigCount,
+                    pigCount.toString(),
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -125,7 +136,7 @@ class PigPenPenNumber extends StatelessWidget {
                 children: [
                   const Text("Max Pigs:  "),
                   Text(
-                    maxPigs,
+                    maxPigs.toString(),
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -230,12 +241,18 @@ class PigPenPenNumber extends StatelessWidget {
                       formFields: [
                         RecyclableTextFormField(
                           controller: TextEditingController(),
-                          labelText: 'Pen Type',
+                          labelText: 'Select Pen Type',
                           showDropdown: true,
-                          dropdownItems: const ['Stall', 'Nursery', 'Farrowing'],
+                          dropdownItems: const [
+                            'Stall',
+                            'Nursery',
+                            'Farrowing',
+                            'Fattening'
+                          ],
                           hintText: 'Pen Type',
                           hintTextSize: 14.sp,
-                          icon: Icons.email,
+                          keyboardType: TextInputType.none,
+                          icon: Icons.house_siding_rounded,
                           textSize: 14.sp,
                           height: 43.h,
                         ),
@@ -244,7 +261,8 @@ class PigPenPenNumber extends StatelessWidget {
                           labelText: 'Max Number',
                           hintText: 'Max Number',
                           hintTextSize: 14.sp,
-                          icon: Icons.email,
+                          keyboardType: TextInputType.phone,
+                          icon: Icons.numbers_rounded,
                           textSize: 14.sp,
                           height: 43.h,
                         ),
@@ -328,5 +346,3 @@ class PigPenPenNumber extends StatelessWidget {
     );
   }
 }
-
-

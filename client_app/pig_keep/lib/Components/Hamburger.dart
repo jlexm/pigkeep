@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +23,14 @@ class _HamburgerState extends State<Hamburger> {
   }
 
   Future<void> _loadName() async {
-    String? fetchedName = await AuthStorage.getName();
+    final currUserJSON = await AuthStorage.getUser();
+    // throw error if user does not exists in storage
+    if (currUserJSON == null) {
+      throw 'Current user not found.';
+    }
+    // decode currUser json string
+    final currUser = jsonDecode(currUserJSON);
+    String? fetchedName = '${currUser['first_name']} ${currUser['last_name']}';
     if (fetchedName != null) {
       setState(() {
         name = fetchedName;
@@ -173,7 +182,6 @@ class _HamburgerState extends State<Hamburger> {
                   onTap: () {
                     Navigator.of(context).pop();
                     AuthStorage.clearToken();
-                    AuthStorage.setSelectedFarmName(null);
                     context.go('/login');
                   },
                 ),

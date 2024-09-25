@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -54,7 +56,8 @@ class _SignupState extends State<Signup> {
                         child: Column(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 30, right: 30),
+                              padding:
+                                  const EdgeInsets.only(left: 30, right: 30),
                               child: Column(
                                 children: [
                                   Row(
@@ -220,10 +223,11 @@ class _SignupState extends State<Signup> {
                                             body['token']);
 
                                         // update localStorage username that was rcved from login api
-                                        await AuthStorage.updateName(
-                                            body['first_name'] +
-                                                " " +
-                                                body['last_name']);
+                                        await AuthStorage.setUser(jsonEncode({
+                                          "username": body['username'],
+                                          "first_name": body['first_name'],
+                                          "last_name": body['last_name']
+                                        }));
 
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) {

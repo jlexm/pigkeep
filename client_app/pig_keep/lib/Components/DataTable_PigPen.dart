@@ -183,59 +183,22 @@
 //   }
 // }
 
-
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyDataTable_Pigpen extends StatefulWidget {
-  final void Function(Map<String, dynamic>) onRowSelected;
+  final void Function(dynamic) onRowSelected;
+  List<dynamic> pigPens;
 
-  const MyDataTable_Pigpen({super.key, required this.onRowSelected});
+  MyDataTable_Pigpen(
+      {super.key, required this.onRowSelected, required this.pigPens});
 
   @override
   State<MyDataTable_Pigpen> createState() => _MyDataTable_PigpenState();
 }
 
 class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
-  final List<Map<String, dynamic>> _data = [
-    {
-      'number': 'P-01',
-      'type': 'Nursery',
-      'pig count': '3',
-      'max pigs': '5',
-      'status': 'alive',
-      'pigs': ['001', '002', '003'],
-    },
-    {
-      'number': 'P-02',
-      'type': 'Stall',
-      'pig count': '5',
-      'max pigs': '5',
-      'status': 'sold',
-      'pigs': ['004', '005', '006', '007', '008'],
-    },
-    {
-      'number': 'P-03',
-      'type': 'Stall',
-      'pig count': '6',
-      'max pigs': '6',
-      'status': 'deceased',
-      'pigs': ['009', '010', '011', '012', '013', '014'],
-    },
-    {
-      'number': 'P-04',
-      'type': 'Farrowing',
-      'pig count': '1',
-      'max pigs': '1',
-      'status': 'alive',
-      'pigs': ['015'],
-    },
-  ];
-
-  void _handleRowSelection(Map<String, dynamic> row) {
+  void _handleRowSelection(final row) {
     widget.onRowSelected(row);
   }
 
@@ -303,14 +266,14 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                 ),
               ),
             ],
-            rows: _data.map((row) {
+            rows: widget.pigPens.map((row) {
               return DataRow(
                 onSelectChanged: (_) => _handleRowSelection(row),
                 cells: [
                   DataCell(
                     Center(
                       child: Text(
-                        row['number']!,
+                        row.penNumber!,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -321,7 +284,7 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                   DataCell(
                     Center(
                       child: Text(
-                        row['type']!,
+                        row.penType!,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -332,7 +295,7 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                   DataCell(
                     Center(
                       child: Text(
-                        row['pig count']!,
+                        row.currentPigCount!.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -343,7 +306,7 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                   DataCell(
                     Center(
                       child: Text(
-                        row['max pigs']!,
+                        row.maxPigCount!.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,

@@ -6,7 +6,6 @@ class Chips extends StatefulWidget {
   final ValueChanged<int?> onChipSelected;
 
   const Chips({super.key, required this.onChipSelected});
-  
 
   @override
   State<Chips> createState() => _ChipsState();
@@ -23,10 +22,10 @@ class _ChipsState extends State<Chips> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            _buildChip('Pig List', 0, 55.w), 
-            _buildChip('Feed Inventory', 1, 95.w), 
-            _buildChip('Medical Records', 2, 100.w), 
-            _buildChip('Pig Pen', 3, 50.w), 
+            _buildChip('Pig Pen', 0, 55.w),
+            _buildChip('Pig List', 1, 50.w),
+            _buildChip('Feed Inventory', 2, 95.w),
+            _buildChip('Medical Records', 3, 100.w),
           ],
         ),
       ),
@@ -39,7 +38,7 @@ class _ChipsState extends State<Chips> {
       child: ChoiceChip(
         label: Container(
           alignment: Alignment.center,
-          width: width, 
+          width: width,
           child: Text(
             label,
             style: TextStyle(
@@ -49,12 +48,12 @@ class _ChipsState extends State<Chips> {
           ),
         ),
         selected: _selectedChoiceIndex == index,
-        onSelected: (bool selected) {  
+        onSelected: (bool selected) {
           if (selected && _selectedChoiceIndex != index) {
             setState(() {
               _selectedChoiceIndex = index;
             });
-            widget.onChipSelected(_selectedChoiceIndex); 
+            widget.onChipSelected(_selectedChoiceIndex);
           }
         },
         selectedColor: appPrimary,

@@ -138,8 +138,6 @@
 //   }
 // }
 
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
@@ -166,7 +164,7 @@ class Records extends StatefulWidget {
 
 class _RecordsState extends State<Records> {
   int? _selectedChoiceIndex = 0;
-  Map<String, String>? _selectedRowData;
+  var _selectedRowData;
   Widget? _currentView;
 
   @override
@@ -190,13 +188,13 @@ class _RecordsState extends State<Records> {
     } else {
       switch (_selectedChoiceIndex) {
         case 0:
-          return PigList(onRowSelected: _showQRCodeStatus);
-        case 1:
-          return const FeedInventory();
-        case 2:
-          return const MedicalRecords();
-        case 3:
           return PigPen(onRowSelected: _showPigPenPenNumberScreen);
+        case 1:
+          return PigList(onRowSelected: _showQRCodeStatus);
+        case 2:
+          return const FeedInventory();
+        case 3:
+          return const MedicalRecords();
         default:
           return Container(); // Default view
       }
@@ -213,21 +211,21 @@ class _RecordsState extends State<Records> {
 
   void _showQRCodeStatus(Map<String, String> rowData) {
     setState(() {
-      _selectedChoiceIndex = null;
+      _selectedChoiceIndex = 1;
       _selectedRowData = rowData;
       _currentView = QRCodeStatus(pigData: rowData);
     });
   }
 
-  void _showPigPenPenNumberScreen(Map<String, String> rowData) {
+  void _showPigPenPenNumberScreen(final rowData) {
     setState(() {
-      _selectedChoiceIndex = 3;
+      _selectedChoiceIndex = 0;
       _selectedRowData = rowData;
       _currentView = PigPenPenNumber(
-        number: rowData['number']!,
-        type: rowData['type']!,
-        pigCount: rowData['pig count']!,
-        maxPigs: rowData['max pigs']!,
+        number: rowData.penNumber!,
+        type: rowData.penType!,
+        pigCount: rowData.currentPigCount!,
+        maxPigs: rowData.maxPigCount!,
         pigNumbers: const [], // Fetch and pass actual pig numbers if needed
       );
     });
@@ -237,7 +235,6 @@ class _RecordsState extends State<Records> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appSecondary,
-      drawer: const Hamburger(),
       body: SafeArea(
         child: Column(
           children: [

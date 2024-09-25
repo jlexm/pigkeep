@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pig_keep/Components/DataTable_PigPen.dart';
 import 'package:pig_keep/Components/PigPen_PenNumber.dart';
 import 'package:pig_keep/Components/SearchBar_PigPen.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 
 class PigPen extends StatefulWidget {
   final void Function(Map<String, String>) onRowSelected;
@@ -16,18 +23,76 @@ class PigPen extends StatefulWidget {
 }
 
 class _PigPenState extends State<PigPen> {
-  void _navigateToPigPenPenNumber(Map<String, dynamic> rowData) {
+  // controllers
+  final TextEditingController _penNumberController = TextEditingController();
+  final TextEditingController _penTypeController = TextEditingController();
+  final TextEditingController _penMaxNumberController = TextEditingController();
+
+  // pigPen db
+  final pigPenService = globalLocator.get<PigPenService>();
+
+  // pig pen variables
+  var selectedFarm;
+  late String userOwner;
+  var pigPens = [];
+  String searchValue = '';
+
+  void _navigateToPigPenPenNumber(final rowData) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => PigPenPenNumber(
-          number: rowData['number']!,
-          type: rowData['type']!,
-          pigCount: rowData['pig count']!,
-          maxPigs: rowData['max pigs']!,
-          pigNumbers: List<String>.from(rowData['pigs']),
+          number: rowData.penNumber!,
+          type: rowData.penType!,
+          pigCount: rowData.currentPigCount!,
+          maxPigs: rowData.maxPigCount!,
+          pigNumbers: [],
         ),
       ),
     );
+  }
+
+  Future<void> addPigPen(int penNumber, String penType, int maxNumber) async {
+    print(userOwner);
+    // convert penNumber to readable text format
+    String penNum = 'P-${penNumber.toString().padLeft(2, '0')}';
+    await pigPenService.addPigPen(
+        penNum, penType, maxNumber, selectedFarm['_id'], userOwner);
+    await getPigPens();
+  }
+
+  Future<void> getPigPens() async {
+    final fetchPens =
+        await pigPenService.fetchPigPens(selectedFarm['_id'], userOwner);
+    setState(() {
+      pigPens = fetchPens;
+    });
+  }
+
+  void onSearch(final value) {
+    setState(() {
+      searchValue = value;
+    });
+  }
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
+      userOwner = user['username'];
+      getPigPens();
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+    getPigPens();
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -56,7 +121,7 @@ class _PigPenState extends State<PigPen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '05',
+                          pigPens.length.toString(),
                           style: TextStyle(
                             color: appSecondary,
                             fontSize: 70.sp,
@@ -72,7 +137,7 @@ class _PigPenState extends State<PigPen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Total \nPigpens',
+                          'Total \nPig Pens',
                           style: TextStyle(
                             color: appSecondary,
                             fontSize: 12.sp,
@@ -106,33 +171,51 @@ class _PigPenState extends State<PigPen> {
                                         'Fill up the necessary information.',
                                     formFields: [
                                       RecyclableTextFormField(
-                                        controller: TextEditingController(),
+                                        controller: _penNumberController,
+                                        labelText: 'Pen Number',
+                                        hintText: 'Pen Number',
+                                        hintTextSize: 14.sp,
+                                        keyboardType: TextInputType.phone,
+                                        icon: Icons.numbers_rounded,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                      RecyclableTextFormField(
+                                        readOnly: true,
+                                        controller: _penTypeController,
                                         labelText: 'Pen Type',
                                         showDropdown: true,
                                         dropdownItems: const [
                                           'Stall',
                                           'Nursery',
-                                          'Farrowing'
+                                          'Farrowing',
+                                          'Fattening'
                                         ],
-                                        hintText: 'Pen Type',
+                                        hintText: 'Select Pen Type',
                                         hintTextSize: 14.sp,
-                                        icon: Icons.email,
+                                        icon: Icons.house_siding_rounded,
                                         textSize: 14.sp,
                                         height: 43.h,
                                       ),
                                       RecyclableTextFormField(
-                                        controller: TextEditingController(),
-                                        labelText: 'Max Number',
-                                        hintText: 'Max Number',
+                                        controller: _penMaxNumberController,
+                                        labelText: 'Max Pig Count',
+                                        hintText: 'Max Pig Count',
                                         hintTextSize: 14.sp,
-                                        icon: Icons.email,
+                                        keyboardType: TextInputType.phone,
+                                        icon: Icons.exposure,
                                         textSize: 14.sp,
                                         height: 43.h,
                                       ),
                                     ],
-                                    onSave: () {
+                                    onSave: () async {
                                       // Handle the save action, e.g., validate and save data
                                       print('Form saved');
+                                      await addPigPen(
+                                          int.parse(_penNumberController.text),
+                                          _penTypeController.text,
+                                          int.parse(
+                                              _penMaxNumberController.text));
                                       Navigator.of(context).pop();
                                     },
                                     saveButtonText: 'Add Pen',
@@ -173,7 +256,9 @@ class _PigPenState extends State<PigPen> {
         SizedBox(height: 11.h),
         Container(
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
-          child: SearchBarPigPen(), // SearchBar_PigPen.dart
+          child: SearchBarPigPen(
+            onSearchValueChange: onSearch,
+          ), // SearchBar_PigPen.dart
         ),
         SizedBox(height: 10.h),
         Container(
@@ -181,6 +266,11 @@ class _PigPenState extends State<PigPen> {
           child: Column(
             children: [
               MyDataTable_Pigpen(
+                pigPens: pigPens
+                    .where((pen) => pen.penNumber
+                        .toLowerCase()
+                        .contains(searchValue.toLowerCase()))
+                    .toList(),
                 onRowSelected: _navigateToPigPenPenNumber,
               )
             ],

@@ -4,6 +4,10 @@ import 'package:pig_keep/Components/DataTable_PigList.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 
 class PigList extends StatefulWidget {
   final void Function(Map<String, String> rowData) onRowSelected;
@@ -15,6 +19,50 @@ class PigList extends StatefulWidget {
 }
 
 class _PigListState extends State<PigList> {
+  // controller
+  final TextEditingController _pigDOBController = TextEditingController();
+  final TextEditingController _pigParentController = TextEditingController();
+  final TextEditingController _pigSexController = TextEditingController();
+  final TextEditingController _pigPenController = TextEditingController();
+
+  // pig db
+  final pigService = globalLocator.get<PigService>();
+
+  // pigs variables
+  var selectedFarm;
+  late String userOwner;
+  var pigs = [];
+  String searchValue = '';
+
+  // fns
+  Future<void> getPigs() async {
+    final fetchPigs =
+        await pigService.fetchPigs(selectedFarm['_id'], userOwner);
+    setState(() {
+      pigs = fetchPigs;
+    });
+  }
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
+      userOwner = user['username'];
+      getPigs();
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+    getPigs();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,7 +90,7 @@ class _PigListState extends State<PigList> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          '42',
+                          pigs.length.toString(),
                           style: TextStyle(
                             color: appSecondary,
                             fontSize: 70.sp,
@@ -94,8 +142,9 @@ class _PigListState extends State<PigList> {
                                     formFields: [
                                       RecyclableTextFormField(
                                         controller: TextEditingController(),
+                                        keyboardType: TextInputType.datetime,
                                         labelText: 'Date of Birth',
-                                        hintText: 'Date of Birth',
+                                        hintText: 'YYYY/MM/DD',
                                         hintTextSize: 14.sp,
                                         icon: Icons.email,
                                         textSize: 14.sp,
@@ -252,9 +301,3 @@ class _PigListState extends State<PigList> {
     );
   }
 }
-
-
-
-
-
-

@@ -1,38 +1,55 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pig_keep/Api/farm_api.dart';
-import 'package:pig_keep/Classes/Farm.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 
 class GlobalProvider with ChangeNotifier {
-  List<Farm> _farms = [];
-  String? _selectedFarmName;
+  late List<Map<String, dynamic>> userFarms = [];
 
   Future<void> fetchFarms() async {
     try {
-      _farms = [];
+      userFarms = [];
 
-      final List<dynamic> farms = await FarmApi.getMyFarms();
+      // get userFarms from local storage
+      String? userFarmsString = await AuthStorage.getUserFarms();
+      if (userFarmsString != null) {
+        List<dynamic> decodedFarms = jsonDecode(userFarmsString);
+        userFarms = decodedFarms.cast<Map<String, dynamic>>();
+      }
+
+      // get farms from api
+      final farms = await FarmApi.getMyFarms();
+
+      // check if farms from api does not yet exists in local storage,
+      // then add it
       for (var farm in farms) {
-        _farms.add(Farm(
-            ID: farm['_id'],
-            farmName: farm['farm_name'],
-            farmAddress: farm['farm_address'],
-            ownerID: farm['owner_id']));
+        if (!userFarms.any((e) => e['_id'] == farm['_id'])) {
+          userFarms.add({
+            'farm_name': farm['farm_name'],
+            '_id': farm['_id'],
+            'owner_id': farm['owner_id'],
+            'farm_address': farm['farm_address']
+          });
+        }
       }
 
       // when farm is empty show create farm screen
-      if (farms.isEmpty) {
+      if (userFarms.isEmpty) {
         navigationService.navigateTo('/create-farm');
-      } else {
-        // check for selected farm existence
-        String? selectedFarmName = await AuthStorage.getSelectedFarmName();
-        if (selectedFarmName == null) {
-          await AuthStorage.setSelectedFarmName(_farms[0].farmName);
-          selectedFarmName = _farms[0].farmName;
-        }
-        _selectedFarmName = selectedFarmName;
+        return;
       }
+
+      // check if farm already have selected farm.
+      // if none, then make first as selected
+      if (!userFarms.any((f) => f['is_selected'] != null && f['is_selected'])) {
+        userFarms[0]['is_selected'] = true;
+      }
+      // save farms to local
+      await AuthStorage.setUserFarms(jsonEncode(userFarms));
+
       notifyListeners();
     } catch (err) {
       print('ERROR RCVC');
@@ -40,34 +57,32 @@ class GlobalProvider with ChangeNotifier {
     }
   }
 
-  // farms
-  void setFarm(List<Farm> farms) {
-    _farms = farms;
+  List<Map<String, dynamic>> getFarms() {
+    return userFarms;
+  }
+
+  Future<void> setSelectedFarm(Map<String, dynamic> farm) async {
+    userFarms = userFarms.map((f) {
+      if (f['_id'] == farm['_id']) {
+        return {...farm, 'is_selected': true};
+      }
+      f.remove('is_selected');
+      return f;
+    }).toList();
+    await AuthStorage.setUserFarms(jsonEncode(userFarms));
     notifyListeners();
   }
 
-  void addFarm(Farm farm) {
-    _farms.add(farm);
-    notifyListeners();
+  Map<String, dynamic> getSelectedFarm() {
+    return userFarms
+        .firstWhere((f) => f['is_selected'] != null && f['is_selected']);
   }
 
-  void removeFarm(String farmID) {
-    _farms.removeWhere((farm) => farm.ID == farmID);
-    notifyListeners();
-  }
-
-  List<Farm> getFarms() {
-    return _farms;
-  }
-
-  String? getSelectedFarm() {
-    return _selectedFarmName;
-  }
-
-  void setSelectedFarm(String? selectedFarmName) {
-    AuthStorage.setSelectedFarmName(selectedFarmName);
-    _selectedFarmName = selectedFarmName;
-
-    notifyListeners();
+  Future<dynamic> getCurrentUser() async {
+    final user = await AuthStorage.getUser();
+    if (user == null) {
+      return null;
+    }
+    return jsonDecode(user);
   }
 }

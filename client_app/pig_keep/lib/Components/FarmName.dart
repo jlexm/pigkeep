@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +9,7 @@ import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/Store/auth_storage.dart';
 import 'package:provider/provider.dart';
 
 class FarmName extends StatefulWidget {
@@ -29,8 +32,7 @@ class _FarmNameState extends State<FarmName> {
     }
   }
 
-  String? _selectedValue;
-  List<String> _farmNames = [];
+  List<Map<String, dynamic>> _farms = [];
 
   void _addNewFarm() {
     showDialog(
@@ -75,12 +77,7 @@ class _FarmNameState extends State<FarmName> {
 
   @override
   Widget build(BuildContext context) {
-    _farmNames = context
-        .watch<GlobalProvider>()
-        .getFarms()
-        .map((farm) => farm.farmName)
-        .toList();
-    _selectedValue = context.watch<GlobalProvider>().getSelectedFarm();
+    _farms = context.watch<GlobalProvider>().getFarms();
 
     return Container(
       padding: EdgeInsets.only(
@@ -95,18 +92,19 @@ class _FarmNameState extends State<FarmName> {
             children: [
               SizedBox(
                 width: 250.w,
-                child: DropdownButton<String>(
-                  value: _farmNames.contains(_selectedValue)
-                      ? _selectedValue
-                      : null,
+                child: DropdownButton<Map<String, dynamic>>(
+                  value: _farms.isEmpty
+                      ? null
+                      : _farms.firstWhere(
+                          (f) => f['is_selected'] != null && f['is_selected']),
                   isExpanded: true,
-                  items: _farmNames.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
+                  items: _farms.map((farm) {
+                    return DropdownMenuItem<Map<String, dynamic>>(
+                      value: farm,
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          value,
+                          farm['farm_name'],
                           style: TextStyle(
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w400,
@@ -117,7 +115,7 @@ class _FarmNameState extends State<FarmName> {
                     );
                   }).toList()
                     ..add(
-                      DropdownMenuItem<String>(
+                      DropdownMenuItem<Map<String, dynamic>>(
                         value: null,
                         child: Align(
                           alignment: Alignment.centerLeft,
@@ -143,11 +141,11 @@ class _FarmNameState extends State<FarmName> {
                         ),
                       ),
                     ),
-                  onChanged: (String? newValue) {
-                    if (newValue == null) {
+                  onChanged: (farm) {
+                    if (farm == null) {
                       _addNewFarm();
                     } else {
-                      context.read<GlobalProvider>().setSelectedFarm(newValue);
+                      context.read<GlobalProvider>().setSelectedFarm(farm);
                     }
                   },
                   underline: const SizedBox(),
@@ -156,14 +154,18 @@ class _FarmNameState extends State<FarmName> {
                     color: appPrimary,
                   ),
                   selectedItemBuilder: (BuildContext context) {
-                    return _farmNames.map((String value) {
+                    return _farms.map((farm) {
                       return Text(
-                        value,
+                        farm['farm_name'],
                         style: TextStyle(
-                          fontSize: value == _selectedValue ? 24.sp : 14.sp,
-                          fontWeight: value == _selectedValue
-                              ? FontWeight.w700
-                              : FontWeight.w400,
+                          fontSize:
+                              farm['is_selected'] != null && farm['is_selected']
+                                  ? 24.sp
+                                  : 14.sp,
+                          fontWeight:
+                              farm['is_selected'] != null && farm['is_selected']
+                                  ? FontWeight.w700
+                                  : FontWeight.w400,
                           color: appTertiary,
                         ),
                       );

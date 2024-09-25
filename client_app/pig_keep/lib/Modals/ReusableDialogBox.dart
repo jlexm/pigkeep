@@ -27,7 +27,8 @@ class ReusableDialogBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.h, bottom: 20.h),
+        padding:
+            EdgeInsets.only(left: 25.w, right: 25.w, top: 20.h, bottom: 20.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,6 +101,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final List<String>? dropdownItems;
   final bool showDropdown;
   final bool showIcon;
+  final bool readOnly;
 
   const RecyclableTextFormField({
     super.key,
@@ -123,6 +125,7 @@ class RecyclableTextFormField extends StatelessWidget {
     this.dropdownItems,
     this.showDropdown = false,
     this.showIcon = true,
+    this.readOnly = false,
   });
 
   @override
@@ -158,6 +161,7 @@ class RecyclableTextFormField extends StatelessWidget {
                   : null,
               contentPadding: contentPadding,
             ),
+            readOnly: readOnly,
             obscureText: obscureText,
             keyboardType: keyboardType,
             validator: validator,
@@ -175,7 +179,7 @@ class RecyclableTextFormField extends StatelessWidget {
               top: 0,
               bottom: 0,
               child: Padding(
-                padding: EdgeInsets.only(right: 10.w), 
+                padding: EdgeInsets.only(right: 10.w),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),

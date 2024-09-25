@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/Layout.dart';
@@ -16,13 +17,29 @@ import 'package:pig_keep/Screens/ProfileDetails.dart';
 import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Screens/ScanQR.dart';
 import 'package:pig_keep/Screens/Signup.dart';
+import 'package:pig_keep/Services/database-service.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/Services/pig-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 import 'package:provider/provider.dart';
+
+// This is our global ServiceLocator
+GetIt globalLocator = GetIt.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
+
+  // register global services
+  globalLocator.registerSingleton(DatabaseService());
+
+  // init database
+  await globalLocator.get<DatabaseService>().init();
+
+  globalLocator.registerSingleton(PigPenService());
+  globalLocator.registerSingleton(PigService());
+
   runApp(
     MultiProvider(
         providers: [ChangeNotifierProvider(create: (_) => GlobalProvider())],

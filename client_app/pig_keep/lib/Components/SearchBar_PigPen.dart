@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class SearchBarPigPen extends StatelessWidget {
-  const SearchBarPigPen({super.key});
+  final void Function(dynamic) onSearchValueChange;
+  const SearchBarPigPen({super.key, required this.onSearchValueChange});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +37,7 @@ class SearchBarPigPen extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
               ),
               style: TextStyle(fontSize: 12.sp),
+              onChanged: onSearchValueChange,
             ),
           ),
         ],

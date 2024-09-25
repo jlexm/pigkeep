@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Components/FarmName.dart';
@@ -14,11 +13,14 @@ class ChangePassword extends StatefulWidget {
   @override
   State<ChangePassword> createState() => _ChangePasswordState();
 }
+
 void _saveProfile() {}
+
 class _ChangePasswordState extends State<ChangePassword> {
-    final TextEditingController _oldpasswordController = TextEditingController();
+  final TextEditingController _oldpasswordController = TextEditingController();
   final TextEditingController _newpasswordController = TextEditingController();
-  final TextEditingController _confirmpasswordController = TextEditingController();
+  final TextEditingController _confirmpasswordController =
+      TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,28 +34,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                 scrollDirection: Axis.vertical,
                 child: Column(
                   children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        FarmName(), //FarmName.dart
-                      ],
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Change your password regularly to protect \nyour data from any unauthorized access.',
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
                     SizedBox(
                       height: 30.h,
                     ),
@@ -155,8 +135,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                           SizedBox(
                             height: 15.h,
                           ),
-                          
-                         
                           SizedBox(
                             height: 40.h,
                           ),
