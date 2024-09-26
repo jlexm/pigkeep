@@ -1,9 +1,10 @@
 .homeContainer {
     background-color: #11703b;
-    height: 530px;
+    height: 100%;
     position: relative;
     border-radius: 10px;
     align-content: center;
+    padding: 100px 50px;
 }
 
 .hugePig {
@@ -14,7 +15,6 @@
 }
 
 .col1 {
-    padding-left: 50px;
     align-content: space-evenly;
     max-height: 100%;
 }

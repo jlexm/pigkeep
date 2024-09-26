@@ -2,23 +2,32 @@ import * as React from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import Grid2 from '@mui/material/Grid2'
 import Button from '@mui/material/Button'
-import { Box, IconButton, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material'
+import {
+  Box,
+  IconButton,
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+
+} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
+import ReusableDialogBox from '../../../modals/ReusableDialogBox' // Import the reusable dialog box
 import '../PigList_Folder/PigList.css'
 
 const columns: GridColDef[] = [
   {
     field: 'number',
     headerName: 'Number',
-    flex: 1, // Use flex instead of width
+    flex: 1,
     renderCell: (params) => {
-      const statusColor =
-        {
-          alive: 'blue',
-          sold: 'green',
-          deceased: 'red',
-        }[params.row.status]
+      const statusColor = {
+        alive: 'blue',
+        sold: 'green',
+        deceased: 'red',
+      }[params.row.status]
 
       const paddedNumber = params.value.toString().padStart(3, '0')
 
@@ -61,16 +70,98 @@ const columns: GridColDef[] = [
     field: 'actions',
     headerName: 'Actions',
     flex: 0.7,
-    renderCell: () => (
-      <>
-        <IconButton sx={{ color: 'blue' }} size="small">
-          <EditIcon />
-        </IconButton>
-        <IconButton sx={{ color: 'red' }} size="small">
-          <DeleteIcon />
-        </IconButton>
-      </>
-    ),
+    renderCell: (params) => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [editDialogOpen, setEditDialogOpen] = React.useState(false)
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false) // State for delete dialog visibility
+      const pigNumber = params.row.number
+
+      const handleEditClick = () => {
+        setEditDialogOpen(true)
+      }
+
+      const handleSave = () => {
+        setEditDialogOpen(false)
+      }
+
+      const handleCancelEdit = () => {
+        setEditDialogOpen(false)
+      }
+
+      const handleDeleteClick = () => {
+        setDeleteDialogOpen(true)
+      }
+
+      const handleConfirmDelete = () => {
+        // Perform delete logic here
+        setDeleteDialogOpen(false)
+      }
+
+      const handleCancelDelete = () => {
+        setDeleteDialogOpen(false)
+      }
+
+      return (
+        <>
+          <IconButton
+            sx={{ color: 'blue' }}
+            size="small"
+            onClick={handleEditClick}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            sx={{ color: 'red' }}
+            size="small"
+            onClick={handleDeleteClick}
+          >
+            <DeleteIcon />
+          </IconButton>
+
+          {editDialogOpen && (
+            <ReusableDialogBox
+              title={
+                <>
+                  Edit Pig <span style={{ color: '#11703b' }}>{pigNumber}</span>{' '}
+                </>
+              }
+              description="Fill up the form to update the pig’s information."
+              formFields={[
+                { placeholder: 'Date of Birth', icon: <EditIcon /> },
+                { placeholder: 'Parent Number', icon: <EditIcon /> },
+                { placeholder: 'Sex', icon: <EditIcon /> },
+                { placeholder: 'Pen Number', icon: <EditIcon /> },
+                { placeholder: 'Weight in kg', icon: <EditIcon /> },
+              ]}
+              onSave={handleSave}
+              onCancel={handleCancelEdit}
+              saveButtonText="Update"
+              saveButtonColor="#3B4DE1"
+            />
+          )}
+
+          {deleteDialogOpen && (
+            <ReusableDialogBox
+              title={
+                <>
+                  Delete Pig <span style={{ color: '#FF0000' }}>{pigNumber}</span>{' '}
+                </>
+              }
+              description="Confirm that you would like to proceed with the deletion of the pig. Note that this action is irreversible."
+              formFields={[
+              ]}
+              onSave={handleConfirmDelete}
+              onCancel={handleCancelDelete}
+              saveButtonText="Delete"
+              saveButtonColor="#FF0000"
+            />
+          )}
+
+        
+        </>
+      )
+    },
     headerAlign: 'right',
     align: 'right',
   },
@@ -201,7 +292,7 @@ const rows = [
     pigpenNumber: 15,
     recordedWeight: 140,
     priceSold: null,
-    status: 'sold',
+    status: 'alive',
   },
   {
     id: 10,
@@ -215,7 +306,7 @@ const rows = [
     pigpenNumber: 16,
     recordedWeight: 120,
     priceSold: 21200,
-    status: 'sold',
+    status: 'alive',
   },
   {
     id: 11,
@@ -229,7 +320,7 @@ const rows = [
     pigpenNumber: 12,
     recordedWeight: null,
     priceSold: null,
-    status: 'alive',
+    status: 'deceased',
   },
   {
     id: 12,
@@ -243,7 +334,7 @@ const rows = [
     pigpenNumber: 13,
     recordedWeight: 150,
     priceSold: 12000,
-    status: 'sold',
+    status: 'alive',
   },
   {
     id: 13,
@@ -295,24 +386,27 @@ export default function DataTable() {
   const [searchText, setSearchText] = React.useState('')
   const [statusFilter, setStatusFilter] = React.useState('all')
 
-  // Function to filter rows based on search text and selected status
   const filteredRows = rows.filter((row) => {
     const matchesSearchText = Object.values(row).some((value) =>
       value
         ? value.toString().toLowerCase().includes(searchText.toLowerCase())
         : false
     )
-
-    const matchesStatus =
-      statusFilter === 'all' || row.status === statusFilter
-
+    const matchesStatus = statusFilter === 'all' || row.status === statusFilter
     return matchesSearchText && matchesStatus
   })
 
   return (
     <Grid2 size={12}>
-      <Box sx={{ marginBottom: 2, width: 590, paddingTop: 2, display: 'flex', alignItems: 'center' }}>
-        
+      <Box
+        sx={{
+          marginBottom: 2,
+          width: 590,
+          paddingTop: 2,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
         <TextField
           label="Search"
           variant="outlined"
@@ -321,7 +415,6 @@ export default function DataTable() {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-
         <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
           <InputLabel>Status</InputLabel>
           <Select
@@ -330,22 +423,48 @@ export default function DataTable() {
             size="small"
             label="Status"
           >
-            <MenuItem value="all"><Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box></MenuItem>
+            <MenuItem value="all">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
+            </MenuItem>
             <MenuItem value="alive">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: 'blue', marginRight: 1 }} />
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    backgroundColor: 'blue',
+                    marginRight: 1,
+                  }}
+                />
                 Alive
               </Box>
             </MenuItem>
             <MenuItem value="sold">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: 'green', marginRight: 1 }} />
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    backgroundColor: 'green',
+                    marginRight: 1,
+                  }}
+                />
                 Sold
               </Box>
             </MenuItem>
             <MenuItem value="deceased">
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: 'red', marginRight: 1 }} />
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    backgroundColor: 'red',
+                    marginRight: 1,
+                  }}
+                />
                 Deceased
               </Box>
             </MenuItem>
@@ -363,13 +482,7 @@ export default function DataTable() {
           getRowClassName={(params) =>
             params.indexRelativeToCurrentPage % 2 === 0 ? 'even-row' : 'odd-row'
           }
-          sx={{
-            '& .MuiDataGrid-columnHeaders': {
-              fontWeight: 'bold',
-              fontSize: '15px',
-              color: '#11703B',
-            },
-          }}
+          disableColumnMenu
         />
       </Box>
     </Grid2>

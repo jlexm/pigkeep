@@ -10,7 +10,7 @@ const formatCurrency = (amount: number) => {
 
 export default function BarGraph() {
   return (
-    <Grid2 container spacing={3}>
+    <Grid2 container spacing={6}>
       <Grid2 size={12}>
         <h1 className="finHead">Financial Report</h1>
       </Grid2>
@@ -20,7 +20,7 @@ export default function BarGraph() {
 
       {/* Pig Sales Section */}
 
-      <Grid2 container size={6} className="pigSalesBox">
+      <Grid2 container size={{xs:12, sm:12, lg:6}} className="pigSalesBox">
         <Grid2 container size={6} className="pigSales">
           <p className="pigSalesTitle">Pig Sales</p>
         </Grid2>
@@ -28,7 +28,7 @@ export default function BarGraph() {
           <p className="totalSales">{formatCurrency(200000)}</p>
         </Grid2>
       </Grid2>
-      <Grid2 size={6}>
+      <Grid2 size={{sm:12, lg:6}}>
         <BarChart
           xAxis={[
             {
@@ -70,7 +70,7 @@ export default function BarGraph() {
 
       {/* Feed Expense Section */}
 
-      <Grid2 container size={6} className="pigSalesBox">
+      <Grid2 container size={{xs:12,sm:12, lg:6}} className="pigSalesBox">
         <Grid2 container size={6} className="pigSales">
           <p className="pigSalesTitle">Total Feed Expense </p>
         </Grid2>
@@ -120,7 +120,7 @@ export default function BarGraph() {
 
       {/* Medicine Expense Section */}
 
-      <Grid2 container size={6} className="pigSalesBox">
+      <Grid2 container size={{xs:12,sm:12, lg:6}} className="pigSalesBox">
         <Grid2 container size={6} className="pigSales1">
           <p className="pigSalesTitle">Total Medicine Expense </p>
         </Grid2>

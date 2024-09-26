@@ -1,4 +1,3 @@
-
 import Box from '@mui/material/Box'
 import './Home.css'
 import hugepig from '../../assets/hugepig.svg'
@@ -6,9 +5,9 @@ import { Grid2, Stack } from '@mui/material'
 
 export default function SimpleContainer() {
   return (
-    <Grid2 container size={12} className="homeContainer"  >
-      <Grid2 size={6} className="col1">
-        <Grid2>
+    <Grid2 container size={12} className="homeContainer">
+      <Grid2 size={{xs:12,lg:5, xl:6}} className="col1">
+        <Grid2 size={12}>
           <Stack
             spacing={3}
             direction="row"
@@ -20,7 +19,7 @@ export default function SimpleContainer() {
           </Stack>
         </Grid2>
 
-        <Grid2 size={6}>
+        <Grid2 size={{lg:12,xl:11}}>
           <p className="descrip">
             PigKeep web provides a platform for pig farm owners to efficiently
             manage and analyze their pig farm records. Any updates made on the
@@ -30,19 +29,17 @@ export default function SimpleContainer() {
         </Grid2>
       </Grid2>
 
-
-      <Grid2 size={6}>
+      <Grid2 container size={{xs:12,lg:5, xl:6}}>
         <Box className="hugePig">
           <Box
             component="img"
             src={hugepig}
             alt="Huge Pig"
             className="responsiveImage"
-            sx={{ width:700 }}
+            sx={{ width: { xs:0,lg:620, xl: 700 } }}
           />
         </Box>
       </Grid2>
     </Grid2>
   )
 }
-

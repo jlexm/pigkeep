@@ -14,7 +14,7 @@ interface DynamicCardsProps {
 
 const DynamicCards: React.FC<DynamicCardsProps> = ({ data, onCardClick }) => {
   return (
-    <Grid2 container spacing={1.4} justifyContent="start" className='card'>
+    <Grid2 container spacing={1} justifyContent="start" className='card'>
       {data.map((item, index) => (
         <Grid2 key={index}>
           <Card
@@ -22,7 +22,7 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ data, onCardClick }) => {
             onClick={() => onCardClick(item.text)}
             sx={{
               textAlign: 'center',
-              minWidth: '98px',
+              minWidth: '90px',
               minHeight: '100px',
               borderRadius: '10px',
               borderColor: '#000',

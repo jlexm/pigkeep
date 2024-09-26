@@ -7,10 +7,10 @@ import DataTable from './PigListDataTable'
 export default function PigList_Screen() {
   return (
     <Grid2 container size={12} spacing={2}>
-      <Grid2 size={3}>
+      <Grid2 size={{xs: 12 ,sm:6, md:7, lg:6,xl:3}}>
         <AddPigComp />
       </Grid2>
-      <Grid2 size={5} className="legendGrid">
+      <Grid2 size={{xs: 12 ,sm:6, md:7, lg:6,xl:5}} className="legendGrid">
         <Cards />
       </Grid2>
       <Grid2 size={2.6} className="itemsAlign">

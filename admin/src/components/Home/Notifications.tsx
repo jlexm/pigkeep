@@ -112,10 +112,9 @@ export default function VirtualizedList() {
           {'See Events'}
         </Link>
       </Grid2>
-      <Box sx={{ width: '100%', height: 580, maxWidth: 710, overflowY: 'auto' }}>
+      <Box sx={{ width: '100%', height: 580, overflowY: 'auto' }}>
         <FixedSizeList
           height={560}
-          width={710}
           itemSize={82}
           itemCount={events.length}
           overscanCount={5} // Adds some buffer to prevent flickering

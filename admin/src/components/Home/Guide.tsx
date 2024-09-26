@@ -14,7 +14,7 @@ export default function Guide() {
           <p className="pigSalesTitle">How PigKeep Works?</p>
         </Grid2>
       </Grid2>
-      <Grid2 className="guideCard" size={4}>
+      <Grid2 className="guideCard" size={{xs:6,sm:6, md: 12, lg:4}}>
         <Grid2 size={12} className="number">
           <h1>1</h1>
         </Grid2>
@@ -31,7 +31,7 @@ export default function Guide() {
           />
         </Grid2>
       </Grid2>
-      <Grid2 className="guideCard" size={4}>
+      <Grid2 className="guideCard" size={{xs:6,sm:6, md: 12, lg:4}}>
         <Grid2 size={12} className="number">
           <h1>2</h1>
         </Grid2>
@@ -48,7 +48,7 @@ export default function Guide() {
           />
         </Grid2>
       </Grid2>
-      <Grid2 className="guideCard" size={4}>
+      <Grid2 className="guideCard" size={{xs:6,sm:6, md: 12, lg:4}}>
         <Grid2 size={12} className="number">
           <h1>3</h1>
         </Grid2>
@@ -65,7 +65,7 @@ export default function Guide() {
           />
         </Grid2>
       </Grid2>
-      <Grid2 className="guideCard" size={4}>
+      <Grid2 className="guideCard" size={{xs:6,sm:6, md: 12, lg:4}}>
         <Grid2 size={12} className="number">
           <h1>4</h1>
         </Grid2>
@@ -82,7 +82,7 @@ export default function Guide() {
           />
         </Grid2>
       </Grid2>
-      <Grid2 className="guideCard" size={4}>
+      <Grid2 className="guideCard" size={{xs:6,sm:6, md: 12, lg:4}}>
         <Grid2 size={12} className="number">
           <h1>5</h1>
         </Grid2>
@@ -99,7 +99,7 @@ export default function Guide() {
           />
         </Grid2>
       </Grid2>
-      <Grid2 className="guideCard" size={4}>
+      <Grid2 className="guideCard" size={{xs:6,sm:6, lg:4}}>
         <Grid2 size={12} className="number">
           <h1>6</h1>
         </Grid2>

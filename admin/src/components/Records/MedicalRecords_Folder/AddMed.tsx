@@ -3,9 +3,32 @@ import './Medicine.css'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import MonthPagination from '../../Home/PaginationControl'
 import FeedTable from './MedicalTable'
+import ReusableDialogBox from '../../../modals/ReusableDialogBox';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import { useState } from 'react'
 
 export default function AddMedComp() {
+  // State to manage the dialog box visibility
+  const [openDialog, setOpenDialog] = useState(false);
+
+  // Function to open the dialog
+  const handleOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  // Function to close the dialog
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  // Function to handle save action in the dialog
+  const handleSave = () => {
+    console.log('Saving pig data...');
+    handleCloseDialog(); // Close dialog after saving
+  };
+
   return (
+    <>
     <Grid2 container size={12} spacing={3}>
       <Grid2 size={12} className="miniTitle">
         <p className="margin0">Total Medicine Expense</p>
@@ -32,6 +55,7 @@ export default function AddMedComp() {
                 marginRight: '8px',
               },
             }}
+            onClick={handleOpenDialog}
           >
             Add Meds
           </Button>
@@ -46,5 +70,37 @@ export default function AddMedComp() {
         </Grid2>
       </Grid2>
     </Grid2>
+
+    {/* ReusableDialogBox to be shown when openDialog is true */}
+    {openDialog && (
+      <ReusableDialogBox
+        title="Add Medicine"
+        description="Fill up the necessary information."
+        formFields={[
+          {
+            placeholder: "Medicine Name",
+            icon: <DirectionsBikeIcon />,
+          },
+          {
+            placeholder: "Unit",
+            icon: <DirectionsBikeIcon />,
+          },
+          {
+            placeholder: "Quantity",
+            icon: <DirectionsBikeIcon />,
+          },
+          {
+            placeholder: "Cost",
+            icon: <DirectionsBikeIcon />,
+          },
+        ]}
+        onSave={handleSave} // Handle save action
+        onCancel={handleCloseDialog} // Handle cancel action
+        saveButtonText="Add Medicine"
+        saveButtonColor="#3B4DE1" // Green color for the save button
+      />
+    )}
+
+    </>
   )
 }

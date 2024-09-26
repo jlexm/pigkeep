@@ -5,6 +5,8 @@ import EventIcon from '@mui/icons-material/Event'
 import CurrentDataTable from '../components/Events/CurrentDataTable'
 import UpcomingDataTable from '../components/Events/UpcomingDataTable'
 import HistoryDataTable from '../components/Events/HistoryDataTable'
+import ReusableDialogBox from '../modals/ReusableDialogBox'
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 
 
 const Events = () => {
@@ -14,7 +16,27 @@ const Events = () => {
     setSelectedChip(chip)
   }
 
+    // State to manage the dialog box visibility
+    const [openDialog, setOpenDialog] = useState(false);
+
+    // Function to open the dialog
+    const handleOpenDialog = () => {
+      setOpenDialog(true);
+    };
+  
+    // Function to close the dialog
+    const handleCloseDialog = () => {
+      setOpenDialog(false);
+    };
+  
+    // Function to handle save action in the dialog
+    const handleSave = () => {
+      console.log('Saving pig data...');
+      handleCloseDialog(); // Close dialog after saving
+    };
+
   return (
+    <>
     <Grid2 container size={12} spacing={5} className="paddingTop">
       <Grid2 container size={12} spacing={5}>
         <Grid2 container size={6} className="eventContainer" spacing={0}>
@@ -36,6 +58,7 @@ const Events = () => {
                   marginRight: '8px',
                 },
               }}
+              onClick={handleOpenDialog}
             >
               Set Event
             </Button>
@@ -97,6 +120,33 @@ const Events = () => {
 
      
     </Grid2>
+
+    {/* ReusableDialogBox to be shown when openDialog is true */}
+    {openDialog && (
+        <ReusableDialogBox
+          title="Set Event"
+          description="Fill up the form to set an event for your pig farm."
+          formFields={[
+            {
+              placeholder: "Date",
+              icon: <DirectionsBikeIcon />,
+            },
+            {
+              placeholder: "Pig Number",
+              icon: <DirectionsBikeIcon />,
+            },
+            {
+              placeholder: "Event Name",
+              icon: <DirectionsBikeIcon />,
+            },
+          ]}
+          onSave={handleSave} // Handle save action
+          onCancel={handleCloseDialog} // Handle cancel action
+          saveButtonText="Set"
+          saveButtonColor="#11703b" // Green color for the save button
+        />
+      )}
+    </>
   )
 }
 
