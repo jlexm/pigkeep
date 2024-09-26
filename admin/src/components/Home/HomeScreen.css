@@ -51,8 +51,8 @@
     justify-content: center;
 }
 
-.boxLeft {
-    justify-content: start;
+.boxCenter {
+    justify-content: center;
 }
 
 .pigSales {
@@ -72,6 +72,7 @@
     font-size: 35px;
     font-weight: 500;
     margin: 0;
+    color: white;
 }
 
 .totalSales {

@@ -6,12 +6,12 @@ import Dispose from "../components/Disposal/Dispose"
 const Disposal = () => {
   return (
     <Grid2 container size={12} spacing={5} className="paddingTop">
-      <Grid2 container size={4} className='itemAlign'>
+      <Grid2 container size={{xs:12, lg:4}} className='itemAlign'>
         <Grid2 size={12}>
           <Dispose />
         </Grid2>
       </Grid2>
-      <Grid2 container size={8} className='itemAlign'>
+      <Grid2 container size={{xs:12, lg:8}} className='itemAlign'>
         <Grid2 size={12}>
           <p className='feedHistory'>Disposal Records</p>
           <DisposalDataTable />

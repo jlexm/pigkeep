@@ -39,7 +39,7 @@ const Events = () => {
     <>
     <Grid2 container size={12} spacing={5} className="paddingTop">
       <Grid2 container size={12} spacing={5}>
-        <Grid2 container size={6} className="eventContainer" spacing={0}>
+        <Grid2 container size={{xs:12, lg:6}} className="eventContainer" spacing={0}>
           <Grid2 size={4} className="eventHeadTitle">
             <p className="eventTitle">Events</p>
           </Grid2>
@@ -66,12 +66,12 @@ const Events = () => {
         </Grid2>
       </Grid2>
       <Grid2 container size={12}>
-        <Grid2 container size={6} className='itemAlign'>
+        <Grid2 container size={{xs:12,lg:6}} className='itemAlign'>
           <Grid2 container size={12}>
             <CurrentDataTable />
           </Grid2>
         </Grid2>
-        <Grid2 container size={6} spacing={0} className="itemAlign">
+        <Grid2 container size={{xs:12,lg:6}} spacing={0} className="itemAlign">
           <Grid2 container size={12} spacing={0}>
             <Chip
               label="Upcoming"

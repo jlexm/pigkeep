@@ -29,10 +29,10 @@ const Profile = () => {
 
   return (
     <>
-      <Grid2 container size={12} sx={{ margin: 8 }}>
-        <Grid2 size={1.75}></Grid2>
-        <Grid2 size={1.75} className="rightEnd">
-          <Grid2 size={12} className="right">
+      <Grid2 container size={12} spacing={5} sx={{ margin: 8 }}>
+        <Grid2 size={{xs:0, lg:2}}></Grid2>
+        <Grid2 size={{xs:12, lg:2}} className="rightEnd">
+          <Grid2 size={{xs:6, lg:6}} className="right">
             <Avatar
               src={pfp}
               alt="Junmar"
@@ -48,7 +48,7 @@ const Profile = () => {
               Change Profile Picture
             </Button>
           </Grid2>
-          <Grid2 size={12} className="right">
+          <Grid2 size={{xs:6, lg:12}} className="right">
             <Button
               variant="outlined"
               sx={{
@@ -67,7 +67,7 @@ const Profile = () => {
           </Grid2>
         </Grid2>
 
-        <Grid2 size={5} className="edit" sx={{ backgroundColor: 'white' }}>
+        <Grid2 size={{xs:12, lg:5}} className="edit" sx={{ backgroundColor: 'white' }}>
           <Grid2>
             <p className="margin0" style={{ paddingBottom: 20 }}>
               Edit Profile
@@ -78,7 +78,7 @@ const Profile = () => {
           </Grid2>
         </Grid2>
 
-        <Grid2 size={3.5}></Grid2>
+        <Grid2 size={{xs:0, lg:3}}></Grid2>
 
         <Box className="bottgreen">
           <Box

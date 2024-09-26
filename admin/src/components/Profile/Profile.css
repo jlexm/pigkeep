@@ -28,6 +28,8 @@
     bottom: 0;
     right: 0;
     width: 100%;
+    inset-area: y-end;
+    margin-bottom: -5rem;
 }
 
 .responsiveImage {

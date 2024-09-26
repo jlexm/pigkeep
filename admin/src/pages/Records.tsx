@@ -16,7 +16,6 @@ const Records = () => {
   return (
     <Grid2 container spacing={5} sx={{ marginTop: 5 }}>
       <Grid2 size={12}>
-        <Grid2 container spacing={3}>
           <Grid2 container size={12} style={{ color: 'black', textAlign: 'start' }}>
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Chip
@@ -93,7 +92,6 @@ const Records = () => {
               />
             </Box>
           </Grid2>
-        </Grid2>
       </Grid2>
       <Grid2 container size={12} spacing={3}>
         <Grid2 size={12}>

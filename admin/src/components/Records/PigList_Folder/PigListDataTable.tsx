@@ -397,7 +397,7 @@ export default function DataTable() {
   })
 
   return (
-    <Grid2 size={12}>
+    <Grid2 size={{xs:12}}>
       <Box
         sx={{
           marginBottom: 2,

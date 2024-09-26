@@ -20,7 +20,7 @@ export default function BarGraph() {
 
       {/* Pig Sales Section */}
 
-      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxLeft">
+      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
         <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
           <Grid2 container size={12} className="pigSales">
             <p className="pigSalesTitle">Pig Sales</p>
@@ -58,7 +58,7 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#11703b' }]}
-          width={700}
+          
           height={500}
           sx={{
             '& .MuiChartsAxis-y': {
@@ -72,7 +72,7 @@ export default function BarGraph() {
 
       {/* Feed Expense Section */}
 
-      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxLeft">
+      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
         <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
           <Grid2 container size={12} className="pigSales">
             <p className="pigSalesTitle">Total Feed Expense </p>
@@ -110,13 +110,13 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#11703b' }]}
-          width={700}
           height={500}
           sx={{
             '& .MuiChartsAxis-y': {
               marginRight: '10px',
             },
             paddingLeft: '10px',
+           
           }}
           margin={{ left: 60 }}
         />
@@ -124,7 +124,7 @@ export default function BarGraph() {
 
       {/* Medicine Expense Section */}
 
-      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxLeft">
+      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
         <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
           <Grid2 container size={12} className="pigSales1">
             <p className="pigSalesTitle">Total Medicine Expense </p>
@@ -162,7 +162,7 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#3B4DE1' }]}
-          width={700}
+
           height={500}
           sx={{
             '& .MuiChartsAxis-y': {

@@ -144,7 +144,7 @@ export default function PenInfo({ selectedRow }) {
           <p className="size100">{selectedRow ? selectedRow.number : ''}</p>
         </Grid2>
         <Grid2 size={12}>
-          <text style={{ fontSize: 20 }}>Pen Number</text>
+          <text style={{ fontSize: 20, color: "white" }}>Pen Number</text>
         </Grid2>
       </Grid2>
       <Grid2 size={12} container sx={{ marginLeft: 4, marginRight: 4 }}>
