@@ -36,7 +36,7 @@ export default function BasicPie() {
               ],
             },
           ]}
-          width={590}
+          width={585}
           height={400}
         />
       </Grid2>

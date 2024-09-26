@@ -18,10 +18,10 @@ const Home = () => {
       <Grid2 container size={12}>
         <SimpleContainer />
       </Grid2>
-      <Grid2 size={{ xs: 12, md: 11, lg: 6 }}>
+      <Grid2 size={{ xs: 12,  lg: 6 }}>
         <BasicPie />
       </Grid2>
-      <Grid2 size={{ xs: 12, md: 11, lg: 6 }}>
+      <Grid2 size={{ xs: 12,  lg: 6 }}>
         <VirtualizedList />
       </Grid2>
       <Grid2 size={12}>

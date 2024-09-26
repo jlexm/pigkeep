@@ -15,20 +15,22 @@ export default function BarGraph() {
         <h1 className="finHead">Financial Report</h1>
       </Grid2>
       <Grid2 size={12}>
-        <MonthPagination/>
+        <MonthPagination />
       </Grid2>
 
       {/* Pig Sales Section */}
 
-      <Grid2 container size={{xs:12, sm:12, lg:6}} className="pigSalesBox">
-        <Grid2 container size={6} className="pigSales">
-          <p className="pigSalesTitle">Pig Sales</p>
-        </Grid2>
-        <Grid2 size={10}>
-          <p className="totalSales">{formatCurrency(200000)}</p>
+      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxLeft">
+        <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
+          <Grid2 container size={12} className="pigSales">
+            <p className="pigSalesTitle">Pig Sales</p>
+          </Grid2>
+          <Grid2 size={12}>
+            <p className="totalSales">{formatCurrency(200000)}</p>
+          </Grid2>
         </Grid2>
       </Grid2>
-      <Grid2 size={{sm:12, lg:6}}>
+      <Grid2 size={{ xs: 12, lg: 7 }}>
         <BarChart
           xAxis={[
             {
@@ -70,15 +72,17 @@ export default function BarGraph() {
 
       {/* Feed Expense Section */}
 
-      <Grid2 container size={{xs:12,sm:12, lg:6}} className="pigSalesBox">
-        <Grid2 container size={6} className="pigSales">
-          <p className="pigSalesTitle">Total Feed Expense </p>
-        </Grid2>
-        <Grid2 size={10}>
-          <p className="totalSales">{formatCurrency(200000)}</p>
+      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxLeft">
+        <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
+          <Grid2 container size={12} className="pigSales">
+            <p className="pigSalesTitle">Total Feed Expense </p>
+          </Grid2>
+          <Grid2 size={12}>
+            <p className="totalSales">{formatCurrency(200000)}</p>
+          </Grid2>
         </Grid2>
       </Grid2>
-      <Grid2 size={6}>
+      <Grid2 size={{ xs: 12, lg: 7 }}>
         <BarChart
           xAxis={[
             {
@@ -120,15 +124,17 @@ export default function BarGraph() {
 
       {/* Medicine Expense Section */}
 
-      <Grid2 container size={{xs:12,sm:12, lg:6}} className="pigSalesBox">
-        <Grid2 container size={6} className="pigSales1">
-          <p className="pigSalesTitle">Total Medicine Expense </p>
-        </Grid2>
-        <Grid2 size={10}>
-          <p className="meds">{formatCurrency(200000)}</p>
+      <Grid2 container size={{ xs: 12, lg: 5 }} className="boxLeft">
+        <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
+          <Grid2 container size={12} className="pigSales1">
+            <p className="pigSalesTitle">Total Medicine Expense </p>
+          </Grid2>
+          <Grid2 size={12}>
+            <p className="meds">{formatCurrency(200000)}</p>
+          </Grid2>
         </Grid2>
       </Grid2>
-      <Grid2 size={6}>
+      <Grid2 size={{ xs: 12, lg: 7 }}>
         <BarChart
           xAxis={[
             {
@@ -167,7 +173,6 @@ export default function BarGraph() {
           margin={{ left: 60 }}
         />
       </Grid2>
-
     </Grid2>
   )
 }
