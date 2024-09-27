@@ -10,7 +10,7 @@ import {
   Select,
   InputLabel,
   FormControl,
-
+  Paper,
 } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -145,20 +145,18 @@ const columns: GridColDef[] = [
             <ReusableDialogBox
               title={
                 <>
-                  Delete Pig <span style={{ color: '#FF0000' }}>{pigNumber}</span>{' '}
+                  Delete Pig{' '}
+                  <span style={{ color: '#FF0000' }}>{pigNumber}</span>{' '}
                 </>
               }
               description="Confirm that you would like to proceed with the deletion of the pig. Note that this action is irreversible."
-              formFields={[
-              ]}
+              formFields={[]}
               onSave={handleConfirmDelete}
               onCancel={handleCancelDelete}
               saveButtonText="Delete"
               saveButtonColor="#FF0000"
             />
           )}
-
-        
         </>
       )
     },
@@ -397,82 +395,83 @@ export default function DataTable() {
   })
 
   return (
-    <Grid2 size={{xs:12}}>
-      <Box
-        sx={{
-          marginBottom: 2,
-          width: 590,
-          paddingTop: 2,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <TextField
-          label="Search"
-          variant="outlined"
-          size="small"
-          fullWidth
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-        <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
-          <InputLabel>Status</InputLabel>
-          <Select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
+    <>
+      <Grid2 container size={{ xs: 12 }}>
+        <Box
+          sx={{
+            marginBottom: 2,
+            width: 590,
+            paddingTop: 2,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <TextField
+            label="Search"
+            variant="outlined"
             size="small"
-            label="Status"
-          >
-            <MenuItem value="all">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
-            </MenuItem>
-            <MenuItem value="alive">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box
-                  sx={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: '50%',
-                    backgroundColor: 'blue',
-                    marginRight: 1,
-                  }}
-                />
-                Alive
-              </Box>
-            </MenuItem>
-            <MenuItem value="sold">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box
-                  sx={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: '50%',
-                    backgroundColor: 'green',
-                    marginRight: 1,
-                  }}
-                />
-                Sold
-              </Box>
-            </MenuItem>
-            <MenuItem value="deceased">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Box
-                  sx={{
-                    width: 12,
-                    height: 12,
-                    borderRadius: '50%',
-                    backgroundColor: 'red',
-                    marginRight: 1,
-                  }}
-                />
-                Deceased
-              </Box>
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
+            fullWidth
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              size="small"
+              label="Status"
+            >
+              <MenuItem value="all">
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
+              </MenuItem>
+              <MenuItem value="alive">
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      width: 12,
+                      height: 12,
+                      borderRadius: '50%',
+                      backgroundColor: 'blue',
+                      marginRight: 1,
+                    }}
+                  />
+                  Alive
+                </Box>
+              </MenuItem>
+              <MenuItem value="sold">
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      width: 12,
+                      height: 12,
+                      borderRadius: '50%',
+                      backgroundColor: 'green',
+                      marginRight: 1,
+                    }}
+                  />
+                  Sold
+                </Box>
+              </MenuItem>
+              <MenuItem value="deceased">
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box
+                    sx={{
+                      width: 12,
+                      height: 12,
+                      borderRadius: '50%',
+                      backgroundColor: 'red',
+                      marginRight: 1,
+                    }}
+                  />
+                  Deceased
+                </Box>
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-      <Box>
+        {/* <Paper sx={{ height: 400, width: '100%' }}>
         <DataGrid
           rows={filteredRows}
           columns={columns}
@@ -484,7 +483,18 @@ export default function DataTable() {
           }
           disableColumnMenu
         />
-      </Box>
-    </Grid2>
+      </Paper> */}
+      </Grid2>
+      <Grid2 sx={{ overflow: 'scroll' }} size={{ md: 6 }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[5, 10]}
+          checkboxSelection
+          sx={{ border: 0, width: '100%' }}
+        />
+      </Grid2>
+    </>
   )
 }

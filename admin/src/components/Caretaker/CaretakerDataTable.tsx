@@ -229,6 +229,7 @@ export default function CaretakerDataTable() {
 
       <Box>
         <DataGrid
+          
           rows={filteredRows}
           columns={columns(visiblePasswords, togglePasswordVisibility)}
           initialState={{ pagination: { paginationModel } }}
@@ -249,6 +250,7 @@ export default function CaretakerDataTable() {
             '& .red-text': {
               color: 'red',
             },
+            width:"100%"
           }}
         />
       </Box>
