@@ -7,6 +7,7 @@ import Events from './pages/Events'
 import Disposal from './pages/Disposal'
 import Caretaker from './pages/Caretaker'
 import Profile from './pages/Profile'
+import Login from './pages/Login'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/disposal" element={<Disposal />} />
           <Route path="/caretaker" element={<Caretaker />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </div>

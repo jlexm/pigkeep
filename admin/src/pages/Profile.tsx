@@ -6,8 +6,11 @@ import bottwave from '../assets/bottwave.svg'
 import ReusableDialogBox from '../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
+  const navigate = useNavigate()
+
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = useState(false)
 
@@ -27,14 +30,18 @@ const Profile = () => {
     handleCloseDialog() // Close dialog after saving
   }
 
+  const handleLogOut = () => {
+    navigate('/login')
+  }
+
   return (
     <>
       <Grid2 container size={12} spacing={5} sx={{ margin: 8 }}>
-        <Grid2 size={{xs:0, lg:2}}></Grid2>
-        <Grid2 size={{xs:12, lg:2}} className="rightEnd">
-          <Grid2 size={{xs:6, lg:6}} className="right">
+        <Grid2 size={{ xs: 0, lg: 2 }}></Grid2>
+        <Grid2 size={{ xs: 12, lg: 2 }} className="rightEnd">
+          <Grid2 size={{ xs: 6, lg: 6 }} className="right">
             <Avatar
-              src={pfp}
+              src={pfp} 
               alt="Junmar"
               sx={{
                 width: 180,
@@ -48,7 +55,7 @@ const Profile = () => {
               Change Profile Picture
             </Button>
           </Grid2>
-          <Grid2 size={{xs:6, lg:12}} className="right">
+          <Grid2 size={{ xs: 6, lg: 12 }} className="right">
             <Button
               variant="outlined"
               sx={{
@@ -65,9 +72,32 @@ const Profile = () => {
               Change Password
             </Button>
           </Grid2>
+
+          <Grid2 size={{ xs: 6, lg: 12 }} className="right">
+            <Button
+              variant="outlined"
+              sx={{
+                color: '#11703b',
+                marginTop: 10,
+                border: '1px solid #11703b',
+                zIndex: 2, 
+                '&:hover': {
+                  backgroundColor: '#11703b',
+                  color: 'white',
+                },
+              }}
+              onClick={handleLogOut}
+            >
+              Log Out
+            </Button>
+          </Grid2>
         </Grid2>
 
-        <Grid2 size={{xs:12, lg:5}} className="edit" sx={{ backgroundColor: 'white' }}>
+        <Grid2
+          size={{ xs: 12, lg: 5 }}
+          className="edit"
+          sx={{ backgroundColor: 'white' }}
+        >
           <Grid2>
             <p className="margin0" style={{ paddingBottom: 20 }}>
               Edit Profile
@@ -78,7 +108,7 @@ const Profile = () => {
           </Grid2>
         </Grid2>
 
-        <Grid2 size={{xs:0, lg:3}}></Grid2>
+        <Grid2 size={{ xs: 0, lg: 3 }}></Grid2>
 
         <Box className="bottgreen">
           <Box
