@@ -35,7 +35,7 @@
 //           <p className="size100">P-01</p>
 //         </Grid22>
 //         <Grid22  size={12}>
-          
+
 //           <text style={{ fontSize: 20 }}>{/* number */}Pen Number</text>
 //         </Grid22>
 //       </Grid22>
@@ -68,7 +68,7 @@
 //           <Grid22 container sx={{ height: 4 }}></Grid22>
 //           <Grid22 container spacing={0} className='right'>
 //             {pigs.map((pig, index) => (
-//               <Grid22 size={6} key={index} > 
+//               <Grid22 size={6} key={index} >
 //                 <ListItem sx={{ paddingLeft: 2 }}>
 //                   <ListItemIcon sx={{ minWidth: 30 }}>
 //                     <CircleIcon sx={{ color: getStatusColor(pig.status) }} />
@@ -110,31 +110,36 @@
 //   )
 // }
 
-
-
-import { Button, Grid2, Stack, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import CircleIcon from '@mui/icons-material/Circle';
-import './PigPen.css';
+import {
+  Button,
+  Grid2,
+  Stack,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material'
+import CircleIcon from '@mui/icons-material/Circle'
+import './PigPen.css'
 
 const pigs = [
   { number: '001', status: 'alive' },
   { number: '002', status: 'sold' },
   { number: '003', status: 'deceased' },
   // ... other pigs
-];
+]
 
 const getStatusColor = (status) => {
   switch (status) {
     case 'alive':
-      return 'blue';
+      return 'blue'
     case 'sold':
-      return 'green';
+      return 'green'
     case 'deceased':
-      return 'red';
+      return 'red'
     default:
-      return 'gray';
+      return 'gray'
   }
-};
+}
 
 export default function PenInfo({ selectedRow }) {
   return (
@@ -144,7 +149,7 @@ export default function PenInfo({ selectedRow }) {
           <p className="size100">{selectedRow ? selectedRow.number : ''}</p>
         </Grid2>
         <Grid2 size={12}>
-          <text style={{ fontSize: 20, color: "white" }}>Pen Number</text>
+          <text style={{ fontSize: 20, color: 'white' }}>Pen Number</text>
         </Grid2>
       </Grid2>
       <Grid2 size={12} container sx={{ marginLeft: 4, marginRight: 4 }}>
@@ -155,17 +160,26 @@ export default function PenInfo({ selectedRow }) {
           <Grid2 container sx={{ height: 15 }}></Grid2>
           <Grid2 size={12} sx={{ height: 30 }}>
             <text>
-              Type: <span className="green">{selectedRow ? selectedRow.type : ''}</span>
+              Type:{' '}
+              <span className="green">
+                {selectedRow ? selectedRow.type : ''}
+              </span>
             </text>
           </Grid2>
           <Grid2 size={12} sx={{ height: 30 }}>
             <text>
-              Pig Count: <span className="green">{selectedRow ? selectedRow.pigCount : ''}</span>
+              Pig Count:{' '}
+              <span className="green">
+                {selectedRow ? selectedRow.pigCount : ''}
+              </span>
             </text>
           </Grid2>
           <Grid2 size={12} sx={{ height: 30 }}>
             <text>
-              Max Pig: <span className="green">{selectedRow ? selectedRow.maxPigs : ''}</span>
+              Max Pig:{' '}
+              <span className="green">
+                {selectedRow ? selectedRow.maxPigs : ''}
+              </span>
             </text>
           </Grid2>
         </Grid2>
@@ -174,7 +188,7 @@ export default function PenInfo({ selectedRow }) {
             <text>Pigs Contained</text>
           </Grid2>
           <Grid2 container sx={{ height: 4 }}></Grid2>
-          <Grid2 container spacing={0} className='right'>
+          <Grid2 container spacing={0} className="right">
             {pigs.map((pig, index) => (
               <Grid2 size={6} key={index}>
                 <ListItem sx={{ paddingLeft: 2 }}>
@@ -188,8 +202,25 @@ export default function PenInfo({ selectedRow }) {
           </Grid2>
         </Grid2>
       </Grid2>
-      <Grid2 size={12} container sx={{ marginLeft: 4, marginRight: 4, paddingTop: 3 }} className="right">
+      <Grid2
+        size={12}
+        container
+        sx={{ marginLeft: 4, marginRight: 4, paddingTop: 3 }}
+        className="right"
+      >
         <Stack spacing={2} direction="row">
+          <Button
+            variant="outlined"
+            sx={{
+              color: '#FF0000',
+              borderColor: '#FF0000',
+              '&:hover': { color: "white", backgroundColor: '#d32f2f' , borderColor: '#FF0000'},
+              width: 90,
+              borderRadius: 2,
+            }}
+          >
+            Delete
+          </Button>
           <Button
             variant="contained"
             sx={{
@@ -201,19 +232,8 @@ export default function PenInfo({ selectedRow }) {
           >
             Edit
           </Button>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: '#FF0000',
-              '&:hover': { backgroundColor: '#d32f2f' },
-              width: 90,
-              borderRadius: 2,
-            }}
-          >
-            Delete
-          </Button>
         </Stack>
       </Grid2>
     </Grid2>
-  );
+  )
 }

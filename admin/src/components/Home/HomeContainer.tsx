@@ -14,6 +14,7 @@ export default function SimpleContainer() {
             useFlexGap
             sx={{ flexWrap: 'wrap' }}
           >
+            
             <h1 className="pigNumber">42</h1>
             <h1 className="totalPigs">Total Pigs</h1>
           </Stack>

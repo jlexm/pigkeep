@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Grid2 } from '@mui/material'
+import { Button, Grid2, Typography } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import ReusableDialogBox from '../../../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
@@ -28,6 +28,7 @@ export default function AddPigComp() {
     <>
       <Grid2 container size={12} className="addPig">
         <Grid2 size={{ xs: 12, lg: 4.5 }} className="textAlign-left">
+          
           <span className="pigTotal">44</span>
         </Grid2>
         <Grid2 size={{ xs: 12, lg: 3.5 }} className="total">

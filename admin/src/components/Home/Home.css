@@ -20,7 +20,7 @@
 }
 
 .pigNumber {
-    font-size: 220px;
+    font-size: 12vw;
     font-weight: bold;
     color: white;
     z-index: 0;
@@ -29,7 +29,7 @@
 }
 
 .totalPigs {
-    font-size: 45px;
+    font-size: 3vw;
     font-weight: 700;
     color: white;
     margin: 0;
@@ -40,7 +40,7 @@
 
 .descrip {
     text-align: start;
-    font-size: 20px;
+    font-size: 1.2rem;
     font-weight: 300;
     margin: 0;
     color: white;

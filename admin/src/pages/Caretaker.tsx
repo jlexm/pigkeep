@@ -44,7 +44,7 @@ const Caretaker = () => {
           Add
         </Button>
       </Grid2>
-      <Grid2 container size={12}>
+      <Grid2 container size={12} className='responsiveTable'>
         <CaretakerDataTable />
       </Grid2>
     </Grid2>
