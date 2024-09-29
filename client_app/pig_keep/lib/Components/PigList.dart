@@ -43,6 +43,19 @@ class _PigListState extends State<PigList> {
     });
   }
 
+  Future<void> _selectDate() async {
+    DateTime? _picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
+    if (_picked != null) {
+      setState(() {
+        _pigDOBController.text = _picked.toString().split(" ")[0];
+      });
+    }
+  }
+
   @override
   void initState() {
     context.read<GlobalProvider>().getCurrentUser().then((user) {
@@ -141,7 +154,7 @@ class _PigListState extends State<PigList> {
                                         'Fill up the necessary information.',
                                     formFields: [
                                       RecyclableTextFormField(
-                                        controller: TextEditingController(),
+                                        controller: _pigDOBController,
                                         keyboardType: TextInputType.datetime,
                                         labelText: 'Date of Birth',
                                         hintText: 'YYYY/MM/DD',
@@ -149,15 +162,26 @@ class _PigListState extends State<PigList> {
                                         icon: Icons.email,
                                         textSize: 14.sp,
                                         height: 43.h,
+                                        onTap: () {
+                                          _selectDate();
+                                        },
+                                        readOnly: true,
                                       ),
                                       RecyclableTextFormField(
                                         controller: TextEditingController(),
                                         labelText: 'Parent Number',
+                                        showDropdown: true,
+                                        dropdownItems: const [
+                                          'Parent 1',
+                                          'Parent 2',
+                                          'Parent 3'
+                                        ],
                                         hintText: 'Parent Number',
                                         hintTextSize: 14.sp,
                                         icon: Icons.email,
                                         textSize: 14.sp,
                                         height: 43.h,
+                                        readOnly: true,
                                       ),
                                       RecyclableTextFormField(
                                         controller: TextEditingController(),
@@ -172,6 +196,7 @@ class _PigListState extends State<PigList> {
                                         icon: Icons.email,
                                         textSize: 14.sp,
                                         height: 43.h,
+                                        readOnly: true,
                                       ),
                                       RecyclableTextFormField(
                                         controller: TextEditingController(),
@@ -187,6 +212,7 @@ class _PigListState extends State<PigList> {
                                         icon: Icons.email,
                                         textSize: 14.sp,
                                         height: 43.h,
+                                        readOnly: true,
                                       ),
                                     ],
                                     onSave: () {

@@ -102,6 +102,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final bool showDropdown;
   final bool showIcon;
   final bool readOnly;
+  final void Function()? onTap;
 
   const RecyclableTextFormField({
     super.key,
@@ -126,6 +127,7 @@ class RecyclableTextFormField extends StatelessWidget {
     this.showDropdown = false,
     this.showIcon = true,
     this.readOnly = false,
+    this.onTap,
   });
 
   @override
@@ -167,6 +169,7 @@ class RecyclableTextFormField extends StatelessWidget {
             validator: validator,
             onSaved: onSaved,
             onChanged: onChanged,
+            onTap: onTap,
             maxLines: maxLines,
             minLines: minLines,
             style: TextStyle(
