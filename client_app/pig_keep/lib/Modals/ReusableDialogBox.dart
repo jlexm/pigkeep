@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class ReusableDialogBox extends StatelessWidget {
@@ -98,7 +99,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final double? height;
   final double? iconSize;
   final EdgeInsetsGeometry? contentPadding;
-  final List<String>? dropdownItems;
+  final List<CustomDropDownItem>? dropdownItems;
   final bool showDropdown;
   final bool showIcon;
   final bool readOnly;
@@ -193,16 +194,15 @@ class RecyclableTextFormField extends StatelessWidget {
                       }
                     },
                     items: dropdownItems!.map<DropdownMenuItem<String>>(
-                      (String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        );
-                      },
-                    ).toList(),
+                        (CustomDropDownItem item) {
+                      return DropdownMenuItem<String>(
+                        value: item.value, // Ensure this is a String
+                        child: Text(
+                          item.label,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
               ),

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/DataTable_PigList.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Models/pig-pen.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
 
 class PigList extends StatefulWidget {
-  final void Function(Map<String, String> rowData) onRowSelected;
+  final void Function(Map<String, dynamic> rowData) onRowSelected;
 
   const PigList({super.key, required this.onRowSelected});
 
@@ -20,6 +23,7 @@ class PigList extends StatefulWidget {
 
 class _PigListState extends State<PigList> {
   // controller
+  final TextEditingController _pigNumberController = TextEditingController();
   final TextEditingController _pigDOBController = TextEditingController();
   final TextEditingController _pigParentController = TextEditingController();
   final TextEditingController _pigSexController = TextEditingController();
@@ -27,20 +31,41 @@ class _PigListState extends State<PigList> {
 
   // pig db
   final pigService = globalLocator.get<PigService>();
+  final penService = globalLocator.get<PigPenService>();
 
   // pigs variables
   var selectedFarm;
   late String userOwner;
-  var pigs = [];
+  List<Map<String, dynamic>> pigs = [];
+  List<PigPen> pigPens = [];
   String searchValue = '';
 
   // fns
   Future<void> getPigs() async {
-    final fetchPigs =
-        await pigService.fetchPigs(selectedFarm['_id'], userOwner);
+    // fetch all pens first
+    List<PigPen> pens =
+        await penService.fetchPigPens(selectedFarm['_id'], userOwner);
+    final fetchPigs = await pigService.fetchAllPigsInAllPens(pens);
     setState(() {
       pigs = fetchPigs;
+      pigPens = pens;
     });
+  }
+
+  Future<void> addPig() async {
+    String pigNumber =
+        'P-${_pigNumberController.text.toString().padLeft(3, '0')}';
+
+    await pigService.addPig(
+        userOwner,
+        selectedFarm['_id'],
+        _pigPenController.text,
+        pigNumber,
+        _pigParentController.text,
+        _pigSexController.text == 'Male',
+        DateTime.parse(_pigDOBController.text));
+    await getPigs();
+    print('Form saved');
   }
 
   Future<void> _selectDate() async {
@@ -154,6 +179,16 @@ class _PigListState extends State<PigList> {
                                         'Fill up the necessary information.',
                                     formFields: [
                                       RecyclableTextFormField(
+                                        controller: _pigNumberController,
+                                        labelText: 'Pen Number',
+                                        hintText: 'Pen Number',
+                                        hintTextSize: 14.sp,
+                                        keyboardType: TextInputType.phone,
+                                        icon: Icons.numbers_rounded,
+                                        textSize: 14.sp,
+                                        height: 43.h,
+                                      ),
+                                      RecyclableTextFormField(
                                         controller: _pigDOBController,
                                         keyboardType: TextInputType.datetime,
                                         labelText: 'Date of Birth',
@@ -168,14 +203,19 @@ class _PigListState extends State<PigList> {
                                         readOnly: true,
                                       ),
                                       RecyclableTextFormField(
-                                        controller: TextEditingController(),
+                                        controller: _pigParentController,
                                         labelText: 'Parent Number',
                                         showDropdown: true,
-                                        dropdownItems: const [
-                                          'Parent 1',
-                                          'Parent 2',
-                                          'Parent 3'
-                                        ],
+                                        dropdownItems: pigs
+                                            .where((pig) =>
+                                                (pig['ageCategory'] ==
+                                                        'Grower' ||
+                                                    pig['ageCategory'] ==
+                                                        'Finisher') &&
+                                                pig['status'] == 'alive')
+                                            .map((pig) => CustomDropDownItem(
+                                                pig['uuid'], pig['pigNumber']))
+                                            .toList(),
                                         hintText: 'Parent Number',
                                         hintTextSize: 14.sp,
                                         icon: Icons.email,
@@ -184,12 +224,12 @@ class _PigListState extends State<PigList> {
                                         readOnly: true,
                                       ),
                                       RecyclableTextFormField(
-                                        controller: TextEditingController(),
+                                        controller: _pigSexController,
                                         labelText: 'Sex',
                                         showDropdown: true,
-                                        dropdownItems: const [
-                                          'Male',
-                                          'Female',
+                                        dropdownItems: [
+                                          CustomDropDownItem('Male', 'Male'),
+                                          CustomDropDownItem('Female', 'Female')
                                         ],
                                         hintText: 'Sex',
                                         hintTextSize: 14.sp,
@@ -199,14 +239,13 @@ class _PigListState extends State<PigList> {
                                         readOnly: true,
                                       ),
                                       RecyclableTextFormField(
-                                        controller: TextEditingController(),
+                                        controller: _pigPenController,
                                         labelText: 'Pen Number',
                                         showDropdown: true,
-                                        dropdownItems: const [
-                                          'EditPen 1',
-                                          'EditPen 2',
-                                          'EditPen 3'
-                                        ],
+                                        dropdownItems: pigPens
+                                            .map((pen) => CustomDropDownItem(
+                                                pen.uuid, pen.penNumber))
+                                            .toList(),
                                         hintText: 'Pen Number',
                                         hintTextSize: 14.sp,
                                         icon: Icons.email,
@@ -215,9 +254,9 @@ class _PigListState extends State<PigList> {
                                         readOnly: true,
                                       ),
                                     ],
-                                    onSave: () {
+                                    onSave: () async {
                                       // Handle the save action, e.g., validate and save data
-                                      print('Form saved');
+                                      await addPig();
                                       Navigator.of(context).pop();
                                     },
                                     saveButtonText: 'Add Pig',
@@ -320,7 +359,10 @@ class _PigListState extends State<PigList> {
         ),
         Column(
           children: [
-            MyDataTable(onRowSelected: widget.onRowSelected),
+            MyDataTable(
+              onRowSelected: widget.onRowSelected,
+              pigs: pigs,
+            ),
           ],
         ),
       ],

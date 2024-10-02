@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 
@@ -45,7 +44,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                 setState(() {
                   UpcomingEvents.removeAt(index);
                 });
-                Navigator.of(context).pop(); 
+                Navigator.of(context).pop();
               },
               child: const Text("Delete"),
             ),
@@ -210,10 +209,8 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                                 controller: TextEditingController(),
                                 labelText: 'Event Name',
                                 showDropdown: true,
-                                dropdownItems: const [
-                                  'Event 1 Link this',
-                                  'Event 2 Link this',
-                                  'Event 3 Link this',
+                                dropdownItems: [
+                                  CustomDropDownItem('Event 1', 'Event 1'),
                                 ],
                                 hintText: 'Event Name',
                                 hintTextSize: 14.sp,

@@ -1,40 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
-class MyDataTable extends StatefulWidget {
-  final void Function(Map<String, String>) onRowSelected;
 
-  const MyDataTable({super.key, required this.onRowSelected});
+class MyDataTable extends StatefulWidget {
+  final List<Map<String, dynamic>> pigs;
+  final void Function(Map<String, dynamic>) onRowSelected;
+
+  const MyDataTable(
+      {super.key, required this.onRowSelected, required this.pigs});
 
   @override
   State<MyDataTable> createState() => _MyDataTableState();
 }
 
 class _MyDataTableState extends State<MyDataTable> {
-  final List<Map<String, String>> _data = [
-    {
-      'number': '001',
-      'category': 'Sow',
-      'feed': 'Uno Grower',
-      'pen': '01',
-      'status': 'alive'
-    },
-    {
-      'number': '002',
-      'category': 'Weaner',
-      'feed': 'Uno Starter',
-      'pen': '02',
-      'status': 'sold'
-    },
-    {
-      'number': '003',
-      'category': 'Sow',
-      'feed': 'Uno Grower',
-      'pen': '04',
-      'status': 'deceased'
-    },
-  ];
-
   Color _getStatusColor(String status) {
     switch (status) {
       case 'alive':
@@ -48,7 +27,8 @@ class _MyDataTableState extends State<MyDataTable> {
     }
   }
 
-  void _navigateToQRCodeStatus(BuildContext context, Map<String, String> rowData) {
+  void _navigateToQRCodeStatus(
+      BuildContext context, Map<String, String> rowData) {
     widget.onRowSelected(rowData);
   }
 
@@ -119,7 +99,7 @@ class _MyDataTableState extends State<MyDataTable> {
                 ),
               ),
             ],
-            rows: _data.map((row) {
+            rows: widget.pigs.map((row) {
               return DataRow(
                 onSelectChanged: (_) => widget.onRowSelected(row),
                 cells: [
@@ -138,7 +118,7 @@ class _MyDataTableState extends State<MyDataTable> {
                           ),
                           SizedBox(width: 8.w),
                           Text(
-                            row['number']!,
+                            row['pigNumber']!,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 11.5.sp,
@@ -151,7 +131,7 @@ class _MyDataTableState extends State<MyDataTable> {
                   DataCell(
                     Center(
                       child: Text(
-                        row['category']!,
+                        row['ageCategory']!,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -162,7 +142,7 @@ class _MyDataTableState extends State<MyDataTable> {
                   DataCell(
                     Center(
                       child: Text(
-                        row['feed']!,
+                        row['currentFeed']!,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -173,7 +153,7 @@ class _MyDataTableState extends State<MyDataTable> {
                   DataCell(
                     Center(
                       child: Text(
-                        'P-${row['pen']!}',
+                        row['penNumber']!,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
