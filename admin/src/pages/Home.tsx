@@ -10,7 +10,7 @@ const Home = () => {
     <Grid2
       container
       spacing={10}
-      sx={{ marginLeft: 10, marginRight: 10, marginTop: 5 }}
+      sx={{ marginX: 20, marginY: 5, paddingTop: 10 }}
     >
       {/* <Grid2 container size={12}>
         <Dropdown />

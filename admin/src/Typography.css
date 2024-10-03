@@ -1,0 +1,69 @@
+/* typography.css */
+
+h1 {
+    font-size: var(--h1-size);
+}
+
+h2 {
+    font-size: var(--h2-size);
+}
+
+h3 {
+    font-size: var(--h3-size);
+}
+
+p {
+    font-size: var(--p-size);
+}
+
+small {
+    font-size: var(--small-size);
+}
+
+h1,
+h2,
+h3,
+p,
+small {
+    transition: font-size 0.3s ease;
+}
+
+@media screen and (max-width: 600px) {
+     :root {
+        --h1-size: 2rem;
+        --h2-size: 1.5rem;
+        --h3-size: 1.2rem;
+        --p-size: 1rem;
+        --small-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 900px) {
+     :root {
+        --h1-size: 1.5rem;
+        --h2-size: 1.2rem;
+        --h3-size: 1rem;
+        --p-size: 0.8rem;
+        --small-size: 0.6rem;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+     :root {
+        --h1-size: 2rem;
+        --h2-size: 1.5rem;
+        --h3-size: 1.2rem;
+        --p-size: 1rem;
+        --small-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 1536px) {
+     :root {
+        --h1-size: 1.5rem;
+        --h2-size: 1.2rem;
+        --h3-size: 1rem;
+        --p-size: 0.8rem;
+        --small-size: 0.6rem;
+    }
+}
