@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/Current_Events.dart';
 import 'package:pig_keep/Components/EventsHistory.dart';
 import 'package:pig_keep/Components/FarmName.dart';
@@ -178,10 +179,9 @@ class _EventsState extends State<Events> {
                                                         TextEditingController(),
                                                     labelText: 'Event Name',
                                                     showDropdown: true,
-                                                    dropdownItems: const [
-                                                      'Event 1 Link this',
-                                                      'Event 2 Link this',
-                                                      'Event 3 Link this',
+                                                    dropdownItems: [
+                                                      CustomDropDownItem(
+                                                          'Event 1', 'Event 1')
                                                     ],
                                                     hintText: 'Event Name',
                                                     hintTextSize: 14.sp,

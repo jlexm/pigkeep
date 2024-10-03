@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/Carousel_FeedInventory.dart';
 import 'package:pig_keep/Components/Carousel_MedicalRecords.dart';
 import 'package:pig_keep/Components/SearchBar_MedicalRecords.dart';
@@ -46,11 +47,11 @@ class MedicalRecords extends StatelessWidget {
                                 controller: TextEditingController(),
                                 labelText: 'Medicine Name',
                                 showDropdown: true,
-                                        dropdownItems: const [
-                                          'Medicine 1',
-                                          'Medicine 2',
-                                          'Medicine 3'
-                                        ],
+                                dropdownItems: [
+                                  CustomDropDownItem('Med 1', 'Med 1'),
+                                  CustomDropDownItem('Med 2', 'Med 2'),
+                                  CustomDropDownItem('Med 3', 'Med 3')
+                                ],
                                 hintText: 'Medicine Name',
                                 hintTextSize: 14.sp,
                                 icon: Icons.email,
@@ -141,10 +142,10 @@ class MedicalRecords extends StatelessWidget {
                                 controller: TextEditingController(),
                                 labelText: 'Unit',
                                 showDropdown: true,
-                                dropdownItems: const [
-                                  'Grams (g)',
-                                  'milli-grams (mg)',
-                                  'milli-liters (mL)'
+                                dropdownItems: [
+                                  CustomDropDownItem('g', 'Grams (g)'),
+                                  CustomDropDownItem('mg', 'Milligrams (mg)'),
+                                  CustomDropDownItem('mL', 'Milliliters (mL)')
                                 ],
                                 hintText: 'Unit',
                                 hintTextSize: 14.sp,

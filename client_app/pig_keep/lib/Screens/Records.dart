@@ -209,7 +209,7 @@ class _RecordsState extends State<Records> {
     });
   }
 
-  void _showQRCodeStatus(Map<String, String> rowData) {
+  void _showQRCodeStatus(Map<String, dynamic> rowData) {
     setState(() {
       _selectedChoiceIndex = 1;
       _selectedRowData = rowData;

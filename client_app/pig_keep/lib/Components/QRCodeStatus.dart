@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
@@ -7,7 +8,7 @@ import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Modals/QRCodeDownload.dart';
 
 class QRCodeStatus extends StatefulWidget {
-  final Map<String, String> pigData;
+  final Map<String, dynamic> pigData;
 
   const QRCodeStatus({super.key, required this.pigData});
 
@@ -73,7 +74,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
               SizedBox(
                 height: 135.h,
                 child: Text(
-                  widget.pigData['number'] ?? '--',
+                  widget.pigData['pigNumber'] ?? '--',
                   style: TextStyle(
                     fontSize: 100.sp,
                     fontWeight: FontWeight.w700,
@@ -97,12 +98,14 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
               children: [
                 _DetailRow(
                     label: 'Date of Birth: ',
-                    value: widget.pigData['dateofbirth'] ?? '--'),
+                    value: widget.pigData['dob'] != null
+                        ? widget.pigData['dob'].toString()
+                        : '--'),
                 _DetailRow(
                     label: 'Age: ', value: widget.pigData['age'] ?? '--'),
                 _DetailRow(
                     label: 'Age Category: ',
-                    value: widget.pigData['category'] ?? '--'),
+                    value: widget.pigData['ageCategory'] ?? '--'),
                 _DetailRow(
                     label: 'Sex: ', value: widget.pigData['sex'] ?? '--'),
                 _DetailRow(
@@ -110,12 +113,10 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                     value: widget.pigData['parentnumber'] ?? '--'),
                 _DetailRow(
                     label: 'Current Feed: ',
-                    value: widget.pigData['feed'] ?? '--'),
+                    value: widget.pigData['currentFeed'] ?? '--'),
                 _DetailRow(
                   label: 'Pigpen Number: ',
-                  value: widget.pigData['pen'] != null
-                      ? 'P-${widget.pigData['pen']}'
-                      : '--',
+                  value: widget.pigData['penNumber'] ?? '--',
                 ),
                 Row(
                   children: [
@@ -168,8 +169,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                       builder: (BuildContext context) {
                         return ReusableDialogBox(
                           title: 'Edit Pig ${widget.pigData['number']}',
-                          description:
-                              'Fill up the form to update the pig’s \ninformation.',
+                          description: '',
                           formFields: [
                             RecyclableTextFormField(
                               controller: TextEditingController(),
@@ -184,7 +184,10 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                               controller: TextEditingController(),
                               labelText: 'Sex',
                               showDropdown: true,
-                              dropdownItems: const ['Male', 'Female'],
+                              dropdownItems: [
+                                CustomDropDownItem('Male', 'Male'),
+                                CustomDropDownItem('Female', 'Female')
+                              ],
                               hintText: 'Sex',
                               hintTextSize: 14.sp,
                               icon: Icons.email,
@@ -204,10 +207,8 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                               controller: TextEditingController(),
                               labelText: 'Pen Number',
                               showDropdown: true,
-                              dropdownItems: const [
-                                'PenNumber 1 Link this',
-                                'PenNumber 2 Link this',
-                                'PenNumber 3 Link this',
+                              dropdownItems: [
+                                CustomDropDownItem('Pen1', 'Pen1')
                               ],
                               hintText: 'Pen Number',
                               hintTextSize: 14.sp,
@@ -257,7 +258,7 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
                           imagePath: 'assets/images/qrsample.png', //QR code
                           onSave: () {
                             // Perform your save action here
-                            Navigator.of(context).pop(); 
+                            Navigator.of(context).pop();
                           },
                         );
                       },
@@ -369,6 +370,3 @@ class _QRCodeStatusState extends State<QRCodeStatus> {
     );
   }
 }
-
-
-

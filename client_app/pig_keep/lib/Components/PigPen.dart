@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/DataTable_PigPen.dart';
 import 'package:pig_keep/Components/PigPen_PenNumber.dart';
 import 'package:pig_keep/Components/SearchBar_PigPen.dart';
@@ -185,11 +186,14 @@ class _PigPenState extends State<PigPen> {
                                         controller: _penTypeController,
                                         labelText: 'Pen Type',
                                         showDropdown: true,
-                                        dropdownItems: const [
-                                          'Stall',
-                                          'Nursery',
-                                          'Farrowing',
-                                          'Fattening'
+                                        dropdownItems: [
+                                          CustomDropDownItem('Stall', "Stall"),
+                                          CustomDropDownItem(
+                                              'Nursery', "Nursery"),
+                                          CustomDropDownItem(
+                                              'Farrowing', "Farrowing"),
+                                          CustomDropDownItem(
+                                              'Fattening', "Fattening")
                                         ],
                                         hintText: 'Select Pen Type',
                                         hintTextSize: 14.sp,

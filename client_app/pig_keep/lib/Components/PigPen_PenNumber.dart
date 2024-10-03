@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/CenterReusableDialogBox.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
@@ -243,11 +244,11 @@ class PigPenPenNumber extends StatelessWidget {
                           controller: TextEditingController(),
                           labelText: 'Select Pen Type',
                           showDropdown: true,
-                          dropdownItems: const [
-                            'Stall',
-                            'Nursery',
-                            'Farrowing',
-                            'Fattening'
+                          dropdownItems: [
+                            CustomDropDownItem('Stall', "Stall"),
+                            CustomDropDownItem('Nursery', "Nursery"),
+                            CustomDropDownItem('Farrowing', "Farrowing"),
+                            CustomDropDownItem('Fattening', "Fattening")
                           ],
                           hintText: 'Pen Type',
                           hintTextSize: 14.sp,

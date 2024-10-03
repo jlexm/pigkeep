@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/Carousel_FeedInventory.dart';
 import 'package:pig_keep/Components/SearchBar_FeedInventory.dart';
 import 'package:pig_keep/Components/Transaction_FeedInventory.dart';
@@ -44,10 +45,10 @@ class FeedInventory extends StatelessWidget {
                                 controller: TextEditingController(),
                                 labelText: 'Feed Type',
                                 showDropdown: true,
-                                dropdownItems: const [
-                                  'Feed 1',
-                                  'Feed 2',
-                                  'Feed 3'
+                                dropdownItems: [
+                                  CustomDropDownItem('Feed 1', 'Feed 1'),
+                                  CustomDropDownItem('Feed 2', 'Feed 2'),
+                                  CustomDropDownItem('Feed 2', 'Feed 3')
                                 ],
                                 hintText: 'Feed Type',
                                 hintTextSize: 14.sp,
