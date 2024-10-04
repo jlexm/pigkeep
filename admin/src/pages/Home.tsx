@@ -1,4 +1,4 @@
-import { Grid2 } from '@mui/material'
+import { Grid2, Typography } from '@mui/material'
 import BasicPie from '../components/Home/PieChart'
 import SimpleContainer from '../components/Home/HomeContainer'
 import VirtualizedList from '../components/Home/Notifications'
@@ -18,10 +18,10 @@ const Home = () => {
       <Grid2 container size={12}>
         <SimpleContainer />
       </Grid2>
-      <Grid2 size={{ xs: 12,  lg: 6 }}>
+      <Grid2 size={{ xs: 12, lg: 6 }}>
         <BasicPie />
       </Grid2>
-      <Grid2 size={{ xs: 12,  lg: 6 }}>
+      <Grid2 size={{ xs: 12, lg: 6 }}>
         <VirtualizedList />
       </Grid2>
       <Grid2 size={12}>
@@ -31,17 +31,21 @@ const Home = () => {
         <Guide />
       </Grid2>
       <Grid2 size={12}>
-        <p className="quote">PigKeep. Pig management, done in your pocket.</p>
+        <Typography variant="h6" className="quote">
+          PigKeep. Pig management, done in your pocket.
+        </Typography>
       </Grid2>
       <Grid2 container size={12} spacing={0}>
         <Grid2 size={6} sx={{ textAlign: 'start' }}>
-          <p className="footer">Developed by Maravilla & Talagtag</p>
+          <Typography variant="body1">
+            Developed by Maravilla & Talagtag
+          </Typography>
         </Grid2>
         <Grid2 size={6} sx={{ textAlign: 'end' }}>
-          <p className="footer">Naga City, Philippines</p>
+          <Typography variant="body1">Naga City, Philippines</Typography>
         </Grid2>
         <Grid2 size={6} sx={{ textAlign: 'start' }}>
-          <p className="footer">2024-All Rights Reserved.</p>
+          <Typography variant="body1">2024-All Rights Reserved.</Typography>
         </Grid2>
       </Grid2>
     </Grid2>

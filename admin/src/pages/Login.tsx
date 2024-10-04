@@ -10,12 +10,15 @@ import {
   InputAdornment,
   FormControlLabel,
   Checkbox,
+  ThemeProvider,
 } from '@mui/material'
 import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material'
 import tl from '../assets/topLeft.svg'
 import br from '../assets/bottomRight.svg'
 import miniLogo from '../assets/miniLogo.svg'
 import '../components/Login/Login.css'
+
+import theme from '../Theme'; // Import the theme
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -30,19 +33,27 @@ const Login = () => {
   }
 
   return (
-    <>
-      <Box component="img" src={tl} alt="topLeft" className="loginTopLeft" />
+    <ThemeProvider  theme={theme}>
+      <Box
+        component="img"
+        src={tl}
+        alt="topLeft"
+        className="loginTopLeft"
+        sx={{ width: { xs: 0,md:400, lg: 520, xl: 560 } }}
+      />
       <Box
         component="img"
         src={br}
         alt="bottomRight"
         className="loginBottRight"
+        sx={{ width: { xs: 0,md:410, lg: 450, xl: 560 } }}
       />
-      <Grid2></Grid2>
-      <Grid2 container size={12} spacing={1} className="middle">
+      
+      <Grid2 container size={12} spacing={1} >
         <Grid2
           container
           size={12}
+          className="middle"
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -55,7 +66,7 @@ const Login = () => {
             src={miniLogo}
             alt="Huge Pig"
             className="minLog"
-            sx={{height:70}}
+            sx={{ height: 60 }}
           />
           <Typography
             variant="h3"
@@ -66,8 +77,8 @@ const Login = () => {
             Log In
           </Typography>
 
-          <Grid2 container size={12} sx={{ width: 400 }}>
-            <Typography color="black" align="center">
+          <Grid2 container size={12} sx={{ maxWidth: 420 }}>
+            <Typography variant='subtitle1' color="black" align="center">
               Welcome back! Log in to your account to continue your pig farm
               management experience.
             </Typography>
@@ -141,12 +152,24 @@ const Login = () => {
                     />
                   }
                   label="Remember Me"
-                  sx={{ marginTop: 1, alignSelf: 'flex-start', color: 'black', padding:0 }}
+                  sx={{
+                    marginTop: 1,
+                    alignSelf: 'flex-start',
+                    color: 'black',
+                    padding: 0,
+                  }}
                 />
               </Grid2>
 
-              <Grid2 container size={6} sx={{ alignItems: 'center', justifyContent: "end" }}>
-                <Button variant="text" sx={{ textTransform: 'none', color: "#11703b" }}>
+              <Grid2
+                container
+                size={6}
+                sx={{ alignItems: 'center', justifyContent: 'end' }}
+              >
+                <Button
+                  variant="text"
+                  sx={{ textTransform: 'none', color: '#11703b' }}
+                >
                   Forgot password?
                 </Button>
               </Grid2>
@@ -157,14 +180,14 @@ const Login = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ marginTop: 2, height: 50, bgcolor: "#11703b" }}
+              sx={{ marginTop: 2, height: 50, bgcolor: '#11703b' }}
             >
               Log In
             </Button>
           </Container>
         </Grid2>
       </Grid2>
-    </>
+    </ThemeProvider>
   )
 }
 

@@ -2,12 +2,14 @@
         position: absolute;
         left: -50px;
         top: -50px;
+        z-index: -1;
     }
     
     .loginBottRight {
         position: absolute;
         right: 0px;
         bottom: 0px;
+        z-index: -1;
     }
     
     .middle {
@@ -33,3 +35,4 @@
     .minLog {
         position: relative;
     }
+
