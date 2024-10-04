@@ -180,8 +180,8 @@ class _PigListState extends State<PigList> {
                                     formFields: [
                                       RecyclableTextFormField(
                                         controller: _pigNumberController,
-                                        labelText: 'Pen Number',
-                                        hintText: 'Pen Number',
+                                        labelText: 'Pig Number',
+                                        hintText: 'Pig Number',
                                         hintTextSize: 14.sp,
                                         keyboardType: TextInputType.phone,
                                         icon: Icons.numbers_rounded,
@@ -208,13 +208,11 @@ class _PigListState extends State<PigList> {
                                         showDropdown: true,
                                         dropdownItems: pigs
                                             .where((pig) =>
-                                                (pig['ageCategory'] ==
-                                                        'Grower' ||
-                                                    pig['ageCategory'] ==
-                                                        'Finisher') &&
+                                                (pig['ageCategory'] == 'Sow') &&
                                                 pig['status'] == 'alive')
                                             .map((pig) => CustomDropDownItem(
-                                                pig['uuid'], pig['pigNumber']))
+                                                pig['uuid'],
+                                                'Pig: ${pig['pigNumber']} | Pen: ${pig['penNumber']}'))
                                             .toList(),
                                         hintText: 'Parent Number',
                                         hintTextSize: 14.sp,
@@ -244,7 +242,8 @@ class _PigListState extends State<PigList> {
                                         showDropdown: true,
                                         dropdownItems: pigPens
                                             .map((pen) => CustomDropDownItem(
-                                                pen.uuid, pen.penNumber))
+                                                pen.uuid,
+                                                '${pen.penNumber} - ${pen.penType}'))
                                             .toList(),
                                         hintText: 'Pen Number',
                                         hintTextSize: 14.sp,

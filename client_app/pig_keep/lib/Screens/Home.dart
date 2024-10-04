@@ -10,8 +10,12 @@ import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Screens/Records.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/Services/pig-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
+
+import '../Models/pig-pen.dart';
 
 // ExpansionTile for dropdown
 
@@ -25,9 +29,75 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool isInitialized = false;
 
+  // services
+  final penService = globalLocator.get<PigPenService>();
+  final pigService = globalLocator.get<PigService>();
+
+  // pigs variables
+  var selectedFarm;
+  late String userOwner;
+  int totalPigs = 0;
+  int totalWeaner = 0;
+  int totalPiglet = 0;
+  int totalGrower = 0;
+  int totalSow = 0;
+  int totalBoar = 0;
+  int totalMatured = 0;
+
+  // functions
+  Future<void> getPigs() async {
+    // fetch all pens first
+    List<PigPen> pens =
+        await penService.fetchPigPens(selectedFarm['_id'], userOwner);
+    final fetchPigs = await pigService.fetchAllPigsInAllPens(pens);
+
+    // reset counts
+    int ctotalPigs = 0;
+    int ctotalWeaner = 0;
+    int ctotalPiglet = 0;
+    int ctotalGrower = 0;
+    int ctotalSow = 0;
+    int ctotalBoar = 0;
+    int ctotalMatured = 0;
+
+    // count all pigs
+    fetchPigs.forEach((pig) {
+      ctotalPigs += 1;
+      switch (pig['ageCategory']) {
+        case 'Weaner':
+          ctotalWeaner += 1;
+          break;
+        case 'Piglet':
+          ctotalPiglet += 1;
+          break;
+        case 'Grower':
+          ctotalGrower += 1;
+          break;
+        case 'Sow':
+          ctotalSow += 1;
+          break;
+        case 'Boar':
+          ctotalBoar += 1;
+          break;
+        case 'Matured':
+          ctotalMatured += 1;
+          break;
+      }
+    });
+    print(ctotalPigs);
+    setState(() {
+      totalPigs = ctotalPigs;
+      totalWeaner = ctotalWeaner;
+      totalPiglet = ctotalPiglet;
+      totalGrower = ctotalGrower;
+      totalSow = ctotalSow;
+      totalBoar = ctotalBoar;
+      totalMatured = ctotalMatured;
+    });
+  }
+
   @override
   void initState() {
-    super.initState();
     // fetchfarm
     Future.microtask(() async {
       await context.read<GlobalProvider>().fetchFarms();
@@ -35,6 +105,20 @@ class _HomeState extends State<Home> {
         isInitialized = true;
       });
     });
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      userOwner = user['username'];
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+    getPigs();
+    super.didChangeDependencies();
   }
 
   @override
@@ -86,7 +170,7 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '42',
+                            totalPigs.toString(),
                             style: TextStyle(
                               fontSize: 110.sp,
                               fontWeight: FontWeight.bold,
@@ -139,7 +223,8 @@ class _HomeState extends State<Home> {
                           },
                           child: Column(
                             children: [
-                              const Padding(padding: EdgeInsets.only(right: 30)),
+                              const Padding(
+                                  padding: EdgeInsets.only(right: 30)),
                               Text(
                                 'See all',
                                 style: TextStyle(
@@ -158,7 +243,16 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       height: 11.h,
                     ),
-                    const CarouselPigCount(), //Carousel_PigCount.dart
+                    CarouselPigCount(
+                      data: [
+                        {'number': totalWeaner.toString(), 'text': 'Weaners'},
+                        {'number': totalPiglet.toString(), 'text': 'Piglets'},
+                        {'number': totalGrower.toString(), 'text': 'Growers'},
+                        {'number': totalSow.toString(), 'text': 'Sows'},
+                        {'number': totalBoar.toString(), 'text': 'Boars'},
+                        {'number': totalMatured.toString(), 'text': 'Matured'}
+                      ],
+                    ), //Carousel_PigCount.dart
                     SizedBox(
                       height: 20.h,
                     ),
@@ -196,7 +290,8 @@ class _HomeState extends State<Home> {
                           },
                           child: Column(
                             children: [
-                              const Padding(padding: EdgeInsets.only(right: 30)),
+                              const Padding(
+                                  padding: EdgeInsets.only(right: 30)),
                               Text(
                                 'See events',
                                 style: TextStyle(

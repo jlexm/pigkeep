@@ -6,7 +6,8 @@ import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CarouselPigCount extends StatefulWidget {
-  const CarouselPigCount({super.key});
+  final List<Map<String, dynamic>> data;
+  const CarouselPigCount({super.key, required this.data});
 
   @override
   State<CarouselPigCount> createState() => _CarouselPigCountState();
@@ -14,7 +15,7 @@ class CarouselPigCount extends StatefulWidget {
 
 class _CarouselPigCountState extends State<CarouselPigCount> {
   // Define the array for numbers and texts
-  final List<Map<String, String>> data = [
+  /* final List<Map<String, dynamic>> data = [
     {'number': '12', 'text': 'Weaner'},
     {'number': '2', 'text': 'Piglet'},
     {'number': '3', 'text': 'Grower'},
@@ -22,7 +23,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
     {'number': '1', 'text': 'Boar'},
     {'number': '3', 'text': 'Matured'},
   ];
-
+ */
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +40,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
           enlargeFactor: 0.01,
           scrollDirection: Axis.horizontal,
         ),
-        items: data.map((item) {
+        items: widget.data.map((item) {
           return Builder(
             builder: (BuildContext context) {
               return Container(

@@ -67,7 +67,7 @@ class PigService {
       final penPigs = await fetchPigsInPen(pen.uuid);
       penPigs.forEach((penPig) {
         // calculate pig stage
-        final pigStage = PigHelper.determinePigStage(penPig.dob);
+        final pigStage = PigHelper.determinePigStage(penPig.sex, penPig.dob);
 
         Map<String, dynamic> newPig = {
           'uuid': penPig.uuid,
