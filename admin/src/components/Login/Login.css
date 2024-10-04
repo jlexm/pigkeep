@@ -1,0 +1,38 @@
+    .loginTopLeft {
+        position: absolute;
+        left: -50px;
+        top: -50px;
+        z-index: -1;
+    }
+    
+    .loginBottRight {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        z-index: -1;
+    }
+    
+    .middle {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+    
+    .container {
+        width: 450;
+        padding: 0;
+    }
+    
+    .centerr {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        place-items: center;
+    }
+    
+    .minLog {
+        position: relative;
+    }
+

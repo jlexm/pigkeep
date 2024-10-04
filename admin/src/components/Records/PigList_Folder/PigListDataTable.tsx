@@ -396,7 +396,7 @@ export default function DataTable() {
 
   return (
     <>
-      <Grid2 container size={{ xs: 12 }}>
+      <Grid2 container size={{ xs: 6 }}>
         <Box
           sx={{
             marginBottom: 2,
@@ -485,14 +485,14 @@ export default function DataTable() {
         />
       </Paper> */}
       </Grid2>
-      <Grid2 sx={{ overflow: 'scroll' }} size={{ md: 6 }}>
+      <Grid2 sx={{ overflow: 'scroll' }} size={{ xs: 9, md: 12 }}>
         <DataGrid
           rows={rows}
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[5, 10]}
           checkboxSelection
-          sx={{ border: 0, width: '100%' }}
+          sx={{ border: 0, width: '99%' }}
         />
       </Grid2>
     </>

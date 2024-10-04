@@ -107,24 +107,13 @@
     justify-content: center;
 }
 
-.number {
-    color: #11703b;
-}
 
-.numberGuide {
-    color: black;
-}
 
 .quote {
     color: black;
     font-size: 20px;
 }
 
-.footer {
-    color: black;
-    font-size: 16px;
-    margin: 0;
-}
 
 
 /* Scrollbar for WebKit browsers (Chrome, Safari) */
