@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class ScanQR extends StatefulWidget {
@@ -37,9 +39,14 @@ class _ScanQRState extends State<ScanQR> {
             final String? code = barcode.rawValue;
             if (code != null) {
               // Show a snackbar with the scanned QR code data
-              ScaffoldMessenger.of(context).showSnackBar(
+              /*  ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Scanned Code: $code')),
-              );
+              ); */
+              List<String> qrParts = code.split(':');
+              if (qrParts.length == 3) {
+                String uuid = qrParts[2];
+                context.replace('/records/pigs/${uuid}');
+              }
               // Optionally, you can stop scanning after the first successful scan
               camcontroller.stop();
               break; // Stop after the first successful scan

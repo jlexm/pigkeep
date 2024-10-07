@@ -182,6 +182,7 @@ class _HamburgerState extends State<Hamburger> {
                   onTap: () {
                     Navigator.of(context).pop();
                     AuthStorage.clearToken();
+                    AuthStorage.setUserFarms("[]");
                     context.go('/login');
                   },
                 ),

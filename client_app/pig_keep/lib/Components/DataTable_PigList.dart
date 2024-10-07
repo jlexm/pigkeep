@@ -4,10 +4,9 @@ import 'package:pig_keep/Constants/color.constants.dart';
 
 class MyDataTable extends StatefulWidget {
   final List<Map<String, dynamic>> pigs;
-  final void Function(Map<String, dynamic>) onRowSelected;
+  final void Function(Map<String, dynamic>)? onRowSelected;
 
-  const MyDataTable(
-      {super.key, required this.onRowSelected, required this.pigs});
+  const MyDataTable({super.key, this.onRowSelected, required this.pigs});
 
   @override
   State<MyDataTable> createState() => _MyDataTableState();
@@ -29,7 +28,7 @@ class _MyDataTableState extends State<MyDataTable> {
 
   void _navigateToQRCodeStatus(
       BuildContext context, Map<String, String> rowData) {
-    widget.onRowSelected(rowData);
+    widget.onRowSelected!(rowData);
   }
 
   @override
@@ -101,7 +100,9 @@ class _MyDataTableState extends State<MyDataTable> {
             ],
             rows: widget.pigs.map((row) {
               return DataRow(
-                onSelectChanged: (_) => widget.onRowSelected(row),
+                onSelectChanged: (_) {
+                  widget.onRowSelected!(row);
+                },
                 cells: [
                   DataCell(
                     Center(

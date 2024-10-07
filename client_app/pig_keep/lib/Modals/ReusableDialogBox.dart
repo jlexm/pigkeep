@@ -104,6 +104,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final bool showIcon;
   final bool readOnly;
   final void Function()? onTap;
+  final bool enabled;
 
   const RecyclableTextFormField({
     super.key,
@@ -129,6 +130,7 @@ class RecyclableTextFormField extends StatelessWidget {
     this.showIcon = true,
     this.readOnly = false,
     this.onTap,
+    this.enabled = true,
   });
 
   @override
@@ -140,6 +142,7 @@ class RecyclableTextFormField extends StatelessWidget {
           TextFormField(
             controller: controller,
             decoration: InputDecoration(
+              enabled: enabled,
               labelText: labelText,
               hintText: hintText,
               hintStyle: hintTextSize != null

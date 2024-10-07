@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Classes/DropDownItem.dart';
+import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/DataTable_PigList.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
@@ -9,13 +11,14 @@ import 'package:pig_keep/Models/pig-pen.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
 
 class PigList extends StatefulWidget {
-  final void Function(Map<String, dynamic> rowData) onRowSelected;
+  final void Function(Map<String, dynamic> rowData)? onRowSelected;
 
-  const PigList({super.key, required this.onRowSelected});
+  const PigList({super.key, this.onRowSelected});
 
   @override
   State<PigList> createState() => _PigListState();
@@ -65,7 +68,6 @@ class _PigListState extends State<PigList> {
         _pigSexController.text == 'Male',
         DateTime.parse(_pigDOBController.text));
     await getPigs();
-    print('Form saved');
   }
 
   Future<void> _selectDate() async {
@@ -194,7 +196,7 @@ class _PigListState extends State<PigList> {
                                         labelText: 'Date of Birth',
                                         hintText: 'YYYY/MM/DD',
                                         hintTextSize: 14.sp,
-                                        icon: Icons.email,
+                                        icon: Icons.calendar_month,
                                         textSize: 14.sp,
                                         height: 43.h,
                                         onTap: () {
@@ -254,9 +256,19 @@ class _PigListState extends State<PigList> {
                                       ),
                                     ],
                                     onSave: () async {
-                                      // Handle the save action, e.g., validate and save data
-                                      await addPig();
-                                      Navigator.of(context).pop();
+                                      try {
+                                        // Handle the save action, e.g., validate and save data
+                                        await addPig();
+                                        Navigator.of(context).pop();
+                                        _pigDOBController.clear();
+                                        _pigNumberController.clear();
+                                        _pigParentController.clear();
+                                        _pigSexController.clear();
+                                        _pigPenController.clear();
+                                      } catch (error) {
+                                        ToastService()
+                                            .showErrorToast(error.toString());
+                                      }
                                     },
                                     saveButtonText: 'Add Pig',
                                     saveButtonColor: appPrimary,
@@ -359,7 +371,9 @@ class _PigListState extends State<PigList> {
         Column(
           children: [
             MyDataTable(
-              onRowSelected: widget.onRowSelected,
+              onRowSelected: (Map<String, dynamic> pigData) {
+                context.push('/records/pigs/${pigData['uuid']}');
+              },
               pigs: pigs,
             ),
           ],

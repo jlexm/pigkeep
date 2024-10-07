@@ -29,7 +29,7 @@ class PigService {
     }
 
     if (pen.currentPigCount >= pen.maxPigCount) {
-      throw 'Pen is full of pigs';
+      throw '${pen.penType} Pen: ${pen.penNumber} is full of pigs.';
     }
 
     // update current pen's current pig count
@@ -84,5 +84,38 @@ class PigService {
     }));
 
     return pigs;
+  }
+
+  Future<Map<String, dynamic>> fetchPigDetails(String uuid) async {
+    final pig = await db.pigs.filter().uuidEqualTo(uuid).findFirst();
+    if (pig == null) {
+      throw 'Pig not found.';
+    }
+
+    final pen = await db.pigPens.filter().uuidEqualTo(pig.penUuid).findFirst();
+    if (pen == null) {
+      throw 'Pig not found in pen';
+    }
+
+    // todo get ledger details
+
+    final pigStage = PigHelper.determinePigStage(pig.sex, pig.dob);
+
+    return {
+      'uuid': uuid,
+      'pigNumber': pig.pigNumber,
+      'penUuid': pig.penUuid,
+      'penNumber': pen.penNumber,
+      'dob': pig.dob,
+      'sex': pig.sex,
+      'weightKG': pig.weightKG,
+      'lastWeightRecorded': pig.lastWeightRecorded,
+      'status': pig.status,
+      'currentFeed': pigStage['feed'],
+      'ageCategory': pigStage['stage'],
+      'age': pigStage['age'],
+      'soldPrice': null,
+      'soldDate': null
+    };
   }
 }

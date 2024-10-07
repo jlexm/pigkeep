@@ -15,9 +15,9 @@ import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
 
 class PigPen extends StatefulWidget {
-  final void Function(Map<String, String>) onRowSelected;
+  final void Function(Map<String, String>)? onRowSelected;
 
-  const PigPen({super.key, required this.onRowSelected});
+  const PigPen({super.key, this.onRowSelected});
 
   @override
   State<PigPen> createState() => _PigPenState();

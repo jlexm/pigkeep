@@ -3,7 +3,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Components/FeedInventory.dart';
 import 'package:pig_keep/Components/Layout.dart';
+import 'package:pig_keep/Components/MedicalRecords.dart';
+import 'package:pig_keep/Components/PigList.dart';
+import 'package:pig_keep/Components/PigPen.dart';
+import 'package:pig_keep/Components/PigView.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Screens/Caretakers.dart';
@@ -93,8 +98,49 @@ class MyApp extends StatelessWidget {
                 ),
                 GoRoute(
                   path: '/records',
-                  builder: (context, state) => const Records(),
+                  redirect: (context, state) => '/records/pens',
                 ),
+                ShellRoute(
+                    builder: (context, state, child) {
+                      return Records(currentView: child);
+                    },
+                    routes: [
+                      GoRoute(
+                        path: '/records/pens',
+                        pageBuilder: (context, state) =>
+                            NoTransitionPage(child: const PigPen()),
+                      ),
+                      GoRoute(
+                        path: '/records/pigs',
+                        pageBuilder: (context, state) =>
+                            NoTransitionPage(child: const PigList()),
+                        routes: [
+                          GoRoute(
+                            path: ':uuid', // Use a named parameter
+                            pageBuilder: (context, state) {
+                              // Get the UUID from the route parameters
+                              final String uuid =
+                                  state.pathParameters['uuid'] ?? '';
+                              return NoTransitionPage(
+                                child: PigView(
+                                    pigUUID:
+                                        uuid), // Pass the UUID to the widget
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      GoRoute(
+                        path: '/records/feeds',
+                        pageBuilder: (context, state) =>
+                            NoTransitionPage(child: const FeedInventory()),
+                      ),
+                      GoRoute(
+                        path: '/records/medicines',
+                        pageBuilder: (context, state) =>
+                            NoTransitionPage(child: const MedicalRecords()),
+                      ),
+                    ]),
                 GoRoute(
                   path: '/scan-qr',
                   builder: (context, state) => const ScanQR(),

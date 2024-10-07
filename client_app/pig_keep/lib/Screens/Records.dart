@@ -140,97 +140,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pig_keep/Components/BottomNav.dart';
-import 'package:pig_keep/Components/Carousel_PigCount.dart';
+
 import 'package:pig_keep/Components/Chip.dart';
-import 'package:pig_keep/Components/DataTable_PigList.dart';
 import 'package:pig_keep/Components/FarmName.dart';
-import 'package:pig_keep/Components/FeedInventory.dart';
-import 'package:pig_keep/Components/MedicalRecords.dart';
-import 'package:pig_keep/Components/PigList.dart';
-import 'package:pig_keep/Components/PigPen.dart';
-import 'package:pig_keep/Components/PigPen_PenNumber.dart';
-import 'package:pig_keep/Components/QRCodeStatus.dart';
-import 'package:pig_keep/Components/SearchBar_PigList.dart';
+
 import 'package:pig_keep/Constants/color.constants.dart';
-import 'package:pig_keep/Components/Hamburger.dart';
+import 'package:go_router/go_router.dart';
 
 class Records extends StatefulWidget {
-  const Records({super.key});
+  Widget currentView;
+  Records({super.key, required this.currentView});
 
   @override
   State<Records> createState() => _RecordsState();
 }
 
 class _RecordsState extends State<Records> {
-  int? _selectedChoiceIndex = 0;
-  var _selectedRowData;
-  Widget? _currentView;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentView = _buildInitialView();
-  }
-
-  Widget _buildInitialView() {
-    if (_selectedRowData != null) {
-      if (_selectedChoiceIndex == 3) {
-        return PigPenPenNumber(
-          number: _selectedRowData!['number']!,
-          type: _selectedRowData!['type']!,
-          pigCount: _selectedRowData!['pig count']!,
-          maxPigs: _selectedRowData!['max pigs']!,
-          pigNumbers: const [], // Fetch and pass actual pig numbers if needed
-        );
-      }
-      return QRCodeStatus(pigData: _selectedRowData!);
-    } else {
-      switch (_selectedChoiceIndex) {
-        case 0:
-          return PigPen(onRowSelected: _showPigPenPenNumberScreen);
-        case 1:
-          return PigList(onRowSelected: _showQRCodeStatus);
-        case 2:
-          return const FeedInventory();
-        case 3:
-          return const MedicalRecords();
-        default:
-          return Container(); // Default view
-      }
-    }
-  }
-
-  void _onChipSelected(int? index) {
-    setState(() {
-      _selectedChoiceIndex = index;
-      _selectedRowData = null;
-      _currentView = _buildInitialView();
-    });
-  }
-
-  void _showQRCodeStatus(Map<String, dynamic> rowData) {
-    setState(() {
-      _selectedChoiceIndex = 1;
-      _selectedRowData = rowData;
-      _currentView = QRCodeStatus(pigData: rowData);
-    });
-  }
-
-  void _showPigPenPenNumberScreen(final rowData) {
-    setState(() {
-      _selectedChoiceIndex = 0;
-      _selectedRowData = rowData;
-      _currentView = PigPenPenNumber(
-        number: rowData.penNumber!,
-        type: rowData.penType!,
-        pigCount: rowData.currentPigCount!,
-        maxPigs: rowData.maxPigCount!,
-        pigNumbers: const [], // Fetch and pass actual pig numbers if needed
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -262,12 +187,22 @@ class _RecordsState extends State<Records> {
                     SizedBox(height: 6.h),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 15.w),
-                      child: Chips(onChipSelected: _onChipSelected),
+                      child: Chips(onChipSelected: (int? index) {
+                        if (index == 0) {
+                          context.go('/records/pens');
+                        } else if (index == 1) {
+                          context.go('/records/pigs');
+                        } else if (index == 2) {
+                          context.go('/records/feeds');
+                        } else if (index == 3) {
+                          context.go('/records/medicines');
+                        }
+                      }),
                     ),
                     SizedBox(height: 10.h),
                     Container(
                       // Container containing Screens
-                      child: _currentView,
+                      child: widget.currentView,
                     ),
                   ],
                 ),

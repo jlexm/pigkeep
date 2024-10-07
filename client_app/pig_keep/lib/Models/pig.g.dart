@@ -32,45 +32,55 @@ const PigSchema = CollectionSchema(
       name: r'farmID',
       type: IsarType.string,
     ),
-    r'parentUuid': PropertySchema(
+    r'lastWeightRecorded': PropertySchema(
       id: 3,
+      name: r'lastWeightRecorded',
+      type: IsarType.dateTime,
+    ),
+    r'parentUuid': PropertySchema(
+      id: 4,
       name: r'parentUuid',
       type: IsarType.string,
     ),
     r'penUuid': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'penUuid',
       type: IsarType.string,
     ),
     r'pigNumber': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'pigNumber',
       type: IsarType.string,
     ),
     r'sex': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'sex',
       type: IsarType.bool,
     ),
     r'status': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'status',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'userOwner': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'userOwner',
       type: IsarType.string,
     ),
     r'uuid': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'uuid',
       type: IsarType.string,
+    ),
+    r'weightKG': PropertySchema(
+      id: 12,
+      name: r'weightKG',
+      type: IsarType.double,
     )
   },
   estimateSize: _pigEstimateSize,
@@ -196,14 +206,16 @@ void _pigSerialize(
   writer.writeDateTime(offsets[0], object.createdAt);
   writer.writeDateTime(offsets[1], object.dob);
   writer.writeString(offsets[2], object.farmID);
-  writer.writeString(offsets[3], object.parentUuid);
-  writer.writeString(offsets[4], object.penUuid);
-  writer.writeString(offsets[5], object.pigNumber);
-  writer.writeBool(offsets[6], object.sex);
-  writer.writeString(offsets[7], object.status);
-  writer.writeDateTime(offsets[8], object.updatedAt);
-  writer.writeString(offsets[9], object.userOwner);
-  writer.writeString(offsets[10], object.uuid);
+  writer.writeDateTime(offsets[3], object.lastWeightRecorded);
+  writer.writeString(offsets[4], object.parentUuid);
+  writer.writeString(offsets[5], object.penUuid);
+  writer.writeString(offsets[6], object.pigNumber);
+  writer.writeBool(offsets[7], object.sex);
+  writer.writeString(offsets[8], object.status);
+  writer.writeDateTime(offsets[9], object.updatedAt);
+  writer.writeString(offsets[10], object.userOwner);
+  writer.writeString(offsets[11], object.uuid);
+  writer.writeDouble(offsets[12], object.weightKG);
 }
 
 Pig _pigDeserialize(
@@ -217,14 +229,16 @@ Pig _pigDeserialize(
   object.dob = reader.readDateTime(offsets[1]);
   object.farmID = reader.readString(offsets[2]);
   object.isarID = id;
-  object.parentUuid = reader.readStringOrNull(offsets[3]);
-  object.penUuid = reader.readString(offsets[4]);
-  object.pigNumber = reader.readString(offsets[5]);
-  object.sex = reader.readBool(offsets[6]);
-  object.status = reader.readString(offsets[7]);
-  object.updatedAt = reader.readDateTime(offsets[8]);
-  object.userOwner = reader.readString(offsets[9]);
-  object.uuid = reader.readString(offsets[10]);
+  object.lastWeightRecorded = reader.readDateTime(offsets[3]);
+  object.parentUuid = reader.readStringOrNull(offsets[4]);
+  object.penUuid = reader.readString(offsets[5]);
+  object.pigNumber = reader.readString(offsets[6]);
+  object.sex = reader.readBool(offsets[7]);
+  object.status = reader.readString(offsets[8]);
+  object.updatedAt = reader.readDateTime(offsets[9]);
+  object.userOwner = reader.readString(offsets[10]);
+  object.uuid = reader.readString(offsets[11]);
+  object.weightKG = reader.readDouble(offsets[12]);
   return object;
 }
 
@@ -242,21 +256,25 @@ P _pigDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 8:
-      return (reader.readDateTime(offset)) as P;
-    case 9:
       return (reader.readString(offset)) as P;
+    case 9:
+      return (reader.readDateTime(offset)) as P;
     case 10:
       return (reader.readString(offset)) as P;
+    case 11:
+      return (reader.readString(offset)) as P;
+    case 12:
+      return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -909,6 +927,59 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'isarID',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastWeightRecorded',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastWeightRecorded',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastWeightRecorded',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastWeightRecorded',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1763,6 +1834,68 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'weightKG',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'weightKG',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'weightKG',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'weightKG',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
 }
 
 extension PigQueryObject on QueryBuilder<Pig, Pig, QFilterCondition> {}
@@ -1803,6 +1936,18 @@ extension PigQuerySortBy on QueryBuilder<Pig, Pig, QSortBy> {
   QueryBuilder<Pig, Pig, QAfterSortBy> sortByFarmIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> sortByLastWeightRecorded() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastWeightRecorded', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> sortByLastWeightRecordedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastWeightRecorded', Sort.desc);
     });
   }
 
@@ -1901,6 +2046,18 @@ extension PigQuerySortBy on QueryBuilder<Pig, Pig, QSortBy> {
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> sortByWeightKG() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weightKG', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> sortByWeightKGDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weightKG', Sort.desc);
+    });
+  }
 }
 
 extension PigQuerySortThenBy on QueryBuilder<Pig, Pig, QSortThenBy> {
@@ -1949,6 +2106,18 @@ extension PigQuerySortThenBy on QueryBuilder<Pig, Pig, QSortThenBy> {
   QueryBuilder<Pig, Pig, QAfterSortBy> thenByIsarIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarID', Sort.desc);
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> thenByLastWeightRecorded() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastWeightRecorded', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> thenByLastWeightRecordedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastWeightRecorded', Sort.desc);
     });
   }
 
@@ -2047,6 +2216,18 @@ extension PigQuerySortThenBy on QueryBuilder<Pig, Pig, QSortThenBy> {
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> thenByWeightKG() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weightKG', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterSortBy> thenByWeightKGDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weightKG', Sort.desc);
+    });
+  }
 }
 
 extension PigQueryWhereDistinct on QueryBuilder<Pig, Pig, QDistinct> {
@@ -2066,6 +2247,12 @@ extension PigQueryWhereDistinct on QueryBuilder<Pig, Pig, QDistinct> {
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'farmID', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QDistinct> distinctByLastWeightRecorded() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastWeightRecorded');
     });
   }
 
@@ -2122,6 +2309,12 @@ extension PigQueryWhereDistinct on QueryBuilder<Pig, Pig, QDistinct> {
       return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<Pig, Pig, QDistinct> distinctByWeightKG() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'weightKG');
+    });
+  }
 }
 
 extension PigQueryProperty on QueryBuilder<Pig, Pig, QQueryProperty> {
@@ -2146,6 +2339,12 @@ extension PigQueryProperty on QueryBuilder<Pig, Pig, QQueryProperty> {
   QueryBuilder<Pig, String, QQueryOperations> farmIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'farmID');
+    });
+  }
+
+  QueryBuilder<Pig, DateTime, QQueryOperations> lastWeightRecordedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastWeightRecorded');
     });
   }
 
@@ -2194,6 +2393,12 @@ extension PigQueryProperty on QueryBuilder<Pig, Pig, QQueryProperty> {
   QueryBuilder<Pig, String, QQueryOperations> uuidProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'uuid');
+    });
+  }
+
+  QueryBuilder<Pig, double, QQueryOperations> weightKGProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'weightKG');
     });
   }
 }

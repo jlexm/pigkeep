@@ -28,6 +28,18 @@ class PigHelper {
       }
       feed = 'Finisher';
     }
-    return {'stage': stage, 'feed': feed};
+
+    String age = 'N/A';
+    if (daysOld < 7) {
+      age = '${daysOld} day/s old';
+    } else if (daysOld < 30) {
+      age = '${(daysOld / 7).abs().floor()} week/s old';
+    } else if (daysOld < 365) {
+      age = '${(daysOld / 30).abs().floor()} month/s old';
+    } else {
+      age = '${(daysOld / 365).abs().floor()} year/s old';
+    }
+
+    return {'stage': stage, 'feed': feed, 'age': age};
   }
 }
