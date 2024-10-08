@@ -60,12 +60,13 @@ const Login = () => {
       <Grid2
         container
         size={12}
-        spacing={1}
+        
         sx={{ paddingX: { xs: 3, sm: 20 } }}
       >
         <Grid2
           container
           size={12}
+          spacing={2}
           className="middle"
           sx={{
             display: 'flex',

@@ -9,7 +9,7 @@ import {
 import ProfileEditForm from '../components/Profile/EditProfile'
 import '../components/Profile/Profile.css'
 import pfp from '../assets/junmar.png'
-import bottwave from '../assets/bottwave.svg'
+import bottwave from '../assets/bottomRight.svg'
 import ReusableDialogBox from '../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
@@ -111,6 +111,7 @@ const Profile = () => {
           sx={{
             backgroundColor: 'white',
             borderStyle: { xs: 'none', md: 'solid' },
+            padding: '20px 60px'
           }}
         >
           <Grid2>
@@ -160,7 +161,7 @@ const Profile = () => {
           alt="Huge Pig"
           className="responsiveImage"
           zIndex={-1}
-          width={'100%'}
+          width={{lg:500}}
           sx={{
             display: {
               xs: 'none',

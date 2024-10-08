@@ -35,13 +35,13 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid2 container size={12}>
+      <Grid2 container size={12} >
         <Grid2>
           <TextField
             label={
               <Typography
                 variant="body1"
-                sx={{ fontSize: 'clamp(14px, 1.5vw, 18px)' }}
+                sx={{ fontSize: 'clamp(14px, 1vw, 16px)', padding:0 }}
               >
                 Email
               </Typography>
@@ -51,7 +51,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             disabled
             margin="normal"
             sx={{
-              height: 'clamp(35px, 5vw, 60px)',
+              height: 'clamp(35px, 5vw, 40px)',
+              padding: 0,
               '& .MuiInputBase-root': {
                 height: '100%',
               },
@@ -62,7 +63,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             label={
               <Typography
                 variant="body1"
-                sx={{ fontSize: 'clamp(14px, 1.5vw, 18px)' }}
+                sx={{ fontSize: 'clamp(14px, 1vw, 16px)', padding:0}}
               >
                 Username
               </Typography>
@@ -73,7 +74,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             margin="normal"
             placeholder="Enter your username"
             sx={{
-              height: 'clamp(35px, 5vw, 60px)',
+              height: 'clamp(35px, 5vw, 40px)',
+              padding: 0,
               '& .MuiInputBase-root': {
                 height: '100%',
               },
@@ -84,7 +86,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             label={
               <Typography
                 variant="body1"
-                sx={{ fontSize: 'clamp(14px, 1.5vw, 18px)' }}
+                sx={{ fontSize: 'clamp(14px, 1vw, 16px)', padding:0 }}
               >
                 First Name
               </Typography>
@@ -95,7 +97,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             margin="normal"
             placeholder="Enter your first name"
             sx={{
-              height: 'clamp(35px, 5vw, 60px)',
+              height: 'clamp(35px, 5vw, 40px)',
+              padding: 0,
               '& .MuiInputBase-root': {
                 height: '100%',
               },
@@ -106,7 +109,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             label={
               <Typography
                 variant="body1"
-                sx={{ fontSize: 'clamp(14px, 1.5vw, 18px)' }}
+                sx={{ fontSize: 'clamp(14px, 1vw, 16px)', padding:0 }}
               >
                 Last Name
               </Typography>
@@ -117,7 +120,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             margin="normal"
             placeholder="Enter your last name"
             sx={{
-              height: 'clamp(35px, 5vw, 60px)',
+              height: 'clamp(35px, 5vw, 40px)',
+              padding: 0,
               '& .MuiInputBase-root': {
                 height: '100%',
               },
@@ -128,7 +132,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             label={
               <Typography
                 variant="body1"
-                sx={{ fontSize: 'clamp(14px, 1.5vw, 18px)' }}
+                sx={{ fontSize: 'clamp(14px, 1vw, 16px)', padding:0 }}
               >
                 Address
               </Typography>
@@ -139,7 +143,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             margin="normal"
             placeholder="Enter your address"
             sx={{
-              height: 'clamp(35px, 5vw, 60px)',
+              height: 'clamp(35px, 5vw, 40px)',
+              padding: 0,
               '& .MuiInputBase-root': {
                 height: '100%',
               },
@@ -150,7 +155,7 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             label={
               <Typography
                 variant="body1"
-                sx={{ fontSize: 'clamp(14px, 1.5vw, 18px)' }}
+                sx={{ fontSize: 'clamp(14px, 1vw, 16px)', padding:0 }}
               >
                 Phone Number
               </Typography>
@@ -161,7 +166,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             margin="normal"
             placeholder="Enter your phone number"
             sx={{
-              height: 'clamp(35px, 5vw, 60px)',
+              height: 'clamp(35px, 5vw, 40px)',
+              padding: 0,
               '& .MuiInputBase-root': {
                 height: '100%',
               },
