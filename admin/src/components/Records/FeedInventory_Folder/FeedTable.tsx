@@ -11,6 +11,8 @@ import {
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import ReusableDialogBox from '../../../modals/ReusableDialogBox'; // Adjust the import path as needed
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import { ThemeProvider } from '@emotion/react';
+import theme from '../../../Theme';
 
 interface FeedData {
   type: string;
@@ -44,7 +46,7 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <TableContainer>
         <Table>
           <TableHead>
@@ -105,7 +107,7 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
           saveButtonColor="#FF0000" // Red color for the save button
         />
       )}
-    </>
+    </ThemeProvider>
   );
 };
 

@@ -1,7 +1,8 @@
 import * as React from 'react'
 import { BarChart } from '@mui/x-charts/BarChart'
-import { Grid2 } from '@mui/material'
+import { Grid2, ThemeProvider, Typography } from '@mui/material'
 import MonthPagination from './PaginationControl'
+import theme from '../../Theme'
 
 // format peso sign
 const formatCurrency = (amount: number) => {
@@ -10,9 +11,10 @@ const formatCurrency = (amount: number) => {
 
 export default function BarGraph() {
   return (
-    <Grid2 container spacing={6}>
+   <ThemeProvider theme={theme}>
+     <Grid2 container spacing={6} sx={{paddingX:5}}>
       <Grid2 size={12}>
-        <h1 className="finHead">Financial Report</h1>
+        <Typography variant='h2' fontWeight={700} color='black'>Financial Reports</Typography>
       </Grid2>
       <Grid2 size={12}>
         <MonthPagination />
@@ -21,12 +23,12 @@ export default function BarGraph() {
       {/* Pig Sales Section */}
 
       <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
-        <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
+        <Grid2 container size={{ xs: 9.5, }} className="pigSalesBox">
           <Grid2 container size={12} className="pigSales">
-            <p className="pigSalesTitle">Pig Sales</p>
+            <Typography variant='h5' color='white' paddingX={2}>Pig Sales</Typography>
           </Grid2>
           <Grid2 size={12}>
-            <p className="totalSales">{formatCurrency(200000)}</p>
+            <Typography variant='h3' fontWeight={700} className="totalSales" >{formatCurrency(200000)}</Typography>
           </Grid2>
         </Grid2>
       </Grid2>
@@ -58,13 +60,12 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#11703b' }]}
-          
-          height={500}
+          height={340}
           sx={{
             '& .MuiChartsAxis-y': {
               marginRight: '10px',
             },
-            paddingLeft: '10px',
+            
           }}
           margin={{ left: 60 }}
         />
@@ -73,12 +74,12 @@ export default function BarGraph() {
       {/* Feed Expense Section */}
 
       <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
-        <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
+        <Grid2 container size={{ xs: 9.5, }} className="pigSalesBox">
           <Grid2 container size={12} className="pigSales">
-            <p className="pigSalesTitle">Total Feed Expense </p>
+            <Typography variant='h5' color='white' paddingX={2}>Total Feed Expense </Typography>
           </Grid2>
-          <Grid2 size={12}>
-            <p className="totalSales">{formatCurrency(200000)}</p>
+          <Grid2 size={12} alignContent={'center'}>
+            <Typography variant='h3' fontWeight={700} className="totalSales">{formatCurrency(200000)}</Typography>
           </Grid2>
         </Grid2>
       </Grid2>
@@ -110,12 +111,12 @@ export default function BarGraph() {
             },
           ]}
           series={[{ data: [200000, 300000], color: '#11703b' }]}
-          height={500}
+          height={340}
           sx={{
             '& .MuiChartsAxis-y': {
               marginRight: '10px',
             },
-            paddingLeft: '10px',
+            
            
           }}
           margin={{ left: 60 }}
@@ -125,12 +126,12 @@ export default function BarGraph() {
       {/* Medicine Expense Section */}
 
       <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
-        <Grid2 container size={{ xs: 12, lg: 8 }} className="pigSalesBox">
+        <Grid2 container size={{ xs: 9.9, }} minWidth={30} className="pigSalesBox">
           <Grid2 container size={12} className="pigSales1">
-            <p className="pigSalesTitle">Total Medicine Expense </p>
+            <Typography variant='h5' color='white' paddingX={2}>Total Medicine Expense </Typography>
           </Grid2>
           <Grid2 size={12}>
-            <p className="meds">{formatCurrency(200000)}</p>
+            <Typography variant='h3' fontWeight={700} className="meds">{formatCurrency(200000)}</Typography>
           </Grid2>
         </Grid2>
       </Grid2>
@@ -163,16 +164,17 @@ export default function BarGraph() {
           ]}
           series={[{ data: [200000, 300000], color: '#3B4DE1' }]}
 
-          height={500}
+          height={340}
           sx={{
             '& .MuiChartsAxis-y': {
               marginRight: '10px',
             },
-            paddingLeft: '10px',
+            
           }}
           margin={{ left: 60 }}
         />
       </Grid2>
     </Grid2>
+   </ThemeProvider>
   )
 }

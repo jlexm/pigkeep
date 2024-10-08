@@ -14,13 +14,10 @@
     position: relative;
     border-radius: 10px;
     align-content: center;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.textAlign-left {
-    text-align: start;
-}
 
 .pigTotal {
     color: white;
@@ -34,10 +31,7 @@
     font-weight: 300;
     text-align: left;
     align-content: center;
-}
-
-.addButton {
-    align-content: center;
+    padding-left: 10px;
 }
 
 .card {
@@ -51,10 +45,6 @@
     align-content: center;
 }
 
-.qrButton {
-    align-content: center;
-    text-align: right;
-}
 
 .legend {
     display: flex;
@@ -73,3 +63,4 @@
 .itemsAlign {
     align-content: center;
 }
+

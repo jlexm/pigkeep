@@ -170,8 +170,9 @@
 import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import Grid2 from '@mui/material/Grid2';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, ThemeProvider } from '@mui/material';
 import '../PigList_Folder/PigList.css';
+import theme from '../../../Theme';
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
@@ -285,7 +286,8 @@ export default function PigpenDataTable({ onRowSelect }) {
   }, [searchText, handleFilter]);
 
   return (
-    <Grid2 size={12}>
+    <ThemeProvider theme={theme}>
+      <Grid2 size={12}>
       <Box
         sx={{
           marginBottom: 2,
@@ -333,6 +335,7 @@ export default function PigpenDataTable({ onRowSelect }) {
         />
       </Box>
     </Grid2>
+    </ThemeProvider>
   );
 }
 

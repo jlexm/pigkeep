@@ -1,9 +1,10 @@
 import * as React from 'react'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { Box, Grid2, IconButton, TextField } from '@mui/material'
+import { Box, Grid2, IconButton, TextField, ThemeProvider, Typography } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ReusableDialogBox from '../../modals/ReusableDialogBox' // Adjust the import path as needed
+import theme from '../../Theme'
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
@@ -220,71 +221,73 @@ export default function CurrentDataTable() {
   }
 
   return (
-    <Grid2 container size={12}>
-      <Grid2 size={12} className="lefty">
-        <p className="margin0">Current Events</p>
-      </Grid2>
-      <Grid2 size={12}>
-        <Box
-          sx={{
-            marginBottom: 2,
-            minWidth: 50,
-            paddingTop: 2,
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <TextField
-            label="Search"
-            variant="outlined"
-            size="small"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </Box>
-
-        <Box>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10, 25, 50, 100]}
-            rowSelection={false}
-            onCellClick={handleCellClick} // Add cell click event
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0
-                ? 'even-row'
-                : 'odd-row'
-            }
+    <ThemeProvider theme={theme}>
+      <Grid2 container size={12}>
+        <Grid2 size={12} className="lefty">
+          <Typography variant='h4' fontWeight={500}>Current Events</Typography>
+        </Grid2>
+        <Grid2 size={12}>
+          <Box
             sx={{
-              '& .MuiDataGrid-columnHeaders': {
-                fontWeight: 'bold',
-                fontSize: '15px',
-                color: '#11703B',
-              },
-              '& .green-text': {
-                color: '#11703B', // Style for "In Progress" status
-              },
-              '& .red-text': {
-                color: 'red',
-              },
+              marginBottom: 2,
+              minWidth: 50,
+              paddingTop: 2,
+              display: 'flex',
+              alignItems: 'center',
             }}
-          />
-        </Box>
-      </Grid2>
+          >
+            <TextField
+              label="Search"
+              variant="outlined"
+              size="small"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </Box>
 
-      {/* ReusableDialogBox to be shown when openDialog is true */}
-      {openDialog && selectedRow && (
-        <ReusableDialogBox
-          title="Accomplished?"
-          description="Verify if the event has been accomplished."
-          formFields={[]}
-          onSave={handleSave} // Handle save action
-          onCancel={handleCloseDialog} // Handle cancel action
-          saveButtonText="Mark as Done"
-          saveButtonColor="#11703B" // Green color for the save button
-        />
-      )}
-    </Grid2>
+          <Box>
+            <DataGrid
+              rows={filteredRows}
+              columns={columns}
+              initialState={{ pagination: { paginationModel } }}
+              pageSizeOptions={[5, 10, 25, 50, 100]}
+              rowSelection={false}
+              onCellClick={handleCellClick} // Add cell click event
+              getRowClassName={(params) =>
+                params.indexRelativeToCurrentPage % 2 === 0
+                  ? 'even-row'
+                  : 'odd-row'
+              }
+              sx={{
+                '& .MuiDataGrid-columnHeaders': {
+                  fontWeight: 'bold',
+                  fontSize: '15px',
+                  color: '#11703B',
+                },
+                '& .green-text': {
+                  color: '#11703B', // Style for "In Progress" status
+                },
+                '& .red-text': {
+                  color: 'red',
+                },
+              }}
+            />
+          </Box>
+        </Grid2>
+
+        {/* ReusableDialogBox to be shown when openDialog is true */}
+        {openDialog && selectedRow && (
+          <ReusableDialogBox
+            title="Accomplished?"
+            description="Verify if the event has been accomplished."
+            formFields={[]}
+            onSave={handleSave} // Handle save action
+            onCancel={handleCloseDialog} // Handle cancel action
+            saveButtonText="Mark as Done"
+            saveButtonColor="#11703B" // Green color for the save button
+          />
+        )}
+      </Grid2>
+    </ThemeProvider>
   )
 }

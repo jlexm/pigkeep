@@ -1,4 +1,11 @@
-import { Avatar, Box, Button, Grid2 } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid2,
+  ThemeProvider,
+  Typography,
+} from '@mui/material'
 import ProfileEditForm from '../components/Profile/EditProfile'
 import '../components/Profile/Profile.css'
 import pfp from '../assets/junmar.png'
@@ -7,6 +14,7 @@ import ReusableDialogBox from '../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import theme from '../Theme'
 
 const Profile = () => {
   const navigate = useNavigate()
@@ -35,32 +43,48 @@ const Profile = () => {
   }
 
   return (
-    <>
-      <Grid2 container size={12} spacing={5} sx={{ margin: 8 }}>
-        <Grid2 size={{ xs: 0, lg: 2 }}></Grid2>
-        <Grid2 size={{ xs: 12, lg: 2 }} className="rightEnd">
-          <Grid2 size={{ xs: 6, lg: 6 }} className="right">
+    <ThemeProvider theme={theme}>
+      <Grid2
+        container
+        spacing={5}
+        sx={{
+          paddingX: { xs: 2, sm: 4, lg: 6, xl: 7 },
+          paddingTop: 5,
+          paddingBottom: { xs: 10 },
+        }}
+      >
+        <Grid2 size={{ xs: 0, md: 2 }}></Grid2>
+        <Grid2 size={{ xs: 12, md: 2 }} className="rightEnd">
+          <Grid2 size={{ xs: 6, md: 6 }} className="right">
             <Avatar
-              src={pfp} 
+              src={pfp}
               alt="Junmar"
               sx={{
-                width: 180,
-                height: 180,
+                width: 'clamp(130px, 10vw, 180px)',
+                height: 'clamp(130px, 10vw, 180px)',
                 borderRadius: 3,
                 border: '2px solid #11703b',
               }}
             />
 
             <Button variant="text" sx={{ color: '#11703b', marginTop: 1 }}>
-              Change Profile Picture
+              <Typography
+                sx={{
+                  fontWeight: 300,
+                  fontSize: 'clamp(12px, 1vw + 3px, 16px)',
+                }}
+              >
+                Change Profile Picture
+              </Typography>
             </Button>
           </Grid2>
-          <Grid2 size={{ xs: 6, lg: 12 }} className="right">
+
+          <Grid2 size={{ xs: 6, md: 12 }}>
             <Button
               variant="outlined"
               sx={{
                 color: '#11703b',
-                marginTop: 10,
+                marginTop: { xs: 2, md: 10 },
                 border: '1px solid #11703b',
                 '&:hover': {
                   backgroundColor: '#11703b',
@@ -69,18 +93,45 @@ const Profile = () => {
               }}
               onClick={handleOpenDialog}
             >
-              Change Password
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: 'clamp(11px, 1vw + 3px, 16px)',
+                }}
+              >
+                Change Password
+              </Typography>
             </Button>
           </Grid2>
+        </Grid2>
 
-          <Grid2 size={{ xs: 6, lg: 12 }} className="right">
+        <Grid2
+          size={{ xs: 12, md: 5 }}
+          className="edit"
+          sx={{ backgroundColor: 'white', borderStyle: {xs: 'none', md: 'solid'}}}
+        >
+          <Grid2>
+            <Typography variant="h4" fontWeight={500}>
+              Edit Profile
+            </Typography>
+          </Grid2>
+          <Grid2 sx={{ paddingTop: 2 }}>
+            <ProfileEditForm />
+          </Grid2>
+        </Grid2>
+
+        <Grid2 size={{ xs: 12, md: 3 }}>
+          <Grid2
+            size={{ xs: 6, md: 12 }}
+            className="right"
+            textAlign={{ xs: 'center', md: 'start' }}
+          >
             <Button
               variant="outlined"
               sx={{
                 color: '#11703b',
-                marginTop: 10,
                 border: '1px solid #11703b',
-                zIndex: 2, 
+                zIndex: 2,
                 '&:hover': {
                   backgroundColor: '#11703b',
                   color: 'white',
@@ -88,27 +139,17 @@ const Profile = () => {
               }}
               onClick={handleLogOut}
             >
-              Log Out
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: 'clamp(11px, 1vw + 3px, 16px)',
+                }}
+              >
+                Log out
+              </Typography>
             </Button>
           </Grid2>
         </Grid2>
-
-        <Grid2
-          size={{ xs: 12, lg: 5 }}
-          className="edit"
-          sx={{ backgroundColor: 'white' }}
-        >
-          <Grid2>
-            <p className="margin0" style={{ paddingBottom: 20 }}>
-              Edit Profile
-            </p>
-          </Grid2>
-          <Grid2 sx={{ paddingTop: 2 }}>
-            <ProfileEditForm />
-          </Grid2>
-        </Grid2>
-
-        <Grid2 size={{ xs: 0, lg: 3 }}></Grid2>
 
         <Box className="bottgreen">
           <Box
@@ -117,6 +158,12 @@ const Profile = () => {
             alt="Huge Pig"
             className="responsiveImage"
             zIndex={-1}
+            sx={{
+              display: {
+                xs: 'none', 
+                md: 'block', 
+              },
+            }}
           />
         </Box>
       </Grid2>
@@ -145,7 +192,7 @@ const Profile = () => {
           saveButtonColor="#11703b" // Green color for the save button
         />
       )}
-    </>
+    </ThemeProvider>
   )
 }
 

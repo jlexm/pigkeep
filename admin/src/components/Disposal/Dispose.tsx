@@ -1,4 +1,4 @@
-import { Button, Grid2, Stack } from '@mui/material'
+import { Button, Grid2, Stack, ThemeProvider, Typography } from '@mui/material'
 import './Disposal.css'
 import MonthPagination from '../Home/PaginationControl'
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox'
@@ -6,6 +6,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox'
 import ReusableDialogBox from '../../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
+import theme from '../../Theme'
 
 export default function Dispose() {
   // State to manage the dialog box visibility
@@ -30,7 +31,6 @@ export default function Dispose() {
     setOpenDeceasedDialog(false)
   }
 
-
   // Function to handle save action in the dialog
   const handleSave = () => {
     console.log('Saving sold pig data...')
@@ -43,54 +43,91 @@ export default function Dispose() {
   }
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={3}>
         <Grid2 size={12} className="miniTitle">
-          <p className="disposeTitle">Disposal Ledger</p>
+          <Typography variant="h3" fontWeight={'bold'} sx={{ paddingTop: 3 }}>
+            Disposal Ledger
+          </Typography>
         </Grid2>
         <Grid2 size={12}>
           <MonthPagination />
         </Grid2>
-        <Grid2 container size={12} spacing={3} className="disposeInfoBg">
-          <Grid2 container size={12} spacing={0} className="innerBoxBg">
-            <Grid2 size={12}>
-              <p className="size50">Pig Sales</p>
+        <Grid2 container size={12} sx={{ placeContent: 'center' }}>
+          <Grid2
+            container
+            size={{ xs: 12, sm: 9, md: 8, lg: 12 }}
+            padding={3}
+            
+            spacing={3}
+            className="disposeInfoBg"
+          >
+            <Grid2 container size={12} paddingY={2} className="innerBoxBg">
+              <Grid2 size={12}>
+                <Typography variant="h5" fontWeight={500} color="black">
+                  Pig Sales
+                </Typography>
+              </Grid2>
             </Grid2>
-          </Grid2>
-          <Grid2 size={12}>
-            <text className="sales">230,000</text>
+            <Grid2 size={12}>
+              <Typography variant="h2" fontWeight={'bold'} color="white">
+                230,000
+              </Typography>
+            </Grid2>
           </Grid2>
         </Grid2>
         <Grid2 size={12}>
-          <Stack spacing={5} direction="row" className="center">
+          <Stack
+            spacing={5}
+            direction="row"
+            sx={{ justifyContent: 'center', paddingTop: 2 }}
+          >
             <Button
               variant="outlined"
               sx={{
-                '&:hover': { backgroundColor: '#d32f2f', color: 'white', borderColor: '#FF0000' },
-                width: 140,
-                height: 45,
+                '&:hover': {
+                  backgroundColor: '#d32f2f',
+                  color: 'white',
+                  borderColor: '#FF0000',
+                },
+                width: { xs: 100, sm: 110, md: 125, lg: 130, xl: 140 },
+                height: { xs: 35, sm: 40, md: 45 },
                 borderRadius: 2,
-                borderColor:'#FF0000',
-                color: '#FF0000'
+                borderColor: '#FF0000',
+                color: '#FF0000',
               }}
               startIcon={<IndeterminateCheckBoxIcon />}
               onClick={handleOpenDeceasedDialog}
             >
-              Deceased
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: 'clamp(11px, 1vw + 5px, 16px)',
+                }}
+              >
+                Deceased
+              </Typography>
             </Button>
             <Button
               variant="contained"
               sx={{
                 backgroundColor: '#11703b',
                 '&:hover': { backgroundColor: '#117e4b' },
-                width: 140,
-                height: 45,
+                width: { xs: 100, sm: 120, md: 125, lg: 130, xl: 140 },
+                height: { xs: 35, sm: 42, md: 45 },
                 borderRadius: 2,
               }}
               startIcon={<AddBoxIcon />}
               onClick={handleOpenDialog}
             >
-              Sell Pig
+               <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: 'clamp(11px, 1vw + 5px, 16px)',
+                }}
+              >
+                Sell Pig
+              </Typography>
             </Button>
           </Stack>
         </Grid2>
@@ -132,7 +169,6 @@ export default function Dispose() {
               placeholder: 'Pig Number',
               icon: <DirectionsBikeIcon />,
             },
-            
           ]}
           onSave={handleSaveDeceased} // Handle save action
           onCancel={handleCloseDeceasedDialog} // Handle cancel action
@@ -140,6 +176,6 @@ export default function Dispose() {
           saveButtonColor="#FF0000" // Green color for the save button
         />
       )}
-    </>
+    </ThemeProvider>
   )
 }

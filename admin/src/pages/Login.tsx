@@ -12,13 +12,13 @@ import {
   Checkbox,
   ThemeProvider,
 } from '@mui/material'
-import { AccountCircle, Visibility, VisibilityOff } from '@mui/icons-material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import tl from '../assets/topLeft.svg'
 import br from '../assets/bottomRight.svg'
 import miniLogo from '../assets/miniLogo.svg'
 import '../components/Login/Login.css'
 
-import theme from '../Theme'; // Import the theme
+import theme from '../Theme'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -28,28 +28,35 @@ const Login = () => {
     setShowPassword(!showPassword)
   }
 
-  const handleRememberMeChange = (event) => {
+  const handleRememberMeChange = (event: {
+    target: { checked: boolean | ((prevState: boolean) => boolean) }
+  }) => {
     setRememberMe(event.target.checked)
   }
 
   return (
-    <ThemeProvider  theme={theme}>
+    <ThemeProvider theme={theme}>
       <Box
         component="img"
         src={tl}
         alt="topLeft"
         className="loginTopLeft"
-        sx={{ width: { xs: 0,md:400, lg: 520, xl: 560 } }}
+        sx={{ width: { xs: 0, md: 400, lg: 520, xl: 560 } }}
       />
       <Box
         component="img"
         src={br}
         alt="bottomRight"
         className="loginBottRight"
-        sx={{ width: { xs: 0,md:410, lg: 450, xl: 560 } }}
+        sx={{ width: { xs: 0, md: 410, lg: 450, xl: 560 } }}
       />
-      
-      <Grid2 container size={12} spacing={1} >
+
+      <Grid2
+        container
+        size={12}
+        spacing={1}
+        sx={{ paddingX: { xs: 3, sm: 20 } }}
+      >
         <Grid2
           container
           size={12}
@@ -72,13 +79,13 @@ const Login = () => {
             variant="h3"
             color="black"
             align="center"
-            sx={{ fontWeight: 600 }}
+            sx={{ fontWeight: 900 }}
           >
             Log In
           </Typography>
 
-          <Grid2 container size={12} sx={{ maxWidth: 420 }}>
-            <Typography variant='subtitle1' color="black" align="center">
+          <Grid2 container size={12} sx={{ maxWidth: 440, paddingX: 3 }}>
+            <Typography variant="body1" color="black" align="center">
               Welcome back! Log in to your account to continue your pig farm
               management experience.
             </Typography>
@@ -151,7 +158,7 @@ const Login = () => {
                       color="success"
                     />
                   }
-                  label="Remember Me"
+                  label={<Typography variant="body2">Remember me</Typography>}
                   sx={{
                     marginTop: 1,
                     alignSelf: 'flex-start',
@@ -170,7 +177,7 @@ const Login = () => {
                   variant="text"
                   sx={{ textTransform: 'none', color: '#11703b' }}
                 >
-                  Forgot password?
+                  <Typography variant="body2">Forgot password?</Typography>
                 </Button>
               </Grid2>
             </Grid2>
@@ -180,9 +187,20 @@ const Login = () => {
               variant="contained"
               color="primary"
               fullWidth
-              sx={{ marginTop: 2, height: 50, bgcolor: '#11703b' }}
+              sx={{
+                marginTop: 2,
+                bgcolor: '#11703b',
+                height: { xs: 35, sm: 40, md: 45 },
+              }}
             >
-              Log In
+              <Typography
+                sx={{
+                  fontWeight: 500,
+                  fontSize: 'clamp(11px, 1vw + 3px, 16px)',
+                }}
+              >
+                Log in
+              </Typography>
             </Button>
           </Container>
         </Grid2>

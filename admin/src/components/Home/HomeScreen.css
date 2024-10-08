@@ -1,15 +1,24 @@
+.homeContainer {
+  background-color: #11703b;
+  padding-top: 5rem;  position: relative;
+  border-radius: 10px;
+  align-content: center;
+  padding: clamp(30px, 5vw, 75px) clamp(17px, 5vw, 50px);
+}
+
+
+.hugePig {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
 .parag {
     text-align: start;
     font-size: 1rem;
     color: black;
     margin: 1;
-}
-
-.pigCount {
-    text-align: start;
-    font-weight: 700;
-    color: black;
-    margin: 0;
 }
 
 .notifHead {
@@ -41,14 +50,10 @@
     color: black;
 }
 
-.finHead {
-    color: black;
-    margin-top: 0;
-}
-
 .pigSalesBox {
     align-self: center;
     justify-content: center;
+    
 }
 
 .boxCenter {
@@ -58,22 +63,16 @@
 .pigSales {
     display: flex;
     background-color: #11703b;
-    height: 110px;
     position: relative;
     border-radius: 10px;
     align-content: center;
+    align-items: center;
     display: flex;
     justify-content: center;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 1em 0em 1em 0em;
+    min-width: 300px;
 }
 
-.pigSalesTitle {
-    font-size: 35px;
-    font-weight: 500;
-    margin: 0;
-    color: white;
-}
 
 .totalSales {
     color: #11703b;
@@ -85,14 +84,12 @@
 .pigSales1 {
     display: flex;
     background-color: #3B4DE1;
-    height: 110px;
     position: relative;
     border-radius: 10px;
     align-content: center;
     display: flex;
     justify-content: center;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 1em 0.313em 1em 0.313em;
 }
 
 .meds {
@@ -107,13 +104,10 @@
     justify-content: center;
 }
 
-
-
 .quote {
     color: black;
     font-size: 20px;
 }
-
 
 
 /* Scrollbar for WebKit browsers (Chrome, Safari) */
@@ -122,7 +116,7 @@
     width: 12px;
 }
 
-::-webkit-scrollbar-track {
+0.313::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
 

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Button, Grid2, Typography } from '@mui/material'
+import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import ReusableDialogBox from '../../../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
+import theme from '../../../Theme'
 
 export default function AddPigComp() {
   // State to manage the dialog box visibility
@@ -25,24 +26,44 @@ export default function AddPigComp() {
   }
 
   return (
-    <>
-      <Grid2 container size={12} className="addPig">
-        <Grid2 size={{ xs: 12, lg: 4.5 }} className="textAlign-left">
-          
-          <span className="pigTotal">44</span>
-        </Grid2>
-        <Grid2 size={{ xs: 12, lg: 3.5 }} className="total">
-          <span>
-            Total <br />
-            Living Pigs
-          </span>
-        </Grid2>
-        <Grid2 size={{ xs: 12, lg: 4 }} className="addButton">
+    <ThemeProvider theme={theme}>
+      <Grid2
+        container
+        size={12}
+        sx={{ placeContent: { xs: 'center', md: 'start' } }}
+      >
+        <Grid2
+          container
+          size={{ xs: 12, sm: 9, md: 12 }}
+          className="feedContainer"
+          spacing={0}
+        >
+          <Grid2 size={7}>
+            <Grid2 container>
+            <Typography
+              fontWeight={700}
+              color="white"
+              sx={{ fontSize: 'clamp(3rem, 4vw, 4.688rem)' }}
+            >
+              44
+            </Typography>
+              <Box alignContent={'center'}>
+              <Box className="total">
+            <Typography variant="body2">
+              Total <br />
+              Living Pigs
+            </Typography>
+          </Box>
+              </Box>
+            </Grid2>
+          </Grid2>
+          <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
           <Button
             variant="contained"
             startIcon={<AddCircleIcon fontSize="large" />}
             sx={{
-              height: 47,
+              width: { xs: 90, sm: 100, md: 110 },
+              height: { xs: 35, sm: 40, md: 45 },
               color: 'black',
               backgroundColor: 'white',
               borderRadius: '10px',
@@ -55,11 +76,20 @@ export default function AddPigComp() {
             }}
             onClick={handleOpenDialog} // Open dialog when button is clicked
           >
-            Add Pig
+            <Typography
+              sx={{
+                fontWeight: 500,
+                fontSize: 'clamp(11px, 1vw + 5px, 16px)',
+              }}
+            >
+              Add Pig
+            </Typography>
           </Button>
+          </Grid2>
         </Grid2>
-      </Grid2>
 
+      </Grid2>
+      
       {/* ReusableDialogBox to be shown when openDialog is true */}
       {openDialog && (
         <ReusableDialogBox
@@ -89,6 +119,6 @@ export default function AddPigComp() {
           saveButtonColor="#11703b" // Green color for the save button
         />
       )}
-    </>
+    </ThemeProvider>
   )
 }

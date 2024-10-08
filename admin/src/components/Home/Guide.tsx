@@ -1,27 +1,20 @@
-import { Box, Grid2, Typography } from '@mui/material'
+import { Box, Grid2, ThemeProvider, Typography } from '@mui/material'
 import login from '../../assets/phone_login.svg'
 import home from '../../assets/phone_home.svg'
 import qr from '../../assets/phone_qr.svg'
 import scan from '../../assets/phone_scan.svg'
 import info from '../../assets/phone_info.svg'
 import web from '../../assets/web_dashboard.svg'
-import {
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-} from '@mui/material/styles'
-
-let theme = createTheme()
-theme = responsiveFontSizes(theme)
+import theme from '../../Theme'
 
 export default function Guide() {
   return (
     <ThemeProvider theme={theme}>
       {' '}
-      <Grid2 container size={12} spacing={5}>
-        <Grid2 className="pigSales" size={12}>
+      <Grid2 container size={12} spacing={5} paddingX={5}>
+        <Grid2 className="pigSalesBox" size={12}>
           <Grid2 container size={10} className="pigSales">
-            <Typography variant="h4" color="white" fontWeight={700}>
+            <Typography variant="h4" color="white" fontWeight={500} paddingY={2} >
               How PigKeep Works?
             </Typography>
           </Grid2>
@@ -31,7 +24,7 @@ export default function Guide() {
             <Typography
               variant="h3"
               color="#11703b"
-              fontWeight={700}
+              fontWeight={900}
               gutterBottom
             >
               1
@@ -47,8 +40,14 @@ export default function Guide() {
               component="img"
               src={login}
               alt="login"
-              className="responsiveImage"
-              sx={{ width: 280 }}
+              sx={{
+                width: {
+                  xs: 200,
+                  sm: 240,
+                  md: 280,
+                  lg: 310,
+                },
+              }}
             />
           </Grid2>
         </Grid2>
@@ -73,8 +72,14 @@ export default function Guide() {
               component="img"
               src={home}
               alt="home"
-              className="responsiveImage"
-              sx={{ width: 280 }}
+              sx={{
+                width: {
+                  xs: 200,
+                  sm: 240,
+                  md: 280,
+                  lg: 310,
+                },
+              }}
             />
           </Grid2>
         </Grid2>
@@ -99,8 +104,14 @@ export default function Guide() {
               component="img"
               src={qr}
               alt="qr"
-              className="responsiveImage"
-              sx={{ width: 280 }}
+              sx={{
+                width: {
+                  xs: 200,
+                  sm: 240,
+                  md: 280,
+                  lg: 310,
+                },
+              }}
             />
           </Grid2>
         </Grid2>
@@ -125,8 +136,14 @@ export default function Guide() {
               component="img"
               src={scan}
               alt="scan"
-              className="responsiveImage"
-              sx={{ width: 280 }}
+              sx={{
+                width: {
+                  xs: 200,
+                  sm: 240,
+                  md: 280,
+                  lg: 310,
+                },
+              }}
             />
           </Grid2>
         </Grid2>
@@ -151,8 +168,14 @@ export default function Guide() {
               component="img"
               src={info}
               alt="info"
-              className="responsiveImage"
-              sx={{ width: 280 }}
+              sx={{
+                width: {
+                  xs: 200,
+                  sm: 240,
+                  md: 280,
+                  lg: 310,
+                },
+              }}
             />
           </Grid2>
         </Grid2>
@@ -177,8 +200,19 @@ export default function Guide() {
               component="img"
               src={web}
               alt="web"
-              className="responsiveImage"
-              sx={{ width: 400, paddingTop: 20 }}
+              sx={{
+                width: {
+                  xs: 280,
+                  sm: 300,
+                  md: 310,
+                  lg: 330,
+                },
+                paddingTop: {
+                  xs: 2,
+                  md: 20,
+                  
+                },
+              }}
             />
           </Grid2>
         </Grid2>

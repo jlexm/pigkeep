@@ -8,9 +8,11 @@ import {
   Select,
   InputLabel,
   FormControl,
+  ThemeProvider,
 } from '@mui/material'
 
 import '../PigList_Folder/PigList.css'
+import theme from '../../../Theme'
 
 const columns: GridColDef[] = [
   { field: 'medType', headerName: 'Medicine Name', flex: 1 },
@@ -96,7 +98,6 @@ const initialRows = [
     date: 'Jun 18, 2024',
     cost: 'Php75',
   },
-
 ]
 
 const paginationModel = { page: 0, pageSize: 5 }
@@ -128,72 +129,78 @@ export default function FeedInvDataTable() {
   }, [searchText, statusFilter])
 
   return (
-    <Grid2 size={12}>
-      <Box
-        sx={{
-          marginBottom: 2,
-          width: 590,
-          paddingTop: 2,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <TextField
-          label="Search"
-          variant="outlined"
-          size="small"
-          fullWidth
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-        <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
-          <InputLabel>Status</InputLabel>
-          <Select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            size="small"
-            label="Status"
-          >
-            <MenuItem value="all">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
-            </MenuItem>
-            <MenuItem value="Add Feed">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>Add Feed</Box>
-            </MenuItem>
-            <MenuItem value="Consume Feed">
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                Consume Feed
-              </Box>
-            </MenuItem>
-          </Select>
-        </FormControl>
-      </Box>
-
-      <Box>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10, 25, 50, 100]}
-          rowSelection={false}
-          getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? 'even-row' : 'odd-row'
-          }
+    <ThemeProvider theme={theme}>
+      <Grid2 size={12}>
+        <Box
           sx={{
-            '& .MuiDataGrid-columnHeaders': {
-              fontWeight: 'bold',
-              fontSize: '15px',
-              color: '#3B4DE1',
-            },
-            '& .blue-text': {
-              color: '#3B4DE1',
-            },
-            '& .red-text': {
-              color: 'red',
-            },
+            marginBottom: 2,
+            width: 590,
+            paddingTop: 2,
+            display: 'flex',
+            alignItems: 'center',
           }}
-        />
-      </Box>
-    </Grid2>
+        >
+          <TextField
+            label="Search"
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
+            <InputLabel>Status</InputLabel>
+            <Select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              size="small"
+              label="Status"
+            >
+              <MenuItem value="all">
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
+              </MenuItem>
+              <MenuItem value="Add Feed">
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  Add Feed
+                </Box>
+              </MenuItem>
+              <MenuItem value="Consume Feed">
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  Consume Feed
+                </Box>
+              </MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box>
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            initialState={{ pagination: { paginationModel } }}
+            pageSizeOptions={[5, 10, 25, 50, 100]}
+            rowSelection={false}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0
+                ? 'even-row'
+                : 'odd-row'
+            }
+            sx={{
+              '& .MuiDataGrid-columnHeaders': {
+                fontWeight: 'bold',
+                fontSize: '15px',
+                color: '#3B4DE1',
+              },
+              '& .blue-text': {
+                color: '#3B4DE1',
+              },
+              '& .red-text': {
+                color: 'red',
+              },
+            }}
+          />
+        </Box>
+      </Grid2>
+    </ThemeProvider>
   )
 }

@@ -11,11 +11,14 @@ import {
   InputLabel,
   FormControl,
   Paper,
+  ThemeProvider,
+  Typography,
 } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ReusableDialogBox from '../../../modals/ReusableDialogBox' // Import the reusable dialog box
 import '../PigList_Folder/PigList.css'
+import theme from '../../../Theme'
 
 const columns: GridColDef[] = [
   {
@@ -54,12 +57,12 @@ const columns: GridColDef[] = [
   { field: 'parentNumber', headerName: 'Parent Number', flex: 1 },
   { field: 'currentFeed', headerName: 'Current Feed', flex: 1 },
   { field: 'pigpenNumber', headerName: 'Pigpen Number', flex: 1 },
-  { field: 'recordedWeight', headerName: 'Recorded Weight (kg)', flex: 1.2 },
+  { field: 'recordedWeight', headerName: 'Recorded Weight (kg)', flex: 1 },
   { field: 'priceSold', headerName: 'Price Sold', flex: 1 },
   {
     field: 'qrCode',
     headerName: 'QR Code',
-    flex: 0.8,
+    flex: 1,
     renderCell: () => (
       <Button variant="text" size="small" sx={{ color: '#F25B0C' }}>
         Download
@@ -69,7 +72,7 @@ const columns: GridColDef[] = [
   {
     field: 'actions',
     headerName: 'Actions',
-    flex: 0.7,
+    width: 130,
     renderCell: (params) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [editDialogOpen, setEditDialogOpen] = React.useState(false)
@@ -122,9 +125,9 @@ const columns: GridColDef[] = [
           {editDialogOpen && (
             <ReusableDialogBox
               title={
-                <>
+                <Typography variant="h4" fontWeight={700}>
                   Edit Pig <span style={{ color: '#11703b' }}>{pigNumber}</span>{' '}
-                </>
+                </Typography>
               }
               description="Fill up the form to update the pig’s information."
               formFields={[
@@ -395,8 +398,8 @@ export default function DataTable() {
   })
 
   return (
-    <>
-      <Grid2 container size={{ xs: 6 }}>
+    <ThemeProvider theme={theme}>
+      <Grid2 size={12}>
         <Box
           sx={{
             marginBottom: 2,
@@ -471,30 +474,22 @@ export default function DataTable() {
           </FormControl>
         </Box>
 
-        {/* <Paper sx={{ height: 400, width: '100%' }}>
-        <DataGrid
-          rows={filteredRows}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10, 25, 50, 100]}
-          rowSelection={false}
-          getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0 ? 'even-row' : 'odd-row'
-          }
-          disableColumnMenu
-        />
-      </Paper> */}
+        <Box> 
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            initialState={{ pagination: { paginationModel } }}
+            pageSizeOptions={[5, 10, 25, 50, 100]}
+            rowSelection={false}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0
+                ? 'even-row'
+                : 'odd-row'
+            }
+            disableColumnMenu
+          />
+        </Box>
       </Grid2>
-      <Grid2 sx={{ overflow: 'scroll' }} size={{ xs: 9, md: 12 }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          initialState={{ pagination: { paginationModel } }}
-          pageSizeOptions={[5, 10]}
-          checkboxSelection
-          sx={{ border: 0, width: '99%' }}
-        />
-      </Grid2>
-    </>
+    </ThemeProvider>
   )
 }
