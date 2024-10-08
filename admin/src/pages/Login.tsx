@@ -47,14 +47,14 @@ const Login = () => {
         src={tl}
         alt="topLeft"
         className="loginTopLeft"
-        sx={{ width: { xs: 0, md: 400, lg: 520, xl: 560 } }}
+        sx={{ width: { xs: 400, sm: 500, md: 550, lg: 590, xl: 690 } }}
       />
       <Box
         component="img"
         src={br}
         alt="bottomRight"
         className="loginBottRight"
-        sx={{ width: { xs: 0, md: 410, lg: 450, xl: 560 } }}
+        sx={{ width: { xs: 350, sm: 500, md: 510, lg: 610, xl: 660 } }}
       />
 
       <Grid2
@@ -101,21 +101,24 @@ const Login = () => {
             {/* Username TextField */}
             <TextField
               fullWidth
-              margin="normal"
               label="Username"
               variant="outlined"
               sx={{
-                height: 40,
+                height: 'clamp(40px, 4vw, 60px)',
+                marginBottom: { xs: '12px', lg: '1px' }, 
                 '& .MuiInputBase-root': {
-                  height: '45px', // Adjust the input field height
+                  height: '45px',
+                  '& input': {
+                    padding: 0,
+                  },
                 },
                 '& .MuiInputLabel-root': {
-                  top: '-5px', // Adjust label position
+                  top: '-5px',
                 },
               }}
               InputProps={{
                 sx: {
-                  padding: '5px 10px', // Adjust padding for smaller height
+                  padding: '5px 10px',
                 },
               }}
             />
@@ -123,22 +126,25 @@ const Login = () => {
             {/* Password TextField with Eye Icon */}
             <TextField
               fullWidth
-              margin="normal"
               label="Password"
               type={showPassword ? 'text' : 'password'}
               variant="outlined"
               sx={{
-                height: 40,
+                height: 'clamp(40px, 4vw, 60px)',
+                marginBottom: { md: '12px', lg: '1px' }, 
                 '& .MuiInputBase-root': {
-                  height: '45px', // Adjust the input field height
+                  height: '45px',
+                  '& input': {
+                    padding: 0,
+                  },
                 },
                 '& .MuiInputLabel-root': {
-                  top: '-5px', // Adjust label position
+                  top: '-5px',
                 },
               }}
               InputProps={{
                 sx: {
-                  padding: '5px 10px', // Adjust padding for smaller height
+                  padding: '5px 10px',
                 },
                 endAdornment: (
                   <InputAdornment position="end">

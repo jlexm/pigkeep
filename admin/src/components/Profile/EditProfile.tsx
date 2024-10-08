@@ -174,8 +174,8 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = () => {
             variant="contained"
             onClick={handleSubmit}
             sx={{
-              width: { xs: 90, sm: 100, md: 120, lg: 150 },
-              height: { xs: 35, sm: 40, md: 45 },
+              width: { xs: 140, sm: 200, md: 120, lg: 150 },
+              height: { xs: 30, sm: 40, md: 45 },
               backgroundColor: '#11703b',
             }}
           >

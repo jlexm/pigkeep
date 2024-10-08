@@ -46,7 +46,7 @@ const Profile = () => {
     <ThemeProvider theme={theme}>
       <Grid2
         container
-        spacing={5}
+        spacing={{xs:0, md:5}}
         sx={{
           paddingX: { xs: 2, sm: 4, lg: 6, xl: 7 },
           paddingTop: 5,
@@ -108,7 +108,10 @@ const Profile = () => {
         <Grid2
           size={{ xs: 12, md: 5 }}
           className="edit"
-          sx={{ backgroundColor: 'white', borderStyle: {xs: 'none', md: 'solid'}}}
+          sx={{
+            backgroundColor: 'white',
+            borderStyle: { xs: 'none', md: 'solid' },
+          }}
         >
           <Grid2>
             <Typography variant="h4" fontWeight={500}>
@@ -151,21 +154,20 @@ const Profile = () => {
           </Grid2>
         </Grid2>
 
-        <Box className="bottgreen">
-          <Box
-            component="img"
-            src={bottwave}
-            alt="Huge Pig"
-            className="responsiveImage"
-            zIndex={-1}
-            sx={{
-              display: {
-                xs: 'none', 
-                md: 'block', 
-              },
-            }}
-          />
-        </Box>
+        <Box
+          component="img"
+          src={bottwave}
+          alt="Huge Pig"
+          className="responsiveImage"
+          zIndex={-1}
+          width={'100%'}
+          sx={{
+            display: {
+              xs: 'none',
+              md: 'block',
+            },
+          }}
+        />
       </Grid2>
       {/* ReusableDialogBox to be shown when openDialog is true */}
       {openDialog && (
