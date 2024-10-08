@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Home from './pages/Home'
 import Records from './pages/Records'
@@ -10,23 +10,32 @@ import Profile from './pages/Profile'
 import Login from './pages/Login'
 
 function App() {
+  const location = useLocation();
+
   return (
     <div>
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/records" element={<Records />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/disposal" element={<Disposal />} />
-          <Route path="/caretaker" element={<Caretaker />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </Router>
+      {location.pathname !== '/login' && <Navbar />}
+      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/records" element={<Records />} />
+        <Route path="/events" element={<Events />} />
+        <Route path="/disposal" element={<Disposal />} />
+        <Route path="/caretaker" element={<Caretaker />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </div>
   )
 }
 
-export default App
+function AppWrapper() {
+  return (
+    <Router>
+      <App />
+    </Router>
+  );
+}
+
+export default AppWrapper;

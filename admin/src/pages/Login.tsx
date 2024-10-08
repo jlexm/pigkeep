@@ -19,8 +19,10 @@ import miniLogo from '../assets/miniLogo.svg'
 import '../components/Login/Login.css'
 
 import theme from '../Theme'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
 
@@ -32,6 +34,10 @@ const Login = () => {
     target: { checked: boolean | ((prevState: boolean) => boolean) }
   }) => {
     setRememberMe(event.target.checked)
+  }
+
+  const handeLogIn = () => {
+    navigate('/home')
   }
 
   return (
@@ -192,6 +198,7 @@ const Login = () => {
                 bgcolor: '#11703b',
                 height: { xs: 35, sm: 40, md: 45 },
               }}
+              onClick={handeLogIn}
             >
               <Typography
                 sx={{
