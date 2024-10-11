@@ -35,7 +35,7 @@ const PigStatusLegend: React.FC<PigStatusLegendProps> = ({ statuses }) => {
           className="legend"
         >
           {statuses.map((status) => (
-            <StyledBox key={status} sx={{paddingY:'5px', marginRight: 2}}>
+            <StyledBox key={status} sx={{paddingY:'5px', marginRight: {xs:2, xl: 6}}}>
               <Box
                 component="span"
                 sx={{

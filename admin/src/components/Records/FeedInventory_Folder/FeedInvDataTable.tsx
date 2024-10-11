@@ -8,22 +8,20 @@ import {
   Select,
   InputLabel,
   FormControl,
-  ThemeProvider,
   Typography,
 } from '@mui/material'
-
-import '../PigList_Folder/PigList.css'
+import { ThemeProvider } from '@emotion/react'
 import theme from '../../../Theme'
 
 const columns: GridColDef[] = [
-  { field: 'feedType', headerName: 'Feed Type', flex: 1 },
+  { field: 'feedType', headerName: 'Feed Type', flex: 1, minWidth: 170 },
   {
     field: 'action',
     headerName: 'Action',
     flex: 1,
+    minWidth: 170,
     headerAlign: 'left',
     align: 'left',
-
     cellClassName: (params) => {
       return params.value === 'Add Feed'
         ? 'green-text'
@@ -36,22 +34,15 @@ const columns: GridColDef[] = [
     field: 'quantity',
     headerName: 'Quantity',
     flex: 1,
+    minWidth: 170,
     headerAlign: 'right',
     align: 'right',
-
-    cellClassName: (params) => {
-      const action = params.row.action
-      return action === 'Add Feed'
-        ? 'green-text'
-        : action === 'Consume Feed'
-        ? 'red-text'
-        : ''
-    },
   },
   {
     field: 'date',
     headerName: 'Date',
     flex: 1,
+    minWidth: 170,
     headerAlign: 'right',
     align: 'right',
   },
@@ -59,6 +50,7 @@ const columns: GridColDef[] = [
     field: 'cost',
     headerName: 'Cost',
     flex: 1,
+    minWidth: 170,
     headerAlign: 'right',
     align: 'right',
   },
@@ -121,14 +113,18 @@ export default function FeedInvDataTable() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid2 size={12}>
+      <Grid2
+        container
+        justifyContent="start"
+        sx={{ textAlign: 'start', width: '100%' }}
+      >
         <Box
           sx={{
             marginBottom: 2,
-            width: 590,
+            maxWidth: '100%',
             paddingTop: 2,
             display: 'flex',
-            alignItems: 'center',
+            alignItems: 'start',
           }}
         >
           <TextField
@@ -139,7 +135,7 @@ export default function FeedInvDataTable() {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
+          <FormControl sx={{ minWidth: 170, marginLeft: 2 }}>
             <InputLabel>Status</InputLabel>
             <Select
               value={statusFilter}
@@ -152,19 +148,27 @@ export default function FeedInvDataTable() {
               </MenuItem>
               <MenuItem value="Add Feed">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                 <Typography> Add Feed</Typography>
+                  <Typography>Add Feed</Typography>
                 </Box>
               </MenuItem>
               <MenuItem value="Consume Feed">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                 <Typography> Consume Feed</Typography>
+                  <Typography>Consume Feed</Typography>
                 </Box>
               </MenuItem>
             </Select>
           </FormControl>
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            width: '100%',
+            maxWidth: '100%',
+            overflowX: 'auto', 
+            textAlign: 'start',
+            minWidth: '100px', 
+          }}
+        >
           <DataGrid
             rows={filteredRows}
             columns={columns}
@@ -172,7 +176,7 @@ export default function FeedInvDataTable() {
             pageSizeOptions={[5, 10, 25, 50, 100]}
             rowSelection={false}
             getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0 
+              params.indexRelativeToCurrentPage % 2 === 0
                 ? 'even-row'
                 : 'odd-row'
             }
@@ -183,7 +187,7 @@ export default function FeedInvDataTable() {
                 color: '#11703B',
               },
               '& .green-text': {
-                color: 'green',
+                color: '#11703B',
               },
               '& .red-text': {
                 color: 'red',

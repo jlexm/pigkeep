@@ -10,7 +10,6 @@ import {
   Select,
   InputLabel,
   FormControl,
-  Paper,
   ThemeProvider,
   Typography,
 } from '@mui/material'
@@ -24,7 +23,8 @@ const columns: GridColDef[] = [
   {
     field: 'number',
     headerName: 'Number',
-    flex: 1,
+    flex: 1, // Prevents the column from growing
+    minWidth: 100, // Ensures it doesn't shrink too small
     renderCell: (params) => {
       const statusColor = {
         alive: 'blue',
@@ -50,19 +50,20 @@ const columns: GridColDef[] = [
       )
     },
   },
-  { field: 'dob', headerName: 'Date of Birth', flex: 1 },
-  { field: 'ageDays', headerName: 'Age (Days)', type: 'number', flex: 1 },
-  { field: 'ageCategory', headerName: 'Age Category', flex: 1 },
-  { field: 'sex', headerName: 'Sex', flex: 1 },
-  { field: 'parentNumber', headerName: 'Parent Number', flex: 1 },
-  { field: 'currentFeed', headerName: 'Current Feed', flex: 1 },
-  { field: 'pigpenNumber', headerName: 'Pigpen Number', flex: 1 },
-  { field: 'recordedWeight', headerName: 'Recorded Weight (kg)', flex: 1 },
-  { field: 'priceSold', headerName: 'Price Sold', flex: 1 },
+  { field: 'dob', headerName: 'Date of Birth', flex: 1, minWidth: 100 },
+  { field: 'ageDays', headerName: 'Age (Days)', flex: 1, minWidth: 100 },
+  { field: 'ageCategory', headerName: 'Age Category', flex: 1, minWidth: 100 },
+  { field: 'sex', headerName: 'Sex', flex: 1, minWidth: 80 },
+  { field: 'parentNumber', headerName: 'Parent Number', flex: 1, minWidth: 100 },
+  { field: 'currentFeed', headerName: 'Current Feed', flex: 1, minWidth: 100 },
+  { field: 'pigpenNumber', headerName: 'Pigpen Number', flex: 1, minWidth: 100 },
+  { field: 'recordedWeight', headerName: 'Recorded Weight (kg)', flex: 1, minWidth: 100 },
+  { field: 'priceSold', headerName: 'Price Sold', flex: 1, minWidth: 100 },
   {
     field: 'qrCode',
     headerName: 'QR Code',
     flex: 1,
+    minWidth: 100,
     renderCell: () => (
       <Button variant="text" size="small" sx={{ color: '#F25B0C' }}>
         Download
@@ -72,11 +73,10 @@ const columns: GridColDef[] = [
   {
     field: 'actions',
     headerName: 'Actions',
-    width: 130,
+    flex: 1,
+    minWidth: 100,
     renderCell: (params) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [editDialogOpen, setEditDialogOpen] = React.useState(false)
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false) // State for delete dialog visibility
       const pigNumber = params.row.number
 
@@ -167,6 +167,7 @@ const columns: GridColDef[] = [
     align: 'right',
   },
 ]
+
 
 const rows = [
   {
@@ -399,97 +400,102 @@ export default function DataTable() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid2 size={12}>
-        <Box
-          sx={{
-            marginBottom: 2,
-            width: 590,
-            paddingTop: 2,
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <TextField
-            label="Search"
-            variant="outlined"
+    <Grid2 container  justifyContent="start" >
+      <Box
+        sx={{
+          marginBottom: 2,
+          minWidth: {xs: 30, lg: 590},
+          paddingTop: 1,
+          display: 'flex',
+          alignItems: 'center',
+          overflowX: 'auto',
+        }}
+      >
+        <TextField
+          label="Search"
+          variant="outlined"
+          size="small"
+          fullWidth
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <FormControl sx={{ minWidth: 100, marginLeft: 2 }}>
+          <InputLabel>Status</InputLabel>
+          <Select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
             size="small"
-            fullWidth
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
-            <InputLabel>Status</InputLabel>
-            <Select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              size="small"
-              label="Status"
-            >
-              <MenuItem value="all">
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
-              </MenuItem>
-              <MenuItem value="alive">
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: '50%',
-                      backgroundColor: 'blue',
-                      marginRight: 1,
-                    }}
-                  />
-                  Alive
-                </Box>
-              </MenuItem>
-              <MenuItem value="sold">
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: '50%',
-                      backgroundColor: 'green',
-                      marginRight: 1,
-                    }}
-                  />
-                  Sold
-                </Box>
-              </MenuItem>
-              <MenuItem value="deceased">
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: 12,
-                      height: 12,
-                      borderRadius: '50%',
-                      backgroundColor: 'red',
-                      marginRight: 1,
-                    }}
-                  />
-                  Deceased
-                </Box>
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+            label="Status"
+          >
+            <MenuItem value="all">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
+            </MenuItem>
+            <MenuItem value="alive">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    backgroundColor: 'blue',
+                    marginRight: 1,
+                  }}
+                />
+                Alive
+              </Box>
+            </MenuItem>
+            <MenuItem value="sold">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    backgroundColor: 'green',
+                    marginRight: 1,
+                  }}
+                />
+                Sold
+              </Box>
+            </MenuItem>
+            <MenuItem value="deceased">
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Box
+                  sx={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: '50%',
+                    backgroundColor: 'red',
+                    marginRight: 1,
+                  }}
+                />
+                Deceased
+              </Box>
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+  
+      <Box
+  sx={{
+    width: '100%',
+    maxWidth: '2000px',
+    overflowX: 'auto', 
+    textAlign: 'start',
+    paddingBottom: 1,
+  }}
+>
+  <DataGrid
+    columns={columns}
+    rows={filteredRows}
+    pageSizeOptions={[5, 10, 20]}
+    paginationModel={paginationModel}
+    autoHeight
+    
+  />
+</Box>
 
-        <Box> 
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10, 25, 50, 100]}
-            rowSelection={false}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0
-                ? 'even-row'
-                : 'odd-row'
-            }
-            disableColumnMenu
-          />
-        </Box>
-      </Grid2>
-    </ThemeProvider>
+    </Grid2>
+  </ThemeProvider>
   )
 }

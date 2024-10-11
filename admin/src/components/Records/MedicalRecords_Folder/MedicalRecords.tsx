@@ -12,12 +12,12 @@ export default function MedicalRecords_Screen() {
             <AddMedComp />
           </Grid2>
         </Grid2>{' '}
-        {/* <Grid2 container size={{xs: 12, lg:8}} className="itemAlign">
+        <Grid2 container size={{xs: 12, lg:8}} className="itemAlign">
           <Grid2 size={12}>
             <Typography variant='h5' fontWeight={'bold'} color='black' textAlign={{lg:'start'}}>Medical History</Typography>
             <MedInvDataTable />
           </Grid2>
-        </Grid2> */}
+        </Grid2>
       </Grid2>
     </ThemeProvider>
   )

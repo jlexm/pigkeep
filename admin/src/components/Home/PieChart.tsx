@@ -40,7 +40,7 @@ export default function BasicPie() {
                 xs: 180, 
                 sm: 300, 
                 md: 400,
-                lg: 300, 
+                lg: 270, 
                 xl: 350, 
               },
             }}

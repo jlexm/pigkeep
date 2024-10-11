@@ -32,7 +32,7 @@ export default function AddMedComp() {
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={3} >
         <Grid2 size={12} className="miniTitle" sx={{paddingX: {xs:3}}}>
-          <Typography variant="h3" fontWeight={'bold'} sx={{ paddingTop: 3 }}>
+          <Typography fontSize={'clamp(2rem, 5vw, 3rem)'} fontWeight={'bold'} sx={{ paddingTop: 3 }}>
             Total Medicine Expense
           </Typography>
         </Grid2>
@@ -42,7 +42,7 @@ export default function AddMedComp() {
         <Grid2 container size={12} sx={{ placeContent: 'center' }}>
           <Grid2
             container
-            size={{ xs: 11, sm: 7, md: 5.5, lg: 10.5 }}
+            size={{ xs: 11, sm: 7, lg: 12 }}
             className="medContainer"
             spacing={0}
           >

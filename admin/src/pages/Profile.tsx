@@ -9,7 +9,7 @@ import {
 import ProfileEditForm from '../components/Profile/EditProfile'
 import '../components/Profile/Profile.css'
 import pfp from '../assets/junmar.png'
-import bottwave from '../assets/bottomRight.svg'
+import bottwave from '../assets/pigHead.svg'
 import ReusableDialogBox from '../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
@@ -161,7 +161,7 @@ const Profile = () => {
           alt="Huge Pig"
           className="responsiveImage"
           zIndex={-1}
-          width={{lg:500}}
+          width={{md: 330, lg:400, xl: 650}}
           sx={{
             display: {
               xs: 'none',

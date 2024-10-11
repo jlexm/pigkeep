@@ -83,7 +83,7 @@ const Events = () => {
                 variant="contained"
                 startIcon={<EventIcon fontSize="large" />}
                 sx={{
-                  width: { xs: 95, sm: 115, md: 125 },
+                  width: { xs: 110, sm: 115, md: 130 },
                   height: { xs: 35, sm: 40, md: 45 },
                   color: 'black',
                   backgroundColor: 'white',
@@ -103,7 +103,7 @@ const Events = () => {
                     fontSize: 'clamp(11px, 1vw + 5px, 16px)',
                   }}
                 >
-                  Add Feed
+                  Add Event
                 </Typography>
               </Button>
             </Grid2>
@@ -111,9 +111,9 @@ const Events = () => {
         </Grid2>
         <Grid2 container size={12}>
           <Grid2 container size={{ xs: 12, lg: 6 }} className="itemAlign">
-            {/* <Grid2 container size={12}>
+            <Grid2 container size={12}>
               <CurrentDataTable />
-            </Grid2> */}
+            </Grid2>
           </Grid2>
           <Grid2
             container
@@ -160,13 +160,13 @@ const Events = () => {
                 }}
               />
             </Grid2>
-            {/* <Grid2 container size={12}>
+            <Grid2 container size={12}>
               {selectedChip === 'upcoming' ? (
                 <UpcomingDataTable />
               ) : (
                 <HistoryDataTable />
               )}
-            </Grid2> */}
+            </Grid2>
           </Grid2>
         </Grid2>
       </Grid2>

@@ -20,7 +20,7 @@ const Records = () => {
         container
         spacing={3}
         sx={{
-          paddingX: { xs: 2, sm: 4, lg: 6, xl: 7 },
+          marginX: { xs: 2, sm: 4, lg: 6, xl: 7 },
           paddingY: { xs: 2, sm: 5 },
         }}
       >

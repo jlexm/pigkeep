@@ -130,7 +130,7 @@ export default function FeedInvDataTable() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid2 size={12}>
+      <Grid2 >
         <Box
           sx={{
             marginBottom: 2,

@@ -190,14 +190,14 @@ export default function AddPenComp() {
                   fontSize: 'clamp(11px, 1vw + 5px, 16px)',
                 }}
               >
-                Add Feed
+                Add Pen
               </Typography>
             </Button>
           </Grid2>
         </Grid2>
-        {/* <Grid2 size={12}>
+        <Grid2 size={12}>
             <PigpenDataTable onRowSelect={undefined} />
-          </Grid2> */}
+          </Grid2>
       </Grid2>
 
       {/* ReusableDialogBox to be shown when openDialog is true */}

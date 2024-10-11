@@ -155,7 +155,7 @@ const Caretaker = () => {
         >
           <Box>
             <Typography
-              variant="h3"
+              fontSize={'clamp(2rem, 5vw, 3rem)'}
               fontWeight={700}
               color="Black"
               textAlign={{ xs: 'center', sm: 'start' }} 
