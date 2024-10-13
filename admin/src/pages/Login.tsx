@@ -61,7 +61,7 @@ const Login = () => {
         container
         size={12}
         
-        sx={{ paddingX: { xs: 3, sm: 20 } }}
+        sx={{ paddingX: { xs: 5, sm: 20 } }}
       >
         <Grid2
           container

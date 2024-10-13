@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 import Grid2 from '@mui/material/Grid2'
 import {
   Box,
@@ -15,11 +15,17 @@ import '../PigList_Folder/PigList.css'
 import theme from '../../../Theme'
 
 const columns: GridColDef[] = [
-  { field: 'medType', headerName: 'Medicine Name', flex: 1 },
+  {
+    field: 'medType',
+    headerName: 'Medicine Name',
+    minWidth: 194,
+    resizable: false,
+  },
   {
     field: 'action',
     headerName: 'Action',
-    flex: 1,
+    minWidth: 194,
+    resizable: false,
     headerAlign: 'left',
     align: 'left',
 
@@ -34,7 +40,8 @@ const columns: GridColDef[] = [
   {
     field: 'quantity',
     headerName: 'Quantity',
-    flex: 1,
+    minWidth: 194,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
 
@@ -50,21 +57,24 @@ const columns: GridColDef[] = [
   {
     field: 'target',
     headerName: 'Target Pig',
-    flex: 1,
+    minWidth: 194,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'date',
     headerName: 'Date',
-    flex: 1,
+    minWidth: 194,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'cost',
     headerName: 'Cost',
-    flex: 1,
+    minWidth: 194,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
@@ -107,7 +117,6 @@ export default function FeedInvDataTable() {
   const [statusFilter, setStatusFilter] = React.useState('all')
   const [filteredRows, setFilteredRows] = React.useState(initialRows)
 
-  // Function to handle filtering based on searchText and statusFilter
   const handleFilter = () => {
     const lowerSearchText = searchText.toLowerCase()
     const filtered = initialRows.filter((row) => {
@@ -130,14 +139,17 @@ export default function FeedInvDataTable() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid2 >
+      <Grid2
+        container
+        justifyContent="start"
+        sx={{ textAlign: 'start', width: '100%' }}
+      >
         <Box
           sx={{
             marginBottom: 2,
-            width: 590,
-            paddingTop: 2,
-            display: 'flex',
-            alignItems: 'center',
+            maxWidth: '100%',
+            direction: 'row',
+            paddingTop: 2
           }}
         >
           <TextField
@@ -147,6 +159,7 @@ export default function FeedInvDataTable() {
             fullWidth
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            sx={{ width: { xs: 150, sm: 250, md: 300, lg: 320, xl: 350 } }}
           />
           <FormControl sx={{ minWidth: 150, marginLeft: 2 }}>
             <InputLabel>Status</InputLabel>
@@ -173,7 +186,14 @@ export default function FeedInvDataTable() {
           </FormControl>
         </Box>
 
-        <Box>
+        <Box
+          sx={{
+            width: '100%',
+            overflowX: 'auto',
+            textAlign: 'start',
+            display: 'grid',
+          }}
+        >
           <DataGrid
             rows={filteredRows}
             columns={columns}
@@ -185,10 +205,19 @@ export default function FeedInvDataTable() {
                 ? 'even-row'
                 : 'odd-row'
             }
+            slotProps={{
+              toolbar: {
+                showQuickFilter: false,
+              },
+            }}
+            slots={{ toolbar: GridToolbar }}
             sx={{
               '& .MuiDataGrid-columnHeaders': {
                 fontWeight: 'bold',
                 fontSize: '15px',
+                color: '#3B4DE1',
+              },
+              '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
                 color: '#3B4DE1',
               },
               '& .blue-text': {

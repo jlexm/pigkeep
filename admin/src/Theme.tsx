@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import type {} from '@mui/x-data-grid/themeAugmentation';
 
 const theme = createTheme({
   typography: {
@@ -37,6 +38,31 @@ const theme = createTheme({
       fontSize: 'clamp(0.8rem, 1vw, 1.125rem)', 
     },
   },
+  components: {
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'white',
+          minWidth: 10,
+        },
+        columnHeaders: {
+          fontWeight: 'bold',
+          fontSize: '15px',
+          color: '#222222',
+        },
+        cell: {
+          color: '#222222',
+        },
+        toolbarContainer: {
+          display: 'flex',
+          justifyContent: 'flex-start',
+          alignItems: 'center',
+          marginTop: 'auto',
+        },
+      },
+    },
+  },
+  
 });
 
 export default theme;

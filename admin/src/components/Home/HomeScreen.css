@@ -54,6 +54,7 @@
 .pigSalesBox {
     align-self: center;
     justify-content: center;
+    text-align: -webkit-center;
     
 }
 

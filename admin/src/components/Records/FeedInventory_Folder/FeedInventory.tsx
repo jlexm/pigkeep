@@ -1,4 +1,4 @@
-import { Box, Grid2, ThemeProvider, Typography } from '@mui/material'
+import { Grid2, ThemeProvider, Typography } from '@mui/material'
 import AddFeedComp from './AddFeed'
 import FeedInvDataTable from './FeedInvDataTable'
 import theme from '../../../Theme'
@@ -23,22 +23,12 @@ export default function FeedInventory_Screen() {
               variant="h5"
               fontWeight={'bold'}
               color="black"
-              textAlign={{ lg: 'start' }}
+              textAlign= "start"
             >
               Feed History
             </Typography>
           </Grid2>
-          <Grid2 size={{ xs: 1, lg: 0 }}>
-            <Box
-              sx={{
-                width: '100%',
-                height: 1,
-                bgcolor: '#11703b',
-                borderRadius: 3,
-              }}
-            />
-          </Grid2>
-          <Grid2 container size={{ xs: 11, lg: 12 }}>
+          <Grid2>
             <FeedInvDataTable />
           </Grid2>
         </Grid2>
@@ -46,4 +36,3 @@ export default function FeedInventory_Screen() {
     </ThemeProvider>
   )
 }
-

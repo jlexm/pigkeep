@@ -57,11 +57,11 @@ const Events = () => {
           container
           size={12}
           spacing={5}
-          sx={{ placeContent: { xs: 'center', sm: 'start' } }}
+          sx={{ placeContent: { xs: 'center', md: 'start' } }}
         >
           <Grid2
             container
-            size={{ xs: 12, sm: 7, md: 6 }}
+            size={{ xs: 12, sm: 12, md: 6 }}
             className="feedContainer"
             spacing={0}
           >

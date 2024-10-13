@@ -1,4 +1,4 @@
-import { Box, Grid2 } from '@mui/material'
+import { Grid2 } from '@mui/material'
 import AddPigComp from './AddPigComponent'
 import Cards from './DynamicCard'
 import PigStatusLegend from './Legend'
@@ -31,14 +31,8 @@ export default function PigList_Screen() {
       >
         <QRCode />
       </Grid2>
-      <Grid2 container spacing={0} size={12}>
-        <Grid2 size={1}>
-          <Box sx={{ width: '100%', height: 1, bgcolor: '#11703b', borderRadius: 3}} />
-        </Grid2>
-
-        <Grid2 container size={11} paddingLeft={2}>
-          <DataTable />
-        </Grid2>
+      <Grid2 container size={12}>
+        <DataTable />
       </Grid2>
     </Grid2>
   )
