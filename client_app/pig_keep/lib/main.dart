@@ -8,6 +8,7 @@ import 'package:pig_keep/Components/Layout.dart';
 import 'package:pig_keep/Components/MedicalRecords.dart';
 import 'package:pig_keep/Components/PigList.dart';
 import 'package:pig_keep/Components/PigPen.dart';
+import 'package:pig_keep/Components/PigPen_PenNumber.dart';
 import 'package:pig_keep/Components/PigView.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
@@ -23,6 +24,7 @@ import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Screens/ScanQR.dart';
 import 'package:pig_keep/Screens/Signup.dart';
 import 'package:pig_keep/Services/database-service.dart';
+import 'package:pig_keep/Services/ledger.service.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
@@ -44,6 +46,7 @@ void main() async {
 
   globalLocator.registerSingleton(PigPenService());
   globalLocator.registerSingleton(PigService());
+  globalLocator.registerSingleton(LedgerService());
 
   runApp(
     MultiProvider(
@@ -87,18 +90,18 @@ class MyApp extends StatelessWidget {
               path: '/',
               redirect: (context, state) => isAuth ? '/home' : '/login',
             ),
+            GoRoute(
+              path: '/records',
+              redirect: (context, state) => '/records/pens',
+            ),
             ShellRoute(
               builder: (context, state, child) {
-                return Layout(child: child);
+                return Layout(child: child, currentRoute: state.uri.toString());
               },
               routes: [
                 GoRoute(
                   path: '/home',
                   builder: (context, state) => const Home(),
-                ),
-                GoRoute(
-                  path: '/records',
-                  redirect: (context, state) => '/records/pens',
                 ),
                 ShellRoute(
                     builder: (context, state, child) {
@@ -111,24 +114,33 @@ class MyApp extends StatelessWidget {
                             NoTransitionPage(child: const PigPen()),
                       ),
                       GoRoute(
+                        path: '/records/pens/:uuid', // Use a named parameter
+                        pageBuilder: (context, state) {
+                          // Get the UUID from the route parameters
+                          final String uuid =
+                              state.pathParameters['uuid'] ?? '';
+                          return NoTransitionPage(
+                            child: PigPenPenNumber(
+                                penUUID: uuid), // Pass the UUID to the widget
+                          );
+                        },
+                      ),
+                      GoRoute(
                         path: '/records/pigs',
                         pageBuilder: (context, state) =>
                             NoTransitionPage(child: const PigList()),
-                        routes: [
-                          GoRoute(
-                            path: ':uuid', // Use a named parameter
-                            pageBuilder: (context, state) {
-                              // Get the UUID from the route parameters
-                              final String uuid =
-                                  state.pathParameters['uuid'] ?? '';
-                              return NoTransitionPage(
-                                child: PigView(
-                                    pigUUID:
-                                        uuid), // Pass the UUID to the widget
-                              );
-                            },
-                          ),
-                        ],
+                      ),
+                      GoRoute(
+                        path: '/records/pigs/:uuid', // Use a named parameter
+                        pageBuilder: (context, state) {
+                          // Get the UUID from the route parameters
+                          final String uuid =
+                              state.pathParameters['uuid'] ?? '';
+                          return NoTransitionPage(
+                            child: PigView(
+                                pigUUID: uuid), // Pass the UUID to the widget
+                          );
+                        },
                       ),
                       GoRoute(
                         path: '/records/feeds',

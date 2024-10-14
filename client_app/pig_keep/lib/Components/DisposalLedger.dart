@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
 
 class DisposalLedger extends StatefulWidget {
-  const DisposalLedger({super.key});
+  final List<Map<String, dynamic>> ledgers;
+
+  DisposalLedger({super.key, required this.ledgers});
 
   @override
   State<DisposalLedger> createState() => _DisposalLedgerState();
 }
 
 class _DisposalLedgerState extends State<DisposalLedger> {
-  final List<Map<String, dynamic>> transactionMedcaDisposalLedger = [
-    {
-      'date': 'Today',
-      'time': '08:00 AM',
-      'id': '005',
-      'weight': 95,
-      'status': 'Sold',
-      'price': 1000,
-    },
-    {
-      'date': 'Jul 24, 2024',
-      'time': '09:30 AM',
-      'id': '006',
-      'weight': 85,
-      'status': 'Deceased',
-      'price': 0,
-    },
-    {
-      'date': 'Jul 23, 2024',
-      'time': '07:45 AM',
-      'id': '007',
-      'weight': 95,
-      'status': 'Sold',
-      'price': 1500,
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,10 +22,10 @@ class _DisposalLedgerState extends State<DisposalLedger> {
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: transactionMedcaDisposalLedger.length,
+            itemCount: widget.ledgers.length,
             itemBuilder: (context, index) {
-              final transaction = transactionMedcaDisposalLedger[index];
-              final isSold = transaction['status'] == 'Sold';
+              final transaction = widget.ledgers[index];
+              final isSold = transaction['status'] == 'sold';
               final statusColor = isSold ? appPrimary : appRed;
 
               return Padding(
@@ -67,7 +43,9 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            transaction['date']!,
+                            transaction['transactionDate']!
+                                .toString()
+                                .split(' ')[0],
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
@@ -95,23 +73,15 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: '₱',
-                                    style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w300,
-                                      fontFamily:
-                                          'YourPesoFontFamily', 
-                                          color: appTertiary,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '${transaction['price']}',
+                                    text: transaction['priceSold'] != null
+                                        ? PigHelper.formatCurrency(
+                                            transaction['priceSold'])
+                                        : '',
                                     style: TextStyle(
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400,
-                                      fontFamily:
-                                          'YourPriceFontFamily', 
-                                          color: appTertiary,
+                                      fontFamily: 'YourPriceFontFamily',
+                                      color: appTertiary,
                                     ),
                                   ),
                                 ],
@@ -139,11 +109,11 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: transaction['id'],
+                                  text: transaction['pigNumber'],
                                   style: TextStyle(
                                     fontSize: 11.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: transaction['status'] == 'Sold'
+                                    color: transaction['status'] == 'sold'
                                         ? appPrimary
                                         : appRed,
                                   ),
@@ -153,7 +123,9 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                           ),
                           if (isSold)
                             Text(
-                              '${transaction['weight']}kg',
+                              transaction['weightKG'] != null
+                                  ? '${transaction['weightKG']}kg'
+                                  : '',
                               style: TextStyle(
                                 fontSize: 11.sp,
                                 fontWeight: FontWeight.w500,

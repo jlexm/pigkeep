@@ -8,6 +8,11 @@ import 'package:pig_keep/Components/SearchBar_MedicalRecords.dart';
 import 'package:pig_keep/Components/SearchBar_PigList.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/ledger.service.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 
 class Ledger extends StatefulWidget {
   const Ledger({super.key});
@@ -17,6 +22,44 @@ class Ledger extends StatefulWidget {
 }
 
 class _LedgerState extends State<Ledger> {
+  // services
+  final ledgerService = globalLocator.get<LedgerService>();
+
+  // vars
+  var selectedFarm;
+  var userOwner;
+  List<Map<String, dynamic>> ledgerHistory = [];
+  double totalEarned = 0;
+
+  // fns
+  Future<void> getLedgerDetails() async {
+    final ledgerDets = await ledgerService.getLedgers(selectedFarm['_id']);
+    setState(() {
+      ledgerHistory = ledgerDets['ledgers'];
+      totalEarned = ledgerDets['totalEarned'];
+    });
+  }
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
+      userOwner = user['username'];
+      getLedgerDetails();
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+    getLedgerDetails();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,21 +156,13 @@ class _LedgerState extends State<Ledger> {
                                         text: TextSpan(
                                           children: [
                                             TextSpan(
-                                              text: '₱',
+                                              text: PigHelper.formatCurrency(
+                                                  totalEarned),
                                               style: TextStyle(
-                                                fontSize: 33.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: appSecondary,
-                                                fontFamily: 'Roboto',
-                                              ),
-                                            ),
-                                            TextSpan(
-                                              text: '230,000',
-                                              style: TextStyle(
-                                                fontSize: 33.sp,
+                                                fontSize: 22.sp,
                                                 fontWeight: FontWeight.w700,
                                                 color: appSecondary,
-                                                fontFamily: 'Poppins',
+                                                fontFamily: 'Roboto',
                                               ),
                                             ),
                                           ],
@@ -168,7 +203,7 @@ class _LedgerState extends State<Ledger> {
                                                 labelText: 'Pig Number',
                                                 hintText: 'Pig Number',
                                                 hintTextSize: 14.sp,
-                                                icon: Icons.email,
+                                                icon: Icons.savings,
                                                 textSize: 14.sp,
                                                 height: 43.h,
                                               ),
@@ -178,9 +213,11 @@ class _LedgerState extends State<Ledger> {
                                                 labelText: 'Weight in kg',
                                                 hintText: 'Weight in kg',
                                                 hintTextSize: 14.sp,
-                                                icon: Icons.email,
+                                                icon: Icons.scale,
                                                 textSize: 14.sp,
                                                 height: 43.h,
+                                                keyboardType:
+                                                    TextInputType.phone,
                                               ),
                                               RecyclableTextFormField(
                                                 controller:
@@ -188,9 +225,11 @@ class _LedgerState extends State<Ledger> {
                                                 labelText: 'Price',
                                                 hintText: 'Price',
                                                 hintTextSize: 14.sp,
-                                                icon: Icons.email,
+                                                icon: Icons.php,
                                                 textSize: 14.sp,
                                                 height: 43.h,
+                                                keyboardType:
+                                                    TextInputType.phone,
                                               ),
                                             ],
                                             onSave: () {
@@ -257,7 +296,7 @@ class _LedgerState extends State<Ledger> {
                                                 labelText: 'Pig Number',
                                                 hintText: 'Pig Number',
                                                 hintTextSize: 14.sp,
-                                                icon: Icons.email,
+                                                icon: Icons.savings,
                                                 textSize: 14.sp,
                                                 height: 43.h,
                                               ),
@@ -333,9 +372,11 @@ class _LedgerState extends State<Ledger> {
                 SizedBox(
                   height: 14.h,
                 ),
-                const Column(
+                Column(
                   children: [
-                    DisposalLedger(),
+                    DisposalLedger(
+                      ledgers: ledgerHistory,
+                    ),
                   ],
                 )
               ],

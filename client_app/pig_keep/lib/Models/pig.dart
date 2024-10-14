@@ -31,8 +31,8 @@ class Pig {
   late bool sex;
   late String status = 'alive'; // alive, deceased, sold
 
-  late double weightKG;
-  late DateTime lastWeightRecorded;
+  double? weightKG;
+  DateTime? lastWeightRecorded;
 
   DateTime createdAt = DateTime.now();
   DateTime updatedAt = DateTime.now();

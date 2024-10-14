@@ -1,45 +1,69 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/CenterReusableDialogBox.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Models/pig-pen.dart';
+import 'package:pig_keep/Models/pig.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 
-class PigPenPenNumber extends StatelessWidget {
-  final String number;
-  final String type;
-  final int pigCount;
-  final int maxPigs;
-  final List<String> pigNumbers;
+class PigPenPenNumber extends StatefulWidget {
+  final String penUUID;
 
-  PigPenPenNumber({
-    super.key,
-    required this.number,
-    required this.type,
-    required this.pigCount,
-    required this.maxPigs,
-    required this.pigNumbers,
-  });
+  const PigPenPenNumber({super.key, required this.penUUID});
 
+  @override
+  State<PigPenPenNumber> createState() => PigPenView();
+}
+
+class PigPenView extends State<PigPenPenNumber> {
   // pigPen db
-  final pigPenService = globalLocator.get<PigPenService>();
+  final pigService = globalLocator.get<PigService>();
+  final penService = globalLocator.get<PigPenService>();
+
+  // controllers
+  final TextEditingController _penTypeController = TextEditingController();
+  final TextEditingController _maxPigNumberController = TextEditingController();
+
+  // vars
+  PigPen? penDetails = null;
+  List<Pig> pigs = [];
 
   // functions
-  void getPenDetails() {}
-  void getPigs() {}
-  void editPen() {}
+  Future<void> getPenDetails() async {
+    final pen = await penService.getPigPenDetails(widget.penUUID);
+    final fetchPigs = await pigService.fetchPigsInPen(widget.penUUID);
+    setState(() {
+      penDetails = pen;
+      pigs = fetchPigs;
+
+      // controllers
+      _penTypeController.text = pen!.penType;
+      _maxPigNumberController.text = pen.maxPigCount.toString();
+    });
+  }
+
   void deletePen() {}
+
+  @override
+  void initState() {
+    getPenDetails();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Determine the number of rows needed
     int itemsPerRow = 3;
-    int numRows = (pigNumbers.length / itemsPerRow).ceil();
+    int numRows = (pigs.length / itemsPerRow).ceil();
 
-    List<List<String>> rows = List.generate(numRows, (index) {
-      return pigNumbers.skip(index * itemsPerRow).take(itemsPerRow).toList();
+    List<List<Pig>> rows = List.generate(numRows, (index) {
+      return pigs.skip(index * itemsPerRow).take(itemsPerRow).toList();
     });
 
     return Column(
@@ -55,7 +79,7 @@ class PigPenPenNumber extends StatelessWidget {
                   children: [
                     SizedBox(height: 20.h),
                     Text(
-                      number,
+                      penDetails?.penNumber ?? '--',
                       style: TextStyle(
                         fontSize: 85.sp,
                         fontWeight: FontWeight.w700,
@@ -111,7 +135,7 @@ class PigPenPenNumber extends StatelessWidget {
                 children: [
                   const Text("Type:  "),
                   Text(
-                    type,
+                    penDetails?.penType ?? '--',
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -124,7 +148,9 @@ class PigPenPenNumber extends StatelessWidget {
                 children: [
                   const Text("Pig Count:  "),
                   Text(
-                    pigCount.toString(),
+                    penDetails != null
+                        ? penDetails!.currentPigCount.toString()
+                        : '--',
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -137,7 +163,9 @@ class PigPenPenNumber extends StatelessWidget {
                 children: [
                   const Text("Max Pigs:  "),
                   Text(
-                    maxPigs.toString(),
+                    penDetails != null
+                        ? penDetails!.maxPigCount.toString()
+                        : '--',
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,
@@ -166,30 +194,34 @@ class PigPenPenNumber extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: row.map((pig) {
-                      return Container(
-                        width: 50.w,
-                        padding: EdgeInsets.only(
-                          left: 3.w,
-                          bottom: 15.h,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.circle,
-                              color: appBlue,
-                              size: 15.h,
+                      return InkWell(
+                          onTap: () {
+                            context.go('/records/pigs/${pig.uuid}');
+                          },
+                          child: Container(
+                            width: 100.w,
+                            padding: EdgeInsets.only(
+                              left: 3.w,
+                              bottom: 15.h,
                             ),
-                            SizedBox(width: 4.w),
-                            Text(
-                              pig,
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.circle,
+                                  color: appBlue,
+                                  size: 15.h,
+                                ),
+                                SizedBox(width: 4.w),
+                                Text(
+                                  pig.pigNumber,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      );
+                          ));
                     }).toList(),
                   );
                 }).toList(),
@@ -207,7 +239,7 @@ class PigPenPenNumber extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Navigator.of(context).pop();
+                context.pop();
               },
               child: Container(
                 height: 32.h,
@@ -241,7 +273,7 @@ class PigPenPenNumber extends StatelessWidget {
                       description: 'Fill up the necessary information.',
                       formFields: [
                         RecyclableTextFormField(
-                          controller: TextEditingController(),
+                          controller: _penTypeController,
                           labelText: 'Select Pen Type',
                           showDropdown: true,
                           dropdownItems: [
@@ -258,7 +290,7 @@ class PigPenPenNumber extends StatelessWidget {
                           height: 43.h,
                         ),
                         RecyclableTextFormField(
-                          controller: TextEditingController(),
+                          controller: _maxPigNumberController,
                           labelText: 'Max Number',
                           hintText: 'Max Number',
                           hintTextSize: 14.sp,
@@ -268,9 +300,18 @@ class PigPenPenNumber extends StatelessWidget {
                           height: 43.h,
                         ),
                       ],
-                      onSave: () {
+                      onSave: () async {
                         // Handle the save action, e.g., validate and save data
                         print('Form saved');
+                        try {
+                          await penService.updatePigPenDetails(
+                              widget.penUUID,
+                              _penTypeController.text,
+                              int.parse(_maxPigNumberController.text));
+                          await getPenDetails();
+                        } catch (err) {
+                          ToastService().showErrorToast(err.toString());
+                        }
                         Navigator.of(context).pop();
                       },
                       saveButtonText: 'Save',
@@ -303,6 +344,10 @@ class PigPenPenNumber extends StatelessWidget {
             SizedBox(width: 10.w),
             InkWell(
               onTap: () {
+                if (!pigs.isEmpty) {
+                  ToastService().showErrorToast('Pen must be empty.');
+                  return;
+                }
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {

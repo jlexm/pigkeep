@@ -229,7 +229,7 @@ Pig _pigDeserialize(
   object.dob = reader.readDateTime(offsets[1]);
   object.farmID = reader.readString(offsets[2]);
   object.isarID = id;
-  object.lastWeightRecorded = reader.readDateTime(offsets[3]);
+  object.lastWeightRecorded = reader.readDateTimeOrNull(offsets[3]);
   object.parentUuid = reader.readStringOrNull(offsets[4]);
   object.penUuid = reader.readString(offsets[5]);
   object.pigNumber = reader.readString(offsets[6]);
@@ -238,7 +238,7 @@ Pig _pigDeserialize(
   object.updatedAt = reader.readDateTime(offsets[9]);
   object.userOwner = reader.readString(offsets[10]);
   object.uuid = reader.readString(offsets[11]);
-  object.weightKG = reader.readDouble(offsets[12]);
+  object.weightKG = reader.readDoubleOrNull(offsets[12]);
   return object;
 }
 
@@ -256,7 +256,7 @@ P _pigDeserializeProp<P>(
     case 2:
       return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 4:
       return (reader.readStringOrNull(offset)) as P;
     case 5:
@@ -274,7 +274,7 @@ P _pigDeserializeProp<P>(
     case 11:
       return (reader.readString(offset)) as P;
     case 12:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -935,8 +935,24 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'lastWeightRecorded',
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'lastWeightRecorded',
+      ));
+    });
+  }
+
   QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedEqualTo(
-      DateTime value) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'lastWeightRecorded',
@@ -946,7 +962,7 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
   }
 
   QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedGreaterThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -959,7 +975,7 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
   }
 
   QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedLessThan(
-    DateTime value, {
+    DateTime? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -972,8 +988,8 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
   }
 
   QueryBuilder<Pig, Pig, QAfterFilterCondition> lastWeightRecordedBetween(
-    DateTime lower,
-    DateTime upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -1835,8 +1851,24 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'weightKG',
+      ));
+    });
+  }
+
+  QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'weightKG',
+      ));
+    });
+  }
+
   QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGEqualTo(
-    double value, {
+    double? value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -1849,7 +1881,7 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
   }
 
   QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGGreaterThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -1864,7 +1896,7 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
   }
 
   QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGLessThan(
-    double value, {
+    double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
@@ -1879,8 +1911,8 @@ extension PigQueryFilter on QueryBuilder<Pig, Pig, QFilterCondition> {
   }
 
   QueryBuilder<Pig, Pig, QAfterFilterCondition> weightKGBetween(
-    double lower,
-    double upper, {
+    double? lower,
+    double? upper, {
     bool includeLower = true,
     bool includeUpper = true,
     double epsilon = Query.epsilon,
@@ -2342,7 +2374,7 @@ extension PigQueryProperty on QueryBuilder<Pig, Pig, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Pig, DateTime, QQueryOperations> lastWeightRecordedProperty() {
+  QueryBuilder<Pig, DateTime?, QQueryOperations> lastWeightRecordedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastWeightRecorded');
     });
@@ -2396,7 +2428,7 @@ extension PigQueryProperty on QueryBuilder<Pig, Pig, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Pig, double, QQueryOperations> weightKGProperty() {
+  QueryBuilder<Pig, double?, QQueryOperations> weightKGProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'weightKG');
     });

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:isar/isar.dart';
+import 'package:pig_keep/Models/ledger.dart';
 import 'package:pig_keep/Models/pig-pen.dart';
 import 'package:pig_keep/Models/pig.dart';
 import 'package:pig_keep/Services/database-service.dart';
@@ -34,10 +35,64 @@ class PigService {
 
     // update current pen's current pig count
     pen.currentPigCount += 1;
+    pen.updatedAt = DateTime.now();
 
     await db.writeTxn(() async {
       await db.pigs.put(newPig);
       await db.pigPens.put(pen);
+    });
+  }
+
+  Future<void> updatePigDetails(String uuid, String penUuid, bool sex,
+      DateTime dob, double? weightKG) async {
+    // get pig
+    Pig? pig = await db.pigs.filter().uuidEqualTo(uuid).findFirst();
+
+    if (pig == null) {
+      throw 'Pig not found';
+    }
+
+    // update data if not the same on db
+    if (pig.sex != sex) {
+      pig.sex = sex;
+    }
+    if (pig.dob != dob) {
+      pig.dob = dob;
+    }
+    if (pig.weightKG != weightKG) {
+      pig.weightKG = weightKG;
+      pig.lastWeightRecorded = DateTime.now();
+    }
+
+    // get pen
+    PigPen? pen = await db.pigPens.filter().uuidEqualTo(penUuid).findFirst();
+    PigPen? oldPen =
+        await db.pigPens.filter().uuidEqualTo(pig.penUuid).findFirst();
+
+    if (pen == null || oldPen == null) {
+      throw 'Pen not found';
+    }
+
+    if (pig.penUuid != penUuid) {
+      // update current pig count of old pen
+      oldPen.currentPigCount -= 1;
+      oldPen.updatedAt = DateTime.now();
+
+      pig.penUuid = penUuid;
+
+      if (pen.currentPigCount >= pen.maxPigCount) {
+        throw '${pen.penType} Pen: ${pen.penNumber} is full of pigs.';
+      }
+
+      // update current pen's current pig count
+      pen.currentPigCount += 1;
+      pen.updatedAt = DateTime.now();
+    }
+
+    await db.writeTxn(() async {
+      await db.pigs.put(pig);
+      await db.pigPens.put(pen);
+      await db.pigPens.put(oldPen);
     });
   }
 
@@ -97,6 +152,20 @@ class PigService {
       throw 'Pig not found in pen';
     }
 
+    final ledger =
+        await db.ledgers.filter().pigUuidEqualTo(pig.uuid).findFirst();
+
+    String? parentPigNumber;
+    if (pig.parentUuid != null) {
+      final parentPig = await db.pigs
+          .filter()
+          .uuidEqualTo(pig.parentUuid as String)
+          .findFirst();
+      if (parentPig != null) {
+        parentPigNumber = parentPig.pigNumber;
+      }
+    }
+
     // todo get ledger details
 
     final pigStage = PigHelper.determinePigStage(pig.sex, pig.dob);
@@ -106,6 +175,7 @@ class PigService {
       'pigNumber': pig.pigNumber,
       'penUuid': pig.penUuid,
       'penNumber': pen.penNumber,
+      'parentPigNumber': parentPigNumber,
       'dob': pig.dob,
       'sex': pig.sex,
       'weightKG': pig.weightKG,
@@ -114,8 +184,8 @@ class PigService {
       'currentFeed': pigStage['feed'],
       'ageCategory': pigStage['stage'],
       'age': pigStage['age'],
-      'soldPrice': null,
-      'soldDate': null
+      'priceSold': ledger?.priceSold,
+      'transactionDate': ledger?.transactionDate,
     };
   }
 }

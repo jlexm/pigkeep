@@ -5,8 +5,9 @@ import 'package:pig_keep/Constants/color.constants.dart';
 
 class BottomNav extends StatefulWidget {
   final Function(int)? onNavItemTap;
+  final String currentRoute;
 
-  const BottomNav({super.key, this.onNavItemTap});
+  const BottomNav({super.key, this.onNavItemTap, required this.currentRoute});
 
   @override
   _BottomNavState createState() => _BottomNavState();
@@ -46,21 +47,11 @@ class _BottomNavState extends State<BottomNav> {
 
   Widget buildNavItem(int idx, String label, String route, String iconPath) {
     double iconSize = idx == 2 ? 48.r : 36.r;
-    Color iconColor = idx == 2
-        ? appPrimary
-        : (GoRouter.of(context).routeInformationProvider.value.uri.toString() ==
-                route
-            ? appPrimary
-            : appTertiary);
+    Color iconColor =
+        (widget.currentRoute.contains(route) ? appPrimary : appTertiary);
     return GestureDetector(
       onTap: () {
         context.go(route);
-        setState(() {
-          index = idx;
-        });
-        if (widget.onNavItemTap != null) {
-          widget.onNavItemTap!(idx);
-        }
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

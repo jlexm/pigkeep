@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/DataTable_PigPen.dart';
 import 'package:pig_keep/Components/PigPen_PenNumber.dart';
@@ -37,20 +38,6 @@ class _PigPenState extends State<PigPen> {
   late String userOwner;
   var pigPens = [];
   String searchValue = '';
-
-  void _navigateToPigPenPenNumber(final rowData) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => PigPenPenNumber(
-          number: rowData.penNumber!,
-          type: rowData.penType!,
-          pigCount: rowData.currentPigCount!,
-          maxPigs: rowData.maxPigCount!,
-          pigNumbers: [],
-        ),
-      ),
-    );
-  }
 
   Future<void> addPigPen(int penNumber, String penType, int maxNumber) async {
     print(userOwner);
@@ -275,7 +262,9 @@ class _PigPenState extends State<PigPen> {
                         .toLowerCase()
                         .contains(searchValue.toLowerCase()))
                     .toList(),
-                onRowSelected: _navigateToPigPenPenNumber,
+                onRowSelected: (row) {
+                  context.push('/records/pens/${row.uuid}');
+                },
               )
             ],
           ),
