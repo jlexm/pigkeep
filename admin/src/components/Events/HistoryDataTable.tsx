@@ -1,28 +1,37 @@
 import * as React from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { Box, Grid2, TextField } from '@mui/material'
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
+import { Box, Grid2, TextField, ThemeProvider } from '@mui/material'
+import theme from '../../Theme'
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
-  { field: 'evName', headerName: 'Event Name', flex: 1 },
+  {
+    field: 'evName',
+    headerName: 'Event Name',
+    minWidth: 216,
+    resizable: false,
+  },
   {
     field: 'date',
     headerName: 'Date',
-    flex: 1,
+    minWidth: 216,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'pigNum',
     headerName: 'Pig Number',
-    flex: 1,
+    minWidth: 216,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'status',
     headerName: 'Status',
-    flex: 0.8,
+    minWidth: 216,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
     cellClassName: (params) =>
@@ -172,54 +181,73 @@ export default function HistoryDataTable() {
   }, [searchText, handleFilter])
 
   return (
-    <Grid2 container size={12} >
-      <Grid2 size={12} >
-        <Box
-          sx={{
-            marginBottom: 2,
-            minWidth: 50,
-            paddingTop: 2,
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <TextField
-            label="Search"
-            variant="outlined"
-            size="small"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </Box>
-        <Box sx={{ height: 400, width: '100%' }}>
-          <DataGrid
-            rows={filteredRows}
-            columns={columns}
-            pagination
-            paginationModel={paginationModel}
-            pageSizeOptions={[5, 10, 25, 50, 100]}
-            rowSelection={false}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0
-                ? 'even-row'
-                : 'odd-row'
-            }
+    <ThemeProvider theme={theme}>
+      <Grid2 container size={12}>
+        <Grid2 size={12}>
+          <Box
             sx={{
-              '& .MuiDataGrid-columnHeaders': {
-                fontWeight: 'bold',
-                fontSize: '15px',
-                color: 'red',
-              },
-              '& .green-text': {
-                color: 'green', 
-              },
-              '& .red-text': {
-                color: 'red',
-              },
+              marginBottom: 2,
+              maxWidth: '100%',
+              paddingTop: 2,
+              display: 'flex',
+              alignItems: 'center',
             }}
-          />
-        </Box>
+          >
+            <TextField
+              label="Search"
+              variant="outlined"
+              size="small"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              sx={{ width: { xs: 150, sm: 250, md: 300, lg: 320, xl: 350 } }}
+            />
+          </Box>
+          <Box
+            sx={{
+              width: '100%',
+              overflowX: 'auto',
+              textAlign: 'start',
+              display: 'grid',
+            }}
+          >
+            <DataGrid
+              rows={filteredRows}
+              columns={columns}
+              pagination
+              paginationModel={paginationModel}
+              pageSizeOptions={[5, 10, 25, 50, 100]}
+              rowSelection={false}
+              getRowClassName={(params) =>
+                params.indexRelativeToCurrentPage % 2 === 0
+                  ? 'even-row'
+                  : 'odd-row'
+              }
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: false,
+                },
+              }}
+              slots={{ toolbar: GridToolbar }}
+              sx={{
+                '& .MuiDataGrid-columnHeaders': {
+                  fontWeight: 'bold',
+                  fontSize: '15px',
+                  color: 'red',
+                },
+                '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
+                  color: '#11703B',
+                },
+                '& .green-text': {
+                  color: 'green',
+                },
+                '& .red-text': {
+                  color: 'red',
+                },
+              }}
+            />
+          </Box>
+        </Grid2>
       </Grid2>
-    </Grid2>
+    </ThemeProvider>
   )
 }

@@ -1,14 +1,21 @@
 import * as React from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { Box, TextField } from '@mui/material'
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
+import { Box, Grid2, TextField, ThemeProvider } from '@mui/material'
+import theme from '../../Theme'
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
-  { field: 'number', headerName: 'Pig Number', flex: 1 },
+  {
+    field: 'number',
+    headerName: 'Pig Number',
+    minWidth: 234,
+    resizable: false,
+  },
   {
     field: 'status',
     headerName: 'Status',
-    flex: 1,
+    minWidth: 234,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
     cellClassName: (params) =>
@@ -21,14 +28,16 @@ const columns: GridColDef[] = [
   {
     field: 'date',
     headerName: 'Date',
-    flex: 1,
+    minWidth: 234,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'weight',
     headerName: 'Weight',
-    flex: 1,
+    minWidth: 234,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
@@ -36,7 +45,8 @@ const columns: GridColDef[] = [
   {
     field: 'price',
     headerName: 'Price',
-    flex: 1,
+    minWidth: 234,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
@@ -221,59 +231,83 @@ export default function DisposalDataTable() {
   }, [searchText, handleFilter])
 
   // Function to handle pagination changes
-  const handlePaginationChange = (newModel: React.SetStateAction<{ page: number; pageSize: number }>) => {
+  const handlePaginationChange = (
+    newModel: React.SetStateAction<{ page: number; pageSize: number }>
+  ) => {
     setPaginationModel(newModel)
   }
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Box
-        sx={{
-          marginBottom: 2,
-          minWidth: 50,
-          paddingTop: 2,
-          display: 'flex',
-          alignItems: 'center',
-        }}
+    <ThemeProvider theme={theme}>
+      <Grid2
+        container
+        justifyContent="start"
+        sx={{ textAlign: 'start', width: '100%' }}
       >
-        <TextField
-          label="Search"
-          variant="outlined"
-          size="small"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-      </Box>
-      <Box sx={{ width: '100%' }}>
-        <DataGrid
-          autoHeight
-          rows={filteredRows}
-          columns={columns}
-          pagination
-          paginationModel={paginationModel}
-          onPaginationModelChange={handlePaginationChange}
-          pageSizeOptions={[5, 10, 25, 50, 100]}
-          rowSelection={false}
-          getRowClassName={(params) =>
-            params.indexRelativeToCurrentPage % 2 === 0
-              ? 'even-row'
-              : 'odd-row'
-          }
+        <Box
           sx={{
-            '& .MuiDataGrid-columnHeaders': {
-              fontWeight: 'bold',
-              fontSize: '15px',
-              color: '#11703B',
-            },
-            '& .green-text': {
-              color: 'green',
-            },
-            '& .red-text': {
-              color: 'red',
-            },
+            marginBottom: 2,
+            maxWidth: '100%',
+            paddingTop: 2,
+            display: 'flex',
+            alignItems: 'center',
           }}
-        />
-      </Box>
-    </Box>
+        >
+          <TextField
+            label="Search"
+            variant="outlined"
+            size="small"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+            sx={{ width: { xs: 150, sm: 250, md: 300, lg: 320, xl: 350 } }}
+          />
+        </Box>
+        <Box
+          sx={{
+            width: '100%',
+            overflowX: 'auto',
+            textAlign: 'start',
+            display: 'grid',
+          }}
+        >
+          <DataGrid
+            rows={filteredRows}
+            columns={columns}
+            pagination
+            paginationModel={paginationModel}
+            onPaginationModelChange={handlePaginationChange}
+            pageSizeOptions={[5, 10, 25, 50, 100]}
+            rowSelection={false}
+            getRowClassName={(params) =>
+              params.indexRelativeToCurrentPage % 2 === 0
+                ? 'even-row'
+                : 'odd-row'
+            }
+            slotProps={{
+              toolbar: {
+                showQuickFilter: false,
+              },
+            }}
+            slots={{ toolbar: GridToolbar }}
+            sx={{
+              '& .MuiDataGrid-columnHeaders': {
+                fontWeight: 'bold',
+                fontSize: '15px',
+                color: '#11703B',
+              },
+              '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
+                color: '#11703B',
+              },
+              '& .green-text': {
+                color: 'green',
+              },
+              '& .red-text': {
+                color: 'red',
+              },
+            }}
+          />
+        </Box>
+      </Grid2>
+    </ThemeProvider>
   )
 }

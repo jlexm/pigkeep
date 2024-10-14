@@ -57,11 +57,11 @@ const Events = () => {
           container
           size={12}
           spacing={5}
-          sx={{ placeContent: { xs: 'center', sm: 'start' } }}
+          sx={{ placeContent: { xs: 'center', md: 'start' } }}
         >
           <Grid2
             container
-            size={{ xs: 12, sm: 7, md: 6 }}
+            size={{ xs: 12, sm: 12, md: 6 }}
             className="feedContainer"
             spacing={0}
           >
@@ -83,7 +83,7 @@ const Events = () => {
                 variant="contained"
                 startIcon={<EventIcon fontSize="large" />}
                 sx={{
-                  width: { xs: 95, sm: 115, md: 125 },
+                  width: { xs: 110, sm: 115, md: 130 },
                   height: { xs: 35, sm: 40, md: 45 },
                   color: 'black',
                   backgroundColor: 'white',
@@ -103,7 +103,7 @@ const Events = () => {
                     fontSize: 'clamp(11px, 1vw + 5px, 16px)',
                   }}
                 >
-                  Add Feed
+                  Add Event
                 </Typography>
               </Button>
             </Grid2>
@@ -111,9 +111,9 @@ const Events = () => {
         </Grid2>
         <Grid2 container size={12}>
           <Grid2 container size={{ xs: 12, lg: 6 }} className="itemAlign">
-            {/* <Grid2 container size={12}>
+            <Grid2 container size={12}>
               <CurrentDataTable />
-            </Grid2> */}
+            </Grid2>
           </Grid2>
           <Grid2
             container
@@ -160,13 +160,13 @@ const Events = () => {
                 }}
               />
             </Grid2>
-            {/* <Grid2 container size={12}>
+            <Grid2 container size={12}>
               {selectedChip === 'upcoming' ? (
                 <UpcomingDataTable />
               ) : (
                 <HistoryDataTable />
               )}
-            </Grid2> */}
+            </Grid2>
           </Grid2>
         </Grid2>
       </Grid2>

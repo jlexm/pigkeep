@@ -9,7 +9,7 @@ import {
 import ProfileEditForm from '../components/Profile/EditProfile'
 import '../components/Profile/Profile.css'
 import pfp from '../assets/junmar.png'
-import bottwave from '../assets/bottomRight.svg'
+import bottwave from '../assets/pigHead.svg'
 import ReusableDialogBox from '../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
@@ -46,7 +46,7 @@ const Profile = () => {
     <ThemeProvider theme={theme}>
       <Grid2
         container
-        spacing={{xs:0, md:5}}
+        spacing={{ xs: 0, md: 5 }}
         sx={{
           paddingX: { xs: 2, sm: 4, lg: 6, xl: 7 },
           paddingTop: 5,
@@ -54,8 +54,12 @@ const Profile = () => {
         }}
       >
         <Grid2 size={{ xs: 0, md: 2 }}></Grid2>
-        <Grid2 size={{ xs: 12, md: 2 }} className="rightEnd">
-          <Grid2 size={{ xs: 6, md: 6 }} className="right">
+        <Grid2
+          size={{ xs: 12, md: 2 }}
+          className="rightEnd"
+          sx={{ marginBottom: { xs: 3, md: 0 } }}
+        >
+          <Grid2 size={{ xs: 12, md: 12 }} className="right">
             <Avatar
               src={pfp}
               alt="Junmar"
@@ -79,7 +83,7 @@ const Profile = () => {
             </Button>
           </Grid2>
 
-          <Grid2 size={{ xs: 6, md: 12 }}>
+          <Grid2 size={{ xs: 12, md: 12 }}>
             <Button
               variant="outlined"
               sx={{
@@ -111,7 +115,7 @@ const Profile = () => {
           sx={{
             backgroundColor: 'white',
             borderStyle: { xs: 'none', md: 'solid' },
-            padding: '20px 60px'
+            padding: '20px 60px',
           }}
         >
           <Grid2>
@@ -124,11 +128,11 @@ const Profile = () => {
           </Grid2>
         </Grid2>
 
-        <Grid2 size={{ xs: 12, md: 3 }}>
+        <Grid2 size={{ xs: 12, md: 3 }} sx={{ marginTop: { xs: 5, md: 0 } }}>
           <Grid2
-            size={{ xs: 6, md: 12 }}
-            className="right"
+            size={{ xs: 12, md: 12 }}
             textAlign={{ xs: 'center', md: 'start' }}
+            paddingX={{xs: 6, sm: 20, md: 0}}
           >
             <Button
               variant="outlined"
@@ -140,6 +144,7 @@ const Profile = () => {
                   backgroundColor: '#11703b',
                   color: 'white',
                 },
+                width: { xs: '100%', md: 100, lg: 130 },
               }}
               onClick={handleLogOut}
             >
@@ -161,7 +166,7 @@ const Profile = () => {
           alt="Huge Pig"
           className="responsiveImage"
           zIndex={-1}
-          width={{lg:500}}
+          width={{ md: 330, lg: 400, xl: 650 }}
           sx={{
             display: {
               xs: 'none',
@@ -170,6 +175,7 @@ const Profile = () => {
           }}
         />
       </Grid2>
+
       {/* ReusableDialogBox to be shown when openDialog is true */}
       {openDialog && (
         <ReusableDialogBox

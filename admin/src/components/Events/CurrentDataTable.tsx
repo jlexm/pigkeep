@@ -1,6 +1,13 @@
 import * as React from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
-import { Box, Grid2, IconButton, TextField, ThemeProvider, Typography } from '@mui/material'
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
+import {
+  Box,
+  Grid2,
+  IconButton,
+  TextField,
+  ThemeProvider,
+  Typography,
+} from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ReusableDialogBox from '../../modals/ReusableDialogBox' // Adjust the import path as needed
@@ -8,25 +15,33 @@ import theme from '../../Theme'
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
-  { field: 'evName', headerName: 'Event Name', flex: 1.3 },
+  {
+    field: 'evName',
+    headerName: 'Event Name',
+    minWidth: 173,
+    resizable: false,
+  },
   {
     field: 'date',
     headerName: 'Date',
-    flex: 0.8,
+    minWidth: 173,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'pigNum',
     headerName: 'Pig Number',
-    flex: 0.8,
+    minWidth: 173,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'status',
     headerName: 'Status',
-    flex: 0.8,
+    minWidth: 173,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
     // Apply green text color when status is 'In Progress'
@@ -36,7 +51,8 @@ const columns: GridColDef[] = [
   {
     field: 'actions',
     headerName: 'Actions',
-    flex: 0.7,
+    minWidth: 173,
+    resizable: false,
     renderCell: (params) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [editDialogOpen, setEditDialogOpen] = React.useState(false)
@@ -224,14 +240,16 @@ export default function CurrentDataTable() {
     <ThemeProvider theme={theme}>
       <Grid2 container size={12}>
         <Grid2 size={12} className="lefty">
-          <Typography variant='h4' fontWeight={500}>Current Events</Typography>
+          <Typography variant="h4" fontWeight={500}>
+            Current Events
+          </Typography>
         </Grid2>
         <Grid2 size={12}>
           <Box
             sx={{
               marginBottom: 2,
-              minWidth: 50,
-              paddingTop: 2,
+              maxWidth: '100%',
+              paddingTop: 1.5,
               display: 'flex',
               alignItems: 'center',
             }}
@@ -242,10 +260,17 @@ export default function CurrentDataTable() {
               size="small"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              sx={{ width: { xs: 150, sm: 250, md: 300, lg: 320, xl: 350 } }}
             />
           </Box>
-
-          <Box>
+          <Box
+            sx={{
+              width: '100%',
+              overflowX: 'auto',
+              textAlign: 'start',
+              display: 'grid',
+            }}
+          >
             <DataGrid
               rows={filteredRows}
               columns={columns}
@@ -258,10 +283,19 @@ export default function CurrentDataTable() {
                   ? 'even-row'
                   : 'odd-row'
               }
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: false,
+                },
+              }}
+              slots={{ toolbar: GridToolbar }}
               sx={{
                 '& .MuiDataGrid-columnHeaders': {
                   fontWeight: 'bold',
                   fontSize: '15px',
+                  color: '#11703B',
+                },
+                '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
                   color: '#11703B',
                 },
                 '& .green-text': {

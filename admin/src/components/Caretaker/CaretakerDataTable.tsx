@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { DataGrid, GridColDef } from '@mui/x-data-grid'
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
 
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -21,25 +21,33 @@ const columns: (
   visiblePasswords: Record<number, boolean>,
   togglePasswordVisibility: (id: number) => void
 ) => GridColDef[] = (visiblePasswords, togglePasswordVisibility) => [
-  { field: 'username', headerName: 'Username', flex: 1 },
+  {
+    field: 'username',
+    headerName: 'Username',
+    minWidth: 359,
+    resizable: false,
+  },
   {
     field: 'email',
     headerName: 'Email',
-    flex: 1,
+    minWidth: 359,
+    resizable: false,
     headerAlign: 'left',
     align: 'left',
   },
   {
     field: 'phoneNum',
     headerName: 'Phone Number',
-    flex: 1,
+    minWidth: 359,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
   },
   {
     field: 'password',
     headerName: 'Password',
-    flex: 1,
+    minWidth: 359,
+    resizable: false,
     headerAlign: 'right',
     align: 'right',
     renderCell: (params) => {
@@ -62,7 +70,8 @@ const columns: (
   {
     field: 'actions',
     headerName: 'Actions',
-    flex: 0.7,
+    minWidth: 359,
+    resizable: false,
     renderCell: (params) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [editDialogOpen, setEditDialogOpen] = React.useState(false)
@@ -217,11 +226,15 @@ export default function CaretakerDataTable() {
   return (
     <ThemeProvider theme={theme}>
       <TableContainer>
-        <Grid2 size={12}>
+        <Grid2
+          container
+          justifyContent="start"
+          sx={{ textAlign: 'start', width: '100%' }}
+        >
           <Box
             sx={{
               marginBottom: 2,
-              width: 590,
+              maxWidth: '100%',
               paddingTop: 2,
               display: 'flex',
               alignItems: 'center',
@@ -233,10 +246,18 @@ export default function CaretakerDataTable() {
               size="small"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
+              sx={{ width: { xs: 150, sm: 250, md: 300, lg: 320, xl: 350 } }}
             />
           </Box>
 
-          <Box>
+          <Box
+            sx={{
+              width: '100%',
+              overflowX: 'auto',
+              textAlign: 'start',
+              display: 'grid',
+            }}
+          >
             <DataGrid
               rows={filteredRows}
               columns={columns(visiblePasswords, togglePasswordVisibility)}
@@ -248,10 +269,19 @@ export default function CaretakerDataTable() {
                   ? 'even-row'
                   : 'odd-row'
               }
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: false,
+                },
+              }}
+              slots={{ toolbar: GridToolbar }}
               sx={{
                 '& .MuiDataGrid-columnHeaders': {
                   fontWeight: 'bold',
                   fontSize: '15px',
+                  color: '#11703B',
+                },
+                '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
                   color: '#11703B',
                 },
                 '& .green-text': {

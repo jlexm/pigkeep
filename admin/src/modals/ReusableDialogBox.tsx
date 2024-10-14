@@ -125,20 +125,18 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
                 </Grid2>
               ))}
               <Grid2 size={12}>
-                {' '}
-                {/* Full width for the buttons */}
                 <Box
                   sx={{
                     display: 'flex',
-                    marginTop: '15px', // Added margin for better spacing
+                    marginTop: '15px', 
                     justifyContent: 'flex-end',
                   }}
                 >
                   <Button
-                    onClick={onCancel} // Trigger cancel function
+                    onClick={onCancel} 
                     sx={{
-                      color: '#222222', // Cancel button color
-                      textTransform: 'none', // Disable uppercase transformation
+                      color: '#222222', 
+                      textTransform: 'none', 
                       fontSize: '16px',
                       marginRight: '20px',
                     }}

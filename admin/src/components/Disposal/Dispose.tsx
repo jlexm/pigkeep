@@ -46,7 +46,7 @@ export default function Dispose() {
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={3}>
         <Grid2 size={12} className="miniTitle">
-          <Typography variant="h3" fontWeight={'bold'} sx={{ paddingTop: 3 }}>
+          <Typography fontSize={'clamp(2rem, 5vw, 3rem)'} fontWeight={'bold'} sx={{ paddingTop: {xs: 0, lg: 3} }}>
             Disposal Ledger
           </Typography>
         </Grid2>
