@@ -132,7 +132,7 @@ const Profile = () => {
           <Grid2
             size={{ xs: 12, md: 12 }}
             textAlign={{ xs: 'center', md: 'start' }}
-            paddingX={{xs: 7, sm: 20, md: 0}}
+            paddingX={{xs: 6, sm: 20, md: 0}}
           >
             <Button
               variant="outlined"
