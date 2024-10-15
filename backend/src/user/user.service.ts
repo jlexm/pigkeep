@@ -27,7 +27,7 @@ export class UserService {
   async getUserCredentials(username: string) {
     return this.userModel
       .findOne(
-        { username: { $regex: new RegExp(username, 'i') } },
+        { username: { $regex: new RegExp(`^${username}$`, 'i') } },
         {
           _id: 1,
           email: 1,
