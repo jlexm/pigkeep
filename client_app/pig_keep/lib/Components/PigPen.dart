@@ -208,6 +208,9 @@ class _PigPenState extends State<PigPen> {
                                           int.parse(
                                               _penMaxNumberController.text));
                                       Navigator.of(context).pop();
+                                      _penNumberController.clear();
+                                      _penMaxNumberController.clear();
+                                      _penTypeController.clear();
                                     },
                                     saveButtonText: 'Add Pen',
                                     saveButtonColor: appPrimary,

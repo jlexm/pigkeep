@@ -40,7 +40,7 @@ class PigPenView extends State<PigPenPenNumber> {
     final fetchPigs = await pigService.fetchPigsInPen(widget.penUUID);
     setState(() {
       penDetails = pen;
-      pigs = fetchPigs;
+      pigs = fetchPigs.where((pig) => pig.status == 'alive').toList();
 
       // controllers
       _penTypeController.text = pen!.penType;
@@ -196,7 +196,7 @@ class PigPenView extends State<PigPenPenNumber> {
                     children: row.map((pig) {
                       return InkWell(
                           onTap: () {
-                            context.go('/records/pigs/${pig.uuid}');
+                            context.push('/records/pigs/${pig.uuid}');
                           },
                           child: Container(
                             width: 100.w,

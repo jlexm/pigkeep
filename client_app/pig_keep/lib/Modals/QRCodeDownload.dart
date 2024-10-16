@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -10,14 +8,15 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:flutter/services.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class QRCodeDownload extends StatefulWidget {
   final String title;
   final String saveButtonText;
   final IconData saveButtonIcon;
   final Color saveButtonColor;
-  final int number;
-  final String imagePath;
+  final String pigNumber;
+  final String uuid;
   final VoidCallback onSave;
 
   const QRCodeDownload({
@@ -26,8 +25,8 @@ class QRCodeDownload extends StatefulWidget {
     required this.saveButtonText,
     required this.saveButtonIcon,
     required this.saveButtonColor,
-    required this.number,
-    required this.imagePath,
+    required this.pigNumber,
+    required this.uuid,
     required this.onSave,
   });
 
@@ -43,7 +42,7 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
       // Capture the widget
       RenderRepaintBoundary boundary = _globalKey.currentContext
           ?.findRenderObject() as RenderRepaintBoundary;
-      var image = await boundary.toImage(pixelRatio: 3.0);
+      var image = await boundary.toImage(pixelRatio: 4.0);
       ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
       Uint8List pngBytes = byteData!.buffer.asUint8List();
 
@@ -69,8 +68,6 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
 
   @override
   Widget build(BuildContext context) {
-    String formattedNumber = widget.number.toString().padLeft(3, '0');
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -93,19 +90,21 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
             RepaintBoundary(
               key: _globalKey,
               child: Container(
-                decoration:
-                    BoxDecoration(border: Border.all(color: appTertiary)),
+                decoration: BoxDecoration(
+                    border: Border.all(color: appTertiary),
+                    color: Colors.white),
                 padding: const EdgeInsets.all(3.0),
                 // Downloadable PNG for QR code, size set to 5cm x 3.7cm
-                width: 188, 
-                height: 141, 
+                width: 188,
+                height: 141,
                 child: Row(
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: formattedNumber
+                      children: widget.pigNumber
                           .split('')
                           .reversed
+                          .where((char) => RegExp(r'^\d+$').hasMatch(char))
                           .map((digit) => RotatedBox(
                                 quarterTurns: 3,
                                 child: SizedBox(
@@ -125,13 +124,12 @@ class _QRCodeDownloadState extends State<QRCodeDownload> {
                     ),
                     Container(
                       constraints: const BoxConstraints(
-                        maxHeight: 141, 
-                        maxWidth: 180, 
+                        maxHeight: 141,
+                        maxWidth: 180,
                       ),
-                      child: Image.asset(
-                        widget.imagePath,
-                        fit: BoxFit.contain,
-                      ),
+                      child: QrImageView(
+                          data: 'pigkeep:${widget.pigNumber}:${widget.uuid}',
+                          version: QrVersions.auto),
                     ),
                   ],
                 ),

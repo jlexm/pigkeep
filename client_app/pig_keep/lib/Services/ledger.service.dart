@@ -30,6 +30,7 @@ class LedgerService {
 
     pig.status = status;
     pig.weightKG = weightKG;
+    pig.lastWeightRecorded = DateTime.now();
     pig.updatedAt = DateTime.now();
 
     PigPen? pen = await db.pigPens.filter().uuidEqualTo(penUuid).findFirst();
@@ -71,7 +72,7 @@ class LedgerService {
 
       ledgers.add({
         'uuid': ledger.uuid,
-        'transactionDate': ledger.transactionDate.toString(),
+        'transactionDate': ledger.transactionDate,
         'status': ledger.status,
         'pigUuid': ledger.pigUuid,
         'pigNumber': pig.pigNumber,

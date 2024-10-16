@@ -43,9 +43,8 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            transaction['transactionDate']!
-                                .toString()
-                                .split(' ')[0],
+                            PigHelper.formatDate(
+                                transaction['transactionDate']),
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,

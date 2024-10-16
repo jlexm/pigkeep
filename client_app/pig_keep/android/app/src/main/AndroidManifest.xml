@@ -7,7 +7,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus"/>
 
     <application
-        android:label="pig_keep"
+        android:label="PigKeep"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

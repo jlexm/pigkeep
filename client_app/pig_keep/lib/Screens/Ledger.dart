@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/DisposalLedger.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
@@ -11,8 +12,12 @@ import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Services/ledger.service.dart';
 import 'package:pig_keep/Services/pig-helper.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/Services/pig-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
+
+import '../Models/pig-pen.dart';
 
 class Ledger extends StatefulWidget {
   const Ledger({super.key});
@@ -25,11 +30,21 @@ class _LedgerState extends State<Ledger> {
   // services
   final ledgerService = globalLocator.get<LedgerService>();
 
+  // controllers
+  final TextEditingController _pigNumberController = TextEditingController();
+
+  // pig db
+  final pigService = globalLocator.get<PigService>();
+  final penService = globalLocator.get<PigPenService>();
+
   // vars
   var selectedFarm;
   var userOwner;
   List<Map<String, dynamic>> ledgerHistory = [];
   double totalEarned = 0;
+  List<Map<String, dynamic>> pigs = [];
+  List<PigPen> pigPens = [];
+  String searchValue = '';
 
   // fns
   Future<void> getLedgerDetails() async {
@@ -40,12 +55,25 @@ class _LedgerState extends State<Ledger> {
     });
   }
 
+  Future<void> getPigs() async {
+    if (!mounted) return;
+    // fetch all pens first
+    List<PigPen> pens =
+        await penService.fetchPigPens(selectedFarm['_id'], userOwner);
+    final fetchPigs = await pigService.fetchAllPigsInAllPens(pens);
+    setState(() {
+      pigs = fetchPigs;
+      pigPens = pens;
+    });
+  }
+
   @override
   void initState() {
     context.read<GlobalProvider>().getCurrentUser().then((user) {
       selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
       userOwner = user['username'];
       getLedgerDetails();
+      getPigs();
     });
     super.initState();
   }
@@ -199,13 +227,24 @@ class _LedgerState extends State<Ledger> {
                                             formFields: [
                                               RecyclableTextFormField(
                                                 controller:
-                                                    TextEditingController(),
+                                                    _pigNumberController,
                                                 labelText: 'Pig Number',
+                                                showDropdown: true,
+                                                dropdownItems: pigs
+                                                    .where((pig) =>
+                                                        pig['status'] ==
+                                                        'alive')
+                                                    .map((pig) =>
+                                                        CustomDropDownItem(
+                                                            pig['uuid'],
+                                                            'Pig: ${pig['pigNumber']} | ${pig['ageCategory']}'))
+                                                    .toList(),
                                                 hintText: 'Pig Number',
                                                 hintTextSize: 14.sp,
                                                 icon: Icons.savings,
                                                 textSize: 14.sp,
                                                 height: 43.h,
+                                                readOnly: true,
                                               ),
                                               RecyclableTextFormField(
                                                 controller:
@@ -288,17 +327,28 @@ class _LedgerState extends State<Ledger> {
                                           return ReusableDialogBox(
                                             title: 'Deceased Pig',
                                             description:
-                                                'Fill up the necessary information.',
+                                                'Select pig to declare dead.',
                                             formFields: [
                                               RecyclableTextFormField(
                                                 controller:
-                                                    TextEditingController(),
+                                                    _pigNumberController,
                                                 labelText: 'Pig Number',
+                                                showDropdown: true,
+                                                dropdownItems: pigs
+                                                    .where((pig) =>
+                                                        pig['status'] ==
+                                                        'alive')
+                                                    .map((pig) =>
+                                                        CustomDropDownItem(
+                                                            pig['uuid'],
+                                                            'Pig: ${pig['pigNumber']} | ${pig['ageCategory']}'))
+                                                    .toList(),
                                                 hintText: 'Pig Number',
                                                 hintTextSize: 14.sp,
                                                 icon: Icons.savings,
                                                 textSize: 14.sp,
                                                 height: 43.h,
+                                                readOnly: true,
                                               ),
                                             ],
                                             onSave: () {
@@ -306,7 +356,7 @@ class _LedgerState extends State<Ledger> {
                                               print('Form saved');
                                               Navigator.of(context).pop();
                                             },
-                                            saveButtonText: 'Remove',
+                                            saveButtonText: 'Declare',
                                             saveButtonColor: appRed,
                                           );
                                         },

@@ -46,9 +46,10 @@ class _ScanQRState extends State<ScanQR> {
               if (qrParts.length == 3) {
                 String uuid = qrParts[2];
                 context.replace('/records/pigs/${uuid}');
+                // Optionally, you can stop scanning after the first successful scan
+                camcontroller.stop();
               }
-              // Optionally, you can stop scanning after the first successful scan
-              camcontroller.stop();
+
               break; // Stop after the first successful scan
             }
           }

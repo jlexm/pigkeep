@@ -14,9 +14,9 @@ class API {
       // Throw an error for non-successful status codes
       dynamic errMessage = body['message'];
       if (errMessage is String) {
-        throw ErrorDescription(errMessage);
+        throw errMessage;
       } else {
-        throw ErrorDescription(errMessage[0]);
+        throw errMessage[0];
       }
     }
   }

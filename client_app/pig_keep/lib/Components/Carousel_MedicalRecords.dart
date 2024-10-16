@@ -1,11 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Models/medicine.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
 
 class CarouselMedicalrecords extends StatefulWidget {
-  final List<int> items; 
+  final List<Medicine> items;
 
   const CarouselMedicalrecords({super.key, required this.items});
 
@@ -17,7 +18,9 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(right: 15.h,),
+      padding: EdgeInsets.only(
+        right: 15.h,
+      ),
       child: CarouselSlider.builder(
         options: CarouselOptions(
           padEnds: false,
@@ -32,11 +35,10 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
         ),
         itemCount: widget.items.length,
         itemBuilder: (BuildContext context, int index, int realIndex) {
-          final int item = widget.items[index];
+          final item = widget.items[index];
 
           return Container(
-            padding: EdgeInsets.only(left: 10.w,),
-            width: MediaQuery.of(context).size.width * 0.35.w,
+            padding: EdgeInsets.all(10.0),
             margin: const EdgeInsets.symmetric(horizontal: 5.0),
             decoration: BoxDecoration(
               border: Border.all(color: appBlue, width: 1.5.w),
@@ -52,21 +54,10 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '$item',
+                        '${PigHelper.convertVolume(item.quantity, item.unit!)}',
                         style: TextStyle(
                             height: 0.9.h,
-                            fontSize: 35.sp,
-                            color: appBlue,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(
-                        width: 5.w,
-                      ),
-                      Text(
-                        'mg',
-                        style: TextStyle(
-                            height: 0.9.h,
-                            fontSize: 25.sp,
+                            fontSize: 22.sp,
                             color: appBlue,
                             fontWeight: FontWeight.w700),
                       ),
@@ -80,8 +71,8 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'Monensin',
-                        style: TextStyle(fontSize: 16.0.sp),
+                        item.medicineName,
+                        style: TextStyle(fontSize: 12.0.sp),
                       ),
                     ],
                   )
