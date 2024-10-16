@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Classes/DropDownItem.dart';
+import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Modals/QRCodeDownload.dart';
+import 'package:pig_keep/Models/pig-pen.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/ledger.service.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class PigView extends StatefulWidget {
@@ -19,29 +27,76 @@ class PigView extends StatefulWidget {
 
 class _QRCodeStatusState extends State<PigView> {
   // services
+  final penService = globalLocator.get<PigPenService>();
   final pigService = globalLocator.get<PigService>();
+  final ledgerService = globalLocator.get<LedgerService>();
 
+  var selectedFarm;
+  late String userOwner;
   String pigStatus = "Alive";
-  final TextEditingController _pigDOBController = TextEditingController();
   Map<String, dynamic> pigData = {};
+  List<PigPen> pigPens = [];
+
+  // edit pig controllers
+  final TextEditingController _pigDOBController = TextEditingController();
+  final TextEditingController _pigSexController = TextEditingController();
+  final TextEditingController _pigPenNumberController = TextEditingController();
+  final TextEditingController _pigWeightKGController = TextEditingController();
+
+  // sell controllers
+  final TextEditingController _priceController = TextEditingController();
 
   // functions
   Future<void> getPigDetails() async {
+    if (!mounted) return;
     final pig = await pigService.fetchPigDetails(widget.pigUUID);
 
     setState(() {
+      // load pigData
       pigData = pig;
       pigStatus = pigData['status'] ?? 'Alive';
-      //update dob
-      _pigDOBController.text = pigData['dob'].toString();
+
+      //update pig update controllers
+      _pigDOBController.text = pigData['dob'].toString().split(' ')[0];
+      _pigSexController.text = pigData['sex'] ? 'Male' : 'Female';
+      //_pigParentPigNumberController.text
+      _pigPenNumberController.text = pigData['penUuid'];
+      _pigWeightKGController.text =
+          pigData['weightKG'] != null ? pigData['weightKG'].toString() : '';
+    });
+  }
+
+  Future<void> getPigPens() async {
+    final fetchPens =
+        await penService.fetchPigPens(selectedFarm['_id'], userOwner);
+    setState(() {
+      pigPens = fetchPens;
     });
   }
 
   @override
   void initState() {
-    // fetch pig details
-    getPigDetails();
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
+      userOwner = user['username'];
+      getPigDetails();
+      getPigPens();
+    });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    // Use post frame callback for navigation
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Navigate only if the selectedFarm is not null
+      if (selectedFarm != null) {
+        context.go('/records/pigs'); // Perform navigation
+      }
+    });
   }
 
   /*  void _navigateToRecords(BuildContext context) {
@@ -153,27 +208,47 @@ class _QRCodeStatusState extends State<PigView> {
                                   enabled: false,
                                 ),
                                 RecyclableTextFormField(
-                                  controller: TextEditingController(),
+                                  controller: _pigWeightKGController,
                                   labelText: 'Weight in kg',
                                   hintText: 'Weight in kg',
                                   hintTextSize: 14.sp,
                                   icon: Icons.scale,
                                   textSize: 14.sp,
                                   height: 43.h,
+                                  keyboardType: TextInputType.phone,
                                 ),
                                 RecyclableTextFormField(
-                                  controller: TextEditingController(),
+                                  controller: _priceController,
                                   labelText: 'Price',
                                   hintText: 'Price',
                                   hintTextSize: 14.sp,
                                   icon: Icons.php,
                                   textSize: 14.sp,
                                   height: 43.h,
+                                  keyboardType: TextInputType.phone,
                                 ),
                               ],
-                              onSave: () {
+                              onSave: () async {
                                 // Handle the save action, e.g., validate and save data
                                 print('Form saved');
+                                try {
+                                  await ledgerService.ledgePig(
+                                      'sold',
+                                      userOwner,
+                                      selectedFarm['_id'],
+                                      pigData['uuid'],
+                                      pigData['penUuid'],
+                                      _priceController.text.isNotEmpty
+                                          ? double.parse(_priceController.text)
+                                          : 0,
+                                      _pigWeightKGController.text.isNotEmpty
+                                          ? double.parse(
+                                              _pigWeightKGController.text)
+                                          : 0);
+                                  await getPigDetails();
+                                } catch (err) {
+                                  ToastService().showErrorToast(err.toString());
+                                }
                                 Navigator.of(context).pop();
                               },
                               saveButtonText: 'Sell Pig',
@@ -185,7 +260,7 @@ class _QRCodeStatusState extends State<PigView> {
                     ),
                     SizedBox(height: 5.h),
                     _ActionButton(
-                      text: 'Deceased',
+                      text: 'Decease',
                       color: Colors.transparent,
                       borderColor: appRed,
                       textColor: appRed,
@@ -210,9 +285,27 @@ class _QRCodeStatusState extends State<PigView> {
                                   enabled: false,
                                 ),
                               ],
-                              onSave: () {
+                              onSave: () async {
                                 // Handle the save action, e.g., validate and save data
                                 print('Form saved');
+                                try {
+                                  await ledgerService.ledgePig(
+                                      'deceased',
+                                      userOwner,
+                                      selectedFarm['_id'],
+                                      pigData['uuid'],
+                                      pigData['penUuid'],
+                                      _priceController.text.isNotEmpty
+                                          ? double.parse(_priceController.text)
+                                          : 0,
+                                      _pigWeightKGController.text.isNotEmpty
+                                          ? double.parse(
+                                              _pigWeightKGController.text)
+                                          : 0);
+                                  await getPigDetails();
+                                } catch (err) {
+                                  ToastService().showErrorToast(err.toString());
+                                }
                                 Navigator.of(context).pop();
                               },
                               saveButtonText: 'Remove',
@@ -234,65 +327,40 @@ class _QRCodeStatusState extends State<PigView> {
                           context: context,
                           builder: (BuildContext context) {
                             return ReusableDialogBox(
-                              title: 'Edit Pig ${pigData['pigNumber']}',
-                              description: '',
+                              title: 'Consume Medicine',
+                              description: 'Fill up the necessary information.',
                               formFields: [
                                 RecyclableTextFormField(
-                                  controller: _pigDOBController,
-                                  keyboardType: TextInputType.datetime,
-                                  labelText: 'Date of Birth',
-                                  hintText: 'YYYY/MM/DD',
-                                  hintTextSize: 14.sp,
-                                  icon: Icons.calendar_month,
-                                  textSize: 14.sp,
-                                  height: 43.h,
-                                  onTap: () {
-                                    _selectDate();
-                                  },
-                                  readOnly: true,
-                                ),
-                                RecyclableTextFormField(
                                   controller: TextEditingController(),
-                                  labelText: 'Sex',
+                                  labelText: 'Medicine Name',
                                   showDropdown: true,
                                   dropdownItems: [
-                                    CustomDropDownItem('Male', 'Male'),
-                                    CustomDropDownItem('Female', 'Female')
+                                    CustomDropDownItem('Med 1', 'Med 1'),
+                                    CustomDropDownItem('Med 2', 'Med 2'),
+                                    CustomDropDownItem('Med 3', 'Med 3')
                                   ],
-                                  hintText: 'Sex',
+                                  hintText: 'Medicine Name',
                                   hintTextSize: 14.sp,
-                                  icon: Icons.male,
+                                  icon: Icons.medical_services,
                                   textSize: 14.sp,
                                   height: 43.h,
                                 ),
                                 RecyclableTextFormField(
                                   controller: TextEditingController(),
-                                  labelText: 'Parent Number',
-                                  hintText: 'Parent Number',
-                                  hintTextSize: 14.sp,
-                                  icon: Icons.savings,
-                                  textSize: 14.sp,
-                                  height: 43.h,
-                                ),
-                                RecyclableTextFormField(
-                                  controller: TextEditingController(),
-                                  labelText: 'Pen Number',
-                                  showDropdown: true,
-                                  dropdownItems: [
-                                    CustomDropDownItem('Pen1', 'Pen1')
-                                  ],
-                                  hintText: 'Pen Number',
+                                  labelText: 'Quantity',
+                                  hintText: 'Quantity',
                                   hintTextSize: 14.sp,
                                   icon: Icons.numbers,
                                   textSize: 14.sp,
                                   height: 43.h,
+                                  keyboardType: TextInputType.phone,
                                 ),
                                 RecyclableTextFormField(
                                   controller: TextEditingController(),
-                                  labelText: 'Weight in kg',
-                                  hintText: 'Weight in kg',
+                                  labelText: 'Pig Number',
+                                  hintText: 'Pig Number',
                                   hintTextSize: 14.sp,
-                                  icon: Icons.scale,
+                                  icon: Icons.savings,
                                   textSize: 14.sp,
                                   height: 43.h,
                                 ),
@@ -302,8 +370,8 @@ class _QRCodeStatusState extends State<PigView> {
                                 print('Form saved');
                                 Navigator.of(context).pop();
                               },
-                              saveButtonText: 'Save',
-                              saveButtonColor: appBlue,
+                              saveButtonText: 'Consume',
+                              saveButtonColor: appRed,
                             );
                           },
                         );
@@ -379,13 +447,14 @@ class _QRCodeStatusState extends State<PigView> {
                             readOnly: true,
                           ),
                           RecyclableTextFormField(
-                            controller: TextEditingController(),
+                            controller: _pigSexController,
                             labelText: 'Sex',
                             showDropdown: true,
                             dropdownItems: [
                               CustomDropDownItem('Male', 'Male'),
                               CustomDropDownItem('Female', 'Female')
                             ],
+                            readOnly: true,
                             hintText: 'Sex',
                             hintTextSize: 14.sp,
                             icon: Icons.male,
@@ -393,38 +462,50 @@ class _QRCodeStatusState extends State<PigView> {
                             height: 43.h,
                           ),
                           RecyclableTextFormField(
-                            controller: TextEditingController(),
-                            labelText: 'Parent Number',
-                            hintText: 'Parent Number',
-                            hintTextSize: 14.sp,
-                            icon: Icons.savings,
-                            textSize: 14.sp,
-                            height: 43.h,
-                          ),
-                          RecyclableTextFormField(
-                            controller: TextEditingController(),
+                            controller: _pigPenNumberController,
                             labelText: 'Pen Number',
                             showDropdown: true,
-                            dropdownItems: [CustomDropDownItem('Pen1', 'Pen1')],
+                            dropdownItems: pigPens
+                                .map((pen) => CustomDropDownItem(pen.uuid,
+                                    '${pen.penNumber} - ${pen.penType}'))
+                                .toList(),
                             hintText: 'Pen Number',
                             hintTextSize: 14.sp,
                             icon: Icons.numbers,
                             textSize: 14.sp,
                             height: 43.h,
+                            readOnly: true,
                           ),
                           RecyclableTextFormField(
-                            controller: TextEditingController(),
+                            controller: _pigWeightKGController,
                             labelText: 'Weight in kg',
                             hintText: 'Weight in kg',
                             hintTextSize: 14.sp,
                             icon: Icons.scale,
                             textSize: 14.sp,
                             height: 43.h,
+                            keyboardType: TextInputType.phone,
                           ),
                         ],
-                        onSave: () {
+                        onSave: () async {
                           // Handle the save action, e.g., validate and save data
                           print('Form saved');
+                          print(_pigWeightKGController.text.isNotEmpty
+                              ? double.parse(_pigWeightKGController.text)
+                              : null);
+                          try {
+                            await pigService.updatePigDetails(
+                                widget.pigUUID,
+                                _pigPenNumberController.text,
+                                _pigSexController.text == 'Male',
+                                DateTime.parse(_pigDOBController.text),
+                                _pigWeightKGController.text.isNotEmpty
+                                    ? double.parse(_pigWeightKGController.text)
+                                    : null);
+                            await getPigDetails();
+                          } catch (err) {
+                            ToastService().showErrorToast(err.toString());
+                          }
                           Navigator.of(context).pop();
                         },
                         saveButtonText: 'Save',
@@ -444,7 +525,7 @@ class _QRCodeStatusState extends State<PigView> {
                 _DetailRow(
                     label: 'Date of Birth: ',
                     value: pigData['dob'] != null
-                        ? pigData['dob'].toString()
+                        ? pigData['dob'].toString().split(' ')[0]
                         : '--'),
                 _DetailRow(label: 'Age: ', value: pigData['age'] ?? '--'),
                 _DetailRow(
@@ -459,23 +540,25 @@ class _QRCodeStatusState extends State<PigView> {
                             : 'Female'),
                 _DetailRow(
                     label: 'Parent Number: ',
-                    value: pigData['parentnumber'] ?? '--'),
+                    value: pigData['parentPigNumber'] ?? '--'),
                 _DetailRow(
                     label: 'Current Feed: ',
                     value: pigData['currentFeed'] ?? '--'),
                 _DetailRow(
-                  label: 'Pigpen Number: ',
+                  label: 'Pen Number: ',
                   value: pigData['penNumber'] ?? '--',
                 ),
                 Row(
                   children: [
                     _DetailRow(
                         label: 'Recorded Weight(Kg): ',
-                        value: '${pigData['weight'] ?? '--'} '),
+                        value:
+                            '${pigData['weightKG'] != null ? pigData['weightKG'].toString() : '--'} '),
                     const Spacer(),
                     _DetailRow(
                         label: 'Date: ',
-                        value: '${pigData['weightdate'] ?? '--'} '),
+                        value:
+                            '${pigData['lastWeightRecorded'] != null ? pigData['lastWeightRecorded'].toString().split(' ')[0] : '--'} '),
                   ],
                 ),
                 Row(
@@ -486,7 +569,8 @@ class _QRCodeStatusState extends State<PigView> {
                     const Spacer(),
                     _DetailRow(
                         label: 'Date: ',
-                        value: '${pigData['selldate'] ?? '--'} '),
+                        value:
+                            '${pigData['transactionDate'] != null ? pigData['transactionDate'].toString().split(' ')[0] : '--'} '),
                   ],
                 ),
               ],

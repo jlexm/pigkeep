@@ -33,4 +33,30 @@ class PigPenService {
         .farmIDEqualTo(farmID)
         .findFirst();
   }
+
+  Future<PigPen?> getPigPenDetails(String uuid) async {
+    final pen = await db.pigPens.filter().uuidEqualTo(uuid).findFirst();
+    if (pen == null) {
+      throw 'Pen not found.';
+    }
+    return pen;
+  }
+
+  Future<void> updatePigPenDetails(
+      String uuid, String penType, int maxPigCount) async {
+    final pen = await db.pigPens.filter().uuidEqualTo(uuid).findFirst();
+    if (pen == null) {
+      throw 'Pen not found.';
+    }
+    // update current pen's current pig count
+    pen.maxPigCount = maxPigCount;
+    // update pen type
+    pen.penType = penType;
+
+    pen.updatedAt = DateTime.now();
+
+    await db.writeTxn(() async {
+      await db.pigPens.put(pen);
+    });
+  }
 }

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class PigHelper {
   static Map<String, String> determinePigStage(bool isMale, DateTime pigDOB) {
     int daysOld = DateTime.now().difference(pigDOB).inDays;
@@ -41,5 +43,13 @@ class PigHelper {
     }
 
     return {'stage': stage, 'feed': feed, 'age': age};
+  }
+
+  static String formatCurrency(double amount) {
+    return NumberFormat.currency(
+      locale: 'en_US',
+      symbol: '₱',
+      decimalDigits: 2,
+    ).format(amount);
   }
 }

@@ -45,6 +45,7 @@ class _PigListState extends State<PigList> {
 
   // fns
   Future<void> getPigs() async {
+    if (!mounted) return;
     // fetch all pens first
     List<PigPen> pens =
         await penService.fetchPigPens(selectedFarm['_id'], userOwner);

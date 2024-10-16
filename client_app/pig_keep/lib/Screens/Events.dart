@@ -23,6 +23,8 @@ class _EventsState extends State<Events> {
   bool showUpcomingEvents = false;
   bool showEventsHistory = false;
 
+  final TextEditingController _eventDate = TextEditingController();
+
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
@@ -39,6 +41,19 @@ class _EventsState extends State<Events> {
     setState(() {
       showEventsHistory = !showEventsHistory;
     });
+  }
+
+  Future<void> _selectDate() async {
+    DateTime? _picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
+    if (_picked != null) {
+      setState(() {
+        _eventDate.text = _picked.toString().split(" ")[0];
+      });
+    }
   }
 
   @override
@@ -155,14 +170,19 @@ class _EventsState extends State<Events> {
                                                     'Fill up the form to set an event for your pig farm.',
                                                 formFields: [
                                                   RecyclableTextFormField(
-                                                    controller:
-                                                        TextEditingController(),
-                                                    labelText: 'Date',
-                                                    hintText: 'Date',
+                                                    controller: _eventDate,
+                                                    keyboardType:
+                                                        TextInputType.datetime,
+                                                    labelText: 'Set Event',
+                                                    hintText: 'YYYY/MM/DD',
                                                     hintTextSize: 14.sp,
-                                                    icon: Icons.email,
+                                                    icon: Icons.calendar_month,
                                                     textSize: 14.sp,
                                                     height: 43.h,
+                                                    onTap: () {
+                                                      _selectDate();
+                                                    },
+                                                    readOnly: true,
                                                   ),
                                                   RecyclableTextFormField(
                                                     controller:
@@ -170,24 +190,25 @@ class _EventsState extends State<Events> {
                                                     labelText: 'Pig Number',
                                                     hintText: 'Pig Number',
                                                     hintTextSize: 14.sp,
-                                                    icon: Icons.email,
+                                                    icon: Icons.savings,
                                                     textSize: 14.sp,
                                                     height: 43.h,
                                                   ),
                                                   RecyclableTextFormField(
                                                     controller:
                                                         TextEditingController(),
-                                                    labelText: 'Event Name',
+                                                    labelText: 'Event',
                                                     showDropdown: true,
                                                     dropdownItems: [
                                                       CustomDropDownItem(
                                                           'Event 1', 'Event 1')
                                                     ],
-                                                    hintText: 'Event Name',
+                                                    hintText: 'Event',
                                                     hintTextSize: 14.sp,
-                                                    icon: Icons.email,
+                                                    icon: Icons.event_note,
                                                     textSize: 14.sp,
                                                     height: 43.h,
+                                                    readOnly: true,
                                                   ),
                                                 ],
                                                 onSave: () {
