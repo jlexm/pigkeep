@@ -62,7 +62,7 @@ export default function SimpleContainer() {
               src={hugepig}
               alt="Huge Pig"
               className="responsiveImage"
-              sx={{ width: { xs: 0, lg: 540, xl: 650 } ,}}
+              sx={{ width: { xs: 0, lg: 'clamp(440px, 36vw, 650px)' } ,}}
             />
           </Box>
         </Grid2>
