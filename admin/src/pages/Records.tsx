@@ -8,7 +8,7 @@ import '../components/Records/PigList_Folder/PigList.css'
 import theme from '../Theme'
 
 const Records = () => {
-  const [selectedChip, setSelectedChip] = React.useState('Pig List') // Default selected chip
+  const [selectedChip, setSelectedChip] = React.useState('Pigpen'); // Default selected chip
 
   const handleChipClick = (chip: string) => {
     setSelectedChip(chip)
@@ -36,6 +36,45 @@ const Records = () => {
                 gap: { xs: 0.5, sm: 1.5, lg: 2 },
               }}
             >
+              <Chip
+                label={
+                  <Typography
+                    fontSize={{
+                      xs: '11px',
+                      sm: '14px',
+                      md: '16px',
+                      lg: '17px',
+                    }}
+                    fontWeight={200}
+                  >
+                    Pig pen
+                  </Typography>
+                }
+                clickable
+                onClick={() => handleChipClick('Pigpen')}
+                sx={{
+                  backgroundColor:
+                    selectedChip === 'Pigpen' ? '#11703b' : 'transparent',
+                  color: selectedChip === 'Pigpen' ? 'white' : 'black',
+                  borderColor: '#11703b',
+                  borderWidth: '1px',
+                  borderStyle: 'solid',
+                  padding: {
+                    xs: '2px',
+                    sm: '8px 10px',
+                    md: '8px 20px',
+                    lg: '10px 50px',
+                  },
+                  borderRadius: '10px',
+                  fontSize: '16px',
+                  '&:hover': {
+                    backgroundColor:
+                      selectedChip === 'Pigpen'
+                        ? '#11703b'
+                        : 'rgba(46, 125, 50, 0.1)',
+                  },
+                }}
+              />
               <Chip
                 label={
                   <Typography
@@ -152,45 +191,6 @@ const Records = () => {
                   '&:hover': {
                     backgroundColor:
                       selectedChip === 'Medical Records'
-                        ? '#11703b'
-                        : 'rgba(46, 125, 50, 0.1)',
-                  },
-                }}
-              />
-              <Chip
-                label={
-                  <Typography
-                    fontSize={{
-                      xs: '11px',
-                      sm: '14px',
-                      md: '16px',
-                      lg: '17px',
-                    }}
-                    fontWeight={200}
-                  >
-                    Pig pen
-                  </Typography>
-                }
-                clickable
-                onClick={() => handleChipClick('Pigpen')}
-                sx={{
-                  backgroundColor:
-                    selectedChip === 'Pigpen' ? '#11703b' : 'transparent',
-                  color: selectedChip === 'Pigpen' ? 'white' : 'black',
-                  borderColor: '#11703b',
-                  borderWidth: '1px',
-                  borderStyle: 'solid',
-                  padding: {
-                    xs: '2px',
-                    sm: '8px 10px',
-                    md: '8px 20px',
-                    lg: '10px 50px',
-                  },
-                  borderRadius: '10px',
-                  fontSize: '16px',
-                  '&:hover': {
-                    backgroundColor:
-                      selectedChip === 'Pigpen'
                         ? '#11703b'
                         : 'rgba(46, 125, 50, 0.1)',
                   },

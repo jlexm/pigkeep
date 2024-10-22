@@ -24,11 +24,11 @@ export default function BarGraph() {
 
       <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
         <Grid2 container size={{ xs: 9.5, }} className="pigSalesBox">
-          <Grid2 container size={12} className="pigSales">
+          <Grid2 container size={12} className="pigSalesOne">
             <Typography variant='h5' color='white' paddingX={2}>Pig Sales</Typography>
           </Grid2>
           <Grid2 size={12}>
-            <Typography variant='h3' fontWeight={700} className="totalSales" >{formatCurrency(200000)}</Typography>
+            <Typography variant='h3' fontWeight={700} className="totalPigSales" >{formatCurrency(200000)}</Typography>
           </Grid2>
         </Grid2>
       </Grid2>
@@ -59,7 +59,7 @@ export default function BarGraph() {
               },
             },
           ]}
-          series={[{ data: [200000, 300000], color: '#11703b' }]}
+          series={[{ data: [200000, 300000], color: '#554F91' }]}
           height={340}
           sx={{
             '& .MuiChartsAxis-y': {

@@ -293,16 +293,19 @@ export default function DisposalDataTable() {
               '& .MuiDataGrid-columnHeaders': {
                 fontWeight: 'bold',
                 fontSize: '15px',
-                color: '#11703B',
+                color: '#554F91',
               },
               '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
-                color: '#11703B',
+                color: '#554F91',
               },
               '& .green-text': {
-                color: 'green',
+                color: '#11703b',
               },
               '& .red-text': {
                 color: 'red',
+              },
+              '& .even-row': {
+                backgroundColor: '#EBE9FF',
               },
             }}
           />

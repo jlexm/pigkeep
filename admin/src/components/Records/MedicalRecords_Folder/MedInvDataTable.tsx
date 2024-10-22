@@ -226,6 +226,9 @@ export default function FeedInvDataTable() {
               '& .red-text': {
                 color: 'red',
               },
+              '& .even-row': {
+                backgroundColor: '#E1EDFB',
+              },
             }}
           />
         </Box>

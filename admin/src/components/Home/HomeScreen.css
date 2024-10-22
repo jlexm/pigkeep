@@ -62,6 +62,19 @@
     justify-content: center;
 }
 
+.pigSalesOne {
+  display: flex;
+  background-color: #554F91;
+  position: relative;
+  border-radius: 10px;
+  align-content: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 1em 0em 1em 0em;
+  min-width: 300px;
+}
+
 .pigSales {
     display: flex;
     background-color: #11703b;
@@ -75,6 +88,12 @@
     min-width: 300px;
 }
 
+.totalPigSales {
+  color: #554F91;
+  font-size: 60px;
+  font-weight: bold;
+  margin: 0;
+}
 
 .totalSales {
     color: #11703b;

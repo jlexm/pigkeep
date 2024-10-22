@@ -111,8 +111,8 @@ export default function Dispose() {
             <Button
               variant="contained"
               sx={{
-                backgroundColor: '#11703b',
-                '&:hover': { backgroundColor: '#117e4b' },
+                backgroundColor: '#554F91',
+                '&:hover': { backgroundColor: '#554F71' },
                 width: { xs: 100, sm: 120, md: 125, lg: 130, xl: 140 },
                 height: { xs: 35, sm: 42, md: 45 },
                 borderRadius: 2,
@@ -155,7 +155,7 @@ export default function Dispose() {
           onSave={handleSave} // Handle save action
           onCancel={handleCloseDialog} // Handle cancel action
           saveButtonText="Sell Pig"
-          saveButtonColor="#11703b" // Green color for the save button
+          saveButtonColor="#554F91" 
         />
       )}
 
@@ -173,7 +173,7 @@ export default function Dispose() {
           onSave={handleSaveDeceased} // Handle save action
           onCancel={handleCloseDeceasedDialog} // Handle cancel action
           saveButtonText="Remove"
-          saveButtonColor="#FF0000" // Green color for the save button
+          saveButtonColor="#FF0000" 
         />
       )}
     </ThemeProvider>
