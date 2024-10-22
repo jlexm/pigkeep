@@ -16,18 +16,16 @@ class _ChipsState extends State<Chips> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            _buildChip('Pig Pen', 0, 55.w),
-            _buildChip('Pig List', 1, 50.w),
-            _buildChip('Feed Inventory', 2, 95.w),
-            _buildChip('Medical Records', 3, 100.w),
-          ],
-        ),
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _buildChip('Pig Pen', 0, 55.w),
+          _buildChip('Pig List', 1, 50.w),
+          _buildChip('Feed Inventory', 2, 95.w),
+          _buildChip('Medical Records', 3, 100.w),
+        ],
       ),
     );
   }

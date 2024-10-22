@@ -176,9 +176,7 @@ class RecyclableTextFormField extends StatelessWidget {
             onTap: onTap,
             maxLines: maxLines,
             minLines: minLines,
-            style: TextStyle(
-              fontSize: textSize,
-            ),
+            style: TextStyle(fontSize: textSize, fontFamily: 'Roboto'),
           ),
           if (showDropdown && dropdownItems != null)
             Positioned(
@@ -203,6 +201,7 @@ class RecyclableTextFormField extends StatelessWidget {
                         child: Text(
                           item.label,
                           overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontFamily: 'Roboto'),
                         ),
                       );
                     }).toList(),

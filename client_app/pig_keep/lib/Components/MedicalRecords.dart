@@ -1,16 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Classes/DropDownItem.dart';
-import 'package:pig_keep/Components/Carousel_FeedInventory.dart';
 import 'package:pig_keep/Components/Carousel_MedicalRecords.dart';
+import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/SearchBar_MedicalRecords.dart';
-import 'package:pig_keep/Components/Transaction_FeedInventory.dart';
 import 'package:pig_keep/Components/Transaction_MedicalRecords.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Models/medicine.dart';
+import 'package:pig_keep/Models/pig-pen.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/medicine-service.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 
-class MedicalRecords extends StatelessWidget {
-  const MedicalRecords({super.key});
+class Medicalrecords extends StatefulWidget {
+  Medicalrecords({super.key});
+
+  @override
+  State<Medicalrecords> createState() => _MedicalRecordsState();
+}
+
+class _MedicalRecordsState extends State<Medicalrecords> {
+  // services
+  final medService = globalLocator.get<MedicineService>();
+  final pigService = globalLocator.get<PigService>();
+  final penService = globalLocator.get<PigPenService>();
+
+  // controllers
+
+  // add
+  final TextEditingController _medNameController = TextEditingController();
+  final TextEditingController _unitController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _costController = TextEditingController();
+
+  // consume
+  final TextEditingController _medNameEController = TextEditingController();
+  final TextEditingController _quantityEController = TextEditingController();
+  final TextEditingController _pigNumberEController = TextEditingController();
+
+  // vars
+  var selectedFarm;
+  late String userOwner;
+  List<Medicine> medicines = [];
+  List<Map<String, dynamic>> medHistory = [];
+  List<Map<String, dynamic>> pigs = [];
+
+  // functions
+  Future<void> fetchMedData() async {
+    final meds = await medService.getMedicines(selectedFarm['_id']);
+    final medH = await medService.getMedicineTransactions(selectedFarm['_id']);
+    setState(() {
+      medicines = meds;
+      medHistory = medH;
+    });
+  }
+
+  Future<void> getPigs() async {
+    List<PigPen> pens =
+        await penService.fetchPigPens(selectedFarm['_id'], userOwner);
+    final fetchPigs = await pigService.fetchAllPigsInAllPens(pens);
+    setState(() {
+      pigs = fetchPigs;
+    });
+  }
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
+      userOwner = user['username'];
+      fetchMedData();
+      getPigs();
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+    fetchMedData();
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +124,14 @@ class MedicalRecords extends StatelessWidget {
                             description: 'Fill up the necessary information.',
                             formFields: [
                               RecyclableTextFormField(
-                                controller: TextEditingController(),
+                                controller: _medNameEController,
                                 labelText: 'Medicine Name',
                                 showDropdown: true,
-                                dropdownItems: [
-                                  CustomDropDownItem('Med 1', 'Med 1'),
-                                  CustomDropDownItem('Med 2', 'Med 2'),
-                                  CustomDropDownItem('Med 3', 'Med 3')
-                                ],
+                                dropdownItems: medicines
+                                    .map((med) => CustomDropDownItem(
+                                        med.medicineName,
+                                        '${med.medicineName} | ${PigHelper.convertVolume(med.quantity, med.unit!)}'))
+                                    .toList(),
                                 hintText: 'Medicine Name',
                                 hintTextSize: 14.sp,
                                 icon: Icons.medical_services,
@@ -59,9 +139,9 @@ class MedicalRecords extends StatelessWidget {
                                 height: 43.h,
                               ),
                               RecyclableTextFormField(
-                                controller: TextEditingController(),
-                                labelText: 'Quantity',
-                                hintText: 'Quantity',
+                                controller: _quantityEController,
+                                labelText: 'mg or mL',
+                                hintText: 'mg or mL',
                                 hintTextSize: 14.sp,
                                 icon: Icons.numbers,
                                 textSize: 14.sp,
@@ -69,7 +149,14 @@ class MedicalRecords extends StatelessWidget {
                                 keyboardType: TextInputType.phone,
                               ),
                               RecyclableTextFormField(
-                                controller: TextEditingController(),
+                                controller: _pigNumberEController,
+                                showDropdown: true,
+                                dropdownItems: pigs
+                                    .where((pig) => pig['status'] == 'alive')
+                                    .map((pig) => CustomDropDownItem(
+                                        pig['uuid'],
+                                        'Pig: ${pig['pigNumber']} | ${pig['ageCategory']}'))
+                                    .toList(),
                                 labelText: 'Pig Number',
                                 hintText: 'Pig Number',
                                 hintTextSize: 14.sp,
@@ -78,10 +165,24 @@ class MedicalRecords extends StatelessWidget {
                                 height: 43.h,
                               ),
                             ],
-                            onSave: () {
-                              // Handle the save action, e.g., validate and save data
-                              print('Form saved');
-                              Navigator.of(context).pop();
+                            onSave: () async {
+                              try {
+                                await medService.addMedicine(
+                                    selectedFarm['_id'],
+                                    'consumed',
+                                    _medNameEController.text,
+                                    null,
+                                    int.parse(_quantityEController.text),
+                                    0,
+                                    _pigNumberEController.text);
+                                await fetchMedData();
+                                context.pop();
+                                _medNameEController.clear();
+                                _quantityEController.clear();
+                                _pigNumberEController.clear();
+                              } catch (err) {
+                                ToastService().showErrorToast(err.toString());
+                              }
                             },
                             saveButtonText: 'Consume',
                             saveButtonColor: appRed,
@@ -131,7 +232,7 @@ class MedicalRecords extends StatelessWidget {
                             description: 'Fill up the necessary information.',
                             formFields: [
                               RecyclableTextFormField(
-                                controller: TextEditingController(),
+                                controller: _medNameController,
                                 labelText: 'Medicine Name',
                                 hintText: 'Medicine Name',
                                 hintTextSize: 14.sp,
@@ -140,11 +241,10 @@ class MedicalRecords extends StatelessWidget {
                                 height: 43.h,
                               ),
                               RecyclableTextFormField(
-                                controller: TextEditingController(),
+                                controller: _unitController,
                                 labelText: 'Unit',
                                 showDropdown: true,
                                 dropdownItems: [
-                                  CustomDropDownItem('g', 'Grams (g)'),
                                   CustomDropDownItem('mg', 'Milligrams (mg)'),
                                   CustomDropDownItem('mL', 'Milliliters (mL)')
                                 ],
@@ -156,30 +256,46 @@ class MedicalRecords extends StatelessWidget {
                                 readOnly: true,
                               ),
                               RecyclableTextFormField(
-                                controller: TextEditingController(),
-                                labelText: 'Quantity',
-                                hintText: 'Quantity',
+                                controller: _quantityController,
+                                labelText: 'Volume',
+                                hintText: 'Volume',
                                 hintTextSize: 14.sp,
                                 icon: Icons.numbers,
                                 textSize: 14.sp,
                                 height: 43.h,
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.number,
                               ),
                               RecyclableTextFormField(
-                                controller: TextEditingController(),
+                                controller: _costController,
                                 labelText: 'Cost',
                                 hintText: 'Cost',
                                 hintTextSize: 14.sp,
                                 icon: Icons.php,
                                 textSize: 14.sp,
                                 height: 43.h,
-                                keyboardType: TextInputType.phone,
+                                keyboardType: TextInputType.number,
                               ),
                             ],
-                            onSave: () {
+                            onSave: () async {
                               // Handle the save action, e.g., validate and save data
-                              print('Form saved');
-                              Navigator.of(context).pop();
+                              try {
+                                await medService.addMedicine(
+                                    selectedFarm['_id'],
+                                    'stock',
+                                    _medNameController.text,
+                                    _unitController.text,
+                                    int.parse(_quantityController.text),
+                                    double.parse(_costController.text),
+                                    null);
+                                await fetchMedData();
+                                context.pop();
+                                _medNameController.clear();
+                                _unitController.clear();
+                                _quantityController.clear();
+                                _costController.clear();
+                              } catch (err) {
+                                ToastService().showErrorToast(err.toString());
+                              }
                             },
                             saveButtonText: 'Add Medicine',
                             saveButtonColor: appBlue,
@@ -227,8 +343,9 @@ class MedicalRecords extends StatelessWidget {
         ),
         Container(
           padding: EdgeInsets.only(left: 15.w),
-          child: const CarouselMedicalrecords(//Carousel_MedicalRecords.dart
-              items: [125, 125, 130, 200, 259] // Dynamic list of items
+          child: CarouselMedicalrecords(
+              //Carousel_MedicalRecords.dart
+              items: medicines // Dynamic list of items
               ),
         ),
         SizedBox(
@@ -255,7 +372,9 @@ class MedicalRecords extends StatelessWidget {
         SizedBox(
           height: 14.h,
         ),
-        const TransactionMedicalrecords(), //Transaction_Medicalrecords.dart
+        TransactionMedicalrecords(
+          medHistory: medHistory,
+        ), //Transaction_Medicalrecords.dart
         SizedBox(
           //remove this later
           height: 600.h,

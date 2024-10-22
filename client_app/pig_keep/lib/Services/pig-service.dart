@@ -110,7 +110,11 @@ class PigService {
   Future<List<Pig>> fetchPigsInPen(
     String penUuid,
   ) async {
-    return await db.pigs.filter().penUuidEqualTo(penUuid).findAll();
+    return await db.pigs
+        .filter()
+        .penUuidEqualTo(penUuid)
+        .sortByCreatedAtDesc()
+        .findAll();
   }
 
   Future<List<Map<String, dynamic>>> fetchAllPigsInAllPens(

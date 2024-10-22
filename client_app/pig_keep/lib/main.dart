@@ -25,6 +25,7 @@ import 'package:pig_keep/Screens/ScanQR.dart';
 import 'package:pig_keep/Screens/Signup.dart';
 import 'package:pig_keep/Services/database-service.dart';
 import 'package:pig_keep/Services/ledger.service.dart';
+import 'package:pig_keep/Services/medicine-service.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
@@ -47,6 +48,7 @@ void main() async {
   globalLocator.registerSingleton(PigPenService());
   globalLocator.registerSingleton(PigService());
   globalLocator.registerSingleton(LedgerService());
+  globalLocator.registerSingleton(MedicineService());
 
   runApp(
     MultiProvider(
@@ -150,7 +152,7 @@ class MyApp extends StatelessWidget {
                       GoRoute(
                         path: '/records/medicines',
                         pageBuilder: (context, state) =>
-                            NoTransitionPage(child: const MedicalRecords()),
+                            NoTransitionPage(child: Medicalrecords()),
                       ),
                     ]),
                 GoRoute(

@@ -219,7 +219,7 @@ class _PigListState extends State<PigList> {
                                             .toList(),
                                         hintText: 'Parent Number',
                                         hintTextSize: 14.sp,
-                                        icon: Icons.email,
+                                        icon: Icons.savings,
                                         textSize: 14.sp,
                                         height: 43.h,
                                         readOnly: true,
@@ -234,7 +234,7 @@ class _PigListState extends State<PigList> {
                                         ],
                                         hintText: 'Sex',
                                         hintTextSize: 14.sp,
-                                        icon: Icons.email,
+                                        icon: Icons.male,
                                         textSize: 14.sp,
                                         height: 43.h,
                                         readOnly: true,
@@ -246,11 +246,11 @@ class _PigListState extends State<PigList> {
                                         dropdownItems: pigPens
                                             .map((pen) => CustomDropDownItem(
                                                 pen.uuid,
-                                                '${pen.penNumber} - ${pen.penType}'))
+                                                '${pen.penNumber} | ${pen.penType}'))
                                             .toList(),
                                         hintText: 'Pen Number',
                                         hintTextSize: 14.sp,
-                                        icon: Icons.email,
+                                        icon: Icons.house_siding_rounded,
                                         textSize: 14.sp,
                                         height: 43.h,
                                         readOnly: true,

@@ -42,9 +42,14 @@ class _QRCodeStatusState extends State<PigView> {
   final TextEditingController _pigSexController = TextEditingController();
   final TextEditingController _pigPenNumberController = TextEditingController();
   final TextEditingController _pigWeightKGController = TextEditingController();
+  final TextEditingController _pigNumberController = TextEditingController();
 
   // sell controllers
   final TextEditingController _priceController = TextEditingController();
+
+  // var
+
+  List<Map<String, dynamic>> pigs = [];
 
   // functions
   Future<void> getPigDetails() async {
@@ -356,13 +361,21 @@ class _QRCodeStatusState extends State<PigView> {
                                   keyboardType: TextInputType.phone,
                                 ),
                                 RecyclableTextFormField(
-                                  controller: TextEditingController(),
+                                  controller: _pigNumberController,
                                   labelText: 'Pig Number',
+                                  showDropdown: true,
+                                  dropdownItems: pigs
+                                      .where((pig) => pig['status'] == 'alive')
+                                      .map((pig) => CustomDropDownItem(
+                                          pig['uuid'],
+                                          'Pig: ${pig['pigNumber']} | ${pig['ageCategory']}'))
+                                      .toList(),
                                   hintText: 'Pig Number',
                                   hintTextSize: 14.sp,
                                   icon: Icons.savings,
                                   textSize: 14.sp,
                                   height: 43.h,
+                                  readOnly: true,
                                 ),
                               ],
                               onSave: () {
@@ -402,8 +415,8 @@ class _QRCodeStatusState extends State<PigView> {
                           saveButtonText: 'QR Code',
                           saveButtonIcon: Icons.download,
                           saveButtonColor: appOrange,
-                          number: int.parse(pigData['number'] ?? '0'),
-                          imagePath: 'assets/images/qrsample.png', //QR code
+                          pigNumber: pigData['pigNumber'],
+                          uuid: pigData['uuid'], //QR code
                           onSave: () {
                             // Perform your save action here
                             Navigator.of(context).pop();

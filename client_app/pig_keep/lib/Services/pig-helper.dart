@@ -52,4 +52,38 @@ class PigHelper {
       decimalDigits: 2,
     ).format(amount);
   }
+
+  static String convertVolume(int amount, String unit) {
+    if (unit == 'mg') {
+      if (amount >= 1000) {
+        return '${amount / 1000.0}g';
+      } else {
+        return '${amount}mg';
+      }
+    }
+
+    if (unit == 'mL') {
+      if (amount >= 1000) {
+        return '${amount / 1000.0}L';
+      } else {
+        return '${amount}mL';
+      }
+    }
+    throw 'Unit not supported.';
+  }
+
+  static String formatDate(DateTime date) {
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('MMMM, d, y');
+
+    if (DateFormat('yMd').format(date) == DateFormat('yMd').format(now)) {
+      return 'Today';
+    } else {
+      return formatter.format(date);
+    }
+  }
+
+  static String formatToHour(DateTime date) {
+    return DateFormat('h:mm a').format(date);
+  }
 }
