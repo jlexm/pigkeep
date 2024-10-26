@@ -64,3 +64,6 @@
     align-content: center;
 }
 
+.recorded-weight-header .MuiDataGrid-columnHeaderTitle {
+  white-space: pre-line; /* Allows breaking text */
+}

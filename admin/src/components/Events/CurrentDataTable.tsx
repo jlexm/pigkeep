@@ -18,13 +18,15 @@ const columns: GridColDef[] = [
   {
     field: 'evName',
     headerName: 'Event Name',
-    minWidth: 173,
+    flex: 1,
+    minWidth: 160,
     resizable: false,
   },
   {
     field: 'date',
     headerName: 'Date',
-    minWidth: 173,
+    flex: 1,
+    minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -32,7 +34,8 @@ const columns: GridColDef[] = [
   {
     field: 'pigNum',
     headerName: 'Pig Number',
-    minWidth: 173,
+    flex: 1,
+    minWidth: 140,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -40,7 +43,8 @@ const columns: GridColDef[] = [
   {
     field: 'status',
     headerName: 'Status',
-    minWidth: 173,
+    flex: 1,
+    minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -51,7 +55,8 @@ const columns: GridColDef[] = [
   {
     field: 'actions',
     headerName: 'Actions',
-    minWidth: 173,
+    flex: 1,
+    minWidth: 110,
     resizable: false,
     renderCell: (params) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -283,6 +288,7 @@ export default function CurrentDataTable() {
                   ? 'even-row'
                   : 'odd-row'
               }
+              disableColumnMenu
               slotProps={{
                 toolbar: {
                   showQuickFilter: false,
@@ -293,7 +299,7 @@ export default function CurrentDataTable() {
                 '& .MuiDataGrid-columnHeaders': {
                   fontWeight: 'bold',
                   fontSize: '15px',
-                  color: '#11703B',
+                  color: '#222222',
                 },
                 '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
                   color: '#11703B',

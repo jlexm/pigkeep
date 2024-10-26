@@ -17,13 +17,15 @@ const columns: GridColDef[] = [
   {
     field: 'feedType',
     headerName: 'Feed Type',
-    minWidth: 235,
+    flex: 1,
+    minWidth: 130,
     resizable: false,
   },
   {
     field: 'action',
     headerName: 'Action',
-    minWidth: 235,
+    flex: 1,
+    minWidth: 130,
     resizable: false,
     headerAlign: 'left',
     align: 'left',
@@ -38,7 +40,8 @@ const columns: GridColDef[] = [
   {
     field: 'quantity',
     headerName: 'Quantity',
-    minWidth: 235,
+    flex: 1,
+    minWidth: 120,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -46,7 +49,8 @@ const columns: GridColDef[] = [
   {
     field: 'date',
     headerName: 'Date',
-    minWidth: 235,
+    flex: 1,
+    minWidth: 130,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -54,7 +58,8 @@ const columns: GridColDef[] = [
   {
     field: 'cost',
     headerName: 'Cost',
-    minWidth: 235,
+    flex: 1,
+    minWidth: 115,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -181,6 +186,7 @@ export default function FeedInvDataTable() {
                 ? 'even-row'
                 : 'odd-row'
             }
+            disableColumnMenu
             slotProps={{
               toolbar: {
                 showQuickFilter: false,

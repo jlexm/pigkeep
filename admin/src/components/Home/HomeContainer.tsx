@@ -20,7 +20,7 @@ export default function SimpleContainer() {
                 fontWeight={700}
                 color="white"
                 sx={{
-                  fontSize: 'clamp(7rem, 11vw, 13rem)', 
+                  fontSize: 'clamp(7rem, 9vw, 13rem)', 
                   lineHeight: 0.8, 
                   margin: 0, 
                   padding: 0, 
@@ -40,7 +40,7 @@ export default function SimpleContainer() {
             </Stack>
           </Grid2>
 
-          <Grid2 size={{ lg: 12, xl: 11 }}>
+          <Grid2 size={{ lg: 12, xl: 12 }}>
             <Typography
               variant='subtitle1'
               color="white"
@@ -62,7 +62,7 @@ export default function SimpleContainer() {
               src={hugepig}
               alt="Huge Pig"
               className="responsiveImage"
-              sx={{ width: { xs: 0, lg: 'clamp(440px, 36vw, 650px)' } ,}}
+              sx={{ width: { xs: 0, lg: 'clamp(440px, 36vw, 550px)' } ,}}
             />
           </Box>
         </Grid2>

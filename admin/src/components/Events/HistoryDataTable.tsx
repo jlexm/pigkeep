@@ -8,13 +8,15 @@ const columns: GridColDef[] = [
   {
     field: 'evName',
     headerName: 'Event Name',
-    minWidth: 216,
+    flex: 1,
+    minWidth: 160,
     resizable: false,
   },
   {
     field: 'date',
     headerName: 'Date',
-    minWidth: 216,
+    flex: 1,
+    minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -22,7 +24,8 @@ const columns: GridColDef[] = [
   {
     field: 'pigNum',
     headerName: 'Pig Number',
-    minWidth: 216,
+    flex: 1,
+    minWidth: 140,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -30,7 +33,8 @@ const columns: GridColDef[] = [
   {
     field: 'status',
     headerName: 'Status',
-    minWidth: 216,
+    flex: 1,
+    minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -222,6 +226,7 @@ export default function HistoryDataTable() {
                   ? 'even-row'
                   : 'odd-row'
               }
+              disableColumnMenu
               slotProps={{
                 toolbar: {
                   showQuickFilter: false,

@@ -8,13 +8,15 @@ const columns: GridColDef[] = [
   {
     field: 'number',
     headerName: 'Pig Number',
-    minWidth: 234,
+    flex: 1,
+    minWidth: 140,
     resizable: false,
   },
   {
     field: 'status',
     headerName: 'Status',
-    minWidth: 234,
+    flex: 1,
+    minWidth: 110,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -28,7 +30,8 @@ const columns: GridColDef[] = [
   {
     field: 'date',
     headerName: 'Date',
-    minWidth: 234,
+    flex: 1,
+    minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -36,7 +39,8 @@ const columns: GridColDef[] = [
   {
     field: 'weight',
     headerName: 'Weight',
-    minWidth: 234,
+    flex: 1,
+    minWidth: 110,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -45,7 +49,8 @@ const columns: GridColDef[] = [
   {
     field: 'price',
     headerName: 'Price',
-    minWidth: 234,
+    flex: 1,
+    minWidth: 90,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -283,6 +288,7 @@ export default function DisposalDataTable() {
                 ? 'even-row'
                 : 'odd-row'
             }
+            disableColumnMenu
             slotProps={{
               toolbar: {
                 showQuickFilter: false,
@@ -293,7 +299,7 @@ export default function DisposalDataTable() {
               '& .MuiDataGrid-columnHeaders': {
                 fontWeight: 'bold',
                 fontSize: '15px',
-                color: '#554F91',
+                color: '#222222',
               },
               '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
                 color: '#554F91',

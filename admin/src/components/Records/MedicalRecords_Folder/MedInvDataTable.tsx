@@ -18,13 +18,15 @@ const columns: GridColDef[] = [
   {
     field: 'medType',
     headerName: 'Medicine Name',
-    minWidth: 194,
+    flex: 1,
+    minWidth: 170,
     resizable: false,
   },
   {
     field: 'action',
     headerName: 'Action',
-    minWidth: 194,
+    flex: 1,
+    minWidth: 140,
     resizable: false,
     headerAlign: 'left',
     align: 'left',
@@ -40,7 +42,8 @@ const columns: GridColDef[] = [
   {
     field: 'quantity',
     headerName: 'Quantity',
-    minWidth: 194,
+    flex: 1,
+    minWidth: 120,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -57,7 +60,8 @@ const columns: GridColDef[] = [
   {
     field: 'target',
     headerName: 'Target Pig',
-    minWidth: 194,
+    flex: 1,
+    minWidth: 130,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -65,7 +69,8 @@ const columns: GridColDef[] = [
   {
     field: 'date',
     headerName: 'Date',
-    minWidth: 194,
+    flex: 1,
+    minWidth: 120,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -73,7 +78,8 @@ const columns: GridColDef[] = [
   {
     field: 'cost',
     headerName: 'Cost',
-    minWidth: 194,
+    flex: 1,
+    minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -205,6 +211,7 @@ export default function FeedInvDataTable() {
                 ? 'even-row'
                 : 'odd-row'
             }
+            disableColumnMenu
             slotProps={{
               toolbar: {
                 showQuickFilter: false,
@@ -215,7 +222,7 @@ export default function FeedInvDataTable() {
               '& .MuiDataGrid-columnHeaders': {
                 fontWeight: 'bold',
                 fontSize: '15px',
-                color: '#3B4DE1',
+                color: '#222222',
               },
               '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
                 color: '#3B4DE1',

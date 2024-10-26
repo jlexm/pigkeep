@@ -24,13 +24,15 @@ const columns: (
   {
     field: 'username',
     headerName: 'Username',
-    minWidth: 359,
+    flex: 1,
+    minWidth: 130,
     resizable: false,
   },
   {
     field: 'email',
     headerName: 'Email',
-    minWidth: 359,
+    flex: 1,
+    minWidth: 150,
     resizable: false,
     headerAlign: 'left',
     align: 'left',
@@ -38,7 +40,8 @@ const columns: (
   {
     field: 'phoneNum',
     headerName: 'Phone Number',
-    minWidth: 359,
+    flex: 1,
+    minWidth: 170,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -46,7 +49,8 @@ const columns: (
   {
     field: 'password',
     headerName: 'Password',
-    minWidth: 359,
+    flex: 1,
+    minWidth: 130,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
@@ -70,7 +74,8 @@ const columns: (
   {
     field: 'actions',
     headerName: 'Actions',
-    minWidth: 359,
+    flex: 1,
+    minWidth: 110,
     resizable: false,
     renderCell: (params) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -269,6 +274,7 @@ export default function CaretakerDataTable() {
                   ? 'even-row'
                   : 'odd-row'
               }
+              disableColumnMenu
               slotProps={{
                 toolbar: {
                   showQuickFilter: false,
@@ -279,7 +285,7 @@ export default function CaretakerDataTable() {
                 '& .MuiDataGrid-columnHeaders': {
                   fontWeight: 'bold',
                   fontSize: '15px',
-                  color: '#11703B',
+                  color: '#222222',
                 },
                 '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
                   color: '#11703B',
