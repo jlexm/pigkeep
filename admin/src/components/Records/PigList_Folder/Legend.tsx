@@ -31,7 +31,7 @@ const PigStatusLegend: React.FC<PigStatusLegendProps> = ({ statuses }) => {
             flexDirection: {
               xs: 'row',
               lg: 'column',
-              xl: 'row',
+              xl: 'column',
             },
           }}
           justifyContent={{ xs: 'center', sm: 'end', lg: 'start' }}

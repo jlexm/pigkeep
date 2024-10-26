@@ -26,7 +26,7 @@ export default function PigList_Screen() {
         <PigStatusLegend statuses={['Alive', 'Sold', 'Deceased']} />
       </Grid2>
       <Grid2
-        size={{ xs: 12, sm: 5, md: 2, lg: 1, xl: 2 }}
+        size={{ xs: 12, sm: 5, md: 2, lg: 1, xl: 1 }}
         sx={{ alignContent: 'center' }}
       >
         <QRCode />
