@@ -141,7 +141,7 @@ class _PigPenState extends State<PigPen> {
                       children: [
                         Container(
                           height: 36.h,
-                          width: 93.w,
+                          width: 95.w,
                           padding: EdgeInsets.only(left: 9.w, right: 9.w),
                           decoration: BoxDecoration(
                             border: Border.all(color: appPrimary),

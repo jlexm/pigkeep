@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
@@ -85,6 +83,9 @@ class _CurrentEventsState extends State<CurrentEvents> {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
                       title: Text(
                         "Confirm Deletion",
                         style: TextStyle(
@@ -138,7 +139,6 @@ class _CurrentEventsState extends State<CurrentEvents> {
                         description:
                             'Verify if the event has been accomplished by clicking the button.',
                         onSave: () {
-                          
                           Navigator.of(context).pop();
                         },
                         saveButtonText: 'Mark as Done',

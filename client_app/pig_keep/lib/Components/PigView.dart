@@ -191,8 +191,8 @@ class _QRCodeStatusState extends State<PigView> {
                       text: 'Sell',
                       color: Colors.transparent,
                       width: 100.w,
-                      borderColor: appPrimary,
-                      textColor: appPrimary,
+                      borderColor: appPurple,
+                      textColor: appPurple,
                       onTap: () {
                         showDialog(
                           context: context,
@@ -257,7 +257,7 @@ class _QRCodeStatusState extends State<PigView> {
                                 Navigator.of(context).pop();
                               },
                               saveButtonText: 'Sell Pig',
-                              saveButtonColor: appPrimary,
+                              saveButtonColor: appPurple,
                             );
                           },
                         );

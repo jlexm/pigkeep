@@ -134,6 +134,9 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
                           title: Text(
                             "Confirm Deletion",
                             style: TextStyle(

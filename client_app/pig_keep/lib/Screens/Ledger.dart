@@ -136,7 +136,7 @@ class _LedgerState extends State<Ledger> {
                         style: TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w500,
-                          color: appPrimary,
+                          color: appPurple,
                         ),
                       )
                     ],
@@ -153,8 +153,8 @@ class _LedgerState extends State<Ledger> {
                           right: 20.w,
                         ),
                         decoration: BoxDecoration(
-                          border: Border.all(color: appPrimary),
-                          color: appPrimary,
+                          border: Border.all(color: appPurple),
+                          color: appPurple,
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
@@ -277,7 +277,7 @@ class _LedgerState extends State<Ledger> {
                                               Navigator.of(context).pop();
                                             },
                                             saveButtonText: 'Sell Pig',
-                                            saveButtonColor: appPrimary,
+                                            saveButtonColor: appPurple,
                                           );
                                         },
                                       );
@@ -316,7 +316,7 @@ class _LedgerState extends State<Ledger> {
                                   padding: const EdgeInsets.all(5),
                                   decoration: BoxDecoration(
                                     border: Border.all(color: appSecondary),
-                                    color: appPrimary,
+                                    color: appPurple,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: InkWell(
