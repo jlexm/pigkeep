@@ -67,7 +67,7 @@ class _TransactionMedicalrecordsState extends State<TransactionMedicalrecords> {
                       Row(
                         children: [
                           Text(
-                            '${PigHelper.convertVolume(transaction['quantity'], transaction['unit'])}',
+                            '${transaction['quantity']} x ${transaction['dosage']}',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
@@ -108,8 +108,9 @@ class _TransactionMedicalrecordsState extends State<TransactionMedicalrecords> {
                           padding: EdgeInsets.only(left: 8.w),
                           child: RichText(
                             text: TextSpan(
-                              text:
-                                  '${PigHelper.formatCurrency(transaction['cost'])}',
+                              text: PigHelper.formatCurrency(
+                                  transaction['cost'] *
+                                      transaction['quantity']),
                               style: TextStyle(
                                 fontSize: 11.sp,
                                 fontWeight: FontWeight.w500,

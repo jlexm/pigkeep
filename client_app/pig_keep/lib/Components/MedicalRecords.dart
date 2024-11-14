@@ -36,7 +36,8 @@ class _MedicalRecordsState extends State<Medicalrecords> {
 
   // add
   final TextEditingController _medNameController = TextEditingController();
-  final TextEditingController _unitController = TextEditingController();
+  final TextEditingController _dosageController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _costController = TextEditingController();
 
@@ -116,6 +117,7 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                   ),
                   child: InkWell(
                     onTap: () {
+                      _quantityEController.text = '1';
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -130,22 +132,21 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                                 dropdownItems: medicines
                                     .map((med) => CustomDropDownItem(
                                         med.medicineName,
-                                        '${med.medicineName} | ${PigHelper.convertVolume(med.quantity, med.unit!)}'))
+                                        '${med.medicineName} ${med.dosage} | ${med.quantity}x'))
                                     .toList(),
                                 hintText: 'Medicine Name',
                                 hintTextSize: 14.sp,
                                 icon: Icons.medical_services,
                                 textSize: 14.sp,
-                                height: 43.h,
+                                readOnly: true,
                               ),
                               RecyclableTextFormField(
                                 controller: _quantityEController,
-                                labelText: 'mg or mL',
-                                hintText: 'mg or mL',
+                                labelText: 'Quantity',
+                                hintText: 'Quantity',
                                 hintTextSize: 14.sp,
                                 icon: Icons.numbers,
                                 textSize: 14.sp,
-                                height: 43.h,
                                 keyboardType: TextInputType.phone,
                               ),
                               RecyclableTextFormField(
@@ -162,23 +163,25 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                                 hintTextSize: 14.sp,
                                 icon: Icons.savings,
                                 textSize: 14.sp,
-                                height: 43.h,
                               ),
                             ],
                             onSave: () async {
                               try {
+                                // perform consume mode
                                 await medService.addMedicine(
+                                    false,
                                     selectedFarm['_id'],
                                     'consumed',
                                     _medNameEController.text,
                                     null,
+                                    '',
                                     int.parse(_quantityEController.text),
                                     0,
                                     _pigNumberEController.text);
                                 await fetchMedData();
                                 context.pop();
                                 _medNameEController.clear();
-                                _quantityEController.clear();
+                                _quantityEController.text = '1';
                                 _pigNumberEController.clear();
                               } catch (err) {
                                 ToastService().showErrorToast(err.toString());
@@ -213,116 +216,121 @@ class _MedicalRecordsState extends State<Medicalrecords> {
             ),
             Expanded(
               child: Container(
-                  height: 57.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: appBlue, width: 1.5),
-                    color: appBlue,
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    ),
+                height: 57.h,
+                decoration: BoxDecoration(
+                  border: Border.all(color: appBlue, width: 1.5),
+                  color: appBlue,
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(10),
+                    bottomRight: Radius.circular(10),
                   ),
-                  child: InkWell(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ReusableDialogBox(
-                            title: 'Add Medicine',
-                            description: 'Fill up the necessary information.',
-                            formFields: [
-                              RecyclableTextFormField(
-                                controller: _medNameController,
-                                labelText: 'Medicine Name',
-                                hintText: 'Medicine Name',
-                                hintTextSize: 14.sp,
-                                icon: Icons.medical_services,
-                                textSize: 14.sp,
-                                height: 43.h,
-                              ),
-                              RecyclableTextFormField(
-                                controller: _unitController,
-                                labelText: 'Unit',
-                                showDropdown: true,
-                                dropdownItems: [
-                                  CustomDropDownItem('mg', 'Milligrams (mg)'),
-                                  CustomDropDownItem('mL', 'Milliliters (mL)')
-                                ],
-                                hintText: 'Unit',
-                                hintTextSize: 14.sp,
-                                icon: Icons.scale,
-                                textSize: 14.sp,
-                                height: 43.h,
-                                readOnly: true,
-                              ),
-                              RecyclableTextFormField(
-                                controller: _quantityController,
-                                labelText: 'Volume',
-                                hintText: 'Volume',
-                                hintTextSize: 14.sp,
-                                icon: Icons.numbers,
-                                textSize: 14.sp,
-                                height: 43.h,
-                                keyboardType: TextInputType.number,
-                              ),
-                              RecyclableTextFormField(
-                                controller: _costController,
-                                labelText: 'Cost',
-                                hintText: 'Cost',
-                                hintTextSize: 14.sp,
-                                icon: Icons.php,
-                                textSize: 14.sp,
-                                height: 43.h,
-                                keyboardType: TextInputType.number,
-                              ),
-                            ],
-                            onSave: () async {
-                              // Handle the save action, e.g., validate and save data
-                              try {
-                                await medService.addMedicine(
-                                    selectedFarm['_id'],
-                                    'stock',
-                                    _medNameController.text,
-                                    _unitController.text,
-                                    int.parse(_quantityController.text),
-                                    double.parse(_costController.text),
-                                    null);
-                                await fetchMedData();
-                                context.pop();
-                                _medNameController.clear();
-                                _unitController.clear();
-                                _quantityController.clear();
-                                _costController.clear();
-                              } catch (err) {
-                                ToastService().showErrorToast(err.toString());
-                              }
-                            },
-                            saveButtonText: 'Add Medicine',
-                            saveButtonColor: appBlue,
-                          );
-                        },
-                      );
-                    },
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/icons/Add.png',
-                            width: 30.w,
-                            height: 30.h,
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          Text('Add Meds',
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w500,
-                                color: appSecondary,
-                              ))
-                        ]),
-                  )),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ReusableDialogBox(
+                          title: 'New Medicine',
+                          description: 'Fill up the necessary information.',
+                          formFields: [
+                            RecyclableTextFormField(
+                              controller: _medNameController,
+                              labelText: 'Medicine Name',
+                              hintText: 'Medicine Name',
+                              hintTextSize: 14.sp,
+                              icon: Icons.medical_services,
+                              textSize: 14.sp,
+                            ),
+                            RecyclableTextFormField(
+                              controller: _dosageController,
+                              labelText: 'Dosage eg. 10mg',
+                              hintText: 'Dosage',
+                              hintTextSize: 14.sp,
+                              icon: Icons.scale,
+                              textSize: 14.sp,
+                            ),
+                            RecyclableTextFormField(
+                              controller: _quantityController,
+                              labelText: 'Quantity',
+                              hintText: 'Quantity',
+                              hintTextSize: 14.sp,
+                              icon: Icons.numbers,
+                              textSize: 14.sp,
+                              keyboardType: TextInputType.number,
+                            ),
+                            RecyclableTextFormField(
+                              controller: _costController,
+                              labelText: 'Cost Per Qty',
+                              hintText: 'Cost Per Qty',
+                              hintTextSize: 14.sp,
+                              icon: Icons.php,
+                              textSize: 14.sp,
+                              keyboardType: TextInputType.number,
+                            ),
+                            RecyclableTextFormField(
+                              controller: _descriptionController,
+                              labelText: 'Description',
+                              hintText: 'Description',
+                              keyboardType: TextInputType.multiline,
+                              textInputAction: TextInputAction.newline,
+                              hintTextSize: 14.sp,
+                              textSize: 14.sp,
+                              minLines: 2,
+                              maxLines: 5,
+                            ),
+                          ],
+                          onSave: () async {
+                            // Handle the save action, e.g., validate and save data
+                            try {
+                              await medService.addMedicine(
+                                  false,
+                                  selectedFarm['_id'],
+                                  'stock',
+                                  _medNameController.text,
+                                  _dosageController.text,
+                                  _descriptionController.text,
+                                  int.parse(_quantityController.text),
+                                  double.parse(_costController.text),
+                                  null);
+                              await fetchMedData();
+                              context.pop();
+                              _medNameController.clear();
+                              _dosageController.clear();
+                              _descriptionController.clear();
+                              _quantityController.clear();
+                              _costController.clear();
+                            } catch (err) {
+                              ToastService().showErrorToast(err.toString());
+                            }
+                          },
+                          saveButtonText: 'Add Medicine',
+                          saveButtonColor: appBlue,
+                        );
+                      },
+                    );
+                  },
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/icons/Add.png',
+                          width: 30.w,
+                          height: 30.h,
+                        ),
+                        SizedBox(
+                          width: 2.w,
+                        ),
+                        Text('Add Meds',
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                              color: appSecondary,
+                            ))
+                      ]),
+                ),
+              ),
             ),
             SizedBox(
               width: 20.w,
@@ -332,12 +340,12 @@ class _MedicalRecordsState extends State<Medicalrecords> {
         SizedBox(
           height: 10.h,
         ),
-        Container(
+        /* Container(
             padding: EdgeInsets.only(
               left: 20.w,
               right: 20.w,
             ),
-            child: SearchBar_MedicalRecords()), //Searchbar_MedicalRecords.dart
+            child: SearchBar_MedicalRecords()), */ //Searchbar_MedicalRecords.dart
         SizedBox(
           height: 18.h,
         ),
@@ -345,6 +353,8 @@ class _MedicalRecordsState extends State<Medicalrecords> {
           padding: EdgeInsets.only(left: 15.w),
           child: CarouselMedicalrecords(
               //Carousel_MedicalRecords.dart
+              farmID: selectedFarm['_id'],
+              fetchMedData: fetchMedData(),
               items: medicines // Dynamic list of items
               ),
         ),

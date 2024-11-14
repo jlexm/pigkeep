@@ -9,8 +9,20 @@ import 'package:pig_keep/main.dart';
 class MedicineService {
   Isar db = globalLocator.get<DatabaseService>().db;
 
-  Future<void> addMedicine(String farmID, String status, String medicineName,
-      String? unit, int quantity, double cost, String? pigUUID) async {
+  Future<void> addMedicine(
+      bool isEditMode,
+      String farmID,
+      String status,
+      String medicineName,
+      String? dosage,
+      String? description,
+      int quantity,
+      double cost,
+      String? pigUUID) async {
+    if (quantity <= 0) {
+      throw 'Invalid Quantity Value';
+    }
+
     // upsert med type
     var med = await db.medicines
         .filter()
@@ -20,41 +32,53 @@ class MedicineService {
       if (status == 'consumed') {
         throw 'Cannot consume non existing medicine';
       }
+      if (dosage == null) {
+        throw 'Dosage is required. Example: 10mg';
+      }
       // perform insert med
       med = Medicine()
         ..farmID = farmID
         ..medicineName = medicineName
-        ..unit = unit
+        ..dosage = dosage
+        ..description = description ?? ''
         ..quantity = quantity
-        ..avgCost =
-            cost / (quantity / 1000); // calculate cost per grams or liters
+        ..avgCost = cost; // calculate cost per grams or liters
     } else {
-      if (med.unit != unit && status == 'stock') {
-        throw '${med.medicineName} unit must be ${med.unit}.';
-      }
       // perform update med
-      med.avgCost =
-          cost / (quantity / 1000); // calculate cost per grams or liters
+      if (status == 'stock') {
+        med.avgCost = cost;
+      }
       med.quantity += status == 'stock'
           ? quantity
           : -quantity; // if stock add, consume minus
+
+      if (med.quantity < 0) {
+        throw 'Not enough stock available';
+      }
       med.updatedAt = DateTime.now();
     }
 
-    // add med history
-    final medHistory = MedicineHistory()
-      ..farmID = farmID
-      ..cost = cost
-      ..medicineName = medicineName
-      ..quantity = quantity
-      ..status = status
-      ..unit = med.unit
-      ..pigUuid = pigUUID;
+    if (isEditMode) {
+      med.quantity = quantity;
+      await db.writeTxn(() async {
+        await db.medicines.put(med!);
+      });
+    } else {
+      // add med history
+      final medHistory = MedicineHistory()
+        ..farmID = farmID
+        ..cost = cost
+        ..medicineName = medicineName
+        ..quantity = quantity
+        ..status = status
+        ..dosage = med.dosage
+        ..pigUuid = pigUUID;
 
-    await db.writeTxn(() async {
-      await db.medicines.put(med!);
-      await db.medicineHistorys.put(medHistory);
-    });
+      await db.writeTxn(() async {
+        await db.medicines.put(med!);
+        await db.medicineHistorys.put(medHistory);
+      });
+    }
   }
 
   Future<List<Medicine>> getMedicines(String farmID) async {
@@ -85,7 +109,7 @@ class MedicineService {
         'pigNumber': pig != null ? pig.pigNumber : null,
         'status': med.status,
         'quantity': med.quantity,
-        'unit': med.unit
+        'dosage': med.dosage,
       });
     }
 

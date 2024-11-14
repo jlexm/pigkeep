@@ -44,7 +44,7 @@ class PigService {
   }
 
   Future<void> updatePigDetails(String uuid, String penUuid, bool sex,
-      DateTime dob, double? weightKG) async {
+      DateTime dob, String pigNumber, double? weightKG) async {
     // get pig
     Pig? pig = await db.pigs.filter().uuidEqualTo(uuid).findFirst();
 
@@ -53,6 +53,15 @@ class PigService {
     }
 
     // update data if not the same on db
+    if (pig.pigNumber != pigNumber) {
+      // check if pigNumber exists
+      Pig? existingPig =
+          await db.pigs.filter().pigNumberEqualTo(pigNumber).findFirst();
+      if (existingPig != null) {
+        throw 'Pig Number already exists';
+      }
+      pig.pigNumber = pigNumber;
+    }
     if (pig.sex != sex) {
       pig.sex = sex;
     }
@@ -191,5 +200,9 @@ class PigService {
       'priceSold': ledger?.priceSold,
       'transactionDate': ledger?.transactionDate,
     };
+  }
+
+  Future<Pig?> fetchPigByNumber(String pigNumber) async {
+    return db.pigs.filter().pigNumberEqualTo(pigNumber).findFirst();
   }
 }

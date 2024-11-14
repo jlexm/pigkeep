@@ -14,8 +14,8 @@ class MedicineHistory {
 
   @Index()
   late String medicineName;
-  // mg, mL
-  String? unit;
+  // mg, mL String? unit;
+  late String dosage;
   int quantity = 0;
   double cost = 0;
 

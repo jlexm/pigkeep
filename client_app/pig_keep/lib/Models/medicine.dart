@@ -14,7 +14,9 @@ class Medicine {
 
   @Index(unique: true)
   late String medicineName;
-  String? unit; // mg or mL
+  //String? unit; // mg or mL
+  late String dosage;
+  late String description;
   int quantity = 0;
   double avgCost = 0;
 

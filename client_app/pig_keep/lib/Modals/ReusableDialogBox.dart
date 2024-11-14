@@ -87,6 +87,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final String? hintText;
   final bool obscureText;
   final TextInputType keyboardType;
+  final TextInputAction textInputAction;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
   final void Function(String)? onChanged;
@@ -113,6 +114,7 @@ class RecyclableTextFormField extends StatelessWidget {
     this.hintText,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
+    this.textInputAction = TextInputAction.done,
     this.validator,
     this.onSaved,
     this.onChanged,
@@ -170,6 +172,7 @@ class RecyclableTextFormField extends StatelessWidget {
             readOnly: readOnly,
             obscureText: obscureText,
             keyboardType: keyboardType,
+            textInputAction: textInputAction,
             validator: validator,
             onSaved: onSaved,
             onChanged: onChanged,
