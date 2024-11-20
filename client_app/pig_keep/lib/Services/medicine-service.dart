@@ -3,7 +3,6 @@ import 'package:pig_keep/Models/medicine-history.dart';
 import 'package:pig_keep/Models/medicine.dart';
 import 'package:pig_keep/Models/pig.dart';
 import 'package:pig_keep/Services/database-service.dart';
-import 'package:pig_keep/Services/pig-helper.dart';
 import 'package:pig_keep/main.dart';
 
 class MedicineService {
@@ -27,6 +26,7 @@ class MedicineService {
     var med = await db.medicines
         .filter()
         .medicineNameEqualTo(medicineName)
+        .farmIDEqualTo(farmID)
         .findFirst();
     if (med == null) {
       if (status == 'consumed') {
@@ -91,6 +91,7 @@ class MedicineService {
         .filter()
         .farmIDEqualTo(farmID)
         .sortByCreatedAtDesc()
+        .limit(20)
         .findAll();
 
     List<Map<String, dynamic>> medHistories = [];

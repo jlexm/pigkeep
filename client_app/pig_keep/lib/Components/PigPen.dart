@@ -166,7 +166,6 @@ class _PigPenState extends State<PigPen> {
                                         keyboardType: TextInputType.phone,
                                         icon: Icons.numbers_rounded,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                       ),
                                       RecyclableTextFormField(
                                         readOnly: true,
@@ -186,7 +185,6 @@ class _PigPenState extends State<PigPen> {
                                         hintTextSize: 14.sp,
                                         icon: Icons.house_siding_rounded,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                       ),
                                       RecyclableTextFormField(
                                         controller: _penMaxNumberController,
@@ -196,7 +194,6 @@ class _PigPenState extends State<PigPen> {
                                         keyboardType: TextInputType.phone,
                                         icon: Icons.exposure,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                       ),
                                     ],
                                     onSave: () async {

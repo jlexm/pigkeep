@@ -1,34 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Models/pig-event.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
 
 class EventsHistory extends StatefulWidget {
   final VoidCallback onReturn;
+  final List<PigEvent> events;
 
-  const EventsHistory({super.key, required this.onReturn});
+  const EventsHistory(
+      {super.key, required this.onReturn, required this.events});
 
   @override
   State<EventsHistory> createState() => _EventsHistoryState();
 }
 
 class _EventsHistoryState extends State<EventsHistory> {
-  final List<Map<String, dynamic>> currentEvents = [
-    {
-      'date': 'July 28, 2024',
-      'time': '08:00 AM',
-      'id': '002', // Pig ID 002
-      'event': 'Vaccination',
-      'status': 'Done',
-    },
-    {
-      'date': 'July 28, 2024',
-      'time': '09:30 AM',
-      'id': '003',
-      'event': 'Farrow',
-      'status': 'Done',
-    },
-  ];
-
   void _onNotificationTap(String id, String event) {
     // Implement routing logic here
   }
@@ -36,7 +23,7 @@ class _EventsHistoryState extends State<EventsHistory> {
   @override
   Widget build(BuildContext context) {
     final double itemHeight = 80.h;
-    final double containerHeight = currentEvents.length * itemHeight;
+    final double containerHeight = widget.events.length * itemHeight;
 
     return Column(
       children: [
@@ -82,9 +69,10 @@ class _EventsHistoryState extends State<EventsHistory> {
           height: containerHeight,
           child: ListView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: currentEvents.length,
+            itemCount: widget.events.length,
             itemBuilder: (context, index) {
-              final event = currentEvents[index];
+              final event = widget.events[index];
+              String eventStatus = 'Done';
 
               return Padding(
                 padding: EdgeInsets.only(bottom: 21.h),
@@ -112,7 +100,7 @@ class _EventsHistoryState extends State<EventsHistory> {
                                   ),
                                 ),
                                 TextSpan(
-                                  text: event['id'],
+                                  text: event.pigNumber,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
@@ -123,7 +111,7 @@ class _EventsHistoryState extends State<EventsHistory> {
                             ),
                           ),
                           Text(
-                            event['event']!,
+                            event.eventType,
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
@@ -136,18 +124,18 @@ class _EventsHistoryState extends State<EventsHistory> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            event['date']!,
+                            PigHelper.formatDate(event.eventDate),
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Text(
-                            event['status']!,
+                            eventStatus,
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
-                              color: event['status'] == 'Done'
+                              color: eventStatus == 'Done'
                                   ? appPrimary
                                   : appTertiary,
                             ),

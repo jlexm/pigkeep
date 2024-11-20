@@ -74,7 +74,6 @@ class _CreatefarmState extends State<Createfarm> {
                               hintTextSize: 14.sp,
                               icon: Icons.house_siding_rounded,
                               textSize: 14.sp,
-                              height: 43.h,
                             ),
                             RecyclableTextFormField(
                               controller: farmAddressController,
@@ -83,7 +82,6 @@ class _CreatefarmState extends State<Createfarm> {
                               hintTextSize: 14.sp,
                               icon: Icons.location_on,
                               textSize: 14.sp,
-                              height: 43.h,
                             ),
                           ],
                           onSave: () {

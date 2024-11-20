@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'medicine.dart';
+part of 'feed-history.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,17 +9,17 @@ part of 'medicine.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetMedicineCollection on Isar {
-  IsarCollection<Medicine> get medicines => this.collection();
+extension GetFeedHistoryCollection on Isar {
+  IsarCollection<FeedHistory> get feedHistorys => this.collection();
 }
 
-const MedicineSchema = CollectionSchema(
-  name: r'Medicine',
-  id: 284787057740778982,
+const FeedHistorySchema = CollectionSchema(
+  name: r'FeedHistory',
+  id: 6498308678078589878,
   properties: {
-    r'avgCost': PropertySchema(
+    r'cost': PropertySchema(
       id: 0,
-      name: r'avgCost',
+      name: r'cost',
       type: IsarType.double,
     ),
     r'createdAt': PropertySchema(
@@ -27,46 +27,41 @@ const MedicineSchema = CollectionSchema(
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'description': PropertySchema(
-      id: 2,
-      name: r'description',
-      type: IsarType.string,
-    ),
-    r'dosage': PropertySchema(
-      id: 3,
-      name: r'dosage',
-      type: IsarType.string,
-    ),
     r'farmID': PropertySchema(
-      id: 4,
+      id: 2,
       name: r'farmID',
       type: IsarType.string,
     ),
-    r'medicineName': PropertySchema(
-      id: 5,
-      name: r'medicineName',
+    r'feedType': PropertySchema(
+      id: 3,
+      name: r'feedType',
       type: IsarType.string,
     ),
-    r'quantity': PropertySchema(
-      id: 6,
-      name: r'quantity',
-      type: IsarType.long,
+    r'status': PropertySchema(
+      id: 4,
+      name: r'status',
+      type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-      id: 7,
+      id: 5,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'uuid': PropertySchema(
-      id: 8,
+      id: 6,
       name: r'uuid',
       type: IsarType.string,
+    ),
+    r'weightKG': PropertySchema(
+      id: 7,
+      name: r'weightKG',
+      type: IsarType.double,
     )
   },
-  estimateSize: _medicineEstimateSize,
-  serialize: _medicineSerialize,
-  deserialize: _medicineDeserialize,
-  deserializeProp: _medicineDeserializeProp,
+  estimateSize: _feedHistoryEstimateSize,
+  serialize: _feedHistorySerialize,
+  deserialize: _feedHistoryDeserialize,
+  deserializeProp: _feedHistoryDeserializeProp,
   idName: r'isarID',
   indexes: {
     r'uuid': IndexSchema(
@@ -82,14 +77,14 @@ const MedicineSchema = CollectionSchema(
         )
       ],
     ),
-    r'medicineName': IndexSchema(
-      id: 819219057635901769,
-      name: r'medicineName',
+    r'feedType': IndexSchema(
+      id: 8613721165025455693,
+      name: r'feedType',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'medicineName',
+          name: r'feedType',
           type: IndexType.hash,
           caseSensitive: true,
         )
@@ -111,64 +106,61 @@ const MedicineSchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {},
-  getId: _medicineGetId,
-  getLinks: _medicineGetLinks,
-  attach: _medicineAttach,
+  getId: _feedHistoryGetId,
+  getLinks: _feedHistoryGetLinks,
+  attach: _feedHistoryAttach,
   version: '3.1.0+1',
 );
 
-int _medicineEstimateSize(
-  Medicine object,
+int _feedHistoryEstimateSize(
+  FeedHistory object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.description.length * 3;
-  bytesCount += 3 + object.dosage.length * 3;
   bytesCount += 3 + object.farmID.length * 3;
-  bytesCount += 3 + object.medicineName.length * 3;
+  bytesCount += 3 + object.feedType.length * 3;
+  bytesCount += 3 + object.status.length * 3;
   bytesCount += 3 + object.uuid.length * 3;
   return bytesCount;
 }
 
-void _medicineSerialize(
-  Medicine object,
+void _feedHistorySerialize(
+  FeedHistory object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.avgCost);
+  writer.writeDouble(offsets[0], object.cost);
   writer.writeDateTime(offsets[1], object.createdAt);
-  writer.writeString(offsets[2], object.description);
-  writer.writeString(offsets[3], object.dosage);
-  writer.writeString(offsets[4], object.farmID);
-  writer.writeString(offsets[5], object.medicineName);
-  writer.writeLong(offsets[6], object.quantity);
-  writer.writeDateTime(offsets[7], object.updatedAt);
-  writer.writeString(offsets[8], object.uuid);
+  writer.writeString(offsets[2], object.farmID);
+  writer.writeString(offsets[3], object.feedType);
+  writer.writeString(offsets[4], object.status);
+  writer.writeDateTime(offsets[5], object.updatedAt);
+  writer.writeString(offsets[6], object.uuid);
+  writer.writeDouble(offsets[7], object.weightKG);
 }
 
-Medicine _medicineDeserialize(
+FeedHistory _feedHistoryDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Medicine();
-  object.avgCost = reader.readDouble(offsets[0]);
+  final object = FeedHistory();
+  object.cost = reader.readDouble(offsets[0]);
   object.createdAt = reader.readDateTime(offsets[1]);
-  object.description = reader.readString(offsets[2]);
-  object.dosage = reader.readString(offsets[3]);
-  object.farmID = reader.readString(offsets[4]);
+  object.farmID = reader.readString(offsets[2]);
+  object.feedType = reader.readString(offsets[3]);
   object.isarID = id;
-  object.medicineName = reader.readString(offsets[5]);
-  object.quantity = reader.readLong(offsets[6]);
-  object.updatedAt = reader.readDateTime(offsets[7]);
-  object.uuid = reader.readString(offsets[8]);
+  object.status = reader.readString(offsets[4]);
+  object.updatedAt = reader.readDateTime(offsets[5]);
+  object.uuid = reader.readString(offsets[6]);
+  object.weightKG = reader.readDouble(offsets[7]);
   return object;
 }
 
-P _medicineDeserializeProp<P>(
+P _feedHistoryDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -186,40 +178,42 @@ P _medicineDeserializeProp<P>(
     case 4:
       return (reader.readString(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
-    case 6:
-      return (reader.readLong(offset)) as P;
-    case 7:
       return (reader.readDateTime(offset)) as P;
-    case 8:
+    case 6:
       return (reader.readString(offset)) as P;
+    case 7:
+      return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-Id _medicineGetId(Medicine object) {
+Id _feedHistoryGetId(FeedHistory object) {
   return object.isarID;
 }
 
-List<IsarLinkBase<dynamic>> _medicineGetLinks(Medicine object) {
+List<IsarLinkBase<dynamic>> _feedHistoryGetLinks(FeedHistory object) {
   return [];
 }
 
-void _medicineAttach(IsarCollection<dynamic> col, Id id, Medicine object) {
+void _feedHistoryAttach(
+    IsarCollection<dynamic> col, Id id, FeedHistory object) {
   object.isarID = id;
 }
 
-extension MedicineQueryWhereSort on QueryBuilder<Medicine, Medicine, QWhere> {
-  QueryBuilder<Medicine, Medicine, QAfterWhere> anyIsarID() {
+extension FeedHistoryQueryWhereSort
+    on QueryBuilder<FeedHistory, FeedHistory, QWhere> {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhere> anyIsarID() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDEqualTo(Id isarID) {
+extension FeedHistoryQueryWhere
+    on QueryBuilder<FeedHistory, FeedHistory, QWhereClause> {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> isarIDEqualTo(
+      Id isarID) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: isarID,
@@ -228,7 +222,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDNotEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> isarIDNotEqualTo(
       Id isarID) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -251,7 +245,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> isarIDGreaterThan(
       Id isarID,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
@@ -261,7 +255,8 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDLessThan(Id isarID,
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> isarIDLessThan(
+      Id isarID,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -270,7 +265,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> isarIDBetween(
     Id lowerIsarID,
     Id upperIsarID, {
     bool includeLower = true,
@@ -286,7 +281,8 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> uuidEqualTo(String uuid) {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> uuidEqualTo(
+      String uuid) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'uuid',
@@ -295,7 +291,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> uuidNotEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> uuidNotEqualTo(
       String uuid) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -330,52 +326,52 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> medicineNameEqualTo(
-      String medicineName) {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> feedTypeEqualTo(
+      String feedType) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'medicineName',
-        value: [medicineName],
+        indexName: r'feedType',
+        value: [feedType],
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> medicineNameNotEqualTo(
-      String medicineName) {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> feedTypeNotEqualTo(
+      String feedType) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
+              indexName: r'feedType',
               lower: [],
-              upper: [medicineName],
+              upper: [feedType],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
-              lower: [medicineName],
+              indexName: r'feedType',
+              lower: [feedType],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
-              lower: [medicineName],
+              indexName: r'feedType',
+              lower: [feedType],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
+              indexName: r'feedType',
               lower: [],
-              upper: [medicineName],
+              upper: [feedType],
               includeUpper: false,
             ));
       }
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> farmIDEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> farmIDEqualTo(
       String farmID) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
@@ -385,7 +381,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> farmIDNotEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterWhereClause> farmIDNotEqualTo(
       String farmID) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -421,22 +417,22 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
   }
 }
 
-extension MedicineQueryFilter
-    on QueryBuilder<Medicine, Medicine, QFilterCondition> {
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostEqualTo(
+extension FeedHistoryQueryFilter
+    on QueryBuilder<FeedHistory, FeedHistory, QFilterCondition> {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> costEqualTo(
     double value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'avgCost',
+        property: r'cost',
         value: value,
         epsilon: epsilon,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> costGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -444,14 +440,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'avgCost',
+        property: r'cost',
         value: value,
         epsilon: epsilon,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostLessThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> costLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -459,14 +455,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'avgCost',
+        property: r'cost',
         value: value,
         epsilon: epsilon,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> costBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -475,7 +471,7 @@ extension MedicineQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'avgCost',
+        property: r'cost',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -485,8 +481,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtEqualTo(
-      DateTime value) {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'createdAt',
@@ -495,7 +491,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      createdAtGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -508,7 +505,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtLessThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      createdAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -521,7 +519,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -538,269 +537,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      descriptionGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'description',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'description',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'description',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      descriptionIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'description',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'dosage',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'dosage',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dosage',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'dosage',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> farmIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -813,7 +550,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      farmIDGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -828,7 +566,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDLessThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> farmIDLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -843,7 +581,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> farmIDBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -862,7 +600,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDStartsWith(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      farmIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -875,7 +614,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDEndsWith(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> farmIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -888,7 +627,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDContains(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> farmIDContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -900,7 +639,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDMatches(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> farmIDMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -912,7 +651,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDIsEmpty() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      farmIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'farmID',
@@ -921,7 +661,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDIsNotEmpty() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      farmIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'farmID',
@@ -930,7 +671,142 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> feedTypeEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'feedType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      feedTypeGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'feedType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      feedTypeLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'feedType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> feedTypeBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'feedType',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      feedTypeStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'feedType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      feedTypeEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'feedType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      feedTypeContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'feedType',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> feedTypeMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'feedType',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      feedTypeIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'feedType',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      feedTypeIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'feedType',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> isarIDEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -940,7 +816,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      isarIDGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -953,7 +830,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDLessThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> isarIDLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -966,7 +843,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> isarIDBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -983,21 +860,21 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> statusEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'medicineName',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      statusGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1005,14 +882,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'medicineName',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameLessThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> statusLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1020,14 +897,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'medicineName',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> statusBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1036,7 +913,7 @@ extension MedicineQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'medicineName',
+        property: r'status',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1046,132 +923,79 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameStartsWith(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      statusStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'medicineName',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameEndsWith(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> statusEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'medicineName',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameContains(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> statusContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'medicineName',
+        property: r'status',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameMatches(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> statusMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'medicineName',
+        property: r'status',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameIsEmpty() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      statusIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'medicineName',
+        property: r'status',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameIsNotEmpty() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      statusIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'medicineName',
+        property: r'status',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityEqualTo(
-      int value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'quantity',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'quantity',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityLessThan(
-    int value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'quantity',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityBetween(
-    int lower,
-    int upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'quantity',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtEqualTo(
-      DateTime value) {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      updatedAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'updatedAt',
@@ -1180,7 +1004,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      updatedAtGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -1193,7 +1018,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtLessThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      updatedAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -1206,7 +1032,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      updatedAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -1223,7 +1050,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidEqualTo(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1236,7 +1063,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidGreaterThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1251,7 +1078,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidLessThan(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1266,7 +1093,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidBetween(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1285,7 +1112,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidStartsWith(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1298,7 +1125,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidEndsWith(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1311,7 +1138,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidContains(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1323,7 +1150,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidMatches(
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1335,7 +1162,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidIsEmpty() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> uuidIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'uuid',
@@ -1344,7 +1171,8 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidIsNotEmpty() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      uuidIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'uuid',
@@ -1352,368 +1180,396 @@ extension MedicineQueryFilter
       ));
     });
   }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> weightKGEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'weightKG',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      weightKGGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'weightKG',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition>
+      weightKGLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'weightKG',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterFilterCondition> weightKGBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'weightKG',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
 }
 
-extension MedicineQueryObject
-    on QueryBuilder<Medicine, Medicine, QFilterCondition> {}
+extension FeedHistoryQueryObject
+    on QueryBuilder<FeedHistory, FeedHistory, QFilterCondition> {}
 
-extension MedicineQueryLinks
-    on QueryBuilder<Medicine, Medicine, QFilterCondition> {}
+extension FeedHistoryQueryLinks
+    on QueryBuilder<FeedHistory, FeedHistory, QFilterCondition> {}
 
-extension MedicineQuerySortBy on QueryBuilder<Medicine, Medicine, QSortBy> {
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByAvgCost() {
+extension FeedHistoryQuerySortBy
+    on QueryBuilder<FeedHistory, FeedHistory, QSortBy> {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByCost() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.asc);
+      return query.addSortBy(r'cost', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByAvgCostDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByCostDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.desc);
+      return query.addSortBy(r'cost', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByCreatedAt() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByCreatedAtDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDescription() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDescriptionDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDosage() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDosageDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByFarmID() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByFarmID() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByFarmIDDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByFarmIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByMedicineName() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByFeedType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.asc);
+      return query.addSortBy(r'feedType', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByMedicineNameDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByFeedTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.desc);
+      return query.addSortBy(r'feedType', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByQuantity() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByStatus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.asc);
+      return query.addSortBy(r'status', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByQuantityDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.desc);
+      return query.addSortBy(r'status', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUpdatedAt() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUpdatedAtDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUuid() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByUuid() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUuidDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByUuidDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByWeightKG() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weightKG', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> sortByWeightKGDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weightKG', Sort.desc);
+    });
+  }
 }
 
-extension MedicineQuerySortThenBy
-    on QueryBuilder<Medicine, Medicine, QSortThenBy> {
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByAvgCost() {
+extension FeedHistoryQuerySortThenBy
+    on QueryBuilder<FeedHistory, FeedHistory, QSortThenBy> {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByCost() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.asc);
+      return query.addSortBy(r'cost', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByAvgCostDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByCostDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.desc);
+      return query.addSortBy(r'cost', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByCreatedAt() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByCreatedAtDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDescription() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDescriptionDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDosage() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDosageDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByFarmID() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByFarmID() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByFarmIDDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByFarmIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByIsarID() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByFeedType() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'feedType', Sort.asc);
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByFeedTypeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'feedType', Sort.desc);
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByIsarID() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarID', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByIsarIDDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByIsarIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarID', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByMedicineName() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByStatus() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.asc);
+      return query.addSortBy(r'status', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByMedicineNameDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.desc);
+      return query.addSortBy(r'status', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByQuantity() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByQuantityDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUpdatedAt() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUpdatedAtDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUuid() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByUuid() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUuidDesc() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByUuidDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
-}
 
-extension MedicineQueryWhereDistinct
-    on QueryBuilder<Medicine, Medicine, QDistinct> {
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByAvgCost() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByWeightKG() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'avgCost');
+      return query.addSortBy(r'weightKG', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByCreatedAt() {
+  QueryBuilder<FeedHistory, FeedHistory, QAfterSortBy> thenByWeightKGDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'weightKG', Sort.desc);
+    });
+  }
+}
+
+extension FeedHistoryQueryWhereDistinct
+    on QueryBuilder<FeedHistory, FeedHistory, QDistinct> {
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByCost() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'cost');
+    });
+  }
+
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByDescription(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByDosage(
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'dosage', caseSensitive: caseSensitive);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByFarmID(
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByFarmID(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'farmID', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByMedicineName(
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByFeedType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'medicineName', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'feedType', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByQuantity() {
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByStatus(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'quantity');
+      return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByUpdatedAt() {
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'updatedAt');
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByUuid(
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByUuid(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<FeedHistory, FeedHistory, QDistinct> distinctByWeightKG() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'weightKG');
+    });
+  }
 }
 
-extension MedicineQueryProperty
-    on QueryBuilder<Medicine, Medicine, QQueryProperty> {
-  QueryBuilder<Medicine, int, QQueryOperations> isarIDProperty() {
+extension FeedHistoryQueryProperty
+    on QueryBuilder<FeedHistory, FeedHistory, QQueryProperty> {
+  QueryBuilder<FeedHistory, int, QQueryOperations> isarIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarID');
     });
   }
 
-  QueryBuilder<Medicine, double, QQueryOperations> avgCostProperty() {
+  QueryBuilder<FeedHistory, double, QQueryOperations> costProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'avgCost');
+      return query.addPropertyName(r'cost');
     });
   }
 
-  QueryBuilder<Medicine, DateTime, QQueryOperations> createdAtProperty() {
+  QueryBuilder<FeedHistory, DateTime, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> descriptionProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'description');
-    });
-  }
-
-  QueryBuilder<Medicine, String, QQueryOperations> dosageProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'dosage');
-    });
-  }
-
-  QueryBuilder<Medicine, String, QQueryOperations> farmIDProperty() {
+  QueryBuilder<FeedHistory, String, QQueryOperations> farmIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'farmID');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> medicineNameProperty() {
+  QueryBuilder<FeedHistory, String, QQueryOperations> feedTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'medicineName');
+      return query.addPropertyName(r'feedType');
     });
   }
 
-  QueryBuilder<Medicine, int, QQueryOperations> quantityProperty() {
+  QueryBuilder<FeedHistory, String, QQueryOperations> statusProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'quantity');
+      return query.addPropertyName(r'status');
     });
   }
 
-  QueryBuilder<Medicine, DateTime, QQueryOperations> updatedAtProperty() {
+  QueryBuilder<FeedHistory, DateTime, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> uuidProperty() {
+  QueryBuilder<FeedHistory, String, QQueryOperations> uuidProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'uuid');
+    });
+  }
+
+  QueryBuilder<FeedHistory, double, QQueryOperations> weightKGProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'weightKG');
     });
   }
 }

@@ -74,7 +74,8 @@ class _CaretakersListState extends State<CaretakersList> {
                   builder: (BuildContext context) {
                     return ReusableDialogBox(
                       title: 'Add Caretaker',
-                      description: 'Fill up the form to add a caretaker to your farm.',
+                      description:
+                          'Fill up the form to add a caretaker to your farm.',
                       formFields: [
                         RecyclableTextFormField(
                           controller: TextEditingController(),
@@ -83,7 +84,6 @@ class _CaretakersListState extends State<CaretakersList> {
                           hintTextSize: 14.sp,
                           icon: Icons.email,
                           textSize: 14.sp,
-                          height: 43.h,
                         ),
                         RecyclableTextFormField(
                           controller: TextEditingController(),
@@ -92,7 +92,6 @@ class _CaretakersListState extends State<CaretakersList> {
                           hintTextSize: 14.sp,
                           icon: Icons.email,
                           textSize: 14.sp,
-                          height: 43.h,
                         ),
                         RecyclableTextFormField(
                           controller: TextEditingController(),
@@ -101,7 +100,6 @@ class _CaretakersListState extends State<CaretakersList> {
                           hintTextSize: 14.sp,
                           icon: Icons.email,
                           textSize: 14.sp,
-                          height: 43.h,
                         ),
                         RecyclableTextFormField(
                           controller: TextEditingController(),
@@ -110,7 +108,6 @@ class _CaretakersListState extends State<CaretakersList> {
                           hintTextSize: 14.sp,
                           icon: Icons.email,
                           textSize: 14.sp,
-                          height: 43.h,
                         ),
                         RecyclableTextFormField(
                           controller: TextEditingController(),
@@ -119,7 +116,6 @@ class _CaretakersListState extends State<CaretakersList> {
                           hintTextSize: 14.sp,
                           icon: Icons.email,
                           textSize: 14.sp,
-                          height: 43.h,
                         ),
                       ],
                       onSave: () {

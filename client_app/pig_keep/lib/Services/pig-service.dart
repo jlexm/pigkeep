@@ -145,11 +145,15 @@ class PigService {
           'dob': penPig.dob,
           'status': penPig.status,
           'currentFeed': pigStage['feed'],
-          'ageCategory': pigStage['stage']
+          'ageCategory': pigStage['stage'],
+          'createdAt': penPig.createdAt
         };
         pigs.add(newPig);
       });
     }));
+
+    // sort desc
+    pigs.sort((a, b) => b['createdAt'].compareTo(a['createdAt']));
 
     return pigs;
   }

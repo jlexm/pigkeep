@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Classes/DropDownItem.dart';
 import 'package:pig_keep/Components/Current_Events.dart';
 import 'package:pig_keep/Components/EventsHistory.dart';
@@ -7,8 +9,17 @@ import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/SearchBar_Events.dart';
 import 'package:pig_keep/Components/UpcomingEvents.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
-import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Models/pig-event.dart';
+import 'package:pig_keep/Models/pig-pen.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/pig-event-service.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
+import 'package:pig_keep/Services/pig-pen-service.dart';
+import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Events extends StatefulWidget {
@@ -19,27 +30,105 @@ class Events extends StatefulWidget {
 }
 
 class _EventsState extends State<Events> {
-  DateTime today = DateTime.now();
+  // services
+  final pigEventService = globalLocator.get<PigEventService>();
+  final pigService = globalLocator.get<PigService>();
+  final penService = globalLocator.get<PigPenService>();
+
+  final TextEditingController _eventDateController = TextEditingController();
+  final TextEditingController _pigUuidController = TextEditingController();
+  final TextEditingController _eventTypeController = TextEditingController();
+
+  DateTime focusedDay = DateTime.now();
+  DateTime? selectedDay;
   bool showUpcomingEvents = false;
   bool showEventsHistory = false;
 
-  final TextEditingController _eventDate = TextEditingController();
+  var selectedFarm;
+  late String userOwner;
+  List<Map<String, dynamic>> pigs = [];
+  List<PigPen> pigPens = [];
+  List<PigEvent> selectedMonthEvents = [];
+  List<PigEvent> currentWIPEvents = [];
+  List<PigEvent> upcomingEvents = [];
+  List<PigEvent> eventHistory = [];
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
-      today = day;
+      selectedDay = day == selectedDay ? null : day;
+      //focusedDay = focusedDay;
     });
   }
 
   void _toggleView() {
+    if (!showUpcomingEvents) {
+      getUpcomingEvents();
+    }
     setState(() {
       showUpcomingEvents = !showUpcomingEvents;
     });
   }
 
+  Future<void> markEventDone(String eventUuid) async {
+    await pigEventService.markEventAsCompleted(eventUuid);
+    getSelectedMonthEvents();
+    getWIPEvents();
+    getUpcomingEvents();
+    getEventHistory();
+  }
+
+  Future<void> updateEvent(String eventUuid, DateTime eventDate, String pigUuid,
+      String eventType) async {
+    await pigEventService.updateEvent(eventUuid, eventDate, pigUuid, eventType);
+    getSelectedMonthEvents();
+    getWIPEvents();
+    getUpcomingEvents();
+    getEventHistory();
+  }
+
   void _toggleHistoryView() {
     setState(() {
       showEventsHistory = !showEventsHistory;
+    });
+  }
+
+  Future<void> getPigs() async {
+    // fetch all pens first
+    List<PigPen> pens =
+        await penService.fetchPigPens(selectedFarm['_id'], userOwner);
+    final fetchPigs = await pigService.fetchAllPigsInAllPens(pens);
+    setState(() {
+      pigs = fetchPigs;
+      pigPens = pens;
+    });
+  }
+
+  Future<void> getSelectedMonthEvents() async {
+    final events = await pigEventService.getMonthlyEvents(
+        selectedFarm['_id'], focusedDay.month, focusedDay.year);
+    setState(() {
+      selectedMonthEvents = events;
+    });
+  }
+
+  Future<void> getWIPEvents() async {
+    final events = await pigEventService.getWIPEvents(selectedFarm['_id']);
+    setState(() {
+      currentWIPEvents = events;
+    });
+  }
+
+  Future<void> getUpcomingEvents() async {
+    final events = await pigEventService.getUpcomingEvents(selectedFarm['_id']);
+    setState(() {
+      upcomingEvents = events;
+    });
+  }
+
+  Future<void> getEventHistory() async {
+    final events = await pigEventService.getEventHistory(selectedFarm['_id']);
+    setState(() {
+      eventHistory = events;
     });
   }
 
@@ -51,9 +140,48 @@ class _EventsState extends State<Events> {
         lastDate: DateTime(2100));
     if (_picked != null) {
       setState(() {
-        _eventDate.text = _picked.toString().split(" ")[0];
+        _eventDateController.text = _picked.toString().split(" ")[0];
       });
     }
+  }
+
+  List<PigEvent> _getEventsForDay(DateTime day) {
+    const statusOrder = {
+      'In Progress': 0,
+      'Pending': 1,
+      'Completed': 2,
+    };
+    return selectedMonthEvents
+        .where((event) => PigHelper.isSameDay(event.eventDate, day))
+        .toList()
+      ..sort(
+          (a, b) => statusOrder[a.status]!.compareTo(statusOrder[b.status]!));
+  }
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
+      userOwner = user['username'];
+      getPigs();
+      getSelectedMonthEvents();
+      getWIPEvents();
+      getEventHistory();
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+    getPigs();
+    getSelectedMonthEvents();
+    getWIPEvents();
+    getEventHistory();
+    super.didChangeDependencies();
   }
 
   @override
@@ -118,7 +246,7 @@ class _EventsState extends State<Events> {
                                     Row(
                                       children: [
                                         Text(
-                                          'June, 2024',
+                                          PigHelper.getCurrentMonthYear(),
                                           style: TextStyle(
                                             color: appSecondary,
                                             fontSize: 12.sp,
@@ -170,7 +298,8 @@ class _EventsState extends State<Events> {
                                                     'Fill up the form to set an event for your pig farm.',
                                                 formFields: [
                                                   RecyclableTextFormField(
-                                                    controller: _eventDate,
+                                                    controller:
+                                                        _eventDateController,
                                                     keyboardType:
                                                         TextInputType.datetime,
                                                     labelText: 'Set Event',
@@ -178,7 +307,6 @@ class _EventsState extends State<Events> {
                                                     hintTextSize: 14.sp,
                                                     icon: Icons.calendar_month,
                                                     textSize: 14.sp,
-                                                    height: 43.h,
                                                     onTap: () {
                                                       _selectDate();
                                                     },
@@ -186,35 +314,74 @@ class _EventsState extends State<Events> {
                                                   ),
                                                   RecyclableTextFormField(
                                                     controller:
-                                                        TextEditingController(),
+                                                        _pigUuidController,
                                                     labelText: 'Pig Number',
                                                     hintText: 'Pig Number',
+                                                    showDropdown: true,
+                                                    dropdownItems: pigs
+                                                        .where((pig) =>
+                                                            pig['status'] ==
+                                                            'alive')
+                                                        .map((pig) =>
+                                                            CustomDropDownItem(
+                                                                pig['uuid'],
+                                                                'Pig: ${pig['pigNumber']} | Pen: ${pig['penNumber']}'))
+                                                        .toList(),
                                                     hintTextSize: 14.sp,
                                                     icon: Icons.savings,
                                                     textSize: 14.sp,
-                                                    height: 43.h,
                                                   ),
                                                   RecyclableTextFormField(
                                                     controller:
-                                                        TextEditingController(),
+                                                        _eventTypeController,
                                                     labelText: 'Event',
                                                     showDropdown: true,
                                                     dropdownItems: [
                                                       CustomDropDownItem(
-                                                          'Event 1', 'Event 1')
+                                                          'Vaccination',
+                                                          'Vaccination'),
+                                                      CustomDropDownItem(
+                                                          'Farrowing',
+                                                          'Farrowing'),
+                                                      CustomDropDownItem(
+                                                          'Artificial Insemination',
+                                                          'Artificial Insemination'),
                                                     ],
                                                     hintText: 'Event',
                                                     hintTextSize: 14.sp,
                                                     icon: Icons.event_note,
                                                     textSize: 14.sp,
-                                                    height: 43.h,
                                                     readOnly: true,
                                                   ),
                                                 ],
-                                                onSave: () {
-                                                  // Handle the save action, e.g., validate and save data
-                                                  print('Form saved');
-                                                  Navigator.of(context).pop();
+                                                onSave: () async {
+                                                  try {
+                                                    await pigEventService
+                                                        .addNewEvent(
+                                                            selectedFarm['_id'],
+                                                            DateTime.parse(
+                                                                _eventDateController
+                                                                    .text),
+                                                            _pigUuidController
+                                                                .text,
+                                                            _eventTypeController
+                                                                .text,
+                                                            'Pending');
+
+                                                    context.pop();
+                                                    getSelectedMonthEvents();
+                                                    getWIPEvents();
+                                                    getUpcomingEvents();
+                                                    _pigUuidController.clear();
+                                                    _eventDateController
+                                                        .clear();
+                                                    _eventTypeController
+                                                        .clear();
+                                                  } catch (err) {
+                                                    ToastService()
+                                                        .showErrorToast(
+                                                            err.toString());
+                                                  }
                                                 },
                                                 saveButtonText: 'Set',
                                                 saveButtonColor: appPrimary,
@@ -253,12 +420,15 @@ class _EventsState extends State<Events> {
                     ),
                     if (showUpcomingEvents)
                       UpcomingEvents(
-                        onReturn: _toggleView, // Pass the toggle function
+                        onReturn: _toggleView,
+                        events: upcomingEvents, // Pass the toggle function
+                        pigs: pigs,
+                        updatePigEvent: updateEvent,
                       )
                     else if (showEventsHistory)
                       EventsHistory(
-                        onReturn:
-                            _toggleHistoryView, // Pass the toggle function
+                        onReturn: _toggleHistoryView,
+                        events: eventHistory, // Pass the toggle function
                       )
                     else
                       Container(
@@ -321,11 +491,11 @@ class _EventsState extends State<Events> {
                                 daysOfWeekHeight: 30.h,
                                 availableGestures: AvailableGestures.all,
                                 selectedDayPredicate: (day) =>
-                                    isSameDay(day, today),
+                                    isSameDay(day, selectedDay),
                                 firstDay: DateTime.utc(2010, 10, 16),
                                 lastDay: DateTime.utc(2040, 10, 16),
                                 onDaySelected: _onDaySelected,
-                                focusedDay: today,
+                                focusedDay: focusedDay,
                                 startingDayOfWeek: StartingDayOfWeek.sunday,
                                 calendarStyle: CalendarStyle(
                                   selectedDecoration: BoxDecoration(
@@ -340,10 +510,95 @@ class _EventsState extends State<Events> {
                                   selectedTextStyle:
                                       TextStyle(color: appSecondary),
                                 ),
+                                onPageChanged: (focDay) {
+                                  setState(() {
+                                    selectedDay = null;
+                                    focusedDay = focDay;
+                                  });
+                                  getSelectedMonthEvents();
+                                },
+                                eventLoader: (day) {
+                                  return _getEventsForDay(day);
+                                },
+                                calendarBuilders: CalendarBuilders(
+                                  markerBuilder: (context, day, events) {
+                                    // Display the number of events for each day
+                                    if (events.isNotEmpty) {
+                                      int totalLength = events.length;
+                                      int totalNotDone = events
+                                          .where((e) =>
+                                              e is PigEvent &&
+                                              e.status != 'Completed')
+                                          .toList()
+                                          .length;
+                                      bool isAllDone = totalNotDone == 0;
+                                      int markerEventCount = !isAllDone
+                                          ? totalNotDone
+                                          : totalLength;
+                                      return Positioned(
+                                        top: 1,
+                                        right: 3,
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 6, vertical: 2),
+                                          decoration: BoxDecoration(
+                                            color: isAllDone
+                                                ? Colors.blue
+                                                : Colors
+                                                    .red, // Background color for the event number
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Text(
+                                            '$markerEventCount',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return SizedBox
+                                        .shrink(); // If no events, return an empty widget
+                                  },
+                                ),
                               ),
                             ),
                             SizedBox(
                               height: 17.h,
+                            ),
+                            if (selectedDay != null &&
+                                _getEventsForDay(selectedDay!).isNotEmpty) ...[
+                              // Check if events exist
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    width: 20.w,
+                                  ),
+                                  Text(
+                                    "${PigHelper.formatToWeekDay(selectedDay!)}'s Events",
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: appTertiary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 15.h,
+                              ),
+                              CurrentEvents(
+                                events: selectedMonthEvents
+                                    .where((event) =>
+                                        isSameDay(event.eventDate, selectedDay))
+                                    .toList(),
+                                markAsDone: markEventDone,
+                              ),
+                            ],
+                            SizedBox(
+                              height: 20.h,
                             ),
                             Row(
                               children: [
@@ -380,9 +635,13 @@ class _EventsState extends State<Events> {
                             if (showUpcomingEvents)
                               UpcomingEvents(
                                 onReturn: _toggleView,
+                                events: upcomingEvents,
                               )
                             else
-                              const CurrentEvents(),
+                              CurrentEvents(
+                                events: currentWIPEvents,
+                                markAsDone: markEventDone,
+                              ),
                           ],
                         ),
                       ),

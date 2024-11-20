@@ -8,8 +8,10 @@ import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Carousel_PigCount.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Models/pig-event.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Screens/Records.dart';
+import 'package:pig_keep/Services/pig-event-service.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
 import 'package:pig_keep/main.dart';
@@ -32,6 +34,7 @@ class _HomeState extends State<Home> {
   // services
   final penService = globalLocator.get<PigPenService>();
   final pigService = globalLocator.get<PigService>();
+  final pigEventService = globalLocator.get<PigEventService>();
 
   // pigs variables
   var selectedFarm;
@@ -43,6 +46,8 @@ class _HomeState extends State<Home> {
   int totalSow = 0;
   int totalBoar = 0;
   int totalMatured = 0;
+
+  List<PigEvent> eventNotifications = [];
 
   // functions
   Future<void> getPigs() async {
@@ -84,7 +89,6 @@ class _HomeState extends State<Home> {
           break;
       }
     });
-    print(ctotalPigs);
     setState(() {
       totalPigs = ctotalPigs;
       totalWeaner = ctotalWeaner;
@@ -93,6 +97,14 @@ class _HomeState extends State<Home> {
       totalSow = ctotalSow;
       totalBoar = ctotalBoar;
       totalMatured = ctotalMatured;
+    });
+  }
+
+  Future<void> getPigEventNotifications() async {
+    final pEvents =
+        await pigEventService.getEventNotification(selectedFarm['_id']);
+    setState(() {
+      eventNotifications = pEvents;
     });
   }
 
@@ -118,6 +130,7 @@ class _HomeState extends State<Home> {
       selectedFarm = farm;
     });
     getPigs();
+    getPigEventNotifications();
     super.didChangeDependencies();
   }
 
@@ -313,7 +326,9 @@ class _HomeState extends State<Home> {
                     SizedBox(
                       width: 20.w,
                     ),
-                    const CurrentEvents(),
+                    CurrentEvents(
+                      events: eventNotifications,
+                    ),
                   ],
                 ),
               ),

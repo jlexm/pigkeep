@@ -1,10 +1,10 @@
 import 'package:isar/isar.dart';
 import 'package:uuid/uuid.dart';
 
-part 'medicine.g.dart';
+part 'feed-history.g.dart';
 
 @Collection()
-class Medicine {
+class FeedHistory {
   Id isarID = Isar.autoIncrement;
 
   @Index()
@@ -13,12 +13,12 @@ class Medicine {
   late String? _id; // mongodb ID
 
   @Index()
-  late String medicineName;
-  //String? unit; // mg or mL
-  late String dosage;
-  late String description;
-  int quantity = 0;
-  double avgCost = 0;
+  late String feedType;
+  double weightKG = 0;
+  double cost = 0;
+
+  // consumed or stock
+  String status = 'stock';
 
   @Index()
   late String farmID;

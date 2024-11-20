@@ -86,7 +86,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             hintText: 'Enter your Old Password',
                             icon: Icons.lock,
                             textSize: 14.sp,
-                            height: 43.h,
+
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Old Password';
@@ -105,7 +105,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             hintText: 'Enter your New Password',
                             icon: Icons.lock,
                             textSize: 14.sp,
-                            height: 43.h,
+
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your New Password';
@@ -124,7 +124,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             hintText: 'Confirm Password',
                             icon: Icons.lock,
                             textSize: 14.sp,
-                            height: 43.h,
+
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter confirm your Password';

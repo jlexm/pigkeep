@@ -87,7 +87,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             hintText: 'Enter your Email',
                             icon: Icons.mail,
                             textSize: 14.sp,
-                            height: 43.h,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Email';
@@ -106,7 +105,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             icon: Icons.mail,
                             //iconSize: 20,
                             textSize: 14.sp,
-                            height: 43.h,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Username';
@@ -124,7 +122,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             hintText: 'Enter your First Name',
                             icon: Icons.mail,
                             textSize: 14.sp,
-                            height: 43.h,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your First Name';
@@ -142,7 +139,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             hintText: 'Enter your Last Name',
                             icon: Icons.mail,
                             textSize: 14.sp,
-                            height: 43.h,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Last Name';
@@ -161,7 +157,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             icon: Icons.home,
                             iconSize: 30.0,
                             textSize: 14.sp,
-                            height: 43.h,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Address';
@@ -179,7 +174,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             hintText: 'Enter your Phone Number',
                             icon: Icons.phone_outlined,
                             textSize: 14.sp,
-                            height: 43.h,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Phone Number';

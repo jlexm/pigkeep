@@ -78,6 +78,10 @@ class PigHelper {
 
     if (DateFormat('yMd').format(date) == DateFormat('yMd').format(now)) {
       return 'Today';
+    } else if (date.year == now.year &&
+        date.month == now.month &&
+        date.day == now.day + 1) {
+      return 'Tomorrow';
     } else {
       return formatter.format(date);
     }
@@ -85,5 +89,33 @@ class PigHelper {
 
   static String formatToHour(DateTime date) {
     return DateFormat('h:mm a').format(date);
+  }
+
+  static String formatToWeekDay(DateTime date) {
+    int day = date.day;
+    // Determine the suffix based on the day
+    String suffix = 'th';
+    if (day == 1 || day == 21 || day == 31) {
+      suffix = 'st';
+    } else if (day == 2 || day == 22) {
+      suffix = 'nd';
+    } else if (day == 3 || day == 23) {
+      suffix = 'rd';
+    }
+    return '${day}${suffix} | ${DateFormat('EEEE').format(date)}';
+  }
+
+  static String getCurrentMonthYear() {
+    return DateFormat('MMMM, yyyy').format(DateTime.now());
+  }
+
+  static DateTime setToMidnight(DateTime date) {
+    return DateTime(date.year, date.month, date.day, 0, 0, 0, 0, 0);
+  }
+
+  static bool isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 }

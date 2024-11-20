@@ -14,6 +14,7 @@ import 'package:pig_keep/Services/ledger.service.dart';
 import 'package:pig_keep/Services/pig-helper.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
 
@@ -32,6 +33,8 @@ class _LedgerState extends State<Ledger> {
 
   // controllers
   final TextEditingController _pigNumberController = TextEditingController();
+  final TextEditingController _weightKGController = TextEditingController();
+  final TextEditingController _costController = TextEditingController();
 
   // pig db
   final pigService = globalLocator.get<PigService>();
@@ -167,7 +170,7 @@ class _LedgerState extends State<Ledger> {
                                 Row(
                                   children: [
                                     Text(
-                                      'June, 2024',
+                                      'As of ${PigHelper.getCurrentMonthYear()}',
                                       style: TextStyle(
                                         color: appSecondary,
                                         fontSize: 12.sp,
@@ -243,7 +246,6 @@ class _LedgerState extends State<Ledger> {
                                                 hintTextSize: 14.sp,
                                                 icon: Icons.savings,
                                                 textSize: 14.sp,
-                                                height: 43.h,
                                                 readOnly: true,
                                               ),
                                               RecyclableTextFormField(
@@ -254,7 +256,6 @@ class _LedgerState extends State<Ledger> {
                                                 hintTextSize: 14.sp,
                                                 icon: Icons.scale,
                                                 textSize: 14.sp,
-                                                height: 43.h,
                                                 keyboardType:
                                                     TextInputType.phone,
                                               ),
@@ -266,15 +267,18 @@ class _LedgerState extends State<Ledger> {
                                                 hintTextSize: 14.sp,
                                                 icon: Icons.php,
                                                 textSize: 14.sp,
-                                                height: 43.h,
                                                 keyboardType:
                                                     TextInputType.phone,
                                               ),
                                             ],
-                                            onSave: () {
+                                            onSave: () async {
                                               // Handle the save action, e.g., validate and save data
-                                              print('Form saved');
-                                              Navigator.of(context).pop();
+                                              try {
+                                                Navigator.of(context).pop();
+                                              } catch (err) {
+                                                ToastService().showErrorToast(
+                                                    err.toString());
+                                              }
                                             },
                                             saveButtonText: 'Sell Pig',
                                             saveButtonColor: appPurple,
@@ -347,7 +351,6 @@ class _LedgerState extends State<Ledger> {
                                                 hintTextSize: 14.sp,
                                                 icon: Icons.savings,
                                                 textSize: 14.sp,
-                                                height: 43.h,
                                                 readOnly: true,
                                               ),
                                             ],

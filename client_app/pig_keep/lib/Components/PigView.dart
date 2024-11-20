@@ -248,7 +248,6 @@ class _QRCodeStatusState extends State<PigView> {
                               ],
                               onSave: () async {
                                 // Handle the save action, e.g., validate and save data
-                                print('Form saved');
                                 try {
                                   await ledgerService.ledgePig(
                                       'sold',
@@ -264,10 +263,10 @@ class _QRCodeStatusState extends State<PigView> {
                                               _pigWeightKGController.text)
                                           : 0);
                                   await getPigDetails();
+                                  Navigator.of(context).pop();
                                 } catch (err) {
                                   ToastService().showErrorToast(err.toString());
                                 }
-                                Navigator.of(context).pop();
                               },
                               saveButtonText: 'Sell Pig',
                               saveButtonColor: appPurple,

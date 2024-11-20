@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'medicine.dart';
+part of 'pig-event.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,48 +9,48 @@ part of 'medicine.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetMedicineCollection on Isar {
-  IsarCollection<Medicine> get medicines => this.collection();
+extension GetPigEventCollection on Isar {
+  IsarCollection<PigEvent> get pigEvents => this.collection();
 }
 
-const MedicineSchema = CollectionSchema(
-  name: r'Medicine',
-  id: 284787057740778982,
+const PigEventSchema = CollectionSchema(
+  name: r'PigEvent',
+  id: -7899174666049214205,
   properties: {
-    r'avgCost': PropertySchema(
-      id: 0,
-      name: r'avgCost',
-      type: IsarType.double,
-    ),
     r'createdAt': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'description': PropertySchema(
-      id: 2,
-      name: r'description',
-      type: IsarType.string,
+    r'eventDate': PropertySchema(
+      id: 1,
+      name: r'eventDate',
+      type: IsarType.dateTime,
     ),
-    r'dosage': PropertySchema(
-      id: 3,
-      name: r'dosage',
+    r'eventType': PropertySchema(
+      id: 2,
+      name: r'eventType',
       type: IsarType.string,
     ),
     r'farmID': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'farmID',
       type: IsarType.string,
     ),
-    r'medicineName': PropertySchema(
-      id: 5,
-      name: r'medicineName',
+    r'pigNumber': PropertySchema(
+      id: 4,
+      name: r'pigNumber',
       type: IsarType.string,
     ),
-    r'quantity': PropertySchema(
+    r'pigUuid': PropertySchema(
+      id: 5,
+      name: r'pigUuid',
+      type: IsarType.string,
+    ),
+    r'status': PropertySchema(
       id: 6,
-      name: r'quantity',
-      type: IsarType.long,
+      name: r'status',
+      type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
       id: 7,
@@ -63,10 +63,10 @@ const MedicineSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _medicineEstimateSize,
-  serialize: _medicineSerialize,
-  deserialize: _medicineDeserialize,
-  deserializeProp: _medicineDeserializeProp,
+  estimateSize: _pigEventEstimateSize,
+  serialize: _pigEventSerialize,
+  deserialize: _pigEventDeserialize,
+  deserializeProp: _pigEventDeserializeProp,
   idName: r'isarID',
   indexes: {
     r'uuid': IndexSchema(
@@ -77,19 +77,6 @@ const MedicineSchema = CollectionSchema(
       properties: [
         IndexPropertySchema(
           name: r'uuid',
-          type: IndexType.hash,
-          caseSensitive: true,
-        )
-      ],
-    ),
-    r'medicineName': IndexSchema(
-      id: 819219057635901769,
-      name: r'medicineName',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'medicineName',
           type: IndexType.hash,
           caseSensitive: true,
         )
@@ -111,64 +98,70 @@ const MedicineSchema = CollectionSchema(
   },
   links: {},
   embeddedSchemas: {},
-  getId: _medicineGetId,
-  getLinks: _medicineGetLinks,
-  attach: _medicineAttach,
+  getId: _pigEventGetId,
+  getLinks: _pigEventGetLinks,
+  attach: _pigEventAttach,
   version: '3.1.0+1',
 );
 
-int _medicineEstimateSize(
-  Medicine object,
+int _pigEventEstimateSize(
+  PigEvent object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
-  bytesCount += 3 + object.description.length * 3;
-  bytesCount += 3 + object.dosage.length * 3;
+  bytesCount += 3 + object.eventType.length * 3;
   bytesCount += 3 + object.farmID.length * 3;
-  bytesCount += 3 + object.medicineName.length * 3;
+  bytesCount += 3 + object.pigNumber.length * 3;
+  bytesCount += 3 + object.pigUuid.length * 3;
+  {
+    final value = object.status;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.uuid.length * 3;
   return bytesCount;
 }
 
-void _medicineSerialize(
-  Medicine object,
+void _pigEventSerialize(
+  PigEvent object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeDouble(offsets[0], object.avgCost);
-  writer.writeDateTime(offsets[1], object.createdAt);
-  writer.writeString(offsets[2], object.description);
-  writer.writeString(offsets[3], object.dosage);
-  writer.writeString(offsets[4], object.farmID);
-  writer.writeString(offsets[5], object.medicineName);
-  writer.writeLong(offsets[6], object.quantity);
+  writer.writeDateTime(offsets[0], object.createdAt);
+  writer.writeDateTime(offsets[1], object.eventDate);
+  writer.writeString(offsets[2], object.eventType);
+  writer.writeString(offsets[3], object.farmID);
+  writer.writeString(offsets[4], object.pigNumber);
+  writer.writeString(offsets[5], object.pigUuid);
+  writer.writeString(offsets[6], object.status);
   writer.writeDateTime(offsets[7], object.updatedAt);
   writer.writeString(offsets[8], object.uuid);
 }
 
-Medicine _medicineDeserialize(
+PigEvent _pigEventDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Medicine();
-  object.avgCost = reader.readDouble(offsets[0]);
-  object.createdAt = reader.readDateTime(offsets[1]);
-  object.description = reader.readString(offsets[2]);
-  object.dosage = reader.readString(offsets[3]);
-  object.farmID = reader.readString(offsets[4]);
+  final object = PigEvent();
+  object.createdAt = reader.readDateTime(offsets[0]);
+  object.eventDate = reader.readDateTime(offsets[1]);
+  object.eventType = reader.readString(offsets[2]);
+  object.farmID = reader.readString(offsets[3]);
   object.isarID = id;
-  object.medicineName = reader.readString(offsets[5]);
-  object.quantity = reader.readLong(offsets[6]);
+  object.pigNumber = reader.readString(offsets[4]);
+  object.pigUuid = reader.readString(offsets[5]);
+  object.status = reader.readStringOrNull(offsets[6]);
   object.updatedAt = reader.readDateTime(offsets[7]);
   object.uuid = reader.readString(offsets[8]);
   return object;
 }
 
-P _medicineDeserializeProp<P>(
+P _pigEventDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -176,7 +169,7 @@ P _medicineDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 1:
       return (reader.readDateTime(offset)) as P;
     case 2:
@@ -188,7 +181,7 @@ P _medicineDeserializeProp<P>(
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
-      return (reader.readLong(offset)) as P;
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
       return (reader.readDateTime(offset)) as P;
     case 8:
@@ -198,28 +191,28 @@ P _medicineDeserializeProp<P>(
   }
 }
 
-Id _medicineGetId(Medicine object) {
+Id _pigEventGetId(PigEvent object) {
   return object.isarID;
 }
 
-List<IsarLinkBase<dynamic>> _medicineGetLinks(Medicine object) {
+List<IsarLinkBase<dynamic>> _pigEventGetLinks(PigEvent object) {
   return [];
 }
 
-void _medicineAttach(IsarCollection<dynamic> col, Id id, Medicine object) {
+void _pigEventAttach(IsarCollection<dynamic> col, Id id, PigEvent object) {
   object.isarID = id;
 }
 
-extension MedicineQueryWhereSort on QueryBuilder<Medicine, Medicine, QWhere> {
-  QueryBuilder<Medicine, Medicine, QAfterWhere> anyIsarID() {
+extension PigEventQueryWhereSort on QueryBuilder<PigEvent, PigEvent, QWhere> {
+  QueryBuilder<PigEvent, PigEvent, QAfterWhere> anyIsarID() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDEqualTo(Id isarID) {
+extension PigEventQueryWhere on QueryBuilder<PigEvent, PigEvent, QWhereClause> {
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> isarIDEqualTo(Id isarID) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: isarID,
@@ -228,7 +221,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDNotEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> isarIDNotEqualTo(
       Id isarID) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -251,7 +244,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> isarIDGreaterThan(
       Id isarID,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
@@ -261,7 +254,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDLessThan(Id isarID,
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> isarIDLessThan(Id isarID,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -270,7 +263,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> isarIDBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> isarIDBetween(
     Id lowerIsarID,
     Id upperIsarID, {
     bool includeLower = true,
@@ -286,7 +279,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> uuidEqualTo(String uuid) {
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> uuidEqualTo(String uuid) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'uuid',
@@ -295,7 +288,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> uuidNotEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> uuidNotEqualTo(
       String uuid) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -330,52 +323,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> medicineNameEqualTo(
-      String medicineName) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'medicineName',
-        value: [medicineName],
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> medicineNameNotEqualTo(
-      String medicineName) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
-              lower: [],
-              upper: [medicineName],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
-              lower: [medicineName],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
-              lower: [medicineName],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'medicineName',
-              lower: [],
-              upper: [medicineName],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> farmIDEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> farmIDEqualTo(
       String farmID) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
@@ -385,7 +333,7 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterWhereClause> farmIDNotEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterWhereClause> farmIDNotEqualTo(
       String farmID) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
@@ -421,71 +369,9 @@ extension MedicineQueryWhere on QueryBuilder<Medicine, Medicine, QWhereClause> {
   }
 }
 
-extension MedicineQueryFilter
-    on QueryBuilder<Medicine, Medicine, QFilterCondition> {
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'avgCost',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'avgCost',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostLessThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'avgCost',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> avgCostBetween(
-    double lower,
-    double upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'avgCost',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtEqualTo(
+extension PigEventQueryFilter
+    on QueryBuilder<PigEvent, PigEvent, QFilterCondition> {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> createdAtEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -495,7 +381,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> createdAtGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -508,7 +394,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtLessThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> createdAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -521,7 +407,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -538,21 +424,73 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventDateEqualTo(
+      DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'eventDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventDateGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'eventDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventDateLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'eventDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventDateBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'eventDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'description',
+        property: r'eventType',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      descriptionGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -560,14 +498,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'description',
+        property: r'eventType',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionLessThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -575,14 +513,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'description',
+        property: r'eventType',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -591,7 +529,7 @@ extension MedicineQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'description',
+        property: r'eventType',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -601,206 +539,76 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionStartsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'description',
+        property: r'eventType',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionEndsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'description',
+        property: r'eventType',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionContains(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'description',
+        property: r'eventType',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionMatches(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'description',
+        property: r'eventType',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> descriptionIsEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> eventTypeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'description',
+        property: r'eventType',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      descriptionIsNotEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition>
+      eventTypeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'description',
+        property: r'eventType',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageBetween(
-    String lower,
-    String upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'dosage',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageContains(
-      String value,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'dosage',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'dosage',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'dosage',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> dosageIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'dosage',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -813,7 +621,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -828,7 +636,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDLessThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -843,7 +651,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -862,7 +670,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDStartsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -875,7 +683,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDEndsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -888,7 +696,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDContains(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -900,7 +708,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDMatches(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -912,7 +720,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDIsEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'farmID',
@@ -921,7 +729,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> farmIDIsNotEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> farmIDIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'farmID',
@@ -930,7 +738,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> isarIDEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -940,7 +748,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> isarIDGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -953,7 +761,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDLessThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> isarIDLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -966,7 +774,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> isarIDBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> isarIDBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -983,21 +791,20 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'medicineName',
+        property: r'pigNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1005,14 +812,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'medicineName',
+        property: r'pigNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameLessThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1020,14 +827,14 @@ extension MedicineQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'medicineName',
+        property: r'pigNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1036,7 +843,7 @@ extension MedicineQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'medicineName',
+        property: r'pigNumber',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1046,131 +853,352 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameStartsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'medicineName',
+        property: r'pigNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameEndsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'medicineName',
+        property: r'pigNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameContains(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'medicineName',
+        property: r'pigNumber',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> medicineNameMatches(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'medicineName',
+        property: r'pigNumber',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameIsEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigNumberIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'medicineName',
+        property: r'pigNumber',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition>
-      medicineNameIsNotEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition>
+      pigNumberIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'medicineName',
+        property: r'pigNumber',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityEqualTo(
-      int value) {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'quantity',
+        property: r'pigUuid',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityGreaterThan(
-    int value, {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidGreaterThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'quantity',
+        property: r'pigUuid',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityLessThan(
-    int value, {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidLessThan(
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'quantity',
+        property: r'pigUuid',
         value: value,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> quantityBetween(
-    int lower,
-    int upper, {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidBetween(
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'quantity',
+        property: r'pigUuid',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'pigUuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'pigUuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'pigUuid',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'pigUuid',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'pigUuid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> pigUuidIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'pigUuid',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'status',
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'status',
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'status',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'status',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'status',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'status',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> statusIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'status',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> updatedAtEqualTo(
       DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -1180,7 +1208,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> updatedAtGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -1193,7 +1221,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtLessThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> updatedAtLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -1206,7 +1234,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> updatedAtBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> updatedAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -1223,7 +1251,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidEqualTo(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1236,7 +1264,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidGreaterThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1251,7 +1279,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidLessThan(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1266,7 +1294,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidBetween(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1285,7 +1313,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidStartsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1298,7 +1326,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidEndsWith(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1311,7 +1339,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidContains(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1323,7 +1351,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidMatches(
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -1335,7 +1363,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidIsEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'uuid',
@@ -1344,7 +1372,7 @@ extension MedicineQueryFilter
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterFilterCondition> uuidIsNotEmpty() {
+  QueryBuilder<PigEvent, PigEvent, QAfterFilterCondition> uuidIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'uuid',
@@ -1354,300 +1382,301 @@ extension MedicineQueryFilter
   }
 }
 
-extension MedicineQueryObject
-    on QueryBuilder<Medicine, Medicine, QFilterCondition> {}
+extension PigEventQueryObject
+    on QueryBuilder<PigEvent, PigEvent, QFilterCondition> {}
 
-extension MedicineQueryLinks
-    on QueryBuilder<Medicine, Medicine, QFilterCondition> {}
+extension PigEventQueryLinks
+    on QueryBuilder<PigEvent, PigEvent, QFilterCondition> {}
 
-extension MedicineQuerySortBy on QueryBuilder<Medicine, Medicine, QSortBy> {
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByAvgCost() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByAvgCostDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByCreatedAt() {
+extension PigEventQuerySortBy on QueryBuilder<PigEvent, PigEvent, QSortBy> {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByCreatedAtDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDescription() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByEventDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.asc);
+      return query.addSortBy(r'eventDate', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDescriptionDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByEventDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.desc);
+      return query.addSortBy(r'eventDate', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDosage() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByEventType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.asc);
+      return query.addSortBy(r'eventType', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByDosageDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByEventTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.desc);
+      return query.addSortBy(r'eventType', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByFarmID() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByFarmID() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByFarmIDDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByFarmIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByMedicineName() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByPigNumber() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.asc);
+      return query.addSortBy(r'pigNumber', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByMedicineNameDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByPigNumberDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.desc);
+      return query.addSortBy(r'pigNumber', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByQuantity() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByPigUuid() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.asc);
+      return query.addSortBy(r'pigUuid', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByQuantityDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByPigUuidDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.desc);
+      return query.addSortBy(r'pigUuid', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUpdatedAt() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUpdatedAtDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUuid() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByUuid() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> sortByUuidDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> sortByUuidDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
 }
 
-extension MedicineQuerySortThenBy
-    on QueryBuilder<Medicine, Medicine, QSortThenBy> {
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByAvgCost() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByAvgCostDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'avgCost', Sort.desc);
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByCreatedAt() {
+extension PigEventQuerySortThenBy
+    on QueryBuilder<PigEvent, PigEvent, QSortThenBy> {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByCreatedAtDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDescription() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByEventDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.asc);
+      return query.addSortBy(r'eventDate', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDescriptionDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByEventDateDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'description', Sort.desc);
+      return query.addSortBy(r'eventDate', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDosage() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByEventType() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.asc);
+      return query.addSortBy(r'eventType', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByDosageDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByEventTypeDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'dosage', Sort.desc);
+      return query.addSortBy(r'eventType', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByFarmID() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByFarmID() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByFarmIDDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByFarmIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'farmID', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByIsarID() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByIsarID() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarID', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByIsarIDDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByIsarIDDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarID', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByMedicineName() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByPigNumber() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.asc);
+      return query.addSortBy(r'pigNumber', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByMedicineNameDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByPigNumberDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'medicineName', Sort.desc);
+      return query.addSortBy(r'pigNumber', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByQuantity() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByPigUuid() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.asc);
+      return query.addSortBy(r'pigUuid', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByQuantityDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByPigUuidDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'quantity', Sort.desc);
+      return query.addSortBy(r'pigUuid', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUpdatedAt() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByStatus() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.asc);
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByStatusDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'status', Sort.desc);
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUpdatedAtDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUuid() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByUuid() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.asc);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QAfterSortBy> thenByUuidDesc() {
+  QueryBuilder<PigEvent, PigEvent, QAfterSortBy> thenByUuidDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'uuid', Sort.desc);
     });
   }
 }
 
-extension MedicineQueryWhereDistinct
-    on QueryBuilder<Medicine, Medicine, QDistinct> {
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByAvgCost() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'avgCost');
-    });
-  }
-
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByCreatedAt() {
+extension PigEventQueryWhereDistinct
+    on QueryBuilder<PigEvent, PigEvent, QDistinct> {
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByDescription(
-      {bool caseSensitive = true}) {
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByEventDate() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'eventDate');
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByDosage(
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByEventType(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'dosage', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'eventType', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByFarmID(
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByFarmID(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'farmID', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByMedicineName(
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByPigNumber(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'medicineName', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'pigNumber', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByQuantity() {
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByPigUuid(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'quantity');
+      return query.addDistinctBy(r'pigUuid', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByUpdatedAt() {
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByStatus(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'updatedAt');
     });
   }
 
-  QueryBuilder<Medicine, Medicine, QDistinct> distinctByUuid(
+  QueryBuilder<PigEvent, PigEvent, QDistinct> distinctByUuid(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'uuid', caseSensitive: caseSensitive);
@@ -1655,63 +1684,63 @@ extension MedicineQueryWhereDistinct
   }
 }
 
-extension MedicineQueryProperty
-    on QueryBuilder<Medicine, Medicine, QQueryProperty> {
-  QueryBuilder<Medicine, int, QQueryOperations> isarIDProperty() {
+extension PigEventQueryProperty
+    on QueryBuilder<PigEvent, PigEvent, QQueryProperty> {
+  QueryBuilder<PigEvent, int, QQueryOperations> isarIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarID');
     });
   }
 
-  QueryBuilder<Medicine, double, QQueryOperations> avgCostProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'avgCost');
-    });
-  }
-
-  QueryBuilder<Medicine, DateTime, QQueryOperations> createdAtProperty() {
+  QueryBuilder<PigEvent, DateTime, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> descriptionProperty() {
+  QueryBuilder<PigEvent, DateTime, QQueryOperations> eventDateProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'description');
+      return query.addPropertyName(r'eventDate');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> dosageProperty() {
+  QueryBuilder<PigEvent, String, QQueryOperations> eventTypeProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'dosage');
+      return query.addPropertyName(r'eventType');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> farmIDProperty() {
+  QueryBuilder<PigEvent, String, QQueryOperations> farmIDProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'farmID');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> medicineNameProperty() {
+  QueryBuilder<PigEvent, String, QQueryOperations> pigNumberProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'medicineName');
+      return query.addPropertyName(r'pigNumber');
     });
   }
 
-  QueryBuilder<Medicine, int, QQueryOperations> quantityProperty() {
+  QueryBuilder<PigEvent, String, QQueryOperations> pigUuidProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'quantity');
+      return query.addPropertyName(r'pigUuid');
     });
   }
 
-  QueryBuilder<Medicine, DateTime, QQueryOperations> updatedAtProperty() {
+  QueryBuilder<PigEvent, String?, QQueryOperations> statusProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'status');
+    });
+  }
+
+  QueryBuilder<PigEvent, DateTime, QQueryOperations> updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
     });
   }
 
-  QueryBuilder<Medicine, String, QQueryOperations> uuidProperty() {
+  QueryBuilder<PigEvent, String, QQueryOperations> uuidProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'uuid');
     });

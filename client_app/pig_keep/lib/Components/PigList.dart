@@ -137,7 +137,10 @@ class _PigListState extends State<PigList> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          pigs.length.toString(),
+                          pigs
+                              .where((pig) => pig['status'] == 'alive')
+                              .length
+                              .toString(),
                           style: TextStyle(
                             color: appSecondary,
                             fontSize: 70.sp,
@@ -195,7 +198,6 @@ class _PigListState extends State<PigList> {
                                         keyboardType: TextInputType.phone,
                                         icon: Icons.numbers_rounded,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                       ),
                                       RecyclableTextFormField(
                                         controller: _pigDOBController,
@@ -205,7 +207,6 @@ class _PigListState extends State<PigList> {
                                         hintTextSize: 14.sp,
                                         icon: Icons.calendar_month,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                         onTap: () {
                                           _selectDate();
                                         },
@@ -227,7 +228,6 @@ class _PigListState extends State<PigList> {
                                         hintTextSize: 14.sp,
                                         icon: Icons.savings,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                         readOnly: true,
                                       ),
                                       RecyclableTextFormField(
@@ -242,7 +242,6 @@ class _PigListState extends State<PigList> {
                                         hintTextSize: 14.sp,
                                         icon: Icons.male,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                         readOnly: true,
                                       ),
                                       RecyclableTextFormField(
@@ -258,7 +257,6 @@ class _PigListState extends State<PigList> {
                                         hintTextSize: 14.sp,
                                         icon: Icons.house_siding_rounded,
                                         textSize: 14.sp,
-                                        height: 43.h,
                                         readOnly: true,
                                       ),
                                     ],

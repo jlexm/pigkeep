@@ -287,7 +287,6 @@ class PigPenView extends State<PigPenPenNumber> {
                           keyboardType: TextInputType.none,
                           icon: Icons.house_siding_rounded,
                           textSize: 14.sp,
-                          height: 43.h,
                         ),
                         RecyclableTextFormField(
                           controller: _maxPigNumberController,
@@ -297,7 +296,6 @@ class PigPenView extends State<PigPenPenNumber> {
                           keyboardType: TextInputType.phone,
                           icon: Icons.numbers_rounded,
                           textSize: 14.sp,
-                          height: 43.h,
                         ),
                       ],
                       onSave: () async {

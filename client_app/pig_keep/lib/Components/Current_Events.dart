@@ -1,33 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/CenterReusableDialogBox.dart';
+import 'package:pig_keep/Models/pig-event.dart';
+import 'package:pig_keep/Services/pig-event-service.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
+import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/main.dart';
 
 class CurrentEvents extends StatefulWidget {
-  const CurrentEvents({super.key});
+  final List<PigEvent> events;
+  final Future<void> Function(String)? markAsDone;
+  const CurrentEvents({super.key, required this.events, this.markAsDone});
 
   @override
   State<CurrentEvents> createState() => _CurrentEventsState();
 }
 
 class _CurrentEventsState extends State<CurrentEvents> {
-  final List<Map<String, dynamic>> currentEvents = [
-    {
-      'date': 'Today',
-      'time': '08:00 AM',
-      'id': '002', // Pig ID 002
-      'event': 'Vaccination',
-      'status': 'In Progress',
-    },
-    {
-      'date': 'Jul 24, 2024',
-      'time': '09:30 AM',
-      'id': '003',
-      'event': 'Farrow',
-      'status': 'In Progress',
-    },
-  ];
-
   void _confirmDeletion(BuildContext context, int index) {
     showDialog(
       context: context,
@@ -39,7 +30,7 @@ class _CurrentEventsState extends State<CurrentEvents> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  currentEvents.removeAt(index);
+                  //events.removeAt(index);
                 });
                 Navigator.of(context).pop(); // Dismiss the dialog
               },
@@ -53,21 +44,29 @@ class _CurrentEventsState extends State<CurrentEvents> {
 
   @override
   Widget build(BuildContext context) {
+// services
+    final pigEventService = globalLocator.get<PigEventService>();
+
     final double itemHeight = 80.h;
-    final double containerHeight = currentEvents.length * itemHeight;
+    final double containerHeight = widget.events.length * itemHeight;
 
     return Container(
       padding: EdgeInsets.only(left: 20.w, right: 20.w),
       height: containerHeight,
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: currentEvents.length,
+        itemCount: widget.events.length,
         itemBuilder: (context, index) {
-          final event = currentEvents[index];
+          final event = widget.events[index];
+          String eventStatus = (event.eventDate.isBefore(DateTime.now()) ||
+                      event.eventDate.isAtSameMomentAs(DateTime.now())) &&
+                  event.status == 'Pending'
+              ? 'In Progress'
+              : event.status!;
           return Padding(
             padding: EdgeInsets.only(bottom: 21.h),
             child: Dismissible(
-              key: Key(event['id']),
+              key: Key(event.uuid),
               direction: DismissDirection.endToStart,
               background: Container(
                 alignment: Alignment.centerRight,
@@ -126,11 +125,14 @@ class _CurrentEventsState extends State<CurrentEvents> {
               },
               onDismissed: (direction) {
                 setState(() {
-                  currentEvents.removeAt(index);
+                  //currentEvents.removeAt(index);
                 });
               },
               child: InkWell(
                 onTap: () {
+                  if (eventStatus != 'In Progress') {
+                    return;
+                  }
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -138,8 +140,13 @@ class _CurrentEventsState extends State<CurrentEvents> {
                         title: 'Accomplished?',
                         description:
                             'Verify if the event has been accomplished by clicking the button.',
-                        onSave: () {
-                          Navigator.of(context).pop();
+                        onSave: () async {
+                          try {
+                            await widget.markAsDone!(event.uuid);
+                            context.pop();
+                          } catch (err) {
+                            ToastService().showErrorToast(err.toString());
+                          }
                         },
                         saveButtonText: 'Mark as Done',
                         saveButtonColor: appPrimary,
@@ -163,26 +170,18 @@ class _CurrentEventsState extends State<CurrentEvents> {
                             text: TextSpan(
                               children: [
                                 TextSpan(
-                                  text: 'Pig ',
+                                  text: event.pigNumber,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black,
                                   ),
                                 ),
-                                TextSpan(
-                                  text: event['id'],
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: appPrimary,
-                                  ),
-                                ),
                               ],
                             ),
                           ),
                           Text(
-                            event['event']!,
+                            event.eventType,
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w400,
@@ -197,18 +196,18 @@ class _CurrentEventsState extends State<CurrentEvents> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            event['date']!,
+                            PigHelper.formatDate(event.eventDate),
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                           Text(
-                            event['status']!,
+                            eventStatus,
                             style: TextStyle(
                               fontSize: 10.sp,
                               fontWeight: FontWeight.w400,
-                              color: event['status'] == 'In Progress'
+                              color: eventStatus == 'In Progress'
                                   ? appPrimary
                                   : appTertiary,
                             ),
