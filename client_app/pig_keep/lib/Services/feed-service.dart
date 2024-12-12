@@ -1,9 +1,6 @@
 import 'package:isar/isar.dart';
 import 'package:pig_keep/Models/feed-history.dart';
 import 'package:pig_keep/Models/feed.dart';
-import 'package:pig_keep/Models/medicine-history.dart';
-import 'package:pig_keep/Models/medicine.dart';
-import 'package:pig_keep/Models/pig.dart';
 import 'package:pig_keep/Services/database-service.dart';
 import 'package:pig_keep/main.dart';
 

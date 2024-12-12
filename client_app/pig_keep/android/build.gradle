@@ -1,35 +1,43 @@
 allprojects {
     repositories {
-        google()
-        mavenCentral()
+        google()       // Google's repository for Android dependencies
+        mavenCentral() // Maven Central for other dependencies
     }
 }
 
 rootProject.buildDir = '../build'
+
 subprojects {
-  //  fix for verifyReleaseResources
-  // ============
-  afterEvaluate { project ->
-    if (project.plugins.hasPlugin("com.android.application") ||
-      project.plugins.hasPlugin("com.android.library")) {
-      project.android {
-        compileSdkVersion 34
-        buildToolsVersion "34.0.0"
-      }
-    }
-    if (project.hasProperty("android")) {
-      project.android {
-        if (namespace == null) {
-          namespace project.group
+    afterEvaluate { project ->
+        if (project.plugins.hasPlugin("com.android.application") ||
+            project.plugins.hasPlugin("com.android.library")) {
+            project.android {
+                compileSdkVersion 34
+                buildToolsVersion "34.0.0"
+            }
         }
-      }
+        if (project.hasProperty("android")) {
+            project.android {
+                if (namespace == null) {
+                    namespace project.group
+                }
+            }
+        }
     }
-  }
-  // ============
-  project.buildDir = "${rootProject.buildDir}/${project.name}"
-  project.evaluationDependsOn(":app")
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+
+buildscript {
+    repositories {
+        google()       // This repository is necessary to resolve the Android Gradle plugin
+        mavenCentral() // This repository is necessary for other dependencies
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.1'  // Android Gradle Plugin
+    }
 }

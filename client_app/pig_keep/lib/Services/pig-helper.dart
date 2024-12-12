@@ -118,4 +118,13 @@ class PigHelper {
         date1.month == date2.month &&
         date1.day == date2.day;
   }
+
+  static List<List<T>> splitArrayIntoBatches<T>(List<T> array, int batchSize) {
+    List<List<T>> batches = [];
+    for (int i = 0; i < array.length; i += batchSize) {
+      int end = (i + batchSize < array.length) ? i + batchSize : array.length;
+      batches.add(array.sublist(i, end));
+    }
+    return batches;
+  }
 }

@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/data-sync-service.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 
 class Layout extends StatefulWidget {
   final Widget child;
@@ -15,6 +19,31 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
+  //services
+  final syncService = globalLocator.get<DataSyncService>();
+
+  // vars
+  var selectedFarm;
+  late String userOwner;
+  bool isSyncLoading = true;
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      userOwner = user['username'];
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final isScanQrRoute =
@@ -29,11 +58,23 @@ class _LayoutState extends State<Layout> {
               child: AppBar(
                 actions: [
                   InkWell(
-                    onTap: () {},
-                    child: Image.asset(
-                      'assets/icons/Sync.png',
-                      width: 25.w,
-                      height: 25.h,
+                    onTap: () async {
+                      setState(() {
+                        isSyncLoading = !isSyncLoading;
+                      });
+                      await syncService.syncAllData(
+                          selectedFarm['_id'], userOwner);
+                    },
+                    child: AnimatedRotation(
+                      turns: isSyncLoading ? 3.0 : 0.0,
+                      duration:
+                          Duration(seconds: 3), // Duration of one full rotation
+
+                      child: Image.asset(
+                        'assets/icons/Sync.png',
+                        width: 25, // Adjust width as needed
+                        height: 25, // Adjust height as needed
+                      ),
                     ),
                   ),
                   const SizedBox(width: 25),

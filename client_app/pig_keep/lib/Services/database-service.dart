@@ -3,6 +3,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pig_keep/Models/feed-history.dart';
 import 'package:pig_keep/Models/feed.dart';
 import 'package:pig_keep/Models/ledger.dart';
+import 'package:pig_keep/Models/local-user-meta.dart';
 import 'package:pig_keep/Models/medicine-history.dart';
 import 'package:pig_keep/Models/medicine.dart';
 import 'package:pig_keep/Models/pig-event.dart';
@@ -16,6 +17,7 @@ class DatabaseService {
     print('Isar DB initialized.');
     final dir = await getApplicationDocumentsDirectory();
     db = await Isar.open([
+      LocalUserMetaSchema,
       PigPenSchema,
       PigSchema,
       LedgerSchema,
