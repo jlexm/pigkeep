@@ -148,14 +148,14 @@ export default function AddPenComp() {
                 <Typography
                   fontWeight={'bold'}
                   color="white"
-                  sx={{ fontSize: 'clamp(3.2rem, 5.1vw, 4.688rem)' }}
+                  sx={{ fontSize: 'clamp(3.2rem, 5.1vw, 4.1rem)' }}
                 >
                   10
                 </Typography>
               </Box>
               <Box alignContent={'center'}>
                 <Typography
-                  fontSize="clamp(0.8rem, 5vw, 1.9rem)"
+                  fontSize="clamp(0.8rem, 5vw, 1.8rem)"
                   paddingLeft={1}
                   color="white"
                   fontWeight={300}

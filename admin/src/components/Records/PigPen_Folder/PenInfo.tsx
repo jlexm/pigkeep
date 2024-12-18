@@ -190,26 +190,27 @@ export default function PenInfo({ selectedRow }) {
             <Grid2 container sx={{ height: 15 }}></Grid2>
             <Grid2 size={12} sx={{ height: 30 }}>
               <Typography variant="subtitle1">
-                Type:{' '}
-                <Typography color="#11703b" fontWeight={400}>
-                  {selectedRow ? selectedRow.type : ''}
-                </Typography>
+                Type: {''}
+                <span style={{ color: '#11703b', fontWeight: 500 }}>
+                  {selectedRow ? selectedRow.type : 'Placeholder_1'}
+                </span>
               </Typography>
             </Grid2>
+
             <Grid2 size={12} sx={{ height: 30 }}>
               <Typography variant="subtitle1">
                 Pig Count:{' '}
-                <Typography color="#11703b" fontWeight={400}>
-                  {selectedRow ? selectedRow.pigCount : ''}
-                </Typography>
+                <span style={{ color: '#11703b', fontWeight: 500 }}>
+                  {selectedRow ? selectedRow.type : 'Placeholder_2'}
+                </span>
               </Typography>
             </Grid2>
             <Grid2 size={12} sx={{ height: 30 }}>
               <Typography variant="subtitle1">
                 Max Pig:{' '}
-                <Typography color="#11703b" fontWeight={400}>
-                  {selectedRow ? selectedRow.maxPigs : ''}
-                </Typography>
+                <span style={{ color: '#11703b', fontWeight: 500 }}>
+                  {selectedRow ? selectedRow.type : 'Placeholder_3'}
+                </span>
               </Typography>
             </Grid2>
           </Grid2>
@@ -223,7 +224,7 @@ export default function PenInfo({ selectedRow }) {
             <Grid2 container spacing={0} className="right">
               {pigs.map((pig, index) => (
                 <Grid2 size={6} key={index}>
-                  <ListItem sx={{ paddingLeft: 2 }}>
+                  <ListItem sx={{ paddingLeft: 2, paddingRight: 0 }}>
                     <ListItemIcon sx={{ minWidth: 30 }}>
                       <CircleIcon
                         sx={{
