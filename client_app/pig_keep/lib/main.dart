@@ -23,9 +23,11 @@ import 'package:pig_keep/Screens/ProfileDetails.dart';
 import 'package:pig_keep/Screens/Records.dart';
 import 'package:pig_keep/Screens/ScanQR.dart';
 import 'package:pig_keep/Screens/Signup.dart';
+import 'package:pig_keep/Services/data-sync-service.dart';
 import 'package:pig_keep/Services/database-service.dart';
 import 'package:pig_keep/Services/feed-service.dart';
 import 'package:pig_keep/Services/ledger.service.dart';
+import 'package:pig_keep/Services/local-notification-service.dart';
 import 'package:pig_keep/Services/medicine-service.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Services/pig-event-service.dart';
@@ -33,6 +35,7 @@ import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart';
 
 // This is our global ServiceLocator
 GetIt globalLocator = GetIt.instance;
@@ -41,12 +44,18 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
 
+  // init tz
+  initializeTimeZones();
+  // init notif
+  await LocalNotificationService.setup();
+
   // register global services
   globalLocator.registerSingleton(DatabaseService());
 
   // init database
   await globalLocator.get<DatabaseService>().init();
 
+  globalLocator.registerSingleton(DataSyncService());
   globalLocator.registerSingleton(PigPenService());
   globalLocator.registerSingleton(PigService());
   globalLocator.registerSingleton(LedgerService());

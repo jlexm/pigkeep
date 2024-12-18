@@ -31,4 +31,52 @@ export class PigService {
   async getAllPigs(): Promise<Pig[]> {
     return this.pigModel.find().exec()
   }
+
+  async getAllSyncablePigs(
+    farm_id: string,
+    last_successful_read_sync: Date | null
+  ): Promise<Pig[]> {
+    const query: any = { farmID: farm_id }
+
+    if (last_successful_read_sync) {
+      query.updatedAt = { $gt: last_successful_read_sync }
+    }
+
+    return this.pigModel.find(query).sort({ updatedAt: 1 }).exec()
+  }
+
+  async syncPigs(farm_id: string, pigs: any[]) {
+    // loop all pigs check if its exists in db
+    // if yes, check which has latest updated at then merge
+    // else, add pig to db
+    const bulkOps = []
+
+    for (const pig of pigs) {
+      // Check if pig exists by farm_id and uuid
+      const existingPig = await this.pigModel
+        .findOne({ farmID: farm_id, uuid: pig.uuid })
+        .exec()
+
+      if (existingPig) {
+        if (pig.updatedAt > existingPig.updatedAt) {
+          bulkOps.push({
+            updateOne: {
+              filter: { uuid: existingPig.uuid },
+              update: { $set: { ...pig } },
+            },
+          })
+        }
+      } else {
+        bulkOps.push({
+          insertOne: {
+            document: pig,
+          },
+        })
+      }
+    }
+
+    if (bulkOps.length > 0) {
+      await this.pigModel.bulkWrite(bulkOps)
+    }
+  }
 }

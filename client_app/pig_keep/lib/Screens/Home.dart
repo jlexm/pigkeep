@@ -11,6 +11,7 @@ import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Models/pig-event.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Screens/Records.dart';
+import 'package:pig_keep/Services/local-notification-service.dart';
 import 'package:pig_keep/Services/pig-event-service.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
@@ -193,6 +194,13 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
+                    /* ElevatedButton(
+                      onPressed: () async {
+                        await LocalNotificationService.showSingle(
+                            title: 'Test', body: 'Hello world!');
+                      },
+                      child: Text('Show Notification'),
+                    ), */
                     Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -287,7 +295,7 @@ class _HomeState extends State<Home> {
                           children: [
                             const Padding(padding: EdgeInsets.only(left: 30)),
                             Text(
-                              'Notifications',
+                              'Notifications (${eventNotifications.length})',
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
