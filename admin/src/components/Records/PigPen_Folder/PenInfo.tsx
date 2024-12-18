@@ -240,7 +240,7 @@ export default function PenInfo({ selectedRow }) {
             </Grid2>
           </Grid2>
         </Grid2>
-        <Grid2
+        {/* <Grid2
           size={12}
           container
           sx={{ marginLeft: 4, marginRight: 4, paddingTop: 3 }}
@@ -291,7 +291,7 @@ export default function PenInfo({ selectedRow }) {
               </Typography>
             </Button>
           </Stack>
-        </Grid2>
+        </Grid2> */}
       </Grid2>
     </ThemeProvider>
   )

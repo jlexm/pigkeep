@@ -57,9 +57,9 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
               <TableCell sx={{ color: '#11703b', paddingRight: 0, textAlign: 'end', width: 140 }}>
                 Stock
               </TableCell>
-              <TableCell sx={{ color: '#11703b', paddingRight: 0, textAlign: 'end', width: 30 }}>
+              {/* <TableCell sx={{ color: '#11703b', paddingRight: 0, textAlign: 'end', width: 30 }}>
                 Consume
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -71,7 +71,7 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
                 <TableCell sx={{ color: '#11703b', paddingRight: 0, textAlign: 'end', width: 90 }}>
                   {row.stock}
                 </TableCell>
-                <TableCell sx={{ paddingRight: 0, textAlign: 'end', width: 90 }}>
+                {/* <TableCell sx={{ paddingRight: 0, textAlign: 'end', width: 90 }}>
                   <IconButton
                     aria-label="delete"
                     color='error'
@@ -79,7 +79,7 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
                   >
                     <IndeterminateCheckBoxIcon />
                   </IconButton>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>

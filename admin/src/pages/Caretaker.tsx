@@ -163,7 +163,7 @@ const Caretaker = () => {
               Caretakers
             </Typography>
           </Box>
-          <Box>
+          {/* <Box>
             <Button
               variant="contained"
               sx={{
@@ -185,7 +185,7 @@ const Caretaker = () => {
                 Add
               </Typography>
             </Button>
-          </Box>
+          </Box> */}
         </Grid2>
         <Grid2 container size={12} className="responsiveTable">
           <CaretakerDataTable />

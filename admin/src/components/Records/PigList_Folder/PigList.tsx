@@ -8,25 +8,25 @@ export default function PigList_Screen() {
   return (
     <Grid2 container size={12} spacing={{ xs: 2, lg: 5 }}>
       <Grid2
-        size={{ xs: 12, sm: 12, md: 4.5, lg: 3.5, xl: 3 }}
+        size={{ xs: 12, sm: 12, md: 3, lg: 3, xl: 2.5 }}
         sx={{ alignContent: { md: 'center' } }}
       >
         <AddPigComp />
       </Grid2>
       <Grid2
-        size={{ xs: 12, sm: 12, md: 7.5, lg: 5.5, xl: 5.5 }}
+        size={{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6.5 }}
         className="legendGrid"
       >
         <Cards />
       </Grid2>
       <Grid2
-        size={{ xs: 12, sm: 7, md: 10, lg: 1.5, xl: 1.5 }}
+        size={{ xs: 12, sm: 7, md: 1.5, lg: 1.5, xl: 1.5 }}
         className="itemsAlign"
       >
         <PigStatusLegend statuses={['Alive', 'Sold', 'Deceased']} />
       </Grid2>
       <Grid2
-        size={{ xs: 12, sm: 5, md: 2, lg: 1, xl: 1 }}
+        size={{ xs: 12, sm: 5, md: 1.5, lg: 1.5, xl: 1.5 }}
         sx={{ alignContent: 'center' }}
       >
         <QRCode />
