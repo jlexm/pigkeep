@@ -9,7 +9,7 @@
 
 .innerBoxBg {
   display: flex;
-  background-color: #f0f0f0;
+  background-color: white;
   position: relative;
   border-radius: 10px;
   align-content: center;

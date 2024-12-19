@@ -61,24 +61,24 @@ const Events = () => {
         >
           <Grid2
             container
-            size={{ xs: 12, sm: 12, md: 6 }}
+            size={{ xs: 12 }}
             className="feedContainer"
             spacing={0}
           >
-            <Grid2 size={7}>
+            <Grid2 size={12}>
               <Grid2>
-                <Box sx={{ textAlign: 'left' }}>
+                <Box sx={{ textAlign: 'center' }}>
                   <Typography
                     fontWeight={'bold'}
                     color="white"
-                    sx={{ fontSize: 'clamp(3rem, 2.7vw, 4.688rem)' }}
+                    sx={{ fontSize: 'clamp(2.5rem, 2.7vw, 4.688rem)' }}
                   >
-                    Events
+                    Pig Farm Events
                   </Typography>
                 </Box>
               </Grid2>
             </Grid2>
-            <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
+            {/* <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
               <Button
                 variant="contained"
                 startIcon={<EventIcon fontSize="large" />}
@@ -106,7 +106,7 @@ const Events = () => {
                   Add Event
                 </Typography>
               </Button>
-            </Grid2>
+            </Grid2> */}
           </Grid2>
         </Grid2>
         <Grid2 container size={12}>

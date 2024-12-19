@@ -8,6 +8,11 @@ import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
 import theme from '../../Theme'
 
+// format peso sign
+const formatCurrency = (amount: number) => {
+  return `₱${amount.toLocaleString()}`
+}
+
 export default function Dispose() {
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = useState(false)
@@ -71,12 +76,12 @@ export default function Dispose() {
             </Grid2>
             <Grid2 size={12}>
               <Typography variant="h2" fontWeight={'bold'} color="white">
-                230,000
+              {formatCurrency(230000)}
               </Typography>
             </Grid2>
           </Grid2>
         </Grid2>
-        <Grid2 size={12}>
+        {/* <Grid2 size={12}>
           <Stack
             spacing={5}
             direction="row"
@@ -130,7 +135,7 @@ export default function Dispose() {
               </Typography>
             </Button>
           </Stack>
-        </Grid2>
+        </Grid2> */}
       </Grid2>
 
       {/* Sell */}

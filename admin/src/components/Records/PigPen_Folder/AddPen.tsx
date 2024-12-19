@@ -142,20 +142,20 @@ export default function AddPenComp() {
           className="feedContainer"
           spacing={0}
         >
-          <Grid2 size={7}>
-            <Grid2 container>
+          <Grid2 size={12}>
+            <Grid2 container sx={{ placeContent: { xs: 'center' } }}>
               <Box sx={{ textAlign: 'left' }}>
                 <Typography
                   fontWeight={'bold'}
                   color="white"
-                  sx={{ fontSize: 'clamp(3.2rem, 2.8vw, 4.688rem)' }}
+                  sx={{ fontSize: 'clamp(3.2rem, 5.1vw, 4.1rem)' }}
                 >
                   10
                 </Typography>
               </Box>
               <Box alignContent={'center'}>
                 <Typography
-                  fontSize="clamp(0.9rem, 2vw, 1.5rem)" 
+                  fontSize="clamp(0.8rem, 5vw, 1.8rem)"
                   paddingLeft={1}
                   color="white"
                   fontWeight={300}
@@ -165,7 +165,7 @@ export default function AddPenComp() {
               </Box>
             </Grid2>
           </Grid2>
-          <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
+          {/* <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
             <Button
               variant="contained"
               startIcon={<AddCircleIcon fontSize="large" />}
@@ -193,11 +193,11 @@ export default function AddPenComp() {
                 Add Pen
               </Typography>
             </Button>
-          </Grid2>
+          </Grid2> */}
         </Grid2>
         <Grid2 size={12}>
-            <PigpenDataTable onRowSelect={undefined} />
-          </Grid2>
+          <PigpenDataTable onRowSelect={undefined} />
+        </Grid2>
       </Grid2>
 
       {/* ReusableDialogBox to be shown when openDialog is true */}

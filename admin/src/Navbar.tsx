@@ -27,7 +27,14 @@ const pages = [
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const location = useLocation()
-  const navigate = useNavigate() // useNavigate hook to navigate programmatically
+  const navigate = useNavigate()
+
+  React.useEffect(() => {
+    // Redirect to /home if no route matches
+    if (location.pathname === '/') {
+      navigate('/home')
+    }
+  }, [location.pathname, navigate])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -37,7 +44,6 @@ const Navbar = () => {
     setAnchorElNav(null)
   }
 
-  // Function to navigate to the profile page
   const handleProfileClick = () => {
     navigate('/profile')
   }
@@ -61,10 +67,9 @@ const Navbar = () => {
             disableGutters
             sx={{ justifyContent: 'space-between', alignItems: 'center' }}
           >
-            {/* Mobile menu icon */}
             <Box
               sx={{
-                display: { xs: 'flex', sm: 'none' }, // Visible on xs and sm, hidden on md and above
+                display: { xs: 'flex', sm: 'none' },
                 flexGrow: 1,
                 justifyContent: 'flex-start',
               }}
@@ -77,7 +82,7 @@ const Navbar = () => {
                   color: '#11703b',
                   fontSize: { xs: '2rem', sm: '2.5rem' },
                   padding: 0,
-                }} // Adjust the font size for different screen sizes
+                }}
               >
                 <MenuIcon sx={{ fontSize: { xs: '2rem', sm: '2.5rem' } }} />{' '}
               </IconButton>
@@ -89,7 +94,7 @@ const Navbar = () => {
                 transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                sx={{ display: { xs: 'block', sm: 'block', md: 'none' } }} // Hidden on md and above
+                sx={{ display: { xs: 'block', sm: 'block', md: 'none' } }}
               >
                 {pages.map((page) => (
                   <MenuItem key={page.name} onClick={handleCloseNavMenu}>
@@ -107,7 +112,6 @@ const Navbar = () => {
               </Menu>
             </Box>
 
-            {/* Logo centered on md screens */}
             <Box
               sx={{
                 flexGrow: { md: 1 },
@@ -118,7 +122,7 @@ const Navbar = () => {
               <Link to="/home">
                 <Box
                   sx={{
-                    display: { xs: 'none', sm: 'flex' }, // Hidden on xs and sm, shown on md and larger
+                    display: { xs: 'none', sm: 'flex' },
                     alignItems: 'center',
                   }}
                 >
@@ -144,10 +148,9 @@ const Navbar = () => {
               </Link>
             </Box>
 
-            {/* Desktop menu */}
             <Box
               sx={{
-                display: { xs: 'none', sm: 'flex' }, // Only visible on md and larger
+                display: { xs: 'none', sm: 'flex' },
                 justifyContent: 'end',
                 paddingRight: { xs: 6, sm: 'none' },
                 flexGrow: 1,
@@ -162,17 +165,17 @@ const Navbar = () => {
                     marginLeft: { xs: 0.5, md: 1.5 },
                     my: 2,
                     color:
-                      location.pathname === page.path ? '#11703b' : 'black', // Green text for the selected page
-                    fontSize: { xs: '0.8rem', md: '1rem' }, // Responsive font size
-                    fontWeight: location.pathname === page.path ? '600' : '400', // Font weight for current page
+                      location.pathname === page.path ? '#11703b' : 'black',
+                    fontSize: { xs: '0.8rem', md: '1rem' },
+                    fontWeight: location.pathname === page.path ? '600' : '400',
                     display: 'block',
                     borderBottom:
                       location.pathname === page.path
                         ? '3px solid #11703b'
-                        : 'none', // Underline the current page
-                    textTransform: 'none', // Prevent text from being transformed to uppercase
+                        : 'none',
+                    textTransform: 'none',
                     '&:hover': {
-                      color: '#11703b', // Hover color for the page text
+                      color: '#11703b',
                     },
                   }}
                 >
@@ -181,23 +184,22 @@ const Navbar = () => {
               ))}
             </Box>
 
-            {/* Profile */}
             <Box
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 backgroundColor: '#11703b',
-                padding: '8px 12px', // Adjusted padding
+                padding: '8px 12px',
                 borderRadius: '10px',
-                minWidth: { xs: '50px', md: 'auto' }, // Responsive min width
-                maxWidth: { xs: '100px', md: '200px' }, // Responsive max width
+                minWidth: { xs: '50px', md: 'auto' },
+                maxWidth: { xs: '100px', md: '200px' },
               }}
             >
               <Typography
                 sx={{
                   color: 'white',
                   marginRight: { xs: '5px', md: '8px' },
-                  fontSize: { xs: '11px', md: '16px' }, // Responsive font size
+                  fontSize: { xs: '11px', md: '16px' },
                 }}
               >
                 Alexander
@@ -208,8 +210,8 @@ const Navbar = () => {
                     alt="Profile"
                     src="src/assets/ProfileIcon.png"
                     sx={{
-                      width: { xs: 18, sm: 25, md: 30 }, // Responsive width
-                      height: { xs: 20, sm: 27, md: 32 }, // Responsive height
+                      width: { xs: 18, sm: 25, md: 30 },
+                      height: { xs: 20, sm: 27, md: 32 },
                     }}
                   />
                 </IconButton>

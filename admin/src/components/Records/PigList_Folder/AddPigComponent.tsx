@@ -30,20 +30,21 @@ export default function AddPigComp() {
       <Grid2
         container
         size={12}
-        sx={{ placeContent: { xs: 'center', md: 'start' } }}
+        sx={{ placeContent: { xs: 'center'} }}
       >
         <Grid2
           container
-          size={{ xs: 12, sm: 9, md: 12 }}
+          size={{ xs: 12}}
           className="feedContainer"
           spacing={0}
+          
         >
-          <Grid2 size={7}>
-            <Grid2 container>
+          <Grid2 size={12} >
+            <Grid2 container sx={{placeContent: 'center'}}>
             <Typography
               fontWeight={700}
               color="white"
-              sx={{ fontSize: 'clamp(3rem, 4vw, 4.688rem)' }}
+              sx={{ fontSize: 'clamp(3.5rem, 4vw, 4.688rem)' }}
             >
               44
             </Typography>
@@ -57,7 +58,7 @@ export default function AddPigComp() {
               </Box>
             </Grid2>
           </Grid2>
-          <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
+          {/* <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
           <Button
             variant="contained"
             startIcon={<AddCircleIcon fontSize="large" />}
@@ -85,7 +86,7 @@ export default function AddPigComp() {
               Add Pig
             </Typography>
           </Button>
-          </Grid2>
+          </Grid2> */}
         </Grid2>
 
       </Grid2>

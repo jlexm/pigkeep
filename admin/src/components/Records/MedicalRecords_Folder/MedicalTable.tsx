@@ -64,7 +64,7 @@ const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
               >
                 Stock
               </TableCell>
-              <TableCell
+              {/* <TableCell
                 sx={{
                   color: '#3B4DE1',
                   paddingRight: 0,
@@ -73,7 +73,7 @@ const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
                 }}
               >
                 Consume
-              </TableCell>
+              </TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -90,7 +90,7 @@ const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
                   textAlign: 'end',
                   width: 90,
                 }}>{row.stock}</TableCell>
-                <TableCell sx={{
+                {/* <TableCell sx={{
                   paddingRight: 0,
                   textAlign: 'end',
                   width: 90,
@@ -102,7 +102,7 @@ const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
                   >
                     <IndeterminateCheckBoxIcon />
                   </IconButton>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
