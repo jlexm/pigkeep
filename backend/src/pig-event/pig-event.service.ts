@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+import { DateTime } from 'luxon'
 import { Model } from 'mongoose'
 import { PigEvent, PigEventDocument } from 'schemas/pigEvent.schema'
 
@@ -36,7 +37,9 @@ export class PigEventService {
         .exec()
 
       if (existingVal) {
-        if (val.updatedAt > existingVal.updatedAt) {
+        if (
+          DateTime.fromISO(val.updatedAt).toJSDate() > existingVal.updatedAt
+        ) {
           bulkOps.push({
             updateOne: {
               filter: { uuid: existingVal.uuid },

@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { Pen, PenDocument } from 'schemas/pen.schema'
 import { CreatePenDto, syncPenDto, UpdatePenDto } from './pen.dto'
+import { DateTime } from 'luxon'
 
 @Injectable()
 export class PenService {
@@ -50,7 +51,7 @@ export class PenService {
     return this.penModel.find(query).sort({ updatedAt: 1 }).exec()
   }
 
-  async syncPens(farm_id: string, pens: syncPenDto[]) {
+  async syncPens(farm_id: string, pens: any[]) {
     // loop all pens check if its exists in db
     // if yes, check which has latest updated at then merge
     // else, add pen to db
@@ -63,7 +64,9 @@ export class PenService {
         .exec()
 
       if (existingPen) {
-        if (pen.updatedAt > existingPen.updatedAt) {
+        if (
+          DateTime.fromISO(pen.updatedAt).toJSDate() > existingPen.updatedAt
+        ) {
           bulkOps.push({
             updateOne: {
               filter: { uuid: existingPen.uuid },

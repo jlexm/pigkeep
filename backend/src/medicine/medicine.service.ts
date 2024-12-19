@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { Medicine, MedicineDocument } from 'schemas/medicine.schema'
 import { CreateMedicineDto, UpdateMedicineDto } from './medicine.dto'
+import { DateTime } from 'luxon'
 
 @Injectable()
 export class MedicineService {
@@ -65,7 +66,9 @@ export class MedicineService {
         .exec()
 
       if (existingMed) {
-        if (med.updatedAt > existingMed.updatedAt) {
+        if (
+          DateTime.fromISO(med.updatedAt).toJSDate() > existingMed.updatedAt
+        ) {
           bulkOps.push({
             updateOne: {
               filter: { uuid: existingMed.uuid },

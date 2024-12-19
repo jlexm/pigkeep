@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 import { Feeds, FeedsDocument } from 'schemas/feeds.schema'
 import { CreateFeedsDto, UpdateFeedsDto } from './feeds.dto'
+import { DateTime } from 'luxon'
 
 @Injectable()
 export class FeedsService {
@@ -63,7 +64,9 @@ export class FeedsService {
         .exec()
 
       if (existingFeed) {
-        if (feed.updatedAt > existingFeed.updatedAt) {
+        if (
+          DateTime.fromISO(feed.updatedAt).toJSDate() > existingFeed.updatedAt
+        ) {
           bulkOps.push({
             updateOne: {
               filter: { uuid: existingFeed.uuid },

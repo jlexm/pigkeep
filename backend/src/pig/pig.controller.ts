@@ -16,6 +16,7 @@ import { PigService } from './pig.service'
 import { Roles } from 'src/auth/auth.decorator'
 import { Role } from 'constants/app.constant'
 import { AuthGuard } from 'src/auth/auth.guard'
+import { DateTime } from 'luxon'
 
 @Controller('pigs')
 export class PigController {
@@ -75,16 +76,20 @@ export class PigController {
     @Param('farm_id') farmId,
     @Query('last_successful_read_sync') last_successful_read_sync
   ) {
-    return await this.pigService.getAllSyncablePigs(
+    const data = await this.pigService.getAllSyncablePigs(
       farmId,
       last_successful_read_sync
     )
+    return data
   }
 
   @Post('/syncable/:farm_id')
   //@UseGuards(AuthGuard) // Use to restrict to signed-in users only
   async syncPigs(@Param('farm_id') farmId, @Body('pigs') pigs: any[]) {
-    console.log(pigs)
+    pigs.map((pig) => {
+      if (pig.pigNumber == 'P-006') console.log(pig)
+      console.log(DateTime.fromISO(pig.updatedAt).toRelative())
+    })
     await this.pigService.syncPigs(farmId, pigs)
     return { success: true, message: 'Data synced!' }
   }
