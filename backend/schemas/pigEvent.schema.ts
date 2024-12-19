@@ -1,21 +1,27 @@
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose'
 import { HydratedDocument } from 'mongoose'
 
-export type FeedsDocument = HydratedDocument<Feeds>
+export type PigEventDocument = HydratedDocument<PigEvent>
 
 @Schema({ timestamps: true }) // Adds createdAt and updatedAt automatically
-export class Feeds {
+export class PigEvent {
   @Prop({ required: true, unique: true }) // Auto-generate UUID and add index
   uuid: string
 
-  @Prop({ required: true, minlength: 3, maxlength: 30, index: true }) // Indexed with validation
-  feedType: string
+  @Prop({ required: true })
+  eventDate: Date
 
-  @Prop({ type: Number, default: 0 }) // Default value for weight
-  weightKG: number
+  @Prop({ required: true, index: true, ref: 'Pig' })
+  pigUuid: string
 
-  @Prop({ type: Number, default: 0 }) // Default value for cost
-  cost: number
+  @Prop({ required: true })
+  pigNumber: string
+
+  @Prop({})
+  status: string
+
+  @Prop({ required: true })
+  eventType: string
 
   @Prop({ required: true, index: true }) // Indexed and required farm ID
   farmID: string
@@ -27,4 +33,4 @@ export class Feeds {
   updatedAt: Date // Updated timestamp, defaults to now
 }
 
-export const FeedsSchema = SchemaFactory.createForClass(Feeds)
+export const PigEventSchema = SchemaFactory.createForClass(PigEvent)

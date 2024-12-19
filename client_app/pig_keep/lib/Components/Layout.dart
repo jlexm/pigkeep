@@ -58,12 +58,24 @@ class _LayoutState extends State<Layout> {
               child: AppBar(
                 actions: [
                   InkWell(
-                    onTap: () async {
+                    onTap: () {
                       setState(() {
                         isSyncLoading = !isSyncLoading;
                       });
-                      await syncService.syncAllData(
-                          selectedFarm['_id'], userOwner);
+                      syncService
+                          .syncAllData(selectedFarm['_id'], userOwner)
+                          .then((_) async {
+                        // Wait for 3 seconds after syncAllData is complete
+                        await Future.delayed(Duration(milliseconds: 1));
+
+                        // Ensure the widget is still mounted before accessing the context
+                        if (mounted) {
+                          context.read<GlobalProvider>().reloadCurrentFarm();
+                        }
+                      }).catchError((error) {
+                        // Handle any errors during syncAllData
+                        print("Error syncing data: $error");
+                      });
                     },
                     child: AnimatedRotation(
                       turns: isSyncLoading ? 3.0 : 0.0,

@@ -73,6 +73,11 @@ class GlobalProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> reloadCurrentFarm() async {
+    var farm = getSelectedFarm();
+    await setSelectedFarm(farm);
+  }
+
   Map<String, dynamic> getSelectedFarm() {
     return userFarms
         .firstWhere((f) => f['is_selected'] != null && f['is_selected']);
