@@ -6,6 +6,7 @@ import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Services/data-sync-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ class _LayoutState extends State<Layout> {
 
   @override
   void initState() {
+    print('LAYOUT INIT');
     context.read<GlobalProvider>().getCurrentUser().then((user) {
       userOwner = user['username'];
     });
@@ -72,9 +74,9 @@ class _LayoutState extends State<Layout> {
                         if (mounted) {
                           context.read<GlobalProvider>().reloadCurrentFarm();
                         }
-                      }).catchError((error) {
+                      }).catchError((err) {
                         // Handle any errors during syncAllData
-                        print("Error syncing data: $error");
+                        ToastService().showErrorToast(err.toString());
                       });
                     },
                     child: AnimatedRotation(

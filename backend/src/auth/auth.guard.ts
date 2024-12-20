@@ -8,12 +8,17 @@ import {
 import { AuthService } from './auth.service'
 import { Reflector } from '@nestjs/core'
 import { Roles } from './auth.decorator'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
+import { User } from 'schemas/user.schema'
+import { UserService } from 'src/user/user.service'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
-    private readonly authSvc: AuthService
+    private readonly authSvc: AuthService,
+    private readonly userSvc: UserService
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -24,7 +29,9 @@ export class AuthGuard implements CanActivate {
 
     // decode token
     const decoded = await this.authSvc.verifyJWT(token)
-    request.user = decoded // Attach decoded user information to the request
+    const userRecord = await this.userSvc.getUserCredentials(decoded.username)
+
+    request.user = userRecord // Attach user information to the request
 
     // check role decorator
     const roles = this.reflector.get(Roles, context.getHandler())

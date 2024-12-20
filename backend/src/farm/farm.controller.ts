@@ -24,11 +24,13 @@ export class FarmController {
   @Post()
   @Roles([Role.Superadmin])
   @UseGuards(AuthGuard)
-  async createFarm(@Body() createFarmDto: CreateFarmDto) {
+  async createFarm(@Req() req: { user: ReqUser }, @Body() createFarmDto: any) {
     try {
+      const { _id } = req.user
+      console.log(req.user)
       const newFarm = await this.farmService.createFarm({
         ...createFarmDto,
-        owner_id: '', // TODO: fix soon
+        owner_id: _id,
       })
       return newFarm
     } catch (error) {
@@ -41,10 +43,7 @@ export class FarmController {
 
   @Post('my-farms')
   @UseGuards(AuthGuard)
-  async createMyFarm(
-    @Req() req: { user: ReqUser },
-    @Body() body: CreateFarmDto
-  ) {
+  async createMyFarm(@Req() req: { user: ReqUser }, @Body() body: any) {
     const { _id } = req.user
     console.log(_id, body)
     return this.farmService.createFarm({ owner_id: _id, ...body })

@@ -6,6 +6,7 @@ import {
   Get,
   Param,
   Post,
+  Req,
   UseGuards,
 } from '@nestjs/common'
 import { CreateUserDto, GetUserParamsDto, RegisterUserDto } from './user.dto'
@@ -57,8 +58,8 @@ export class UserController {
       // get pass from payload
       const { password, confirm_password } = registerUserDto
 
-      if (password !== confirm_password){
-        throw new BadRequestException('Passwords do not match');
+      if (password !== confirm_password) {
+        throw new BadRequestException('Passwords do not match')
       }
 
       // convert pass to hash pass for security purposes
@@ -75,7 +76,7 @@ export class UserController {
         role_id: newUser.role_id,
       })
       // send new user info
-      return { ...{...newUser, password : undefined } , token}
+      return { ...{ ...newUser, password: undefined }, token }
     } catch (error) {
       // catch errors such us duplicate username error
       if (error.code === 11000) {
@@ -86,8 +87,22 @@ export class UserController {
     }
   }
 
+  @UseGuards(AuthGuard)
+  @Get('my-details')
+  async getMyUserDetails(@Req() req: { user: ReqUser }) {
+    return await this.userSvc.getUserDetailsByUsername(req.user.username)
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('my-details')
+  async updateMyDetails(@Req() req: { user: ReqUser }, @Body() body) {
+    await this.userSvc.updateUserDetails(req.user.username, body)
+
+    return { success: true, message: 'Updated!' }
+  }
+
   @Get(':username')
-  async getUser(@Param() getUserParamsDto : GetUserParamsDto) {
+  async getUser(@Param() getUserParamsDto: GetUserParamsDto) {
     return 'hello'
   }
 }

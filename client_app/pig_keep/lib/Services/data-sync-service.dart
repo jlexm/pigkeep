@@ -41,6 +41,7 @@ class DataSyncService {
     await syncMedicines(farmID, userOwner);
     await syncMedicinesHistory(farmID, userOwner);
     await syncPigEvent(farmID, userOwner);
+    await syncLedger(farmID, userOwner);
   }
 
   /* SYNC PIG PENS */
@@ -226,9 +227,19 @@ class DataSyncService {
       var pigQuery = db.pigs.filter().farmIDEqualTo(farmID);
       if (lastSyncWriteDate != null) {
         pigQuery = pigQuery.updatedAtGreaterThan(lastSyncWriteDate);
+        print('WEEEW');
       }
 
       final pigs = await pigQuery.findAll();
+
+      print('PIG LENGTH');
+      print(farmID);
+      print(lastSyncWriteDate);
+      for (var pig in pigs) {
+        print(pig.pigNumber);
+        print(pig.status);
+        print(pig.updatedAt);
+      }
 
       final apiPigBatchesToUpload = PigHelper.splitArrayIntoBatches(pigs, 10);
       for (var pigBatch in apiPigBatchesToUpload) {

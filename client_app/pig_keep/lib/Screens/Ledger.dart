@@ -36,6 +36,8 @@ class _LedgerState extends State<Ledger> {
   final TextEditingController _weightKGController = TextEditingController();
   final TextEditingController _costController = TextEditingController();
 
+  final TextEditingController _pigUuidController = TextEditingController();
+
   // pig db
   final pigService = globalLocator.get<PigService>();
   final penService = globalLocator.get<PigPenService>();
@@ -249,8 +251,7 @@ class _LedgerState extends State<Ledger> {
                                                 readOnly: true,
                                               ),
                                               RecyclableTextFormField(
-                                                controller:
-                                                    TextEditingController(),
+                                                controller: _weightKGController,
                                                 labelText: 'Weight in kg',
                                                 hintText: 'Weight in kg',
                                                 hintTextSize: 14.sp,
@@ -260,8 +261,7 @@ class _LedgerState extends State<Ledger> {
                                                     TextInputType.phone,
                                               ),
                                               RecyclableTextFormField(
-                                                controller:
-                                                    TextEditingController(),
+                                                controller: _costController,
                                                 labelText: 'Price',
                                                 hintText: 'Price',
                                                 hintTextSize: 14.sp,
@@ -274,6 +274,27 @@ class _LedgerState extends State<Ledger> {
                                             onSave: () async {
                                               // Handle the save action, e.g., validate and save data
                                               try {
+                                                await ledgerService.ledgePig(
+                                                    'sold',
+                                                    userOwner,
+                                                    selectedFarm['_id'],
+                                                    _pigNumberController.text,
+                                                    _costController
+                                                            .text.isNotEmpty
+                                                        ? double.parse(
+                                                            _costController
+                                                                .text)
+                                                        : 0,
+                                                    _weightKGController
+                                                            .text.isNotEmpty
+                                                        ? double.parse(
+                                                            _weightKGController
+                                                                .text)
+                                                        : 0);
+                                                await getLedgerDetails();
+                                                _pigNumberController.clear();
+                                                _costController.clear();
+                                                _weightKGController.clear();
                                                 Navigator.of(context).pop();
                                               } catch (err) {
                                                 ToastService().showErrorToast(
@@ -334,8 +355,7 @@ class _LedgerState extends State<Ledger> {
                                                 'Select pig to declare dead.',
                                             formFields: [
                                               RecyclableTextFormField(
-                                                controller:
-                                                    _pigNumberController,
+                                                controller: _pigUuidController,
                                                 labelText: 'Pig Number',
                                                 showDropdown: true,
                                                 dropdownItems: pigs
@@ -354,10 +374,24 @@ class _LedgerState extends State<Ledger> {
                                                 readOnly: true,
                                               ),
                                             ],
-                                            onSave: () {
+                                            onSave: () async {
                                               // Handle the save action, e.g., validate and save data
                                               print('Form saved');
-                                              Navigator.of(context).pop();
+                                              try {
+                                                await ledgerService.ledgePig(
+                                                    'deceased',
+                                                    userOwner,
+                                                    selectedFarm['_id'],
+                                                    _pigUuidController.text,
+                                                    0,
+                                                    0);
+                                                await getLedgerDetails();
+                                                _pigUuidController.clear();
+                                                Navigator.of(context).pop();
+                                              } catch (err) {
+                                                ToastService().showErrorToast(
+                                                    err.toString());
+                                              }
                                             },
                                             saveButtonText: 'Declare',
                                             saveButtonColor: appRed,

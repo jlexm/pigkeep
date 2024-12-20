@@ -254,7 +254,6 @@ class _QRCodeStatusState extends State<PigView> {
                                       userOwner,
                                       selectedFarm['_id'],
                                       pigData['uuid'],
-                                      pigData['penUuid'],
                                       _priceController.text.isNotEmpty
                                           ? double.parse(_priceController.text)
                                           : 0,
@@ -310,7 +309,6 @@ class _QRCodeStatusState extends State<PigView> {
                                       userOwner,
                                       selectedFarm['_id'],
                                       pigData['uuid'],
-                                      pigData['penUuid'],
                                       _priceController.text.isNotEmpty
                                           ? double.parse(_priceController.text)
                                           : 0,
@@ -528,6 +526,7 @@ class _QRCodeStatusState extends State<PigView> {
                           try {
                             await pigService.updatePigDetails(
                                 widget.pigUUID,
+                                selectedFarm['_id'],
                                 _pigPenNumberController.text,
                                 _pigSexController.text == 'Male',
                                 DateTime.parse(_pigDOBController.text),

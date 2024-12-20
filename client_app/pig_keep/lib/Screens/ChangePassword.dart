@@ -47,11 +47,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/junmar.png',
-                              fit: BoxFit.cover,
-                              width: 133,
-                              height: 133,
+                            child: Opacity(
+                              opacity: 0.7,
+                              child: Image.asset(
+                                'assets/icons/Farmer.png',
+                                fit: BoxFit.cover,
+                                width: 133,
+                                height: 133,
+                              ),
                             ),
                           ),
                         ),
@@ -61,7 +64,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                         TextButton(
                           onPressed: () {},
                           child: Text(
-                            'Change Profile Picture',
+                            'Change Password',
                             style: TextStyle(
                               color: appTertiary,
                               fontSize: 12.sp,

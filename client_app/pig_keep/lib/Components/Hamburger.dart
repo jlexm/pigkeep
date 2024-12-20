@@ -56,7 +56,7 @@ class _HamburgerState extends State<Hamburger> {
                   children: [
                     SizedBox(width: 16.w),
                     const CircleAvatar(
-                      backgroundImage: AssetImage('assets/images/junmar.png'),
+                      backgroundImage: AssetImage('assets/icons/Farmer.png'),
                       radius: 25.0,
                     ),
                     SizedBox(width: 11.w),

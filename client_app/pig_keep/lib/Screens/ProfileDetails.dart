@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Api/user_api.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/Greenbtn.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
-import 'package:pig_keep/Components/MyUsernameField.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
+import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/Store/auth_storage.dart';
 
 class ProfileDetails extends StatefulWidget {
   const ProfileDetails({super.key});
@@ -21,8 +26,24 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phonenumberController = TextEditingController();
+
+  Future<void> getInitialData() async {
+    print('TESTING USER');
+    var user = await UserApi.getMyDetails();
+    _emailController.text = user['email'];
+    _usernameController.text = user['username'];
+    _firstnameController.text = user['first_name'];
+    _lastnameController.text = user['last_name'];
+    _phonenumberController.text = user['phone_number'];
+  }
+
+  @override
+  void initState() {
+    getInitialData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,11 +70,14 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/images/junmar.png',
-                              fit: BoxFit.cover,
-                              width: 133,
-                              height: 133,
+                            child: Opacity(
+                              opacity: 0.7,
+                              child: Image.asset(
+                                'assets/icons/Farmer.png',
+                                fit: BoxFit.cover,
+                                width: 133,
+                                height: 133,
+                              ),
                             ),
                           ),
                         ),
@@ -81,6 +105,26 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                       child: Column(
                         children: [
                           RecyclableTextFormField(
+                            //username
+                            controller: _usernameController,
+                            labelText: 'Username',
+                            hintText: 'Enter your Username',
+                            icon: Icons.mail,
+                            readOnly: true,
+                            enabled: false,
+                            //iconSize: 20,
+                            textSize: 14.sp,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your Username';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          RecyclableTextFormField(
                             //email
                             controller: _emailController,
                             labelText: 'Email',
@@ -90,24 +134,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Email';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          RecyclableTextFormField(
-                            //username
-                            controller: _usernameController,
-                            labelText: 'Username',
-                            hintText: 'Enter your Username',
-                            icon: Icons.mail,
-                            //iconSize: 20,
-                            textSize: 14.sp,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Username';
                               }
                               return null;
                             },
@@ -150,24 +176,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             height: 15.h,
                           ),
                           RecyclableTextFormField(
-                            //address
-                            controller: _addressController,
-                            labelText: 'Address',
-                            hintText: 'Enter your Address',
-                            icon: Icons.home,
-                            iconSize: 30.0,
-                            textSize: 14.sp,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Address';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          RecyclableTextFormField(
                             //phonenumber
                             controller: _phonenumberController,
                             labelText: 'Phone Number',
@@ -189,7 +197,28 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           ),
                           MyGreenBtn(
                             name: "Save",
-                            onPressed: () {},
+                            onPressed: () async {
+                              try {
+                                await UserApi.updateMyDetails({
+                                  'email': _emailController.text,
+                                  'phone_number': _phonenumberController.text,
+                                  'first_name': _firstnameController.text,
+                                  'last_name': _lastnameController.text,
+                                });
+
+                                // update localStorage username that was rcved from login api
+                                await AuthStorage.setUser(jsonEncode({
+                                  "username": _usernameController.text,
+                                  "first_name": _firstnameController.text,
+                                  "last_name": _lastnameController.text
+                                }));
+
+                                ToastService().showSuccessToast(
+                                    "Succesfully updated profile");
+                              } catch (err) {
+                                ToastService().showErrorToast(err.toString());
+                              }
+                            },
                             borderRadius: 10.0,
                           ),
                           SizedBox(

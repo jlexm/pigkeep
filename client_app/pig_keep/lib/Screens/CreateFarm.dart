@@ -7,6 +7,8 @@ import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:provider/provider.dart';
 
 class Createfarm extends StatefulWidget {
   const Createfarm({super.key});
@@ -19,9 +21,13 @@ class _CreatefarmState extends State<Createfarm> {
   void createFarm(String farmName, String farmAdress) async {
     try {
       await FarmApi.createFarm(farmName, farmAdress);
+      await context.read<GlobalProvider>().fetchFarms();
       ToastService().showSuccessToast('Farm successfully created!');
-      context.pop();
-      navigationService.replaceTo('/home');
+
+      Future.delayed(Duration(seconds: 1), () {
+        context.pop();
+        navigationService.replaceTo('/home');
+      });
     } catch (err) {
       ToastService().showErrorToast(err.toString());
     }

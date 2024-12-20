@@ -61,7 +61,10 @@ class GlobalProvider with ChangeNotifier {
     return userFarms;
   }
 
-  Future<void> setSelectedFarm(Map<String, dynamic> farm) async {
+  Future<void> setSelectedFarm(Map<String, dynamic>? farm) async {
+    if (farm == null) {
+      return;
+    }
     userFarms = userFarms.map((f) {
       if (f['_id'] == farm['_id']) {
         return {...farm, 'is_selected': true};
@@ -78,9 +81,14 @@ class GlobalProvider with ChangeNotifier {
     await setSelectedFarm(farm);
   }
 
-  Map<String, dynamic> getSelectedFarm() {
+  Map<String, dynamic>? getSelectedFarm() {
+    if (userFarms.isEmpty) {
+      return null;
+    }
+
     return userFarms
         .firstWhere((f) => f['is_selected'] != null && f['is_selected']);
+    ;
   }
 
   Future<dynamic> getCurrentUser() async {

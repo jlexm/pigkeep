@@ -9,7 +9,14 @@ class LedgerService {
   Isar db = globalLocator.get<DatabaseService>().db;
 
   Future<void> ledgePig(String status, String userOwner, String farmID,
-      String pigUuid, String penUuid, double priceSold, double weightKG) async {
+      String pigUuid, double priceSold, double weightKG) async {
+    if (weightKG < 0) {
+      throw "Weight cannot be negative";
+    }
+
+    if (priceSold < 0) {
+      throw "Price must not contain negative number";
+    }
     var ledger = Ledger()
       ..userOwner = userOwner
       ..farmID = farmID
@@ -33,7 +40,8 @@ class LedgerService {
     pig.lastWeightRecorded = DateTime.now();
     pig.updatedAt = DateTime.now();
 
-    PigPen? pen = await db.pigPens.filter().uuidEqualTo(penUuid).findFirst();
+    PigPen? pen =
+        await db.pigPens.filter().uuidEqualTo(pig.penUuid).findFirst();
     if (pen == null) {
       throw 'Pen not found';
     }

@@ -1,8 +1,14 @@
 import 'package:pig_keep/Api/api.dart';
 
 class UserApi {
-  static register(String email, String firstName , String lastName, String username, String? phoneNumber,
-      String password, String confirmPassword) {
+  static register(
+      String email,
+      String firstName,
+      String lastName,
+      String username,
+      String? phoneNumber,
+      String password,
+      String confirmPassword) {
     return API.post('/users/sign-up', {
       "email": email,
       "first_name": firstName,
@@ -16,5 +22,13 @@ class UserApi {
 
   static getUser(String username) {
     return API.get('/users/$username');
+  }
+
+  static getMyDetails() {
+    return API.get('/users/my-details');
+  }
+
+  static updateMyDetails(Map<String, dynamic> body) {
+    return API.post('/users/my-details', body);
   }
 }

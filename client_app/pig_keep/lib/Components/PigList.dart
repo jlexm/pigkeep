@@ -61,7 +61,8 @@ class _PigListState extends State<PigList> {
         'P-${_pigNumberController.text.toString().padLeft(3, '0')}';
 
     // check if pig nubmer already exists on local db
-    final existingPig = await pigService.fetchPigByNumber(pigNumber);
+    final existingPig =
+        await pigService.fetchPigByNumber(pigNumber, selectedFarm['_id']);
     if (existingPig != null) {
       throw 'Pig Number already exists';
     }

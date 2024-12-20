@@ -20,8 +20,16 @@ export class UserService {
     return newUser.toObject()
   }
 
-  async getUser(filter: Partial<User>) {
+  getUser(filter: Partial<User>) {
     return this.userModel.findOne(filter).exec()
+  }
+
+  getUserDetailsByUsername(username: string) {
+    return this.userModel.findOne({ username }).exec()
+  }
+
+  updateUserDetails(username: string, user: any) {
+    return this.userModel.updateOne({ username }, { $set: { ...user } })
   }
 
   async getUserCredentials(username: string) {

@@ -44,6 +44,9 @@ import {
 import { PigEventService } from './pig-event/pig-event.service'
 import { PigEventController } from './pig-event/pig-event.controller'
 import { PigEvent, PigEventSchema } from 'schemas/pigEvent.schema'
+import { Legder, LegderSchema } from 'schemas/ledger.schema'
+import { LedgerController } from './ledger/ledger.controller';
+import { LedgerService } from './ledger/ledger.service';
 
 @Module({
   imports: [
@@ -70,6 +73,7 @@ import { PigEvent, PigEventSchema } from 'schemas/pigEvent.schema'
       { name: FeedsHistory.name, schema: FeedsHistorySchema },
       { name: MedicinesHistory.name, schema: MedicinesHistorySchema },
       { name: PigEvent.name, schema: PigEventSchema },
+      { name: Legder.name, schema: LegderSchema },
     ]),
   ],
   controllers: [
@@ -86,6 +90,7 @@ import { PigEvent, PigEventSchema } from 'schemas/pigEvent.schema'
     FeedHistoryController,
     MedicineHistoryController,
     PigEventController,
+    LedgerController,
   ],
   providers: [
     AppService,
@@ -101,6 +106,7 @@ import { PigEvent, PigEventSchema } from 'schemas/pigEvent.schema'
     FeedHistoryService,
     MedicineHistoryService,
     PigEventService,
+    LedgerService,
   ],
 })
 export class AppModule {}
