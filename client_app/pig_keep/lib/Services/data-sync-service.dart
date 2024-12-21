@@ -785,6 +785,7 @@ class DataSyncService {
 
           ledger ??= Ledger()
             ..farmID = apiLedger['farmID']
+            ..userOwner = apiLedger['userOwner']
             ..uuid = apiLedger['uuid']
             ..pigUuid = apiLedger['pigUuid']
             ..status = apiLedger['status']

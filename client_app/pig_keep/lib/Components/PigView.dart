@@ -47,6 +47,8 @@ class _QRCodeStatusState extends State<PigView> {
   final TextEditingController _pigWeightKGController = TextEditingController();
   final TextEditingController _pigNumberController = TextEditingController();
 
+  String? penUuidHidden;
+
   // sell controllers
   final TextEditingController _priceController = TextEditingController();
 
@@ -73,7 +75,10 @@ class _QRCodeStatusState extends State<PigView> {
       _pigDOBController.text = pigData['dob'].toString().split(' ')[0];
       _pigSexController.text = pigData['sex'] ? 'Male' : 'Female';
       //_pigParentPigNumberController.text
-      _pigPenNumberController.text = pigData['penUuid'];
+      var pen = pigPens.firstWhere((pen) => pen.uuid == pigData['penUuid']);
+
+      _pigPenNumberController.text = '${pen.penNumber} - ${pen.penType}';
+      penUuidHidden = pigData['penUuid'];
       _pigWeightKGController.text =
           pigData['weightKG'] != null ? pigData['weightKG'].toString() : '';
     });
@@ -501,6 +506,8 @@ class _QRCodeStatusState extends State<PigView> {
                             controller: _pigPenNumberController,
                             labelText: 'Pen Number',
                             showDropdown: true,
+                            isHiddenText: true,
+                            onChanged: (v) => {penUuidHidden = v},
                             dropdownItems: pigPens
                                 .map((pen) => CustomDropDownItem(pen.uuid,
                                     '${pen.penNumber} - ${pen.penType}'))
@@ -527,7 +534,7 @@ class _QRCodeStatusState extends State<PigView> {
                             await pigService.updatePigDetails(
                                 widget.pigUUID,
                                 selectedFarm['_id'],
-                                _pigPenNumberController.text,
+                                penUuidHidden!,
                                 _pigSexController.text == 'Male',
                                 DateTime.parse(_pigDOBController.text),
                                 _pigNumberController.text,

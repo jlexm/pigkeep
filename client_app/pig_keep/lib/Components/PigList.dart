@@ -32,6 +32,9 @@ class _PigListState extends State<PigList> {
   final TextEditingController _pigSexController = TextEditingController();
   final TextEditingController _pigPenController = TextEditingController();
 
+  String? pigUuidHidden;
+  String? penUuidHidden;
+
   // pig db
   final pigService = globalLocator.get<PigService>();
   final penService = globalLocator.get<PigPenService>();
@@ -70,9 +73,9 @@ class _PigListState extends State<PigList> {
     await pigService.addPig(
         userOwner,
         selectedFarm['_id'],
-        _pigPenController.text,
+        penUuidHidden!,
         pigNumber,
-        _pigParentController.text,
+        pigUuidHidden,
         _pigSexController.text == 'Male',
         DateTime.parse(_pigDOBController.text));
     await getPigs();
@@ -217,6 +220,8 @@ class _PigListState extends State<PigList> {
                                         controller: _pigParentController,
                                         labelText: 'Parent Number',
                                         showDropdown: true,
+                                        isHiddenText: true,
+                                        onChanged: (v) => {pigUuidHidden = v},
                                         dropdownItems: pigs
                                             .where((pig) =>
                                                 (pig['ageCategory'] == 'Sow') &&
@@ -249,6 +254,8 @@ class _PigListState extends State<PigList> {
                                         controller: _pigPenController,
                                         labelText: 'Pen Number',
                                         showDropdown: true,
+                                        isHiddenText: true,
+                                        onChanged: (v) => {penUuidHidden = v},
                                         dropdownItems: pigPens
                                             .map((pen) => CustomDropDownItem(
                                                 pen.uuid,
@@ -271,6 +278,8 @@ class _PigListState extends State<PigList> {
                                         _pigParentController.clear();
                                         _pigSexController.clear();
                                         _pigPenController.clear();
+                                        penUuidHidden = null;
+                                        pigUuidHidden = null;
                                       } catch (error) {
                                         ToastService()
                                             .showErrorToast(error.toString());

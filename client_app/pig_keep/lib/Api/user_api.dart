@@ -31,4 +31,9 @@ class UserApi {
   static updateMyDetails(Map<String, dynamic> body) {
     return API.post('/users/my-details', body);
   }
+
+  static updatePassword(String oldPassword, String password) {
+    return API.post('/users/my-password',
+        {'old_password': oldPassword, 'password': password});
+  }
 }

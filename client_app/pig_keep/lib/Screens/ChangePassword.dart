@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pig_keep/Api/user_api.dart';
 import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/Greenbtn.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/MyUsernameField.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -143,7 +145,23 @@ class _ChangePasswordState extends State<ChangePassword> {
                           ),
                           MyGreenBtn(
                             name: "Save",
-                            onPressed: () {},
+                            onPressed: () async {
+                              try {
+                                if (_newpasswordController.text !=
+                                    _confirmpasswordController.text) {
+                                  throw 'Confirm Password does not match!';
+                                }
+
+                                await UserApi.updatePassword(
+                                    _oldpasswordController.text,
+                                    _newpasswordController.text);
+
+                                ToastService().showSuccessToast(
+                                    "Succesfully updated password");
+                              } catch (err) {
+                                ToastService().showErrorToast(err.toString());
+                              }
+                            },
                             borderRadius: 10.0,
                           ),
                           SizedBox(

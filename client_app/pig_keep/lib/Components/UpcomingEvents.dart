@@ -31,6 +31,8 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
   final TextEditingController _pigUuidController = TextEditingController();
   final TextEditingController _eventTypeController = TextEditingController();
 
+  String? pigUuidHidden;
+
   void _confirmDeletion(BuildContext context, int index) {
     showDialog(
       context: context,
@@ -226,6 +228,8 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                                 labelText: 'Pig Number',
                                 hintText: 'Pig Number',
                                 showDropdown: true,
+                                isHiddenText: true,
+                                onChanged: (v) => {pigUuidHidden = v},
                                 dropdownItems: widget.pigs == null
                                     ? []
                                     : widget.pigs!
@@ -262,12 +266,13 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                                 widget.updatePigEvent!(
                                     event.uuid,
                                     DateTime.parse(_eventDateController.text),
-                                    _pigUuidController.text,
+                                    pigUuidHidden!,
                                     _eventTypeController.text);
                                 context.pop();
                                 _eventDateController.clear();
                                 _eventTypeController.clear();
                                 _pigUuidController.clear();
+                                pigUuidHidden = null;
                               } catch (err) {
                                 ToastService().showErrorToast(err.toString());
                               }

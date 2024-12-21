@@ -43,6 +43,8 @@ class _MedicalRecordsState extends State<Medicalrecords> {
   final TextEditingController _quantityEController = TextEditingController();
   final TextEditingController _pigNumberEController = TextEditingController();
 
+  String? pigUuidHidden;
+
   // vars
   var selectedFarm;
   late String userOwner;
@@ -149,6 +151,8 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                               RecyclableTextFormField(
                                 controller: _pigNumberEController,
                                 showDropdown: true,
+                                isHiddenText: true,
+                                onChanged: (v) => {pigUuidHidden = v},
                                 dropdownItems: pigs
                                     .where((pig) => pig['status'] == 'alive')
                                     .map((pig) => CustomDropDownItem(
@@ -174,12 +178,13 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                                     '',
                                     int.parse(_quantityEController.text),
                                     0,
-                                    _pigNumberEController.text);
+                                    pigUuidHidden);
                                 await fetchMedData();
                                 context.pop();
                                 _medNameEController.clear();
                                 _quantityEController.text = '1';
                                 _pigNumberEController.clear();
+                                pigUuidHidden = null;
                               } catch (err) {
                                 ToastService().showErrorToast(err.toString());
                               }

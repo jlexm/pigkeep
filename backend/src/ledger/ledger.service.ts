@@ -22,6 +22,8 @@ export class LedgerService {
       query.updatedAt = { $gt: last_successful_read_sync }
     }
 
+    console.log(query)
+
     return this.ledgerModel.find(query).sort({ updatedAt: 1 }).exec()
   }
 

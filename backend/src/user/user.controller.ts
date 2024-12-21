@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Req,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common'
 import { CreateUserDto, GetUserParamsDto, RegisterUserDto } from './user.dto'
@@ -99,6 +100,36 @@ export class UserController {
     await this.userSvc.updateUserDetails(req.user.username, body)
 
     return { success: true, message: 'Updated!' }
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('my-password')
+  async updatePassword(@Req() req: { user: ReqUser }, @Body() body) {
+    const { old_password, password } = body
+    const { username } = req.user
+    const user = await this.userSvc.getUserCredentials(username)
+
+    // check if user found
+    if (!user) {
+      throw new UnauthorizedException('Invalid username or password')
+    }
+
+    // check if password match
+    const isPasswordMatch = await this.authSvc.comparePasswords(
+      old_password,
+      user.password
+    )
+
+    if (!isPasswordMatch) {
+      throw new UnauthorizedException('Invalid username or password')
+    }
+
+    // convert pass to hash pass for security purposes
+    const hashedPassword = await this.authSvc.hashPassword(password)
+
+    await this.userSvc.updateUserPassword(username, hashedPassword)
+
+    return { success: true, message: 'Password updated!' }
   }
 
   @Get(':username')

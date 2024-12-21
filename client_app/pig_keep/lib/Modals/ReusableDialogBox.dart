@@ -106,34 +106,35 @@ class RecyclableTextFormField extends StatelessWidget {
   final bool readOnly;
   final void Function()? onTap;
   final bool enabled;
+  final bool isHiddenText;
 
-  const RecyclableTextFormField({
-    super.key,
-    required this.controller,
-    this.labelText,
-    this.hintText,
-    this.obscureText = false,
-    this.keyboardType = TextInputType.text,
-    this.textInputAction = TextInputAction.done,
-    this.validator,
-    this.onSaved,
-    this.onChanged,
-    this.maxLines = 1,
-    this.minLines = 1,
-    this.icon,
-    this.imagePath,
-    this.textSize,
-    this.hintTextSize,
-    this.height,
-    this.iconSize,
-    this.contentPadding,
-    this.dropdownItems,
-    this.showDropdown = false,
-    this.showIcon = true,
-    this.readOnly = false,
-    this.onTap,
-    this.enabled = true,
-  });
+  const RecyclableTextFormField(
+      {super.key,
+      required this.controller,
+      this.labelText,
+      this.hintText,
+      this.obscureText = false,
+      this.keyboardType = TextInputType.text,
+      this.textInputAction = TextInputAction.done,
+      this.validator,
+      this.onSaved,
+      this.onChanged,
+      this.maxLines = 1,
+      this.minLines = 1,
+      this.icon,
+      this.imagePath,
+      this.textSize,
+      this.hintTextSize,
+      this.height,
+      this.iconSize,
+      this.contentPadding,
+      this.dropdownItems,
+      this.showDropdown = false,
+      this.showIcon = true,
+      this.readOnly = false,
+      this.onTap,
+      this.enabled = true,
+      this.isHiddenText = false});
 
   @override
   Widget build(BuildContext context) {
@@ -192,9 +193,16 @@ class RecyclableTextFormField extends StatelessWidget {
                   child: DropdownButton<String>(
                     icon: const Icon(Icons.arrow_drop_down),
                     onChanged: (String? newValue) {
-                      controller.text = newValue!;
+                      if (!isHiddenText) {
+                        controller.text = newValue!;
+                      } else {
+                        var item = dropdownItems!
+                            .where((it) => it.value == newValue)
+                            .first;
+                        controller.text = item.label;
+                      }
                       if (onChanged != null) {
-                        onChanged!(newValue);
+                        onChanged!(newValue!);
                       }
                     },
                     items: dropdownItems!.map<DropdownMenuItem<String>>(

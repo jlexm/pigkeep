@@ -36,6 +36,8 @@ class _LedgerState extends State<Ledger> {
   final TextEditingController _weightKGController = TextEditingController();
   final TextEditingController _costController = TextEditingController();
 
+  String? pigUuidHidden;
+
   final TextEditingController _pigUuidController = TextEditingController();
 
   // pig db
@@ -235,6 +237,9 @@ class _LedgerState extends State<Ledger> {
                                                     _pigNumberController,
                                                 labelText: 'Pig Number',
                                                 showDropdown: true,
+                                                isHiddenText: true,
+                                                onChanged: (v) =>
+                                                    {pigUuidHidden = v},
                                                 dropdownItems: pigs
                                                     .where((pig) =>
                                                         pig['status'] ==
@@ -278,7 +283,7 @@ class _LedgerState extends State<Ledger> {
                                                     'sold',
                                                     userOwner,
                                                     selectedFarm['_id'],
-                                                    _pigNumberController.text,
+                                                    pigUuidHidden!,
                                                     _costController
                                                             .text.isNotEmpty
                                                         ? double.parse(
@@ -295,6 +300,7 @@ class _LedgerState extends State<Ledger> {
                                                 _pigNumberController.clear();
                                                 _costController.clear();
                                                 _weightKGController.clear();
+                                                pigUuidHidden = null;
                                                 Navigator.of(context).pop();
                                               } catch (err) {
                                                 ToastService().showErrorToast(
@@ -358,6 +364,9 @@ class _LedgerState extends State<Ledger> {
                                                 controller: _pigUuidController,
                                                 labelText: 'Pig Number',
                                                 showDropdown: true,
+                                                isHiddenText: true,
+                                                onChanged: (v) =>
+                                                    {pigUuidHidden = v},
                                                 dropdownItems: pigs
                                                     .where((pig) =>
                                                         pig['status'] ==
@@ -382,11 +391,12 @@ class _LedgerState extends State<Ledger> {
                                                     'deceased',
                                                     userOwner,
                                                     selectedFarm['_id'],
-                                                    _pigUuidController.text,
+                                                    pigUuidHidden!,
                                                     0,
                                                     0);
                                                 await getLedgerDetails();
                                                 _pigUuidController.clear();
+                                                pigUuidHidden = null;
                                                 Navigator.of(context).pop();
                                               } catch (err) {
                                                 ToastService().showErrorToast(

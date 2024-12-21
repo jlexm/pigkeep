@@ -32,6 +32,10 @@ export class UserService {
     return this.userModel.updateOne({ username }, { $set: { ...user } })
   }
 
+  updateUserPassword(username: string, password: string) {
+    return this.userModel.updateOne({ username }, { $set: { password } })
+  }
+
   async getUserCredentials(username: string) {
     return this.userModel
       .findOne(

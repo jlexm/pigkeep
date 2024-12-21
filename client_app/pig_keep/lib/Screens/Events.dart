@@ -39,6 +39,8 @@ class _EventsState extends State<Events> {
   final TextEditingController _pigUuidController = TextEditingController();
   final TextEditingController _eventTypeController = TextEditingController();
 
+  String? pigUuidHidden;
+
   DateTime focusedDay = DateTime.now();
   DateTime? selectedDay;
   bool showUpcomingEvents = false;
@@ -318,6 +320,9 @@ class _EventsState extends State<Events> {
                                                     labelText: 'Pig Number',
                                                     hintText: 'Pig Number',
                                                     showDropdown: true,
+                                                    isHiddenText: true,
+                                                    onChanged: (v) =>
+                                                        {pigUuidHidden = v},
                                                     dropdownItems: pigs
                                                         .where((pig) =>
                                                             pig['status'] ==
@@ -377,6 +382,7 @@ class _EventsState extends State<Events> {
                                                         .clear();
                                                     _eventTypeController
                                                         .clear();
+                                                    pigUuidHidden = null;
                                                   } catch (err) {
                                                     ToastService()
                                                         .showErrorToast(
