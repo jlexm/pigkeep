@@ -55,11 +55,16 @@ class MedicineService {
       if (med.quantity < 0) {
         throw 'Not enough stock available';
       }
+
       med.updatedAt = DateTime.now();
     }
 
     if (isEditMode) {
       med.quantity = quantity;
+      med.dosage = dosage!;
+      med.medicineName = medicineName;
+      med.description = description!;
+      med.updatedAt = DateTime.now();
       await db.writeTxn(() async {
         await db.medicines.put(med!);
       });

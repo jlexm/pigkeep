@@ -168,6 +168,9 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                             ],
                             onSave: () async {
                               try {
+                                if (pigUuidHidden == null) {
+                                  throw 'Please select pig.';
+                                }
                                 // perform consume mode
                                 await medService.addMedicine(
                                     false,

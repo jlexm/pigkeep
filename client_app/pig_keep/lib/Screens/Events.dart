@@ -361,14 +361,16 @@ class _EventsState extends State<Events> {
                                                 ],
                                                 onSave: () async {
                                                   try {
+                                                    if (pigUuidHidden == null) {
+                                                      throw 'Please select pig!';
+                                                    }
                                                     await pigEventService
                                                         .addNewEvent(
                                                             selectedFarm['_id'],
                                                             DateTime.parse(
                                                                 _eventDateController
                                                                     .text),
-                                                            _pigUuidController
-                                                                .text,
+                                                            pigUuidHidden!,
                                                             _eventTypeController
                                                                 .text,
                                                             'Pending');
