@@ -4,7 +4,12 @@ import hugepig from '../../assets/hugepig.svg'
 import { Grid2, Stack, ThemeProvider, Typography } from '@mui/material'
 import theme from '../../Theme'
 
-export default function SimpleContainer() {
+interface SimpleContainerProps {
+  total_pigs: number,
+
+}
+
+export default function SimpleContainer({ total_pigs = 0 }: SimpleContainerProps) {
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} className="homeContainer">
@@ -26,7 +31,7 @@ export default function SimpleContainer() {
                   padding: 0, 
                 }}
               >
-                42
+                {total_pigs}
               </Typography>
 
               <Typography

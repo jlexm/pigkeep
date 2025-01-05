@@ -6,24 +6,41 @@ import BarGraph from '../components/Home/FinancialReport'
 import Guide from '../components/Home/Guide'
 import DropdownWithAddButton from '../components/Home/Dropdown'
 import theme from '../Theme'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { fetchMyFarms, getSelectedFarm, setSelectedFarm } from '../services/farm.service'
+import { fetchAllFarmPigs } from '../services/pig.service'
 
 const Home: React.FC = () => {
-  const [options, setOptions] = useState<string[]>([
-    'Alex Pig Farm',
-    'Dominic\'s Pig Farm',
-    'Den\'s Pig Farm',
-  ])
-  
   // Default selected farm 
-  const [selectedOption, setSelectedOption] = useState<string>('Dominix Pig Farm')
+  const [selectedOption, setSelectedOption] = useState<any>()
+  const [options, setOptions] = useState<any[]>([])
+
+  const [pigs, setPigs] = useState<any[]>([])
+
+  useEffect(() => {
+    (async () => {
+      const myFarms = await fetchMyFarms() as any
+      setOptions(myFarms)
+      const selectedFarm = getSelectedFarm() ?? myFarms[0]
+      if(selectedFarm) {
+        setSelectedOption(selectedFarm)
+      }
+      setSelectedFarm(selectedFarm)
+      
+      await fetchPigs(selectedFarm['_id']);
+
+    })()
+  },[])
+  
+
+  const fetchPigs = async (farm_id: string) => {
+    const pigs = await fetchAllFarmPigs(farm_id) as any
+    console.log(pigs)
+    setPigs(pigs)
+  }
 
   const handleAddNewItem = (newItem: string) => {
     setOptions((prevOptions) => [...prevOptions, newItem])
-  }
-
-  const handleSelectChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSelectedOption(event.target.value as string)
   }
 
   return (
@@ -41,12 +58,11 @@ const Home: React.FC = () => {
           <Grid2 size={{xs: 8, sm: 5, md: 6, lg: 5}}>
             <DropdownWithAddButton
               options={options}
-              selectedOption={selectedOption} // Pass the selected option
+              selected={selectedOption} // Pass the selected option
               onAddNewItem={handleAddNewItem}
-              onSelectChange={handleSelectChange} // Pass the change handler
             />
           </Grid2>
-          <SimpleContainer />
+          <SimpleContainer total_pigs={pigs.length} />
         </Grid2>
         <Grid2 size={{ xs: 12, lg: 6 }}>
           <BasicPie />

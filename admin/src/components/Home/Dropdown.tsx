@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Select,
   MenuItem,
@@ -17,19 +17,27 @@ import {
 } from '@mui/material'
 import theme from '../../Theme'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
+import { setSelectedFarm } from '../../services/farm.service'
 
 interface DropdownWithAddButtonProps {
-  options: string[]
+  options: any[]
+  selected: any
   onAddNewItem: (newItem: string) => void
 }
 
 const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
   options,
+  selected,
   onAddNewItem,
 }) => {
-  const [selectedOption, setSelectedOption] = useState('Dominix Pig Farm') // Set default option
+  const [selectedOption, setSelectedOption] = useState<any>(null) // Set default option
   const [openDialog, setOpenDialog] = useState(false)
   const [newItem, setNewItem] = useState('')
+
+  useEffect(() => {
+    console.log('SELECTED', selected)
+      setSelectedOption(selected)
+  }, [selected])
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string
@@ -37,6 +45,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
     if (value === 'add-new') {
       setOpenDialog(true) // Open the dialog for adding new items
     } else {
+      setSelectedFarm(value)
       setSelectedOption(value) // Select the existing option
     }
   }
@@ -71,7 +80,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                     fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
                   }}
                 >
-                  {selected}
+                  {selected.farm_name}
                 </span>
               ) : (
                 <span
@@ -99,7 +108,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
           >
             {options.map((option) => (
               <MenuItem
-                key={option}
+                key={option._id}
                 value={option}
                 sx={{
                   textAlign: 'left',
@@ -107,7 +116,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                   fontSize: 'clamp(1rem, 1.5vw, 1.2rem)', 
                 }}
               >
-                {option}
+                {option.farm_name}
               </MenuItem>
             ))}
             <MenuItem
