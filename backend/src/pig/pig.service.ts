@@ -29,8 +29,8 @@ export class PigService {
     return this.pigModel.findByIdAndDelete(id).exec()
   }
 
-  async getAllPigs(): Promise<Pig[]> {
-    return this.pigModel.find().exec()
+  async getAllPigs(farm_id: string): Promise<Pig[]> {
+    return this.pigModel.find({ farmID: farm_id }).exec()
   }
 
   async getAllSyncablePigs(

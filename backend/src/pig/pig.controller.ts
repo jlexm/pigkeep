@@ -64,9 +64,10 @@ export class PigController {
     return { message: 'Pig deleted successfully' }
   }
 
-  @Get()
-  async getAllPigs() {
-    return this.pigService.getAllPigs()
+  @Get('farm/:farm_id')
+  async getAllPigs(@Param('farm_id') farm_id) {
+    const pigs = await this.pigService.getAllPigs(farm_id)
+    return pigs
   }
 
   /* PIG SYNC */
