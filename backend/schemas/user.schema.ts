@@ -4,6 +4,21 @@ import { HydratedDocument } from 'mongoose'
 
 export type UserDocument = HydratedDocument<User>
 
+@Schema()
+export class AgeCategorySettings {
+  @Prop({ type: Number, required: true, min: 1 })
+  piglet: number;
+
+  @Prop({ type: Number, required: true, min: 1 })
+  weaner: number;
+
+  @Prop({ type: Number, required: true, min: 1 })
+  grower: number;
+
+  @Prop({ type: Number, required: true, min: 1 })
+  matured: number;
+}
+
 // this schema
 // auto genertes id stored in _id.
 // timestamps auto generetes created and updated fields.
@@ -48,6 +63,10 @@ export class User {
     required: true,
   })
   role_id: number // Reference to Role model
+
+  @Prop()
+  userAgeCategorySettings: AgeCategorySettings
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

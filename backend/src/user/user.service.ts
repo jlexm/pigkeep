@@ -90,4 +90,27 @@ export class UserService {
     }).exec()
   }
 
+  async getUserCategorySettings(username: string) {
+    return this.userModel.findOne({ username: { $regex: new RegExp(`^${username}$`, 'i') } }, {
+      userAgeCategorySettings: 1,
+    }).exec()
+  }
+
+  async updateUserCategorySettings(username: string, userAgeCategorySettings: any) {
+    try {
+      const updatedUser = await this.userModel.findOneAndUpdate(
+        { username }, // Filter by unique field
+        { userAgeCategorySettings }, // Updated fields
+        { new: true, runValidators: true } // Return updated document and validate schema
+      );
+      if (!updatedUser) {
+        throw new Error('Caretaker not found');
+      }
+      return updatedUser.toObject();
+    } catch (error) {
+      console.error('Error updating user', error.message);
+      throw error;
+    }
+  }
+
 }

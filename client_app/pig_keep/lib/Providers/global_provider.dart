@@ -3,22 +3,32 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pig_keep/Api/farm_api.dart';
+import 'package:pig_keep/Api/user_api.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Services/network-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 
 class GlobalProvider with ChangeNotifier {
   late List<Map<String, dynamic>> userFarms = [];
+  static dynamic userAgeCategorySettings;
 
   Future<void> fetchFarms() async {
     try {
       userFarms = [];
+      userAgeCategorySettings = null;
 
       // get userFarms from local storage
       String? userFarmsString = await AuthStorage.getUserFarms();
       if (userFarmsString != null) {
         List<dynamic> decodedFarms = jsonDecode(userFarmsString);
         userFarms = decodedFarms.cast<Map<String, dynamic>>();
+      }
+
+      // get userAgeCategorySettings from local storage
+      String? userAgeCategorySettingsString =
+          await AuthStorage.getUserAgeCategorySettings();
+      if (userAgeCategorySettingsString != null) {
+        userAgeCategorySettings = jsonDecode(userAgeCategorySettingsString);
       }
 
       if (await NetworkService.checkInternetConnection()) {
@@ -37,6 +47,12 @@ class GlobalProvider with ChangeNotifier {
             });
           }
         }
+
+        // get user settings from api
+        userAgeCategorySettings = await UserApi.getUserAgeCategorySettings();
+        // save user settings to local
+        await AuthStorage.setUserAgeCategorySettings(
+            jsonEncode(userAgeCategorySettings));
       }
 
       // when farm is empty show create farm screen
@@ -77,6 +93,10 @@ class GlobalProvider with ChangeNotifier {
     }).toList();
     await AuthStorage.setUserFarms(jsonEncode(userFarms));
     notifyListeners();
+  }
+
+  static dynamic getUserAgeCategorySettings() {
+    return userAgeCategorySettings;
   }
 
   Future<void> reloadCurrentFarm() async {

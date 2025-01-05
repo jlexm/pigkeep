@@ -81,11 +81,10 @@ class _HomeState extends State<Home> {
           break;
         case 'Sow':
           ctotalSow += 1;
+          ctotalMatured += 1;
           break;
         case 'Boar':
           ctotalBoar += 1;
-          break;
-        case 'Matured':
           ctotalMatured += 1;
           break;
       }

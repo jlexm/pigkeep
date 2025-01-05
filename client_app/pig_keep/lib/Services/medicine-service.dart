@@ -21,6 +21,9 @@ class MedicineService {
     if (quantity <= 0) {
       throw 'Invalid Quantity Value';
     }
+    if (cost < 0) {
+      throw 'Invalid Cost Value';
+    }
 
     // upsert med type
     var med = await db.medicines

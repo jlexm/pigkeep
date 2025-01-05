@@ -223,6 +223,7 @@ class _HamburgerState extends State<Hamburger> {
                     Navigator.of(context).pop();
                     AuthStorage.clearToken();
                     AuthStorage.setUserFarms("[]");
+                    AuthStorage.clearUserAgeCategorySettings();
                     context.go('/login');
                   },
                 ),

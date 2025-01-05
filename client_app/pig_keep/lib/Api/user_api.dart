@@ -62,4 +62,28 @@ class UserApi {
       'password': password
     });
   }
+
+  static getUserAgeCategorySettings() {
+    return API.get('/users/category/settings');
+  }
+
+  static updateUserAgeCategorySettings(
+      int pigletDays, int weanerDays, int growerDays, int maturedDays) {
+    if (pigletDays >= weanerDays) {
+      throw 'Piglet days should be less than weaner days';
+    }
+    if (weanerDays >= growerDays) {
+      throw 'Weaners days should be less than Growers days';
+    }
+    if (growerDays >= maturedDays) {
+      throw 'Grower days should be less than matured days';
+    }
+
+    return API.patch('/users/category/settings', {
+      'piglet': pigletDays,
+      'weaner': weanerDays,
+      'grower': growerDays,
+      'matured': maturedDays
+    });
+  }
 }

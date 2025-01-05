@@ -36,4 +36,17 @@ class AuthStorage {
   static Future<void> setUserFarms(String serializedFarms) async {
     await storage.write(key: 'user_farms', value: serializedFarms);
   }
+
+  static Future<String?> getUserAgeCategorySettings() async {
+    return await storage.read(key: 'user_age_cat_settings');
+  }
+
+  // serialized settings aka object that is converted to string by using jsonEncode from dart convert lib
+  static Future<void> setUserAgeCategorySettings(String serializedFarms) async {
+    await storage.write(key: 'user_age_cat_settings', value: serializedFarms);
+  }
+
+  static Future<void> clearUserAgeCategorySettings() async {
+    await storage.delete(key: 'user_age_cat_settings');
+  }
 }

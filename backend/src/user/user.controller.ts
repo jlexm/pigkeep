@@ -197,4 +197,20 @@ export class UserController {
   async getCaretakers(@Req() req: { user: ReqUser }) {
     return await this.userSvc.getCaretakers(req.user.username)
   }
+
+  @UseGuards(AuthGuard)
+  @Get('category/settings')
+  async getUseAgeCategorySettings(@Req() req: { user: ReqUser }) {
+    const user = (await this.userSvc.getUserCategorySettings(req.user.username)).toObject()
+    if(!user || !user.userAgeCategorySettings) {
+      return {}
+    }
+    return { ...user.userAgeCategorySettings}
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('category/settings')
+  async updateUseAgeCategorySettings(@Req() req: { user: ReqUser }, @Body() body) {
+    return await this.userSvc.updateUserCategorySettings(req.user.username, body)
+  }
 }

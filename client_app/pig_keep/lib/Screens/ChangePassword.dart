@@ -63,15 +63,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                         SizedBox(
                           height: 5.h,
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Change Password',
-                            style: TextStyle(
-                              color: appTertiary,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w300,
-                            ),
+                        Text(
+                          'Change Password',
+                          style: TextStyle(
+                            color: appTertiary,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                       ],

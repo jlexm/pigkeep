@@ -321,15 +321,6 @@ class _FeedInventoryState extends State<FeedInventory> {
         TransactionFeedInventory(
           feedHistory: feedHistory,
         ), //Transaction_FeedInventory.dart
-        SizedBox(
-          //remove this later
-          height: 600.h,
-        ),
-        const Text('-End of SCSV-'),
-        SizedBox(
-          //remove this later
-          height: 110.h,
-        ),
       ],
     );
   }

@@ -1,28 +1,52 @@
 import 'package:intl/intl.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
 
 class PigHelper {
   static Map<String, String> determinePigStage(bool isMale, DateTime pigDOB) {
+    // get current user age global settings
+    dynamic settings = GlobalProvider.getUserAgeCategorySettings();
+
     int daysOld = DateTime.now().difference(pigDOB).inDays;
     // int weeksOld = (daysOld / 7).abs().floor();
 
+    int pigletDays = 35;
+    int weanerDays = 80;
+    int growerDays = 123;
+    int maturedDays = 182;
+
+    if (settings != null) {
+      if (settings['piglet'] != null) {
+        pigletDays = settings['piglet'];
+      }
+      if (settings['weaner'] != null) {
+        weanerDays = settings['weaner'];
+      }
+      if (settings['grower'] != null) {
+        growerDays = settings['grower'];
+      }
+      if (settings['matured'] != null) {
+        maturedDays = settings['matured'];
+      }
+    }
+
     String stage = 'Piglet';
     String feed = 'Booster';
-    if (daysOld <= 35) {
+    if (daysOld <= pigletDays) {
       stage = 'Piglet';
       feed = 'Booster';
-    } else if (daysOld <= 80) {
+    } else if (daysOld <= weanerDays) {
       stage = 'Weaner';
       if (daysOld <= 45) {
         feed = 'Pre-Starter';
       } else {
         feed = 'Starter';
       }
-    } else if (daysOld <= 123) {
+    } else if (daysOld <= growerDays) {
       stage = 'Grower';
       feed = 'Grower';
     } else {
       stage = 'Matured';
-      if (daysOld >= 182) {
+      if (daysOld >= maturedDays) {
         if (isMale) {
           stage = 'Boar';
         } else
