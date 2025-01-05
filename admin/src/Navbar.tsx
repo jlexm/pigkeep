@@ -15,6 +15,7 @@ import './Navbar.css'
 import { MenuItem } from '@mui/material'
 import { ThemeProvider } from '@emotion/react'
 import theme from './Theme'
+import { getUserBasicInfo } from './services/auth.service'
 
 const pages = [
   { name: 'Home', path: '/home' },
@@ -28,6 +29,7 @@ const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const location = useLocation()
   const navigate = useNavigate()
+  const [currUser, setCurrUser] = React.useState<any>()
 
   React.useEffect(() => {
     // Redirect to /home if no route matches
@@ -35,6 +37,11 @@ const Navbar = () => {
       navigate('/home')
     }
   }, [location.pathname, navigate])
+
+  React.useEffect(() => {
+    const user = getUserBasicInfo()
+    setCurrUser(user);
+  }, [])
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -56,7 +63,7 @@ const Navbar = () => {
         elevation={0}
       >
         <Container
-          maxWidth="xxl"
+          maxWidth='xxl'
           sx={{
             paddingX: { xs: '16px', sm: 5 },
             marginLeft: 0,
@@ -127,7 +134,7 @@ const Navbar = () => {
                   }}
                 >
                   <img
-                    src="src/assets/GreenLogo.png"
+                    src="/src/assets/GreenLogo.png"
                     alt="Pigkeep Logo"
                     style={{ width: 40, marginRight: 8 }}
                   />
@@ -202,7 +209,7 @@ const Navbar = () => {
                   fontSize: { xs: '11px', md: '16px' },
                 }}
               >
-                Alexander
+                {currUser?.first_name ?? '-'}
               </Typography>
               <Tooltip title="Profile">
                 <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>

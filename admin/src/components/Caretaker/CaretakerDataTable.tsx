@@ -16,6 +16,10 @@ import {
 import ReusableDialogBox from '../../modals/ReusableDialogBox'
 import theme from '../../Theme'
 
+interface CareTakerTableProps {
+  rows: any[]
+}
+
 // Function to generate columns
 const columns: (
   visiblePasswords: Record<number, boolean>,
@@ -29,8 +33,8 @@ const columns: (
     resizable: false,
   },
   {
-    field: 'email',
-    headerName: 'Email',
+    field: 'first_name',
+    headerName: 'First Name',
     flex: 1,
     minWidth: 150,
     resizable: false,
@@ -38,7 +42,16 @@ const columns: (
     align: 'left',
   },
   {
-    field: 'phoneNum',
+    field: 'last_name',
+    headerName: 'Last Name',
+    flex: 1,
+    minWidth: 150,
+    resizable: false,
+    headerAlign: 'left',
+    align: 'left',
+  },
+  {
+    field: 'phone_number',
     headerName: 'Phone Number',
     flex: 1,
     minWidth: 170,
@@ -55,15 +68,15 @@ const columns: (
     headerAlign: 'right',
     align: 'right',
     renderCell: (params) => {
-      const isPasswordVisible = visiblePasswords[params.row.id] || false
+      const isPasswordVisible = visiblePasswords[params.row._id] || false
       return (
         <>
           <span>
-            {isPasswordVisible ? params.value : '•'.repeat(params.value.length)}
+            {isPasswordVisible ? params.value : '•'.repeat(Math.min(12, params.value.length))}
           </span>
           <IconButton
             sx={{ paddingRight: 0 }}
-            onClick={() => togglePasswordVisibility(params.row.id)}
+            onClick={() => togglePasswordVisibility(params.row._id)}
           >
             {isPasswordVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
           </IconButton>
@@ -170,6 +183,7 @@ const initialRows = [
     email: 'johnshi@gmail.com',
     phoneNum: '09214356843',
     password: '123434',
+    phone_number: '123'
   },
   {
     id: 2,
@@ -196,12 +210,17 @@ const initialRows = [
 
 const paginationModel = { page: 0, pageSize: 5 }
 
-export default function CaretakerDataTable() {
+export default function CaretakerDataTable(props: CareTakerTableProps) {
+
   const [searchText, setSearchText] = React.useState('')
-  const [filteredRows, setFilteredRows] = React.useState(initialRows)
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([])
   const [visiblePasswords, setVisiblePasswords] = React.useState<
     Record<number, boolean>
   >({})
+
+  React.useEffect(() => {
+    setFilteredRows(props.rows)
+  }, [props.rows])
 
   // Function to toggle password visibility for a specific row
   const togglePasswordVisibility = (id: number) => {
@@ -214,11 +233,10 @@ export default function CaretakerDataTable() {
   // Function to handle filtering based on searchText (excluding password)
   const handleFilter = () => {
     const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter((row) => {
+    const filtered = props.rows.filter((row: any) => {
       return (
         row.username.toLowerCase().includes(lowerSearchText) ||
-        row.email.toLowerCase().includes(lowerSearchText) ||
-        row.phoneNum.toLowerCase().includes(lowerSearchText)
+        row.phone_number.toLowerCase().includes(lowerSearchText)
       )
     })
     setFilteredRows(filtered)
@@ -227,6 +245,8 @@ export default function CaretakerDataTable() {
   React.useEffect(() => {
     handleFilter()
   }, [searchText])
+
+  
 
   return (
     <ThemeProvider theme={theme}>
@@ -298,6 +318,7 @@ export default function CaretakerDataTable() {
                 },
                 width: '100%',
               }}
+              getRowId={(row) => row.username}
             />
           </Box>
         </Grid2>

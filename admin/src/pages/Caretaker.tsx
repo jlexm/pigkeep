@@ -112,12 +112,22 @@ import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material'
 import CaretakerDataTable from '../components/Caretaker/CaretakerDataTable'
 import ReusableDialogBox from '../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import theme from '../Theme'
+import { fetchCaretakers } from '../services/caretaker.service'
 
 const Caretaker = () => {
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = useState(false)
+
+  const [ caretakers, setCaretakers] = useState<any[]>([])
+  useEffect(() => {
+    (async () => {
+      const res = await fetchCaretakers() as any
+      setCaretakers(res);
+    })();
+  }, [])
+
 
   // Function to open the dialog
   const handleOpenDialog = () => {
@@ -188,7 +198,7 @@ const Caretaker = () => {
           </Box> */}
         </Grid2>
         <Grid2 container size={12} className="responsiveTable">
-          <CaretakerDataTable />
+          <CaretakerDataTable rows={caretakers} />
         </Grid2>
       </Grid2>
       {/* ReusableDialogBox to be shown when openDialog is true */}

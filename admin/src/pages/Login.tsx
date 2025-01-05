@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
   Box,
   Container,
@@ -20,9 +20,15 @@ import '../components/Login/Login.css'
 
 import theme from '../Theme'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { login, setUserBasicInfo, setUserToken } from '../services/auth.service'
 
 const Login = () => {
   const navigate = useNavigate()
+
+  const usernameRef = useRef<any>();
+  const passwordRef = useRef<any>();
+
   const [showPassword, setShowPassword] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
 
@@ -36,8 +42,12 @@ const Login = () => {
     setRememberMe(event.target.checked)
   }
 
-  const handeLogIn = () => {
+  const handeLogIn = async () => {
+    const { token, ...restOfResponse } = await login(usernameRef.current!.value, passwordRef.current!.value) as any
+    setUserToken(token)
+    setUserBasicInfo(restOfResponse)
     navigate('/home')
+    toast.success(`Welcome, ${restOfResponse.first_name}!`, { autoClose: 3000})
   }
 
   return (
@@ -101,6 +111,7 @@ const Login = () => {
           <Container className="container">
             {/* Username TextField */}
             <TextField
+              inputRef={usernameRef}
               fullWidth
               label="Username"
               variant="outlined"
@@ -126,6 +137,7 @@ const Login = () => {
 
             {/* Password TextField with Eye Icon */}
             <TextField
+              inputRef={passwordRef}
               fullWidth
               label="Password"
               type={showPassword ? 'text' : 'password'}
@@ -161,39 +173,6 @@ const Login = () => {
               }}
             />
 
-            <Grid2 container size={12}>
-              <Grid2 container size={6} sx={{ alignItems: 'start' }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={rememberMe}
-                      onChange={handleRememberMeChange}
-                      color="success"
-                    />
-                  }
-                  label={<Typography variant="body2">Remember me</Typography>}
-                  sx={{
-                    marginTop: 1,
-                    alignSelf: 'flex-start',
-                    color: 'black',
-                    padding: 0,
-                  }}
-                />
-              </Grid2>
-
-              <Grid2
-                container
-                size={6}
-                sx={{ alignItems: 'center', justifyContent: 'end' }}
-              >
-                <Button
-                  variant="text"
-                  sx={{ textTransform: 'none', color: '#11703b' }}
-                >
-                  <Typography variant="body2">Forgot password?</Typography>
-                </Button>
-              </Grid2>
-            </Grid2>
 
             {/* Login Button */}
             <Button
