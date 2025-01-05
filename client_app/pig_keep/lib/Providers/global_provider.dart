@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pig_keep/Api/farm_api.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
+import 'package:pig_keep/Services/network-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 
 class GlobalProvider with ChangeNotifier {
@@ -20,19 +21,21 @@ class GlobalProvider with ChangeNotifier {
         userFarms = decodedFarms.cast<Map<String, dynamic>>();
       }
 
-      // get farms from api
-      final farms = await FarmApi.getMyFarms();
+      if (await NetworkService.checkInternetConnection()) {
+        // get farms from api
+        final farms = await FarmApi.getMyFarms();
 
-      // check if farms from api does not yet exists in local storage,
-      // then add it
-      for (var farm in farms) {
-        if (!userFarms.any((e) => e['_id'] == farm['_id'])) {
-          userFarms.add({
-            'farm_name': farm['farm_name'],
-            '_id': farm['_id'],
-            'owner_id': farm['owner_id'],
-            'farm_address': farm['farm_address']
-          });
+        // check if farms from api does not yet exists in local storage,
+        // then add it
+        for (var farm in farms) {
+          if (!userFarms.any((e) => e['_id'] == farm['_id'])) {
+            userFarms.add({
+              'farm_name': farm['farm_name'],
+              '_id': farm['_id'],
+              'owner_id': farm['owner_id'],
+              'farm_address': farm['farm_address']
+            });
+          }
         }
       }
 

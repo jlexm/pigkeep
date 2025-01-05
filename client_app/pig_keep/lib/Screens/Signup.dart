@@ -226,7 +226,8 @@ class _SignupState extends State<Signup> {
                                         await AuthStorage.setUser(jsonEncode({
                                           "username": body['username'],
                                           "first_name": body['first_name'],
-                                          "last_name": body['last_name']
+                                          "last_name": body['last_name'],
+                                          "role_id": body['role_id']
                                         }));
 
                                         WidgetsBinding.instance

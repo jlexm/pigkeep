@@ -4,6 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/main.dart';
+import 'package:provider/provider.dart';
 
 class ScanQR extends StatefulWidget {
   const ScanQR({super.key});
@@ -15,6 +20,30 @@ class ScanQR extends StatefulWidget {
 class _ScanQRState extends State<ScanQR> {
   MobileScannerController camcontroller =
       MobileScannerController(facing: CameraFacing.back);
+
+  final pigService = globalLocator.get<PigService>();
+
+  var selectedFarm;
+  late String userOwner;
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      selectedFarm = context.read<GlobalProvider>().getSelectedFarm();
+      userOwner = user['username'];
+    });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final farm = context.watch<GlobalProvider>().getSelectedFarm();
+    setState(() {
+      selectedFarm = farm;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +62,7 @@ class _ScanQRState extends State<ScanQR> {
       ),
       body: MobileScanner(
         controller: camcontroller,
-        onDetect: (capture) {
+        onDetect: (capture) async {
           final List<Barcode> barcodes = capture.barcodes;
           for (final barcode in barcodes) {
             final String? code = barcode.rawValue;
@@ -45,26 +74,25 @@ class _ScanQRState extends State<ScanQR> {
               List<String> qrParts = code.split(':');
               if (qrParts.length == 3) {
                 String uuid = qrParts[2];
-                context.replace('/records/pigs/${uuid}');
-                // Optionally, you can stop scanning after the first successful scan
-                camcontroller.stop();
+                var existingPig = await pigService.fetchPigByUuid(uuid, selectedFarm['_id']);
+                if(existingPig != null) {
+                  context.replace('/records/pigs/${uuid}');
+                  // Optionally, you can stop scanning after the first successful scan
+                  camcontroller.stop();
+                }else {
+                  ToastService().showWarningToast('Pig not found in this farm');
+                  context.replace('/home');
+                  // Optionally, you can stop scanning after the first successful scan
+                  camcontroller.stop();
+                }
+             
               }
 
               break; // Stop after the first successful scan
             }
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          camcontroller.toggleTorch(); // Toggle the flashlight
-        },
-        backgroundColor: appPrimary,
-        child: Icon(
-          Icons.flash_on,
-          color: Colors.white,
-        ),
-      ),
+      )
     );
   }
 

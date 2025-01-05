@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
     const decoded = await this.authSvc.verifyJWT(token)
     const userRecord = await this.userSvc.getUserCredentials(decoded.username)
 
-    request.user = userRecord // Attach user information to the request
+    request.user = {...userRecord.toObject(), ctaker_username: decoded.ctaker_username, role_id: decoded.role_id} // Attach user information to the request
 
     // check role decorator
     const roles = this.reflector.get(Roles, context.getHandler())

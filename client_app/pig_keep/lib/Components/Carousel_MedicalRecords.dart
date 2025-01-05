@@ -248,7 +248,7 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                         labelText: 'Cost Per Qty',
                         hintText: 'Cost Per Qty',
                         hintTextSize: 14.sp,
-                        icon: Icons.php,
+                        icon: Icons.price_change_rounded,
                         textSize: 14.sp,
                         keyboardType: TextInputType.number,
                       ),

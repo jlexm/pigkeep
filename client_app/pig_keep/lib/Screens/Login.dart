@@ -117,35 +117,6 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     height: 5.h,
                                   ),
-                                  Row(
-                                    children: [
-                                      Checkbox(
-                                        value: _isChecked,
-                                        onChanged: (bool? value) {
-                                          setState(() {
-                                            _isChecked = value ?? false;
-                                          });
-                                        },
-                                      ),
-                                      Text(
-                                        'Remember me',
-                                        style: TextStyle(
-                                          fontSize: 11.sp,
-                                          fontWeight: FontWeight.w300,
-                                          color: appTertiary,
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      Text(
-                                        'Forgot Password?',
-                                        style: TextStyle(
-                                          fontSize: 11.sp,
-                                          fontWeight: FontWeight.w300,
-                                          color: appPrimary,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
                                   SizedBox(
                                     height: 15.h,
                                   ),
@@ -179,7 +150,8 @@ class _LoginState extends State<Login> {
                                         await AuthStorage.setUser(jsonEncode({
                                           "username": body['username'],
                                           "first_name": body['first_name'],
-                                          "last_name": body['last_name']
+                                          "last_name": body['last_name'],
+                                          "role_id": body['role_id']
                                         }));
 
                                         WidgetsBinding.instance

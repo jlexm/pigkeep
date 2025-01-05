@@ -11,8 +11,8 @@ export type UserRoleDocument = HydratedDocument<UserRole>
 export class UserRole {
   @Prop({
     required: true,
-    enum: [Role.Superadmin, Role.Admin, Role.User],
-    default: Role.User,
+    enum: [Role.Superadmin, Role.Admin, Role.Owner, Role.Caretaker],
+    default: Role.Owner,
     unique: true,
   })
   role_id: number

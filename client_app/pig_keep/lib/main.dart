@@ -12,6 +12,7 @@ import 'package:pig_keep/Components/PigPen_PenNumber.dart';
 import 'package:pig_keep/Components/PigView.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Screens/AgeCategory.dart';
 import 'package:pig_keep/Screens/Caretakers.dart';
 import 'package:pig_keep/Screens/ChangePassword.dart';
 import 'package:pig_keep/Screens/CreateFarm.dart';
@@ -191,6 +192,10 @@ class MyApp extends StatelessWidget {
                 GoRoute(
                   path: '/changepassword',
                   builder: (context, state) => const ChangePassword(),
+                ),
+                GoRoute(
+                  path: '/agecategory',
+                  builder: (context, state) => const Agecategory(),
                 ),
                 GoRoute(
                   path: '/create-farm',

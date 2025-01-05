@@ -20,6 +20,7 @@ import 'package:pig_keep/Models/pig-pen.dart';
 import 'package:pig_keep/Models/pig.dart';
 import 'package:pig_keep/Services/database-service.dart';
 import 'package:pig_keep/Services/pig-helper.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 
 class DataSyncService {
@@ -42,6 +43,7 @@ class DataSyncService {
     await syncMedicinesHistory(farmID, userOwner);
     await syncPigEvent(farmID, userOwner);
     await syncLedger(farmID, userOwner);
+    ToastService().showSuccessToast('All data synced succesfully!');
   }
 
   /* SYNC PIG PENS */

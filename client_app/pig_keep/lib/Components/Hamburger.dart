@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Services/network-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
 
 class Hamburger extends StatefulWidget {
@@ -102,26 +104,6 @@ class _HamburgerState extends State<Hamburger> {
                   },
                 ),
                 ListTile(
-                  //Profile Details
-                  leading: Image.asset(
-                    'assets/icons/Profile_Details.png',
-                    width: 30.w,
-                    height: 30.h,
-                  ),
-                  title: Text(
-                    "Profile Details",
-                    style: TextStyle(
-                      color: appSecondary,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 16.sp,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    context.push('/profiledetails');
-                  },
-                ),
-                ListTile(
                   //Caretakers
                   leading: Image.asset(
                     'assets/icons/Caretaker.png',
@@ -136,9 +118,62 @@ class _HamburgerState extends State<Hamburger> {
                       fontSize: 16.sp,
                     ),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    if (!await NetworkService.checkInternetConnection()) {
+                      ToastService().showWarningToast(
+                          'This feature requires a stable internet connection.');
+                      return;
+                    }
                     Navigator.of(context).pop();
                     context.push('/caretakers');
+                  },
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.settings, // Replace with the desired icon
+                    color: appSecondary, // Match the color to your theme
+                    size: 30.sp, // Adjust the size to your preference
+                  ),
+                  title: Text(
+                    "Pig Age Category",
+                    style: TextStyle(
+                      color: appSecondary,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    context.push('/agecategory');
+                  },
+                ),
+                SizedBox(
+                  height: 50.h,
+                ),
+                ListTile(
+                  //Profile Details
+                  leading: Image.asset(
+                    'assets/icons/Profile_Details.png',
+                    width: 30.w,
+                    height: 30.h,
+                  ),
+                  title: Text(
+                    "Profile Details",
+                    style: TextStyle(
+                      color: appSecondary,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                  onTap: () async {
+                    if (!await NetworkService.checkInternetConnection()) {
+                      ToastService().showWarningToast(
+                          'This feature requires a stable internet connection.');
+                      return;
+                    }
+
+                    Navigator.of(context).pop();
+                    context.push('/profiledetails');
                   },
                 ),
                 ListTile(
@@ -156,13 +191,18 @@ class _HamburgerState extends State<Hamburger> {
                       fontSize: 16.sp,
                     ),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    if (!await NetworkService.checkInternetConnection()) {
+                      ToastService().showWarningToast(
+                          'This feature requires a stable internet connection.');
+                      return;
+                    }
                     Navigator.of(context).pop();
                     context.push('/changepassword');
                   },
                 ),
                 SizedBox(
-                  height: 350.h,
+                  height: 250.h,
                 ),
                 ListTile(
                   //Logout

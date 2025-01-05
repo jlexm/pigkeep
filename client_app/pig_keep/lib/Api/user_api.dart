@@ -36,4 +36,30 @@ class UserApi {
     return API.post('/users/my-password',
         {'old_password': oldPassword, 'password': password});
   }
+
+  static addCaretaker(String username, String phoneNumber, String firstName,
+      String lastName, String password) {
+    return API.post('/users/manage/caretaker', {
+      'username': username,
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone_number': phoneNumber,
+      'password': password
+    });
+  }
+
+  static getCaretakers() {
+    return API.get('/users/manage/caretaker');
+  }
+
+  static updateCaretaker(String username, String phoneNumber, String firstName,
+      String lastName, String password) {
+    return API.patch('/users/manage/caretaker', {
+      'username': username,
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone_number': phoneNumber,
+      'password': password
+    });
+  }
 }

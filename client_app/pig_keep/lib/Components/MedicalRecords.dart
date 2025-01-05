@@ -269,7 +269,7 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                               labelText: 'Cost Per Qty',
                               hintText: 'Cost Per Qty',
                               hintTextSize: 14.sp,
-                              icon: Icons.php,
+                              icon: Icons.price_change_rounded,
                               textSize: 14.sp,
                               keyboardType: TextInputType.number,
                             ),
@@ -390,15 +390,6 @@ class _MedicalRecordsState extends State<Medicalrecords> {
         TransactionMedicalrecords(
           medHistory: medHistory,
         ), //Transaction_Medicalrecords.dart
-        SizedBox(
-          //remove this later
-          height: 600.h,
-        ),
-        const Text('-End of SCSV-'),
-        SizedBox(
-          //remove this later
-          height: 110.h,
-        ),
       ],
     );
   }

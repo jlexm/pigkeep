@@ -270,7 +270,7 @@ class _LedgerState extends State<Ledger> {
                                                 labelText: 'Price',
                                                 hintText: 'Price',
                                                 hintTextSize: 14.sp,
-                                                icon: Icons.php,
+                                                icon: Icons.price_change_rounded,
                                                 textSize: 14.sp,
                                                 keyboardType:
                                                     TextInputType.phone,
@@ -297,6 +297,7 @@ class _LedgerState extends State<Ledger> {
                                                                 .text)
                                                         : 0);
                                                 await getLedgerDetails();
+                                                await getPigs();
                                                 _pigNumberController.clear();
                                                 _costController.clear();
                                                 _weightKGController.clear();
@@ -395,6 +396,7 @@ class _LedgerState extends State<Ledger> {
                                                     0,
                                                     0);
                                                 await getLedgerDetails();
+                                                await getPigs();
                                                 _pigUuidController.clear();
                                                 pigUuidHidden = null;
                                                 Navigator.of(context).pop();

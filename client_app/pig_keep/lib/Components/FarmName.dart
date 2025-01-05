@@ -20,6 +20,9 @@ class FarmName extends StatefulWidget {
 }
 
 class _FarmNameState extends State<FarmName> {
+  // variable
+  dynamic currentUser;
+
   void createFarm(String farmName, String farmAdress) async {
     try {
       await FarmApi.createFarm(farmName, farmAdress);
@@ -35,6 +38,10 @@ class _FarmNameState extends State<FarmName> {
   List<Map<String, dynamic>> _farms = [];
 
   void _addNewFarm() {
+    if (currentUser != null && currentUser['role_id'] != 3) {
+      ToastService().showWarningToast('Only owner can add new farm');
+      return;
+    }
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -71,6 +78,14 @@ class _FarmNameState extends State<FarmName> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    context.read<GlobalProvider>().getCurrentUser().then((user) {
+      currentUser = user;
+    });
+    super.initState();
   }
 
   @override

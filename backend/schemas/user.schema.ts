@@ -33,12 +33,18 @@ export class User {
   @Prop({ required: true, maxlength: 100 })
   last_name: string
 
-  @Prop({ type: Date, default: null, maxlength: 100 })
-  last_sync: Date | null
+  @Prop({  default: null, ref: 'User', validate: { 
+    validator: function (value: string | null) {
+        return this.role_id === 4 && value
+      },
+      message: 'Caretaker requires to have user owner.'
+    } 
+  })
+  user_owner: string | null
 
   @Prop({
-    enum: [Role.Superadmin, Role.Admin, Role.User],
-    default: Role.User,
+    enum: [Role.Superadmin, Role.Admin, Role.Owner, Role.Caretaker],
+    default: Role.Owner,
     required: true,
   })
   role_id: number // Reference to Role model

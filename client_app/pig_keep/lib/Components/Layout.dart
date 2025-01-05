@@ -6,6 +6,7 @@ import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
 import 'package:pig_keep/Services/data-sync-service.dart';
+import 'package:pig_keep/Services/network-service.dart';
 import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +61,13 @@ class _LayoutState extends State<Layout> {
               child: AppBar(
                 actions: [
                   InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      if (!await NetworkService.checkInternetConnection()) {
+                        ToastService().showWarningToast(
+                            'Cannot sync: need internet connection.');
+                        return;
+                      }
+
                       setState(() {
                         isSyncLoading = !isSyncLoading;
                       });

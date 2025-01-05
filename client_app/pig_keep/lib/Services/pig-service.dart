@@ -29,6 +29,10 @@ class PigService {
       throw 'Pen not found';
     }
 
+    if (pen.penType == 'Farrowing' && newPig.sex) {
+      throw 'Cannot put male pig in farrowing';
+    }
+
     if (pen.currentPigCount >= pen.maxPigCount) {
       throw '${pen.penType} Pen: ${pen.penNumber} is full of pigs.';
     }
@@ -85,6 +89,10 @@ class PigService {
 
     if (pen == null || oldPen == null) {
       throw 'Pen not found';
+    }
+
+    if (pen.penType == 'Farrowing' && pig.sex) {
+      throw 'Cannot put male pig in farrowing';
     }
 
     if (pig.penUuid != penUuid) {
@@ -217,5 +225,9 @@ class PigService {
         .farmIDEqualTo(farmID)
         .pigNumberEqualTo(pigNumber)
         .findFirst();
+  }
+
+  Future<Pig?> fetchPigByUuid(String uuid, String farmID) async {
+    return db.pigs.filter().farmIDEqualTo(farmID).uuidEqualTo(uuid).findFirst();
   }
 }

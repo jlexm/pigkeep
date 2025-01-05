@@ -5,6 +5,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Req,
   UnauthorizedException,
@@ -91,13 +92,15 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Get('my-details')
   async getMyUserDetails(@Req() req: { user: ReqUser }) {
-    return await this.userSvc.getUserDetailsByUsername(req.user.username)
+    const username = req.user.role_id === Role.Caretaker ? req.user.ctaker_username : req.user.username
+    return await this.userSvc.getUserDetailsByUsername(username)
   }
 
   @UseGuards(AuthGuard)
   @Post('my-details')
   async updateMyDetails(@Req() req: { user: ReqUser }, @Body() body) {
-    await this.userSvc.updateUserDetails(req.user.username, body)
+    const username = req.user.role_id === Role.Caretaker ? req.user.ctaker_username : req.user.username
+    await this.userSvc.updateUserDetails(username, body)
 
     return { success: true, message: 'Updated!' }
   }
@@ -106,7 +109,7 @@ export class UserController {
   @Post('my-password')
   async updatePassword(@Req() req: { user: ReqUser }, @Body() body) {
     const { old_password, password } = body
-    const { username } = req.user
+    const username = req.user.role_id === Role.Caretaker ? req.user.ctaker_username : req.user.username
     const user = await this.userSvc.getUserCredentials(username)
 
     // check if user found
@@ -135,5 +138,63 @@ export class UserController {
   @Get(':username')
   async getUser(@Param() getUserParamsDto: GetUserParamsDto) {
     return 'hello'
+  }
+
+  @UseGuards(AuthGuard)
+  @Post('manage/caretaker')
+  async addCaretaker(@Req() req: { user: ReqUser }, @Body() body) {
+    try {
+      const { username, first_name, last_name, phone_number, password } = body
+      // convert pass to hash pass for security purposes
+      const hashedPassword = await this.authSvc.hashPassword(password)
+      const newCareTaker =  await this.userSvc.addCaretaker(req.user.username, { 
+          username, 
+          first_name, 
+          last_name, 
+          phone_number, 
+          password: hashedPassword
+        }
+      )
+      return {...newCareTaker, password: undefined}
+    } catch (error) {
+      // catch errors such us duplicate username error
+      if (error.code === 11000) {
+        // Duplicate key error code
+        throw new ConflictException('Username already taken')
+      }
+      throw error // Re-throw if it's not a duplicate key error
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('manage/caretaker')
+  async updateCaretaker(@Req() req: { user: ReqUser }, @Body() body) {
+    try {
+      const { username, first_name, last_name, phone_number, password } = body
+      // convert pass to hash pass for security purposes
+      const hashedPassword = password ? await this.authSvc.hashPassword(password) : undefined
+      const newCareTaker =  await this.userSvc.updateCaretaker({ 
+          username, 
+          first_name, 
+          last_name, 
+          phone_number, 
+          password: hashedPassword
+        }
+      )
+      return {...newCareTaker, password: undefined}
+    } catch (error) {
+      // catch errors such us duplicate username error
+      if (error.code === 11000) {
+        // Duplicate key error code
+        throw new ConflictException('Username already taken')
+      }
+      throw error // Re-throw if it's not a duplicate key error
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Get('manage/caretaker')
+  async getCaretakers(@Req() req: { user: ReqUser }) {
+    return await this.userSvc.getCaretakers(req.user.username)
   }
 }

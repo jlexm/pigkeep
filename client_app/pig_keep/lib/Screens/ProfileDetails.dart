@@ -7,6 +7,7 @@ import 'package:pig_keep/Components/FarmName.dart';
 import 'package:pig_keep/Components/Greenbtn.dart';
 import 'package:pig_keep/Components/Hamburger.dart';
 import 'package:pig_keep/Components/BottomNav.dart';
+import 'package:pig_keep/Components/ImageInputForm.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Services/toast-service.dart';
@@ -29,13 +30,12 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   final TextEditingController _phonenumberController = TextEditingController();
 
   Future<void> getInitialData() async {
-    print('TESTING USER');
     var user = await UserApi.getMyDetails();
-    _emailController.text = user['email'];
-    _usernameController.text = user['username'];
-    _firstnameController.text = user['first_name'];
-    _lastnameController.text = user['last_name'];
-    _phonenumberController.text = user['phone_number'];
+    _emailController.text = user['email'] ?? '';
+    _usernameController.text = user['username'] ?? '';
+    _firstnameController.text = user['first_name'] ?? '';
+    _lastnameController.text = user['last_name'] ?? '';
+    _phonenumberController.text = user['phone_number'] ?? '';
   }
 
   @override
@@ -109,7 +109,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             controller: _usernameController,
                             labelText: 'Username',
                             hintText: 'Enter your Username',
-                            icon: Icons.mail,
+                            icon: Icons.person,
                             readOnly: true,
                             enabled: false,
                             //iconSize: 20,
@@ -141,37 +141,39 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           SizedBox(
                             height: 15.h,
                           ),
-                          RecyclableTextFormField(
-                            //firstname
-                            controller: _firstnameController,
-                            labelText: 'First Name',
-                            hintText: 'Enter your First Name',
-                            icon: Icons.mail,
-                            textSize: 14.sp,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your First Name';
-                              }
-                              return null;
-                            },
-                          ),
+                                  SizedBox(
+                                    height: 40.h,
+                                    child: ImageInputForm(
+                                      labelText: 'First Name',
+                                      controller: _firstnameController,
+                                      prefixIcon: Image.asset(
+                                        'assets/icons/Farmer.png',
+                                        scale: 13,
+                                        color: appTertiary,
+                                      ),
+                                      textStyle: TextStyle(
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                  ),
                           SizedBox(
                             height: 15.h,
                           ),
-                          RecyclableTextFormField(
-                            //lastname
-                            controller: _lastnameController,
-                            labelText: 'Last Name',
-                            hintText: 'Enter your Last Name',
-                            icon: Icons.mail,
-                            textSize: 14.sp,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Last Name';
-                              }
-                              return null;
-                            },
-                          ),
+                                  SizedBox(
+                                    height: 40.h,
+                                    child: ImageInputForm(
+                                      labelText: 'Last Name',
+                                      controller: _lastnameController,
+                                      prefixIcon: Image.asset(
+                                        'assets/icons/Farmer.png',
+                                        scale: 13,
+                                        color: appTertiary,
+                                      ),
+                                      textStyle: TextStyle(
+                                        fontSize: 12.sp,
+                                      ),
+                                    ),
+                                  ),
                           SizedBox(
                             height: 15.h,
                           ),
@@ -182,12 +184,15 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             hintText: 'Enter your Phone Number',
                             icon: Icons.phone_outlined,
                             textSize: 14.sp,
+                            maxLength: 11,
+                            keyboardType: TextInputType.phone,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Phone Number';
                               }
                               return null;
                             },
+                            
                           ),
                           SizedBox(
                             height: 15.h,

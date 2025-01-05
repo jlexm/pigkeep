@@ -7,5 +7,6 @@ export enum Gender {
 export enum Role {
   Superadmin = 1,
   Admin = 2,
-  User = 3,
+  Owner = 3,
+  Caretaker = 4
 }

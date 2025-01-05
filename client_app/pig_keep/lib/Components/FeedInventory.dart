@@ -215,7 +215,7 @@ class _FeedInventoryState extends State<FeedInventory> {
                                 labelText: 'Cost',
                                 hintText: 'Cost',
                                 hintTextSize: 14.sp,
-                                icon: Icons.php,
+                                icon: Icons.price_change_rounded,
                                 textSize: 14.sp,
                                 keyboardType: TextInputType.phone,
                               ),

@@ -93,6 +93,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final void Function(String)? onChanged;
   final int maxLines;
   final int minLines;
+  final int? maxLength;
   final IconData? icon;
   final String? imagePath;
   final double? textSize;
@@ -134,6 +135,7 @@ class RecyclableTextFormField extends StatelessWidget {
       this.readOnly = false,
       this.onTap,
       this.enabled = true,
+      this.maxLength,
       this.isHiddenText = false});
 
   @override
@@ -180,6 +182,7 @@ class RecyclableTextFormField extends StatelessWidget {
             onTap: onTap,
             maxLines: maxLines,
             minLines: minLines,
+            maxLength: maxLength,
             style: TextStyle(fontSize: textSize, fontFamily: 'Roboto'),
           ),
           if (showDropdown && dropdownItems != null)

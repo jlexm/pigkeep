@@ -8,6 +8,7 @@ import {
 import { LoginDto } from './auth.dto'
 import { AuthService } from './auth.service'
 import { UserService } from 'src/user/user.service'
+import { Role } from 'constants/app.constant'
 
 @Controller('auth')
 export class AuthController {
@@ -37,18 +38,23 @@ export class AuthController {
       throw new UnauthorizedException('Invalid username or password')
     }
 
+    // reuse username for caretaker
+    const validUsername = user.role_id === Role.Caretaker ? user.user_owner : user.username
+
     // if user authorized, generate jwt token so user can use it for verifying authenticity
     // check at jwt.io the token to see decoded value
     const token = this.authSvc.generateJWT({
       _id: user._id,
-      username: user.username,
+      username: validUsername,
+      ctaker_username: user.role_id === Role.Caretaker ? user.username : undefined,
       role_id: user.role_id,
     })
     return {
       token,
-      username,
+      username: validUsername,
       first_name: user.first_name,
       last_name: user.last_name,
+      role_id: user.role_id,
     }
   }
 }
