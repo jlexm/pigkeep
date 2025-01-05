@@ -16,6 +16,7 @@ import { MenuItem } from '@mui/material'
 import { ThemeProvider } from '@emotion/react'
 import theme from './Theme'
 import { getUserBasicInfo } from './services/auth.service'
+import greenLogo from './assets/GreenLogo.png'
 
 const pages = [
   { name: 'Home', path: '/home' },
@@ -134,7 +135,7 @@ const Navbar = () => {
                   }}
                 >
                   <img
-                    src="/src/assets/GreenLogo.png"
+                    src={greenLogo}
                     alt="Pigkeep Logo"
                     style={{ width: 40, marginRight: 8 }}
                   />
