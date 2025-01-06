@@ -4,8 +4,17 @@ import { Container, Grid2, Typography, Box } from '@mui/material'
 import './HomeScreen.css'
 import { ThemeProvider } from '@emotion/react'
 import theme from '../../Theme'
+import { PieValueType } from '@mui/x-charts'
+import { MakeOptional } from '@mui/x-charts/internals'
 
-export default function BasicPie() {
+export default function BasicPie({ data = [] }: { data?: MakeOptional<PieValueType, "id">[]}) {
+
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container spacing={3}>
@@ -26,7 +35,7 @@ export default function BasicPie() {
             color="black"
             marginX={{ xs: 1, sm: 15 , md: 0 }}
           >
-            As of <span style={{ color: '#11703b' }}>July 1, 2024</span>, the
+            As of <span style={{ color: '#11703b' }}>{currentDate}</span>, the
             largest portion of pigs on your farm are weaners, with mature pigs
             being the least numerous.
           </Typography>
@@ -56,7 +65,7 @@ export default function BasicPie() {
               ]}
               series={[
                 {
-                  data: [
+                  /* data: [
                     {
                       id: 1,
                       value: 15,
@@ -81,7 +90,8 @@ export default function BasicPie() {
                       label: '20 series D',
                       color: '#32BE67',
                     },
-                  ],
+                  ], */
+                  data
                 },
               ]}
             />

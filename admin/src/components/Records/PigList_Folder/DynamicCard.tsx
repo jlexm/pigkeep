@@ -3,7 +3,7 @@ import { Card, Grid2, ThemeProvider, Typography } from '@mui/material';
 import theme from '../../../Theme';
 
 // Define the props type for the data
-interface CardData {
+export interface CardData {
   number: number;
   text: string;
 }
@@ -48,21 +48,11 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ data, onCardClick }) => {
   );
 };
 
-export default function Cards() {
-  const [, setSortCategory] = React.useState<string | null>(null);
-
-  const cardData: CardData[] = [
-    { number: 11, text: 'Sows' },
-    { number: 14, text: 'Weaners' },
-    { number: 10, text: 'Piglets' },
-    { number: 4, text: 'Boars' },
-    { number: 2, text: 'Growers' },
-    // { number: 1, text: 'Matured' }, 
-  ];
-
+export default function Cards( { data = [] } : { data?: CardData[] }) {
+  const [sortCategory, setSortCategory] = React.useState<string | null>(null);
   return (
     <DynamicCards 
-      data={cardData} 
+      data={data} 
       onCardClick={(category) => setSortCategory(category)}
     />
   );

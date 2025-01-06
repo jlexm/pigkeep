@@ -11,6 +11,8 @@ import Login from './pages/Login'
 import { useEffect, useState } from 'react'
 import { getUserToken } from './services/auth.service'
 import { ToastContainer } from 'react-toastify';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { fetchMyFarms, getSelectedFarm, setSelectedFarm } from './services/farm.service'
 
 function App() {
   const location = useLocation();
@@ -21,9 +23,36 @@ function App() {
     const token = getUserToken();
     if(!token) {
       navigate('/login')
+    }else {
+      // Fetch all farms and set the default selected farm on first page load
+      (async () => {
+        const myFarms = await fetchMyFarms() as any
+        const selectedFarm = getSelectedFarm() ?? myFarms[0]
+        setSelectedFarm(selectedFarm)
+      })()
     }
     setIsLoading(false);
   }, [location.pathname, navigate])
+
+  if(isLoading) {
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh"
+        flexDirection="column"
+      >
+        <CircularProgress />
+        <Typography variant="h5" component="strong" style={{ marginTop: '20px' }} color="textPrimary">
+          Loading...
+        </Typography>
+        <Typography variant="caption" component="strong" style={{ marginTop: '20px' }} color="textPrimary">
+          Please wait patiently
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <div>

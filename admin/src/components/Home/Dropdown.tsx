@@ -22,12 +22,14 @@ import { setSelectedFarm } from '../../services/farm.service'
 interface DropdownWithAddButtonProps {
   options: any[]
   selected: any
+  handleSetSelectedOption: (option: any) => void
   onAddNewItem: (newItem: string) => void
 }
 
 const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
   options,
   selected,
+  handleSetSelectedOption,
   onAddNewItem,
 }) => {
   const [selectedOption, setSelectedOption] = useState<any>(null) // Set default option
@@ -47,6 +49,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
     } else {
       setSelectedFarm(value)
       setSelectedOption(value) // Select the existing option
+      handleSetSelectedOption(value)
     }
   }
 

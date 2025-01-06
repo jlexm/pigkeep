@@ -8,7 +8,9 @@ import DropdownWithAddButton from '../components/Home/Dropdown'
 import theme from '../Theme'
 import React, { useEffect, useState } from 'react'
 import { fetchMyFarms, getSelectedFarm, setSelectedFarm } from '../services/farm.service'
-import { fetchAllFarmPigs } from '../services/pig.service'
+import { determinePigStage, fetchAllFarmPigs } from '../services/pig.service'
+import { PieValueType } from '@mui/x-charts'
+import { MakeOptional } from '@mui/x-charts/internals'
 
 const Home: React.FC = () => {
   // Default selected farm 
@@ -17,6 +19,7 @@ const Home: React.FC = () => {
 
   const [pigs, setPigs] = useState<any[]>([])
 
+  // Fetch all farms and set the default selected farm
   useEffect(() => {
     (async () => {
       const myFarms = await fetchMyFarms() as any
@@ -26,19 +29,40 @@ const Home: React.FC = () => {
         setSelectedOption(selectedFarm)
       }
       setSelectedFarm(selectedFarm)
-      
-      await fetchPigs(selectedFarm['_id']);
-
     })()
   },[])
-  
 
+  // Fetch pigs when a farm is selected
+  useEffect(() => {
+    if(selectedOption) {
+        fetchPigs(selectedOption['_id'])
+    }
+  }, [selectedOption])
+
+  // Fetch pigs from the selected farm
   const fetchPigs = async (farm_id: string) => {
-    const pigs = await fetchAllFarmPigs(farm_id) as any
-    console.log(pigs)
-    setPigs(pigs)
+    const pigs: any[] = (await fetchAllFarmPigs(farm_id) as any) ?? []
+    setPigs(pigs.map((pig: any) => {
+        return {
+          ...pig,
+          ...determinePigStage(pig.sex, pig.dob)
+          }
+        }
+      )
+    )  
   }
 
+  //  Pie chart data
+  const pigsPieData: MakeOptional<PieValueType, "id">[] = Object.values(
+    pigs.reduce((acc: Record<string, MakeOptional<PieValueType, "id">>, pig: any) => {
+      if (!acc[pig.stage]) {
+        acc[pig.stage] = { id: pig.stage, label: pig.stage, value: 0 };
+      }
+      acc[pig.stage].value += 1;
+      return acc;
+    }, {} as Record<string, MakeOptional<PieValueType, "id">>)
+  ).sort((a, b) => b.value - a.value);
+  
   const handleAddNewItem = (newItem: string) => {
     setOptions((prevOptions) => [...prevOptions, newItem])
   }
@@ -60,12 +84,13 @@ const Home: React.FC = () => {
               options={options}
               selected={selectedOption} // Pass the selected option
               onAddNewItem={handleAddNewItem}
+              handleSetSelectedOption={setSelectedOption}
             />
           </Grid2>
           <SimpleContainer total_pigs={pigs.length} />
         </Grid2>
         <Grid2 size={{ xs: 12, lg: 6 }}>
-          <BasicPie />
+          <BasicPie data={pigsPieData} />
         </Grid2>
         <Grid2 size={{ xs: 12, lg: 6 }}>
           <VirtualizedList />

@@ -5,7 +5,7 @@ import ReusableDialogBox from '../../../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import theme from '../../../Theme'
 
-export default function AddPigComp() {
+export default function AddPigComp( { totalPigs = 0 } : { totalPigs?: number }) {
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = useState(false)
 
@@ -46,7 +46,7 @@ export default function AddPigComp() {
               color="white"
               sx={{ fontSize: 'clamp(3.5rem, 4vw, 4.688rem)' }}
             >
-              44
+              {totalPigs}
             </Typography>
               <Box alignContent={'center'}>
               <Box className="total">

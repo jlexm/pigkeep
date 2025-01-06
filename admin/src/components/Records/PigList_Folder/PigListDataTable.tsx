@@ -21,7 +21,7 @@ import theme from '../../../Theme'
 
 const columns: GridColDef[] = [
   {
-    field: 'number',
+    field: 'pigNumber',
     headerName: 'Number',
     flex:1,
     minWidth: 115,
@@ -31,9 +31,7 @@ const columns: GridColDef[] = [
         alive: 'blue',
         sold: 'green',
         deceased: 'red',
-      }[params.row.status]
-
-      const paddedNumber = params.value.toString().padStart(3, '0')
+      }[params.row.status as string]
 
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -46,7 +44,7 @@ const columns: GridColDef[] = [
               marginRight: 1,
             }}
           />
-          {paddedNumber}
+          {params.row.pigNumber}
         </Box>
       )
     },
@@ -58,26 +56,46 @@ const columns: GridColDef[] = [
     minWidth: 120,
     resizable: false,
     headerClassName: 'recorded-weight-header',
+    renderCell: (params) => {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+          <Typography>{new Date(params.row.dob).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</Typography>
+        </Box>
+      )
+    } 
   },
   {
-    field: 'ageDays',
-    headerName: 'Age (days)',
+    field: 'age',
+    headerName: 'Age',
     flex: 1,
     minWidth: 105,
     resizable: false,
     headerClassName: 'recorded-weight-header',
   },
   {
-    field: 'ageCategory',
+    field: 'stage',
     headerName: 'Age Category',
     flex: 1,
     minWidth: 120,
     resizable: false,
     headerClassName: 'recorded-weight-header',
   },
-  { field: 'sex', headerName: 'Sex', flex: 1, minWidth: 80, resizable: false },
+  { 
+    field: 'sex', 
+    headerName: 'Sex', 
+    flex: 1,
+    minWidth: 80, 
+    resizable: false, 
+    renderCell: (params) => {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+          <Typography>{params.row.sex ? 'Male' : 'Female'}</Typography>
+        </Box>
+      )
+    } 
+  },
   {
-    field: 'parentNumber',
+    field: 'parentUuid',
     headerName: 'Parent Number',
     flex: 1,
     minWidth: 115,
@@ -85,7 +103,7 @@ const columns: GridColDef[] = [
     headerClassName: 'recorded-weight-header',
   },
   {
-    field: 'currentFeed',
+    field: 'feed',
     headerName: 'Current Feed',
     flex: 1,
     minWidth: 110,
@@ -93,7 +111,7 @@ const columns: GridColDef[] = [
     headerClassName: 'recorded-weight-header',
   },
   {
-    field: 'pigpenNumber',
+    field: 'penUuid',
     headerName: 'Pigpen Number',
     flex: 1,
     minWidth: 115,
@@ -101,7 +119,7 @@ const columns: GridColDef[] = [
     headerClassName: 'recorded-weight-header',
   },
   {
-    field: 'recordedWeight',
+    field: 'weightKG',
     headerName: 'Recorded\nWeight (kg)',
     flex: 1,
     minWidth: 145,
@@ -115,6 +133,15 @@ const columns: GridColDef[] = [
     minWidth: 90,
     resizable: false,
     headerClassName: 'recorded-weight-header',
+    renderCell: (params) => {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+          <Typography>
+            {params.row.priceSold ? `$${params.row.priceSold}` : 'N/A'}
+          </Typography>
+        </Box>
+      );
+    },
   },
   {
     field: 'qrCode',
@@ -444,16 +471,16 @@ const rows = [
 
 const paginationModel = { page: 0, pageSize: 5 }
 
-export default function DataTable() {
+export default function PigListDataTable({ data = []}: {data?: any[]}) {
   const [searchText, setSearchText] = React.useState('')
   const [statusFilter, setStatusFilter] = React.useState('all')
 
-  const filteredRows = rows.filter((row) => {
+  const filteredRows = data.filter((row) => {
     const matchesSearchText = Object.values(row).some((value) =>
       value
         ? value.toString().toLowerCase().includes(searchText.toLowerCase())
         : false
-    )
+    ) 
     const matchesStatus = statusFilter === 'all' || row.status === statusFilter
     return matchesSearchText && matchesStatus
   })
@@ -547,6 +574,7 @@ export default function DataTable() {
           <DataGrid
             columns={columns}
             rows={filteredRows}
+            getRowId={(row) => row.uuid}
             pageSizeOptions={[5, 10, 25, 50, 100]}
             initialState={{ pagination: { paginationModel } }}
             slotProps={{
