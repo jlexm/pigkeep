@@ -63,4 +63,8 @@ export class LedgerService {
       await this.ledgerModel.bulkWrite(bulkOps)
     }
   }
+
+  async getFarmLedgers(farm_id: string): Promise<Legder[]> {
+    return this.ledgerModel.find({ farmID: farm_id }).exec()
+  }
 }

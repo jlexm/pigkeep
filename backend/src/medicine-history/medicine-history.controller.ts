@@ -29,4 +29,9 @@ export class MedicineHistoryController {
     await this.medicineHistoryService.syncMedsHistory(farmId, feeds)
     return { success: true, message: 'Data synced!' }
   }
+
+  @Get('farm/:farm_id')
+  async getMedicineHistoryByFarm(@Param('farm_id') farmId) {
+    return await this.medicineHistoryService.getMedicineHistoryByFarmID(farmId)
+  }
 }

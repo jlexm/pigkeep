@@ -24,4 +24,9 @@ export class LedgerController {
     await this.ledgerService.syncLedgers(farmId, ledgers)
     return { success: true, message: 'Data synced!' }
   }
+
+  @Get('/farm/:farm_id')
+  async getLedgers(@Param('farm_id') farmId) {
+    return await this.ledgerService.getFarmLedgers(farmId)
+  }
 }

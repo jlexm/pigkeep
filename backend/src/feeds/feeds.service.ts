@@ -87,4 +87,8 @@ export class FeedsService {
       await this.feedsModel.bulkWrite(bulkOps)
     }
   }
+  
+  async getFeedsByFarmId(farm_id: string): Promise<Feeds[]> {
+    return this.feedsModel.find({ farmID: farm_id }).exec() 
+  }
 }

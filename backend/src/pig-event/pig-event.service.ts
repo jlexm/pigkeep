@@ -11,6 +11,10 @@ export class PigEventService {
     private pigEventModel: Model<PigEventDocument>
   ) {}
 
+  async getFarmPigEvents(farm_id: string): Promise<PigEvent[]> {
+    return this.pigEventModel.find({ farmID: farm_id }).exec()
+  }
+
   async getAllSyncablePigEvents(
     farm_id: string,
     last_successful_read_sync: Date | null

@@ -27,4 +27,10 @@ export class FeedHistoryController {
     await this.feedHistoryService.syncFeedsHistory(farmId, feeds)
     return { success: true, message: 'Data synced!' }
   }
+
+  @Get('farm/:farm_id')
+  async getFeedsByFarmId(@Param('farm_id') farmId) {
+    return await this.feedHistoryService.getFeedsHistoryByFarmID(farmId)
+  }
+  
 }

@@ -24,4 +24,9 @@ export class PigEventController {
     await this.pigEventService.syncPigEvents(farmId, feeds)
     return { success: true, message: 'Data synced!' }
   }
+
+  @Get('/farm/:farm_id')
+  async getFarmPigEvents(@Param('farm_id') farmId) {
+    return await this.pigEventService.getFarmPigEvents(farmId)
+  }
 }

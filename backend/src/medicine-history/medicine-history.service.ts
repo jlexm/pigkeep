@@ -63,4 +63,9 @@ export class MedicineHistoryService {
       await this.medicinesHistory.bulkWrite(bulkOps)
     }
   }
+
+  async getMedicineHistoryByFarmID(farm_id: string) {
+    return this.medicinesHistory.find({ farmID: farm_id }).exec()
+  }
+
 }

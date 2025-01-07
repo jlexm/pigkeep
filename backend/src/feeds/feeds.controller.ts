@@ -90,4 +90,9 @@ export class FeedsController {
     await this.feedsService.syncFeeds(farmId, feeds)
     return { success: true, message: 'Data synced!' }
   }
+
+  @Get('/farm/:farm_id')
+  async getFeedsByFarm(@Param('farm_id') farmId) {
+    return await this.feedsService.getFeedsByFarmId(farmId)
+  }
 }

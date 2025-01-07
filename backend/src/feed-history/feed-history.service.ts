@@ -60,4 +60,8 @@ export class FeedHistoryService {
       await this.feedsHistoryModel.bulkWrite(bulkOps)
     }
   }
+
+  async getFeedsHistoryByFarmID(farm_id: string): Promise<FeedsHistory[]> {
+    return this.feedsHistoryModel.find({ farmID: farm_id }).exec()
+  }
 }
