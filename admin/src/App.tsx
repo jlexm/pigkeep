@@ -32,7 +32,7 @@ function App() {
       })()
     }
     setIsLoading(false);
-  }, [location.pathname, navigate])
+  }, [])
 
   if(isLoading) {
     return (

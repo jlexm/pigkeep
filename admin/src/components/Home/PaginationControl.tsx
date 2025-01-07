@@ -7,8 +7,12 @@ const monthNames = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-export default function MonthPagination() {
+export default function MonthPagination({ yearChange }: { yearChange?: (year: number) => void }) {
   const [date, setDate] = React.useState(new Date());
+
+  React.useEffect(() => {
+    yearChange && yearChange(date.getFullYear());
+  }, [date])
 
   const handlePreviousMonth = () => {
     setDate(prevDate => {
@@ -26,22 +30,39 @@ export default function MonthPagination() {
     });
   };
 
+  const handlePreviousYear = () => {
+    setDate(prevDate => {
+      const newDate = new Date(prevDate);
+      newDate.setFullYear(newDate.getFullYear() - 1);
+      return newDate;
+    });
+  };
+
+  const handleNextYear = () => {
+    setDate(prevDate => {
+      const newDate = new Date(prevDate);
+      newDate.setFullYear(newDate.getFullYear() + 1);
+      return newDate;
+    });
+  };
+
   const month = monthNames[date.getMonth()];
   const year = date.getFullYear();
+  
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
       <Button
-        onClick={handlePreviousMonth}
+        onClick={handlePreviousYear}
         sx={{ color: "black", '&:hover': { color: '#0e5e2a' } }}
       >
         <ArrowBackIos />
       </Button>
       <Typography className='black' variant="h6">
-        {`${month}, ${year}`}
+        {year}
       </Typography>
       <Button
-        onClick={handleNextMonth}
+        onClick={handleNextYear}
         sx={{ color: "black", '&:hover': { color: '#0e5e2a' } }}
       >
         <ArrowForwardIos />

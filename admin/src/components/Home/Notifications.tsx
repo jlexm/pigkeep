@@ -53,77 +53,77 @@ function formatEventDate(dateString: string) {
   }
 }
 
-// Memoized row component to avoid unnecessary re-renders
-const RenderRow = React.memo(({ index, style }: ListChildComponentProps) => {
-  const event = events[index];
+export default function PigEventsNotification({ pigEvents } : { pigEvents: any[] }) {
 
-  // Define alternating colors
-  const backgroundColor = index % 2 === 0 ? '#f1f1f1' : '#ffffff'; 
+  // Memoized row component to avoid unnecessary re-renders
+  const RenderRow = React.memo(({ index, style }: ListChildComponentProps) => {
+    const event = pigEvents[index];
 
-  return (
-    <ThemeProvider theme={theme}>
-      <ListItem
-        style={{
-          ...style,
-          paddingBottom: 15,
-          backgroundColor: backgroundColor, 
-          borderRadius: '3px', 
-        }}
-        key={index}
-        component="div"
-        disablePadding
-      >
-        <ListItemButton>
-          <Box className="listBox">
-            <Box className="listRow1">
-              <ListItemText
-                className="black"
-                primary={formatEventDate(event.date)}
-                sx={{ flex: '1', fontSize: 16 }}
-              />
-              <ListItemText
-                className="black"
-                primary={event.name}
-                sx={{
-                  flex: '1',
-                  textAlign: 'right',
-                  fontSize: 16,
-                  fontWeight: 800,
-                }}
-              />
+    // Define alternating colors
+    const backgroundColor = index % 2 === 0 ? '#f1f1f1' : '#ffffff'; 
+
+    const eventDateString = formatEventDate(event.eventDate)
+    const eventStatus = eventDateString === 'Today' ? 'In Progress' : event.status
+
+    return (
+      <ThemeProvider theme={theme}>
+        <ListItem
+          style={{
+            ...style,
+            paddingBottom: 15,
+            backgroundColor: backgroundColor, 
+            borderRadius: '3px', 
+          }}
+          key={event.uuid}
+          component="div"
+          disablePadding
+        >
+          <ListItemButton>
+            <Box className="listBox">
+              <Box className="listRow1">
+                <ListItemText
+                  className="black"
+                  primary={eventDateString}
+                  sx={{ flex: '1', fontSize: 16 }}
+                />
+                <ListItemText
+                  className="black"
+                  primary={event.eventType}
+                  sx={{
+                    flex: '1',
+                    textAlign: 'right',
+                    fontSize: 16,
+                    fontWeight: 800,
+                  }}
+                />
+              </Box>
+              <Box className="listRow1">
+                <ListItemText
+                  className="black"
+                  primary={
+                    <Typography variant="body1">
+                      Pig{' '}
+                      <span style={{ color: 'green' }}>{event.pigNumber}</span>
+                    </Typography>
+                  }
+                  sx={{ flex: '1' }}
+                />
+                <Typography 
+                  variant="body2" 
+                  fontWeight={100} 
+                  color={'green'} 
+                  sx={{ textDecoration: 'underline'}}
+                  >
+                    {eventStatus}
+                </Typography>
+              </Box>
             </Box>
-            <Box className="listRow1">
-              <ListItemText
-                className="black"
-                primary={
-                  <Typography variant="body1">
-                    Pig{' '}
-                    <span style={{ color: 'green' }}>{event.pigNumber}</span>
-                  </Typography>
-                }
-                sx={{ flex: '1' }}
-              />
-              <Link
-                href="#"
-                underline="hover"
-                sx={{
-                  flex: '1',
-                  textAlign: 'right',
-                  color: 'green',
-                  fontSize: 16,
-                }}
-              >
-                <Typography variant="body2" fontWeight={100}>See Details</Typography>
-              </Link>
-            </Box>
-          </Box>
-        </ListItemButton>
-      </ListItem>
-    </ThemeProvider>
-  );
-})
+          </ListItemButton>
+        </ListItem>
+      </ThemeProvider>
+    );
+  })
 
-export default function VirtualizedList() {
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={2}>
@@ -154,7 +154,7 @@ export default function VirtualizedList() {
           <FixedSizeList
             height={560}
             itemSize={82}
-            itemCount={events.length}
+            itemCount={pigEvents.length}
             overscanCount={5} // Adds some buffer to prevent flickering
           >
             {RenderRow}

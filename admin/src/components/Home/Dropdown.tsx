@@ -37,8 +37,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
   const [newItem, setNewItem] = useState('')
 
   useEffect(() => {
-    console.log('SELECTED', selected)
-      setSelectedOption(selected)
+    setSelectedOption(selected)
   }, [selected])
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {

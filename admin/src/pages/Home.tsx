@@ -1,8 +1,7 @@
 import { Grid2, ThemeProvider, Typography } from '@mui/material'
 import BasicPie from '../components/Home/PieChart'
 import SimpleContainer from '../components/Home/HomeContainer'
-import VirtualizedList from '../components/Home/Notifications'
-import BarGraph from '../components/Home/FinancialReport'
+import FinancialReport from '../components/Home/FinancialReport'
 import Guide from '../components/Home/Guide'
 import DropdownWithAddButton from '../components/Home/Dropdown'
 import theme from '../Theme'
@@ -11,31 +10,49 @@ import { fetchMyFarms, getSelectedFarm, setSelectedFarm } from '../services/farm
 import { determinePigStage, fetchAllFarmPigs } from '../services/pig.service'
 import { PieValueType } from '@mui/x-charts'
 import { MakeOptional } from '@mui/x-charts/internals'
+import { fetchFarmPigEvents } from '../services/pig-events.service'
+import { getTodayMidnight, getTodayPlusDays } from '../services/utils.service'
+import PigEventsNotification from '../components/Home/Notifications'
+import { fetchLedgers } from '../services/ledger.service'
+import { fetchFeedsHistoryByFarm } from '../services/feed.service'
+import { fetchMedicineHistoryByFarm } from '../services/medicines.service'
 
 const Home: React.FC = () => {
+
+  const localStorageSelectedFarm = getSelectedFarm()
+
   // Default selected farm 
-  const [selectedOption, setSelectedOption] = useState<any>()
+  const [selectedOption, setSelectedOption] = useState<any>(localStorageSelectedFarm)
   const [options, setOptions] = useState<any[]>([])
 
   const [pigs, setPigs] = useState<any[]>([])
+  const [pigEvents, setPigEvents] = useState<any[]>([])
+  const [ledgers, setLedgers] = useState<any[]>([])
+  const [feedHistory, setFeedHistory] = useState<any[]>([])
+  const [medicineHistory, setMedicineHistory] = useState<any[]>([])
 
   // Fetch all farms and set the default selected farm
   useEffect(() => {
     (async () => {
       const myFarms = await fetchMyFarms() as any
       setOptions(myFarms)
-      const selectedFarm = getSelectedFarm() ?? myFarms[0]
-      if(selectedFarm) {
+      if(!selectedOption) {
+        const selectedFarm = myFarms[0]
         setSelectedOption(selectedFarm)
+        setSelectedFarm(selectedFarm)
       }
-      setSelectedFarm(selectedFarm)
     })()
   },[])
 
-  // Fetch pigs when a farm is selected
+  // Fetch api data when selected farm changes
   useEffect(() => {
     if(selectedOption) {
-        fetchPigs(selectedOption['_id'])
+      const farm_id = selectedOption['_id']
+      fetchPigs(farm_id)
+      fetchPigEvents(farm_id)
+      fetchLedgersData(farm_id)
+      fetchFeedsHistoryData(farm_id)
+      fetchMedsHistoryData(farm_id)
     }
   }, [selectedOption])
 
@@ -50,6 +67,35 @@ const Home: React.FC = () => {
         }
       )
     )  
+  }
+
+  const fetchPigEvents = async (farm_id: string) => {
+    const pigEvents: any[] = (await fetchFarmPigEvents(farm_id) as any) ?? []
+    const today = getTodayMidnight()
+    const next2Weeks = getTodayPlusDays(14)
+    setPigEvents(
+      pigEvents.filter(
+        (event: any) => event.status !== 'Completed' 
+          && new Date(event.eventDate) >= today 
+          && new Date(event.eventDate) <= next2Weeks
+        )
+        .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime())
+      )
+  }
+
+  const fetchLedgersData = async (farm_id: string) => {
+    const ledgers: any[] = (await fetchLedgers(farm_id) as any) ?? []
+    setLedgers(ledgers)
+  }
+  
+  const fetchFeedsHistoryData = async (farm_id: string) => {
+    const feeds: any[] = (await fetchFeedsHistoryByFarm(farm_id) as any) ?? []
+    setFeedHistory(feeds)
+  }
+
+  const fetchMedsHistoryData = async (farm_id: string) => {
+    const meds: any[] = (await fetchMedicineHistoryByFarm(farm_id) as any) ?? []
+    setMedicineHistory(meds)
   }
 
   //  Pie chart data
@@ -93,10 +139,10 @@ const Home: React.FC = () => {
           <BasicPie data={pigsPieData} />
         </Grid2>
         <Grid2 size={{ xs: 12, lg: 6 }}>
-          <VirtualizedList />
+          <PigEventsNotification pigEvents={pigEvents} />
         </Grid2>
         <Grid2 size={12}>
-          <BarGraph />
+          <FinancialReport ledgers={ledgers} feedHistory={feedHistory} medicineHistory={medicineHistory} />
         </Grid2>
         <Grid2 size={12}>
           <Guide />
