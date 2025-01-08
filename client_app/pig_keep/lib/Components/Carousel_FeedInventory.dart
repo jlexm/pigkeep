@@ -31,7 +31,7 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
           padEnds: false,
           height: 90.h,
           aspectRatio: 16 / 9,
-          viewportFraction: 0.42,
+          viewportFraction: 0.45,
           initialPage: 1,
           enableInfiniteScroll: false,
           reverse: false,
@@ -59,7 +59,7 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         '${item.weightKG} kg',
@@ -79,7 +79,7 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        item.feedType,
+                       '${item.feedType.length > 15 ? item.feedType.substring(0, 15) + '...' : item.feedType}',
                         style: TextStyle(fontSize: 12.0.sp),
                       ),
                     ],
