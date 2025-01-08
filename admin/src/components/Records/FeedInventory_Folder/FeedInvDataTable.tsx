@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import { ThemeProvider } from '@emotion/react'
 import theme from '../../../Theme'
+import { useEffect } from 'react'
 
 const columns: GridColDef[] = [
   {
@@ -22,7 +23,7 @@ const columns: GridColDef[] = [
     resizable: false,
   },
   {
-    field: 'action',
+    field: 'status',
     headerName: 'Action',
     flex: 1,
     minWidth: 130,
@@ -30,30 +31,44 @@ const columns: GridColDef[] = [
     headerAlign: 'left',
     align: 'left',
     cellClassName: (params) => {
-      return params.value === 'Add Feed'
+      return params.value === 'stock'
         ? 'green-text'
-        : params.value === 'Consume Feed'
+        : params.value === 'consumed'
         ? 'red-text'
         : ''
     },
   },
   {
-    field: 'quantity',
+    field: 'weightKG',
     headerName: 'Quantity',
     flex: 1,
     minWidth: 120,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell(params) {
+      return (
+        <>
+          {params.value} KG
+        </>
+      )
+    },
   },
   {
-    field: 'date',
+    field: 'createdAt',
     headerName: 'Date',
     flex: 1,
     minWidth: 130,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell(params) {
+      return (
+        <>
+          {new Date(params.value).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </>
+      )
+    },
   },
   {
     field: 'cost',
@@ -63,6 +78,13 @@ const columns: GridColDef[] = [
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell(params) {
+      return (
+        <>
+          {params.value.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+        </>
+      )
+    },
   },
 ]
 
@@ -93,24 +115,29 @@ const initialRows = [
   },
 ]
 
-const paginationModel = { page: 0, pageSize: 5 }
+const paginationModel = { page: 0, pageSize: 10 }
 
-export default function FeedInvDataTable() {
+export default function FeedInvDataTable( { feedHistory }: { feedHistory: any[] }) {
+
   const [searchText, setSearchText] = React.useState('')
   const [statusFilter, setStatusFilter] = React.useState('all')
-  const [filteredRows, setFilteredRows] = React.useState(initialRows)
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([])
+
+  useEffect(() => { 
+    setFilteredRows(feedHistory)
+  }, [feedHistory])
 
   const handleFilter = () => {
     const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter((row) => {
+    const filtered = feedHistory.filter((row) => {
       const matchesSearch =
         row.feedType.toLowerCase().includes(lowerSearchText) ||
-        row.action.toLowerCase().includes(lowerSearchText) ||
-        row.quantity.toLowerCase().includes(lowerSearchText) ||
-        row.date.toLowerCase().includes(lowerSearchText) ||
-        row.cost.toLowerCase().includes(lowerSearchText)
+        row.status.toLowerCase().includes(lowerSearchText) ||
+        row.weightKG.toString().toLowerCase().includes(lowerSearchText) ||
+        row.createdAt.toLowerCase().includes(lowerSearchText) ||
+        row.cost.toString().toLowerCase().includes(lowerSearchText)
       const matchesStatus =
-        statusFilter === 'all' || row.action === statusFilter
+        statusFilter === 'all' || row.status === statusFilter
       return matchesSearch && matchesStatus
     })
     setFilteredRows(filtered)
@@ -153,14 +180,14 @@ export default function FeedInvDataTable() {
               <MenuItem value="all">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
               </MenuItem>
-              <MenuItem value="Add Feed">
+              <MenuItem value="stock">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography>Add Feed</Typography>
+                  <Typography>Stock</Typography>
                 </Box>
               </MenuItem>
-              <MenuItem value="Consume Feed">
+              <MenuItem value="consumed">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Typography>Consume Feed</Typography>
+                  <Typography>Consumed</Typography>
                 </Box>
               </MenuItem>
             </Select>
@@ -178,8 +205,9 @@ export default function FeedInvDataTable() {
           <DataGrid
             rows={filteredRows}
             columns={columns}
+            getRowId={(row) => row.uuid}
             initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10, 25, 50, 100]}
+            pageSizeOptions={[10, 25, 50, 100]}
             rowSelection={false}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0

@@ -11,12 +11,14 @@ import theme from '../../../Theme'
 
 // format peso sign
 const formatCurrency = (amount: number) => {
-  return `₱${amount.toLocaleString()}`
+  return `${amount.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}`
 }
 
-export default function AddFeedComp() {
+export default function AddFeedComp({ feeds, feedHistory }: { feeds: any[], feedHistory: any[] }) {
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = useState(false)
+
+  const [totalCost, setTotalCost] = useState<number>(0)
 
   // Function to open the dialog
   const handleOpenDialog = () => {
@@ -34,6 +36,17 @@ export default function AddFeedComp() {
     handleCloseDialog() // Close dialog after saving
   }
 
+  const handlePaginationChange = (month: number, year: number) => {
+    const totalCost = feedHistory.reduce((acc, feed) => {
+      const feedDate = new Date(feed.createdAt)
+      if (feedDate.getMonth() === month && feedDate.getFullYear() === year) {
+        return acc + feed.cost
+      }
+      return acc
+    }, 0)
+    setTotalCost(totalCost)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={3}>
@@ -43,7 +56,7 @@ export default function AddFeedComp() {
           </Typography>
         </Grid2>
         <Grid2 size={12}>
-          <MonthPagination />
+          <MonthPagination monthChange={handlePaginationChange} />
         </Grid2>
         <Grid2 container size={12} sx={{ placeContent: 'center' }}>
           <Grid2
@@ -60,7 +73,7 @@ export default function AddFeedComp() {
                     color="white"
                     sx={{ fontSize: 'clamp(3rem, 2.7vw, 4.688rem)' }}
                   >
-                   {formatCurrency(90000)}
+                   {formatCurrency(totalCost)}
                   </Typography>
                 </Box>
               </Grid2>
@@ -108,7 +121,7 @@ export default function AddFeedComp() {
             </Typography>
           </Grid2>
           <Grid2 size={12} paddingX={{ xs: 4, sm: 5, lg: 2 }}>
-            <FeedTable />
+            <FeedTable feeds={feeds} />
           </Grid2>
         </Grid2>
       </Grid2>

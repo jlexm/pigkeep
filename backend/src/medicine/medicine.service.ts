@@ -89,4 +89,9 @@ export class MedicineService {
       await this.medicineModel.bulkWrite(bulkOps)
     }
   }
+
+  async getMedicineByFarmID(farm_id: string) {
+    return this.medicineModel.find({ farmID: farm_id }).exec()
+  }
+
 }

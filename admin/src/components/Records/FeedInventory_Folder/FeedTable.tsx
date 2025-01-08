@@ -6,21 +6,18 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  IconButton,
 } from '@mui/material';
-import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import ReusableDialogBox from '../../../modals/ReusableDialogBox'; // Adjust the import path as needed
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import { ThemeProvider } from '@emotion/react';
 import theme from '../../../Theme';
 
 interface FeedData {
-  type: string;
-  stock: string;
-  consume: number;
+  feedType: string;
+  weightKG: string;
 }
 
-const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
+const FeedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
   data,
 }) => {
   // State to manage the dialog box visibility
@@ -64,12 +61,12 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
           </TableHead>
           <TableBody>
             {data.map((row) => (
-              <TableRow key={row.type}>
+              <TableRow key={row.feedType}>
                 <TableCell sx={{ paddingLeft: 0, textAlign: 'start', width: 90 }}>
-                  {row.type}
+                  {row.feedType}
                 </TableCell>
                 <TableCell sx={{ color: '#11703b', paddingRight: 0, textAlign: 'end', width: 90 }}>
-                  {row.stock}
+                  {row.weightKG} KG
                 </TableCell>
                 {/* <TableCell sx={{ paddingRight: 0, textAlign: 'end', width: 90 }}>
                   <IconButton
@@ -91,7 +88,7 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
         <ReusableDialogBox
           title={
             <>
-              Consume <span style={{ color: '#11703b' }}>{selectedRow.type}</span>
+              Consume <span style={{ color: '#11703b' }}>{selectedRow.feedType}</span>
             </>
           } 
           description="Fill up the necessary information."
@@ -111,16 +108,8 @@ const MedsTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
   );
 };
 
-// Sample data
-const sampleData: FeedData[] = [
-  { type: 'Corn', stock: '100 kg', consume: 10 },
-  { type: 'Soybean', stock: '200 kg', consume: 35 },
-  { type: 'Barley', stock: '150 kg', consume: 50 },
-  { type: 'Wheat', stock: '120 kg', consume: 10 },
-];
-
-const App = () => {
-  return <MedsTable data={sampleData} />;
+const App = ({ feeds }: { feeds: any[]}) => {
+  return <FeedsTable data={feeds} />;
 }
 
 export default App;

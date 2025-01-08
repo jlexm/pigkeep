@@ -13,17 +13,18 @@ import {
 
 import '../PigList_Folder/PigList.css'
 import theme from '../../../Theme'
+import { useEffect } from 'react'
 
 const columns: GridColDef[] = [
   {
-    field: 'medType',
+    field: 'medicineName',
     headerName: 'Medicine Name',
     flex: 1,
     minWidth: 170,
     resizable: false,
   },
   {
-    field: 'action',
+    field: 'status',
     headerName: 'Action',
     flex: 1,
     minWidth: 140,
@@ -32,9 +33,9 @@ const columns: GridColDef[] = [
     align: 'left',
 
     cellClassName: (params) => {
-      return params.value === 'Add Feed'
+      return params.value === 'stock'
         ? 'blue-text'
-        : params.value === 'Consume Feed'
+        : params.value === 'consumed'
         ? 'red-text'
         : ''
     },
@@ -47,18 +48,24 @@ const columns: GridColDef[] = [
     resizable: false,
     headerAlign: 'right',
     align: 'right',
-
     cellClassName: (params) => {
       const action = params.row.action
-      return action === 'Add Feed'
+      return action === 'stock'
         ? 'blue-text'
-        : action === 'Consume Feed'
+        : action === 'consumed'
         ? 'red-text'
         : ''
     },
+    renderCell(params) {
+      return (
+        <>
+          {params.value} x {params.row.dosage}
+        </>
+      )
+    }
   },
   {
-    field: 'target',
+    field: 'pigUuid',
     headerName: 'Target Pig',
     flex: 1,
     minWidth: 130,
@@ -67,73 +74,79 @@ const columns: GridColDef[] = [
     align: 'right',
   },
   {
-    field: 'date',
+    field: 'createdAt',
     headerName: 'Date',
     flex: 1,
     minWidth: 120,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell(params) {
+      return (
+        <>
+          {new Date(params.value).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </>
+      )
+    }
   },
   {
     field: 'cost',
+    type: 'number',
     headerName: 'Cost',
     flex: 1,
     minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell(params) {
+      return (
+        <>
+          {params.value.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+        </>
+      )
+    },
+  },
+  {
+    field: 'totalCost',
+    type: 'number',
+    headerName: 'Total Cost',
+    flex: 1,
+    minWidth: 100,
+    resizable: false,
+    headerAlign: 'right',
+    align: 'right',
+    renderCell(params) {
+      return (
+        <>
+          {params.value.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+        </>
+      )
+    },
   },
 ]
 
-const initialRows = [
-  {
-    id: 1,
-    medType: 'Monensin',
-    action: 'Add Feed',
-    quantity: '+25kg',
-    target: '002',
-    date: 'Jun 25, 2024',
-    cost: 'Php875',
-  },
-  {
-    id: 2,
-    medType: 'Biogesic',
-    action: 'Consume Feed',
-    quantity: '-25kg',
-    target: '003',
-    date: 'Jun 8, 2024',
-    cost: 'Php875',
-  },
-  {
-    id: 3,
-    medType: 'Neozep',
-    action: 'Consume Feed',
-    quantity: '-25kg',
-    target: '004',
-    date: 'Jun 18, 2024',
-    cost: 'Php75',
-  },
-]
+const paginationModel = { page: 0, pageSize: 10 }
 
-const paginationModel = { page: 0, pageSize: 5 }
-
-export default function FeedInvDataTable() {
+export default function MedInvDataTable({ medicineHistory }: { medicineHistory: any[] }) {
   const [searchText, setSearchText] = React.useState('')
   const [statusFilter, setStatusFilter] = React.useState('all')
-  const [filteredRows, setFilteredRows] = React.useState(initialRows)
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([])
+
+  useEffect(() => {
+    setFilteredRows(medicineHistory)
+  }, [medicineHistory])
 
   const handleFilter = () => {
     const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter((row) => {
+    const filtered = medicineHistory.filter((row) => {
       const matchesSearch =
-        row.medType.toLowerCase().includes(lowerSearchText) ||
-        row.action.toLowerCase().includes(lowerSearchText) ||
-        row.quantity.toLowerCase().includes(lowerSearchText) ||
-        row.date.toLowerCase().includes(lowerSearchText) ||
-        row.cost.toLowerCase().includes(lowerSearchText)
+        row.medicineName.toLowerCase().includes(lowerSearchText)
       const matchesStatus =
-        statusFilter === 'all' || row.action === statusFilter
+        statusFilter === 'all' || row.status === statusFilter
       return matchesSearch && matchesStatus
     })
     setFilteredRows(filtered)
@@ -178,14 +191,14 @@ export default function FeedInvDataTable() {
               <MenuItem value="all">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
               </MenuItem>
-              <MenuItem value="Add Feed">
+              <MenuItem value="stock">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Add Feed
+                  Stock
                 </Box>
               </MenuItem>
-              <MenuItem value="Consume Feed">
+              <MenuItem value="consumed">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Consume Feed
+                  Consumed
                 </Box>
               </MenuItem>
             </Select>
@@ -204,7 +217,8 @@ export default function FeedInvDataTable() {
             rows={filteredRows}
             columns={columns}
             initialState={{ pagination: { paginationModel } }}
-            pageSizeOptions={[5, 10, 25, 50, 100]}
+            getRowId={(row) => row.uuid}
+            pageSizeOptions={[10, 25, 50, 100]}
             rowSelection={false}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0
