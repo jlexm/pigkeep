@@ -47,7 +47,7 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
           padEnds: false,
           height: 90.h,
           aspectRatio: 16 / 9,
-          viewportFraction: 0.42,
+          viewportFraction: 0.45,
           initialPage: 1,
           enableInfiniteScroll: false,
           reverse: false,
@@ -96,8 +96,9 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              '${item.medicineName} ${item.dosage}',
+                              '${item.medicineName.length > 16 ? item.medicineName.substring(0, 16) + '...' : item.medicineName}\n${item.dosage}',
                               style: TextStyle(fontSize: 12.0.sp),
+                              textAlign: TextAlign.center, // Center the text
                             ),
                           ],
                         )
