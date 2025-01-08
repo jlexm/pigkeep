@@ -27,60 +27,60 @@ class ReusableDialogBox extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Padding(
-        padding:
-            EdgeInsets.only(left: 25.w, right: 25.w, top: 20.h, bottom: 20.h),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 23.sp,
-                fontWeight: FontWeight.w700,
-                color: appTertiary,
-              ),
-            ),
-            SizedBox(height: 6.h),
-            Text(
-              description,
-              style: TextStyle(
-                fontSize: 12.sp,
-                color: appTertiary,
-              ),
-            ),
-            SizedBox(height: 11.h),
-            Column(
-              children: formFields
-                  .map((field) => Padding(
-                        padding: EdgeInsets.only(bottom: 10.h),
-                        child: field,
-                      ))
-                  .toList(),
-            ),
-            SizedBox(height: 10.h),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: onSave,
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: appSecondary,
-                  backgroundColor: saveButtonColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(left: 25.w, right: 25.w, top: 20.h, bottom: 20.h),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 23.sp,
+                  fontWeight: FontWeight.w700,
+                  color: appTertiary,
                 ),
-                child: Text(saveButtonText),
               ),
-            ),
-          ],
+              SizedBox(height: 6.h),
+              Text(
+                description,
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: appTertiary,
+                ),
+              ),
+              SizedBox(height: 11.h),
+              Column(
+                children: formFields
+                    .map((field) => Padding(
+                          padding: EdgeInsets.only(bottom: 10.h),
+                          child: field,
+                        ))
+                    .toList(),
+              ),
+              SizedBox(height: 10.h),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: onSave,
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: appSecondary,
+                    backgroundColor: saveButtonColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: Text(saveButtonText),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
 class RecyclableTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? labelText;
@@ -225,6 +225,29 @@ class RecyclableTextFormField extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+class KeyboardAvoider extends StatelessWidget {
+  final Widget child;
+
+  const KeyboardAvoider({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: IntrinsicHeight(child: child),
+          ),
+        );
+      },
     );
   }
 }
