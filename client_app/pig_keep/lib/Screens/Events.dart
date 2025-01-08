@@ -343,20 +343,26 @@ class _EventsState extends State<Events> {
                                                     showDropdown: true,
                                                     dropdownItems: [
                                                       CustomDropDownItem(
-                                                          'Vaccination',
-                                                          'Vaccination'),
+                                                          'Artificial Insemination',
+                                                          'Artificial Insemination'),
+                                                      CustomDropDownItem(
+                                                          'Breeding',
+                                                          'Breeding'),
+                                                      CustomDropDownItem(
+                                                          'Ear Tagging',
+                                                          'Ear Tagging'),
                                                       CustomDropDownItem(
                                                           'Farrowing',
                                                           'Farrowing'),
                                                       CustomDropDownItem(
-                                                          'Artificial Insemination',
-                                                          'Artificial Insemination'),
+                                                          'Vaccination',
+                                                          'Vaccination'),
                                                     ],
                                                     hintText: 'Event',
                                                     hintTextSize: 14.sp,
                                                     icon: Icons.event_note,
                                                     textSize: 14.sp,
-                                                    readOnly: true,
+                                                    readOnly: false,
                                                   ),
                                                 ],
                                                 onSave: () async {
