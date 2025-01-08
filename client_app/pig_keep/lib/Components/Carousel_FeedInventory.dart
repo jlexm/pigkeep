@@ -31,7 +31,7 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
           padEnds: false,
           height: 90.h,
           aspectRatio: 16 / 9,
-          viewportFraction: 0.45,
+          viewportFraction: 0.46,
           initialPage: 1,
           enableInfiniteScroll: false,
           reverse: false,
