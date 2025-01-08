@@ -7,6 +7,7 @@ import { generateYearlySalesData } from '../../services/utils.service'
 
 type SalesData = {
   totalSales: number
+  yearlySales: number
   salesData: number[]
 }
 
@@ -33,9 +34,9 @@ const formatCurrency = (amount: number) => {
 export default function FinancialReport({ ledgers, feedHistory, medicineHistory }: { ledgers: any[], feedHistory: any[], medicineHistory: any[] }) {
 
   const [year, setYear] = React.useState<number>(new Date().getFullYear())
-  const [pigSalesData, setPigSalesData] = React.useState<SalesData>({ totalSales: 0, salesData: [] })
-  const [feedsCostData, setFeedsCostData] = React.useState<SalesData>({ totalSales: 0, salesData: [] })
-  const [medsCostData, setMedsCostData] = React.useState<SalesData>({ totalSales: 0, salesData: [] })
+  const [pigSalesData, setPigSalesData] = React.useState<SalesData>({ totalSales: 0, salesData: [], yearlySales: 0 })
+  const [feedsCostData, setFeedsCostData] = React.useState<SalesData>({ totalSales: 0, salesData: [], yearlySales: 0  })
+  const [medsCostData, setMedsCostData] = React.useState<SalesData>({ totalSales: 0, salesData: [], yearlySales: 0  })
 
 
   // calculate financial data 
@@ -45,7 +46,8 @@ export default function FinancialReport({ ledgers, feedHistory, medicineHistory 
     const pigSales = generateYearlySalesData(year, ledgers, 'transactionDate', 'priceSold')
     setPigSalesData(
       {
-        totalSales: pigSales.reduce((a, b) => a + b, 0),
+        yearlySales: pigSales.reduce((a, b) => a + b, 0),
+        totalSales: ledgers.reduce((a, b) => a + b.priceSold, 0),
         salesData: pigSales,
       }
     )
@@ -54,16 +56,18 @@ export default function FinancialReport({ ledgers, feedHistory, medicineHistory 
     const feedsCost = generateYearlySalesData(year, feedHistory.filter((item) => item.status === 'stock' ), 'createdAt', 'cost')
     setFeedsCostData(
       {
-        totalSales: feedsCost.reduce((a, b) => a + b, 0),
+        yearlySales: feedsCost.reduce((a, b) => a + b, 0),
+        totalSales: feedHistory.reduce((a, b) => a + b.cost, 0),
         salesData: feedsCost,
       }
     )
 
     // calc meds cost
-    const medsCost = generateYearlySalesData(year, medicineHistory, 'createdAt', 'cost')
+    const medsCost = generateYearlySalesData(year, medicineHistory, 'createdAt', 'totalCost')
     setMedsCostData(
       {
-        totalSales: medsCost.reduce((a, b) => a + b, 0),
+        yearlySales: medsCost.reduce((a, b) => a + b, 0),
+        totalSales: medicineHistory.reduce((a, b) => a + b.totalCost, 0),
         salesData: medsCost,
       }
     )
@@ -99,7 +103,7 @@ export default function FinancialReport({ ledgers, feedHistory, medicineHistory 
             {
               scaleType: 'band',
               data: BAR_MONTHS,
-              label: `YEAR ${year}`,
+              label: `YEAR ${year} - ${formatCurrency(pigSalesData.yearlySales)}`,
               labelStyle: {
                 fontSize: '20px',
                 fontWeight: 500,
@@ -137,7 +141,7 @@ export default function FinancialReport({ ledgers, feedHistory, medicineHistory 
             {
               scaleType: 'band',
               data: BAR_MONTHS,
-              label: '2024',
+              label: `YEAR ${year} - ${formatCurrency(feedsCostData.yearlySales)}`,
               labelStyle: {
                 fontSize: '20px',
                 fontWeight: 500,
@@ -176,7 +180,7 @@ export default function FinancialReport({ ledgers, feedHistory, medicineHistory 
             {
               scaleType: 'band',
               data: BAR_MONTHS,
-              label: '2024',
+              label: `YEAR ${year} - ${formatCurrency(medsCostData.yearlySales)}`,
               labelStyle: {
                 fontSize: '20px',
                 fontWeight: 500,

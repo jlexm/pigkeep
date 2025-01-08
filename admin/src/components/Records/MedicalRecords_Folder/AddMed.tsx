@@ -7,15 +7,18 @@ import ReusableDialogBox from '../../../modals/ReusableDialogBox'
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
 import { useState } from 'react'
 import theme from '../../../Theme'
+import MedicalTable from './MedicalTable'
 
 // format peso sign
 const formatCurrency = (amount: number) => {
-  return `₱${amount.toLocaleString()}`
+  return `${amount.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}`
 }
 
-export default function AddMedComp() {
+export default function AddMedComp({ medicine, medicineHistory }: { medicine: any[], medicineHistory: any[] }) {
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = useState(false)
+
+  const [totalCost, setTotalCost] = useState<number>(0)
 
   // Function to open the dialog
   const handleOpenDialog = () => {
@@ -33,6 +36,17 @@ export default function AddMedComp() {
     handleCloseDialog() // Close dialog after saving
   }
 
+  const handlePaginationChange = (month: number, year: number) => {
+    const totalCost = medicineHistory.reduce((acc, medicine) => {
+      const medicineDate = new Date(medicine.createdAt)
+      if (medicineDate.getMonth() === month && medicineDate.getFullYear() === year) {
+        return acc + medicine.totalCost
+      }
+      return acc
+    }, 0)
+    setTotalCost(totalCost)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={3} >
@@ -42,7 +56,7 @@ export default function AddMedComp() {
           </Typography>
         </Grid2>
         <Grid2 size={12}>
-          <MonthPagination />
+          <MonthPagination monthChange={handlePaginationChange} />
         </Grid2>
         <Grid2 container size={12} sx={{ placeContent: 'center' }}>
           <Grid2
@@ -59,7 +73,7 @@ export default function AddMedComp() {
                     color="white"
                     sx={{ fontSize: 'clamp(3rem, 2.7vw, 4.688rem)' }}
                   >
-                    {formatCurrency(80000)}
+                    {formatCurrency(totalCost)}
                   </Typography>
                 </Box>
               </Grid2>
@@ -107,7 +121,7 @@ export default function AddMedComp() {
             </Typography>
           </Grid2>
           <Grid2 size={12} paddingX={{ xs: 4, sm: 5, lg: 2 }} >
-            <FeedTable />
+            <MedicalTable medicine={medicine} />
           </Grid2>
         </Grid2>
       </Grid2>

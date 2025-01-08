@@ -95,7 +95,7 @@ const Home: React.FC = () => {
 
   const fetchMedsHistoryData = async (farm_id: string) => {
     const meds: any[] = (await fetchMedicineHistoryByFarm(farm_id) as any) ?? []
-    setMedicineHistory(meds)
+    setMedicineHistory(meds.map((med: any) => ({...med, totalCost: med.cost * med.quantity})))
   }
 
   //  Pie chart data

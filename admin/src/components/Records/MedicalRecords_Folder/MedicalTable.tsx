@@ -12,21 +12,22 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 import ReusableDialogBox from '../../../modals/ReusableDialogBox'; // Adjust the import path as needed
 import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 
-interface FeedData {
-  type: string;
-  stock: string;
+interface MedicalData {
+  medicineName: string;
+  dosage: string; 
+  quantity: number;
   consume: number;
 }
 
-const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
+const MedicalTable: React.FC<React.PropsWithChildren<{ data: MedicalData[] }>> = ({
   data,
 }) => {
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = React.useState(false);
-  const [selectedRow, setSelectedRow] = React.useState<FeedData | null>(null); // State to manage selected row data
+  const [selectedRow, setSelectedRow] = React.useState<MedicalData | null>(null); // State to manage selected row data
 
   // Function to open the dialog
-  const handleOpenDialog = (row: FeedData) => {
+  const handleOpenDialog = (row: MedicalData) => {
     setSelectedRow(row); // Set the selected row data
     setOpenDialog(true); // Open the dialog
   };
@@ -78,18 +79,18 @@ const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
           </TableHead>
           <TableBody>
             {data.map((row) => (
-              <TableRow key={row.type}>
+              <TableRow key={row.medicineName}>
                 <TableCell sx={{
                   paddingLeft: 0,
                   textAlign: 'start',
                   width: 90,
-                }}>{row.type}</TableCell>
+                }}>{row.medicineName}</TableCell>
                 <TableCell sx={{
                   color: '#3B4DE1', 
                   paddingRight: 0,
                   textAlign: 'end',
                   width: 90,
-                }}>{row.stock}</TableCell>
+                }}>{row.quantity} x {row.dosage}</TableCell>
                 {/* <TableCell sx={{
                   paddingRight: 0,
                   textAlign: 'end',
@@ -114,7 +115,7 @@ const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
         <ReusableDialogBox
           title={
             <>
-              Consume <span style={{ color: '#3B4DE1' }}>{selectedRow.type}</span>
+              Consume <span style={{ color: '#3B4DE1' }}>{selectedRow.medicineName}</span>
             </>
           } 
           description="Fill up the necessary information."
@@ -132,16 +133,8 @@ const FeedTable: React.FC<React.PropsWithChildren<{ data: FeedData[] }>> = ({
   );
 };
 
-// Sample data
-const sampleData: FeedData[] = [
-  { type: 'Monessen', stock: '100 mg', consume: 10 },
-  { type: 'Biogesic', stock: '200 mg', consume: 35 },
-  { type: 'Neozep', stock: '150 mg', consume: 50 },
-  { type: 'Katol', stock: '120 mg', consume: 10 },
-];
-
-const App = () => {
-  return <FeedTable data={sampleData} />;
-};
+const App = ({ medicine }: { medicine: any[]}) => {
+  return <MedicalTable data={medicine} />;
+}
 
 export default App;
