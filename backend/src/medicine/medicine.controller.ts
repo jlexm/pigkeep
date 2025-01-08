@@ -94,4 +94,9 @@ export class MedicineController {
     await this.medicineService.syncMeds(farmId, feeds)
     return { success: true, message: 'Data synced!' }
   }
+
+  @Get('farm/:farm_id')
+  async getMedicineByFarm(@Param('farm_id') farmId) {
+    return await this.medicineService.getMedicineByFarmID(farmId)
+  }
 }
