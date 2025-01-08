@@ -149,6 +149,36 @@ class _QRCodeStatusState extends State<PigView> {
     return SingleChildScrollView(
       child: Column(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pop(
+                        context); 
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.arrow_back,
+                        color: appTertiary,
+                      ),
+                      SizedBox(
+                          width: 5), 
+                      Text(
+                        'Return',
+                        style: TextStyle(
+                          color: appTertiary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
           SizedBox(height: 20.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -281,7 +311,7 @@ class _QRCodeStatusState extends State<PigView> {
                     ),
                     SizedBox(height: 5.h),
                     _ActionButton(
-                      text: 'Decease',
+                      text: 'Deceased',
                       color: Colors.transparent,
                       borderColor: appRed,
                       textColor: appRed,
@@ -615,8 +645,7 @@ class _QRCodeStatusState extends State<PigView> {
               ],
             ),
           ),
-          SizedBox(height: 26.h),
-          SizedBox(height: 20.h),
+          SizedBox(height: 26.h)
         ],
       ),
     );
