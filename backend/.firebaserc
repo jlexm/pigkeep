@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "pigkeep-3cfba"
+  },
+  "targets": {
+    "pigkeep-3cfba": {
+      "hosting": {
+        "api-pigkeep": [
+          "api-pigkeep"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
