@@ -10,11 +10,11 @@ class LedgerService {
 
   Future<void> ledgePig(String status, String userOwner, String farmID,
       String pigUuid, double priceSold, double weightKG) async {
-    if (weightKG <= 0 && status == 'alive') {
+    if (weightKG <= 0 && status == 'sold') {
       throw "Invalid weight value";
     }
 
-    if (priceSold <= 0 && status == 'alive') {
+    if (priceSold <= 0 && status == 'sold') {
       throw "Invalid price value";
     }
     var ledger = Ledger()
