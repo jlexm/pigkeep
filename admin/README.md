@@ -43,9 +43,6 @@ firebase login
 # make sure deps are installed
 npm install
 
-# build project first
-npm run build
-
-# deploy to firebase
-firebase deploy
+# build and deploy
+npm run deploy
 ```
