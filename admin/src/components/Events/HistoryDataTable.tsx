@@ -1,28 +1,30 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
-import { Box, Grid2, TextField, ThemeProvider } from '@mui/material'
-import theme from '../../Theme'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { Box, Grid2, TextField, ThemeProvider } from '@mui/material';
+import theme from '../../Theme';
+import { formatDate } from '../../services/utils.service';
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
-    field: 'evName',
+    field: 'eventType',
     headerName: 'Event Name',
     flex: 1,
     minWidth: 160,
     resizable: false,
   },
   {
-    field: 'date',
+    field: 'eventDate',
     headerName: 'Date',
     flex: 1,
     minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell: (params) => <>{formatDate(new Date(params.value))}</>,
   },
   {
-    field: 'pigNum',
+    field: 'pigNumber',
     headerName: 'Pig Number',
     flex: 1,
     minWidth: 140,
@@ -45,144 +47,35 @@ const columns: GridColDef[] = [
         ? 'green-text'
         : '',
   },
-]
-
-// Define the initial rows with pig arrays (to be passed to another component)
-const initialRows = [
-  {
-    id: 1,
-    evName: 'Artificial Insemination',
-    date: 'Jun 22, 2024',
-    pigNum: 15,
-    status: 'Done',
-  },
-  {
-    id: 2,
-    evName: 'Vaccination',
-    date: 'Jun 23, 2024',
-    pigNum: 23,
-    status: 'Done',
-  },
-  {
-    id: 3,
-    evName: 'Artificial Insemination',
-    date: 'Jun 24, 2024',
-    pigNum: 12,
-    status: 'Done',
-  },
-  {
-    id: 4,
-    evName: 'Artificial Insemination',
-    date: 'Jun 26, 2024',
-    pigNum: 7,
-    status: 'Done',
-  },
-  { id: 5, evName: 'Farrow', date: 'Jun 11, 2024', pigNum: 12, status: 'Done' },
-  {
-    id: 6,
-    evName: 'Vaccination',
-    date: 'Jun 23, 2024',
-    pigNum: 4,
-    status: 'Done',
-  },
-  {
-    id: 1,
-    evName: 'Artificial Insemination',
-    date: 'Jun 22, 2024',
-    pigNum: 15,
-    status: 'Done',
-  },
-  {
-    id: 2,
-    evName: 'Vaccination',
-    date: 'Jun 23, 2024',
-    pigNum: 23,
-    status: 'Done',
-  },
-  {
-    id: 3,
-    evName: 'Artificial Insemination',
-    date: 'Jun 24, 2024',
-    pigNum: 12,
-    status: 'Done',
-  },
-  {
-    id: 4,
-    evName: 'Artificial Insemination',
-    date: 'Jun 26, 2024',
-    pigNum: 7,
-    status: 'Done',
-  },
-  { id: 5, evName: 'Farrow', date: 'Jun 11, 2024', pigNum: 12, status: 'Done' },
-  {
-    id: 6,
-    evName: 'Vaccination',
-    date: 'Jun 23, 2024',
-    pigNum: 4,
-    status: 'Done',
-  },
-  {
-    id: 1,
-    evName: 'Artificial Insemination',
-    date: 'Jun 22, 2024',
-    pigNum: 15,
-    status: 'Done',
-  },
-  {
-    id: 2,
-    evName: 'Vaccination',
-    date: 'Jun 23, 2024',
-    pigNum: 23,
-    status: 'Done',
-  },
-  {
-    id: 3,
-    evName: 'Artificial Insemination',
-    date: 'Jun 24, 2024',
-    pigNum: 12,
-    status: 'Done',
-  },
-  {
-    id: 4,
-    evName: 'Artificial Insemination',
-    date: 'Jun 26, 2024',
-    pigNum: 7,
-    status: 'Done',
-  },
-  { id: 5, evName: 'Farrow', date: 'Jun 11, 2024', pigNum: 12, status: 'Done' },
-  {
-    id: 6,
-    evName: 'Vaccination',
-    date: 'Jun 23, 2024',
-    pigNum: 4,
-    status: 'Done',
-  },
-]
+];
 
 // Define the pagination model
-const paginationModel = { page: 0, pageSize: 5 }
+const paginationModel = { page: 0, pageSize: 5 };
 
-export default function HistoryDataTable() {
-  const [searchText, setSearchText] = React.useState('')
-  const [filteredRows, setFilteredRows] = React.useState(initialRows)
+export default function HistoryDataTable({
+  eventHistory,
+}: {
+  eventHistory: any[];
+}) {
+  const [searchText, setSearchText] = React.useState('');
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
 
   // Function to handle filtering based on searchText
   const handleFilter = React.useCallback(() => {
-    const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter((row) => {
+    const lowerSearchText = searchText.toLowerCase();
+    const filtered = eventHistory.filter((row) => {
       return (
-        row.evName.toLowerCase().includes(lowerSearchText) ||
-        row.date.toLowerCase().includes(lowerSearchText) ||
-        row.pigNum.toString().includes(lowerSearchText)
-      )
-    })
-    setFilteredRows(filtered)
-  }, [searchText])
+        row.eventType.toLowerCase().includes(lowerSearchText) ||
+        row.pigNumber.includes(lowerSearchText)
+      );
+    });
+    setFilteredRows(filtered);
+  }, [searchText]);
 
   // Trigger filter whenever searchText changes
   React.useEffect(() => {
-    handleFilter()
-  }, [searchText, handleFilter])
+    handleFilter();
+  }, [searchText, handleFilter]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -217,6 +110,10 @@ export default function HistoryDataTable() {
             <DataGrid
               rows={filteredRows}
               columns={columns}
+              getRowId={(row) => row.uuid}
+              initialState={{
+                sorting: { sortModel: [{ field: 'eventDate', sort: 'desc' }] },
+              }}
               pagination
               paginationModel={paginationModel}
               pageSizeOptions={[5, 10, 25, 50, 100]}
@@ -254,5 +151,5 @@ export default function HistoryDataTable() {
         </Grid2>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }

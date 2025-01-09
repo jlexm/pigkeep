@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
 import {
   Box,
   Container,
@@ -11,44 +11,62 @@ import {
   FormControlLabel,
   Checkbox,
   ThemeProvider,
-} from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import tl from '../assets/topLeft.svg'
-import br from '../assets/bottomRight.svg'
-import miniLogo from '../assets/miniLogo.svg'
-import '../components/Login/Login.css'
+  CircularProgress,
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import tl from '../assets/topLeft.svg';
+import br from '../assets/bottomRight.svg';
+import miniLogo from '../assets/miniLogo.svg';
+import '../components/Login/Login.css';
 
-import theme from '../Theme'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { login, setUserBasicInfo, setUserToken } from '../services/auth.service'
+import theme from '../Theme';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import {
+  login,
+  setUserBasicInfo,
+  setUserToken,
+} from '../services/auth.service';
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const usernameRef = useRef<any>();
   const passwordRef = useRef<any>();
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [rememberMe, setRememberMe] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+
+  const [isLoginLoading, setIsLoginLoading] = useState(false);
 
   const handleClickShowPassword = () => {
-    setShowPassword(!showPassword)
-  }
+    setShowPassword(!showPassword);
+  };
 
   const handleRememberMeChange = (event: {
-    target: { checked: boolean | ((prevState: boolean) => boolean) }
+    target: { checked: boolean | ((prevState: boolean) => boolean) };
   }) => {
-    setRememberMe(event.target.checked)
-  }
+    setRememberMe(event.target.checked);
+  };
 
   const handeLogIn = async () => {
-    const { token, ...restOfResponse } = await login(usernameRef.current!.value, passwordRef.current!.value) as any
-    setUserToken(token)
-    setUserBasicInfo(restOfResponse)
-    navigate('/home')
-    toast.success(`Welcome, ${restOfResponse.first_name}!`, { autoClose: 3000})
-  }
+    setIsLoginLoading(true);
+    try {
+      const { token, ...restOfResponse } = (await login(
+        usernameRef.current!.value,
+        passwordRef.current!.value
+      )) as any;
+      setUserToken(token);
+      setUserBasicInfo(restOfResponse);
+      navigate('/home');
+      toast.success(`Welcome, ${restOfResponse.first_name}!`, {
+        autoClose: 3000,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setIsLoginLoading(false);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,12 +85,7 @@ const Login = () => {
         sx={{ width: { xs: 350, sm: 500, md: 510, lg: 610, xl: 660 } }}
       />
 
-      <Grid2
-        container
-        size={12}
-        
-        sx={{ paddingX: { xs: 5, sm: 20 } }}
-      >
+      <Grid2 container size={12} sx={{ paddingX: { xs: 5, sm: 20 } }}>
         <Grid2
           container
           size={12}
@@ -108,7 +121,10 @@ const Login = () => {
             </Typography>
           </Grid2>
 
-          <Container className="container">
+          <Container
+            className="container"
+            sx={{ pointerEvents: isLoginLoading ? 'none' : 'auto' }}
+          >
             {/* Username TextField */}
             <TextField
               inputRef={usernameRef}
@@ -117,7 +133,7 @@ const Login = () => {
               variant="outlined"
               sx={{
                 height: 'clamp(40px, 4vw, 60px)',
-                marginBottom: { xs: '12px', lg: '1px' }, 
+                marginBottom: { xs: '12px', lg: '1px' },
                 '& .MuiInputBase-root': {
                   height: '45px',
                   '& input': {
@@ -144,7 +160,7 @@ const Login = () => {
               variant="outlined"
               sx={{
                 height: 'clamp(40px, 4vw, 60px)',
-                marginBottom: { md: '12px', lg: '1px' }, 
+                marginBottom: { md: '12px', lg: '1px' },
                 '& .MuiInputBase-root': {
                   height: '45px',
                   '& input': {
@@ -173,7 +189,6 @@ const Login = () => {
               }}
             />
 
-
             {/* Login Button */}
             <Button
               variant="contained"
@@ -186,6 +201,10 @@ const Login = () => {
               }}
               onClick={handeLogIn}
             >
+              {isLoginLoading && (
+                <CircularProgress size={20} sx={{ color: 'white', mr: 2 }} />
+              )}
+
               <Typography
                 sx={{
                   fontWeight: 500,
@@ -199,7 +218,7 @@ const Login = () => {
         </Grid2>
       </Grid2>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

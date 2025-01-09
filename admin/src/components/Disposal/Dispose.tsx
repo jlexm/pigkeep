@@ -1,69 +1,91 @@
-import { Button, Grid2, Stack, ThemeProvider, Typography } from '@mui/material'
-import './Disposal.css'
-import MonthPagination from '../Home/PaginationControl'
-import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox'
-import AddBoxIcon from '@mui/icons-material/AddBox'
-import ReusableDialogBox from '../../modals/ReusableDialogBox'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
-import { useState } from 'react'
-import theme from '../../Theme'
+import { Button, Grid2, Stack, ThemeProvider, Typography } from '@mui/material';
+import './Disposal.css';
+import MonthPagination from '../Home/PaginationControl';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ReusableDialogBox from '../../modals/ReusableDialogBox';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import { useState } from 'react';
+import theme from '../../Theme';
 
 // format peso sign
 const formatCurrency = (amount: number) => {
-  return `₱${amount.toLocaleString()}`
-}
+  return `${amount.toLocaleString('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
+  })}`;
+};
 
-export default function Dispose() {
+export default function Dispose({ ledgers }: { ledgers: any[] }) {
+  const [totalCost, setTotalCost] = useState<number>(0);
+
   // State to manage the dialog box visibility
-  const [openDialog, setOpenDialog] = useState(false)
-  const [openDeceasedDialog, setOpenDeceasedDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openDeceasedDialog, setOpenDeceasedDialog] = useState(false);
 
   // Function to open the dialog
   const handleOpenDialog = () => {
-    setOpenDialog(true)
-  }
+    setOpenDialog(true);
+  };
 
   const handleOpenDeceasedDialog = () => {
-    setOpenDeceasedDialog(true)
-  }
+    setOpenDeceasedDialog(true);
+  };
 
   // Function to close the dialog
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+    setOpenDialog(false);
+  };
 
   const handleCloseDeceasedDialog = () => {
-    setOpenDeceasedDialog(false)
-  }
+    setOpenDeceasedDialog(false);
+  };
 
   // Function to handle save action in the dialog
   const handleSave = () => {
-    console.log('Saving sold pig data...')
-    handleCloseDialog() // Close dialog after saving
-  }
+    console.log('Saving sold pig data...');
+    handleCloseDialog(); // Close dialog after saving
+  };
 
   const handleSaveDeceased = () => {
-    console.log('Saving deceased pig data...')
-    handleCloseDeceasedDialog() // Close dialog after saving
-  }
+    console.log('Saving deceased pig data...');
+    handleCloseDeceasedDialog(); // Close dialog after saving
+  };
+
+  const handlePaginationChange = (month: number, year: number) => {
+    const totalCost = ledgers.reduce((acc, ledger) => {
+      const date = new Date(ledger.transactionDate);
+      if (date.getMonth() === month && date.getFullYear() === year) {
+        return acc + ledger.priceSold;
+      }
+      return acc;
+    }, 0);
+    setTotalCost(totalCost);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={3}>
         <Grid2 size={12} className="miniTitle">
-          <Typography fontSize={'clamp(2rem, 5vw, 3rem)'} fontWeight={'bold'} sx={{ paddingTop: {xs: 0, lg: 3} }}>
+          <Typography
+            fontSize={'clamp(2rem, 5vw, 3rem)'}
+            fontWeight={'bold'}
+            sx={{ paddingTop: { xs: 0, lg: 3 } }}
+          >
             Disposal Ledger
           </Typography>
         </Grid2>
         <Grid2 size={12}>
-          <MonthPagination />
+          <MonthPagination
+            monthChange={handlePaginationChange}
+            triggerData={ledgers}
+          />
         </Grid2>
         <Grid2 container size={12} sx={{ placeContent: 'center' }}>
           <Grid2
             container
             size={{ xs: 12, sm: 9, md: 8, lg: 12 }}
             padding={3}
-            
             spacing={3}
             className="disposeInfoBg"
           >
@@ -76,7 +98,7 @@ export default function Dispose() {
             </Grid2>
             <Grid2 size={12}>
               <Typography variant="h2" fontWeight={'bold'} color="white">
-              {formatCurrency(230000)}
+                {formatCurrency(totalCost)}
               </Typography>
             </Grid2>
           </Grid2>
@@ -160,7 +182,7 @@ export default function Dispose() {
           onSave={handleSave} // Handle save action
           onCancel={handleCloseDialog} // Handle cancel action
           saveButtonText="Sell Pig"
-          saveButtonColor="#554F91" 
+          saveButtonColor="#554F91"
         />
       )}
 
@@ -178,9 +200,9 @@ export default function Dispose() {
           onSave={handleSaveDeceased} // Handle save action
           onCancel={handleCloseDeceasedDialog} // Handle cancel action
           saveButtonText="Remove"
-          saveButtonColor="#FF0000" 
+          saveButtonColor="#FF0000"
         />
       )}
     </ThemeProvider>
-  )
+  );
 }

@@ -1,4 +1,12 @@
 
+export const formatDate = (date: Date) => {
+    return date.toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+}
+
+export const formatDateNumeric = (date: Date) => {
+    return date.toISOString().split('T')[0]
+}
+
 export const getTodayMidnight = () => {
     const today = new Date()
     today.setHours(0, 0, 0, 0)

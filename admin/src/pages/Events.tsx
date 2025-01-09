@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -6,41 +6,80 @@ import {
   Grid2,
   ThemeProvider,
   Typography,
-} from '@mui/material'
-import '../components/Events/Events.css'
-import EventIcon from '@mui/icons-material/Event'
-import CurrentDataTable from '../components/Events/CurrentDataTable'
-import UpcomingDataTable from '../components/Events/UpcomingDataTable'
-import HistoryDataTable from '../components/Events/HistoryDataTable'
-import ReusableDialogBox from '../modals/ReusableDialogBox'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
-import theme from '../Theme'
+} from '@mui/material';
+import '../components/Events/Events.css';
+import EventIcon from '@mui/icons-material/Event';
+import CurrentDataTable from '../components/Events/CurrentDataTable';
+import UpcomingDataTable from '../components/Events/UpcomingDataTable';
+import HistoryDataTable from '../components/Events/HistoryDataTable';
+import ReusableDialogBox from '../modals/ReusableDialogBox';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import theme from '../Theme';
+import { getSelectedFarm } from '../services/farm.service';
+import { fetchFarmPigEvents } from '../services/pig-events.service';
+import {
+  formatDate,
+  formatDateNumeric,
+  getTodayMidnight,
+} from '../services/utils.service';
 
 const Events = () => {
-  const [selectedChip, setSelectedChip] = useState('upcoming')
+  const localStorageSelectedFarm = getSelectedFarm();
 
-  const handleChipClick = (chip: SetStateAction<string>) => {
-    setSelectedChip(chip)
+  const [pigEventsData, setPigEventsData] = useState<{
+    current: any[];
+    upcoming: any[];
+    history: any[];
+  }>({ current: [], upcoming: [], history: [] });
+  const [selectedChip, setSelectedChip] = useState('upcoming');
+
+  useEffect(() => {
+    if (!localStorageSelectedFarm) throw new Error('No farm selected');
+    const farm_id = localStorageSelectedFarm['_id'];
+    getPigEvents(farm_id);
+  }, []);
+
+  async function getPigEvents(farm_id: string) {
+    const farmPigEvents = ((await fetchFarmPigEvents(farm_id)) as any) ?? [];
+    const today = getTodayMidnight();
+
+    const current = farmPigEvents.filter(
+      (event: any) =>
+        event.status !== 'Completed' &&
+        formatDateNumeric(new Date(event.eventDate)) <= formatDateNumeric(today)
+    );
+    const upcoming = farmPigEvents.filter(
+      (event: any) =>
+        formatDateNumeric(new Date(event.eventDate)) > formatDateNumeric(today)
+    );
+    const history = farmPigEvents.filter(
+      (event: any) => event.status === 'Completed'
+    );
+    setPigEventsData({ current, upcoming, history });
   }
 
+  const handleChipClick = (chip: SetStateAction<string>) => {
+    setSelectedChip(chip);
+  };
+
   // State to manage the dialog box visibility
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
 
   // Function to open the dialog
   const handleOpenDialog = () => {
-    setOpenDialog(true)
-  }
+    setOpenDialog(true);
+  };
 
   // Function to close the dialog
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+    setOpenDialog(false);
+  };
 
   // Function to handle save action in the dialog
   const handleSave = () => {
-    console.log('Saving pig data...')
-    handleCloseDialog() // Close dialog after saving
-  }
+    console.log('Saving pig data...');
+    handleCloseDialog(); // Close dialog after saving
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -112,7 +151,7 @@ const Events = () => {
         <Grid2 container size={12}>
           <Grid2 container size={{ xs: 12, lg: 6 }} className="itemAlign">
             <Grid2 container size={12}>
-              <CurrentDataTable />
+              <CurrentDataTable currentEvents={pigEventsData.current} />
             </Grid2>
           </Grid2>
           <Grid2
@@ -156,15 +195,15 @@ const Events = () => {
                   color: selectedChip === 'history' ? 'white' : 'black',
                   border:
                     selectedChip === 'history' ? 'none' : '1px solid #ddd',
-                    fontSize: 'clamp(0.7rem, 0.90vw, 1rem)',
+                  fontSize: 'clamp(0.7rem, 0.90vw, 1rem)',
                 }}
               />
             </Grid2>
             <Grid2 container size={12}>
               {selectedChip === 'upcoming' ? (
-                <UpcomingDataTable />
+                <UpcomingDataTable upcomingEvents={pigEventsData.upcoming} />
               ) : (
-                <HistoryDataTable />
+                <HistoryDataTable eventHistory={pigEventsData.history} />
               )}
             </Grid2>
           </Grid2>
@@ -197,7 +236,7 @@ const Events = () => {
         />
       )}
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Events
+export default Events;

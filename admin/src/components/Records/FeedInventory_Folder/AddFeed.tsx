@@ -1,62 +1,77 @@
-import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material'
-import './Feed.css'
-import AddCircleIcon from '@mui/icons-material/AddCircle'
-import MonthPagination from '../../Home/PaginationControl'
-import FeedTable from './FeedTable'
-import ReusableDialogBox from '../../../modals/ReusableDialogBox'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
-import { useState } from 'react'
-import theme from '../../../Theme'
-
+import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material';
+import './Feed.css';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import MonthPagination from '../../Home/PaginationControl';
+import FeedTable from './FeedTable';
+import ReusableDialogBox from '../../../modals/ReusableDialogBox';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import { useState } from 'react';
+import theme from '../../../Theme';
 
 // format peso sign
 const formatCurrency = (amount: number) => {
-  return `${amount.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}`
-}
+  return `${amount.toLocaleString('en-PH', {
+    style: 'currency',
+    currency: 'PHP',
+  })}`;
+};
 
-export default function AddFeedComp({ feeds, feedHistory }: { feeds: any[], feedHistory: any[] }) {
+export default function AddFeedComp({
+  feeds,
+  feedHistory,
+}: {
+  feeds: any[];
+  feedHistory: any[];
+}) {
   // State to manage the dialog box visibility
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const [totalCost, setTotalCost] = useState<number>(0)
+  const [totalCost, setTotalCost] = useState<number>(0);
 
   // Function to open the dialog
   const handleOpenDialog = () => {
-    setOpenDialog(true)
-  }
+    setOpenDialog(true);
+  };
 
   // Function to close the dialog
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+    setOpenDialog(false);
+  };
 
   // Function to handle save action in the dialog
   const handleSave = () => {
-    console.log('Saving pig data...')
-    handleCloseDialog() // Close dialog after saving
-  }
+    console.log('Saving pig data...');
+    handleCloseDialog(); // Close dialog after saving
+  };
 
   const handlePaginationChange = (month: number, year: number) => {
     const totalCost = feedHistory.reduce((acc, feed) => {
-      const feedDate = new Date(feed.createdAt)
+      const feedDate = new Date(feed.createdAt);
       if (feedDate.getMonth() === month && feedDate.getFullYear() === year) {
-        return acc + feed.cost
+        return acc + feed.cost;
       }
-      return acc
-    }, 0)
-    setTotalCost(totalCost)
-  }
+      return acc;
+    }, 0);
+    setTotalCost(totalCost);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} spacing={3}>
-        <Grid2 size={12} className="miniTitle" sx={{paddingX: {xs:3}}}>
-          <Typography fontSize={'clamp(2rem, 5vw, 3rem)'} fontWeight={'bold'} sx={{ paddingTop: 3}}>
+        <Grid2 size={12} className="miniTitle" sx={{ paddingX: { xs: 3 } }}>
+          <Typography
+            fontSize={'clamp(2rem, 5vw, 3rem)'}
+            fontWeight={'bold'}
+            sx={{ paddingTop: 3 }}
+          >
             Total Feed Expense
           </Typography>
         </Grid2>
         <Grid2 size={12}>
-          <MonthPagination monthChange={handlePaginationChange} />
+          <MonthPagination
+            monthChange={handlePaginationChange}
+            triggerData={feeds}
+          />
         </Grid2>
         <Grid2 container size={12} sx={{ placeContent: 'center' }}>
           <Grid2
@@ -73,7 +88,7 @@ export default function AddFeedComp({ feeds, feedHistory }: { feeds: any[], feed
                     color="white"
                     sx={{ fontSize: 'clamp(3rem, 2.7vw, 4.688rem)' }}
                   >
-                   {formatCurrency(totalCost)}
+                    {formatCurrency(totalCost)}
                   </Typography>
                 </Box>
               </Grid2>
@@ -151,5 +166,5 @@ export default function AddFeedComp({ feeds, feedHistory }: { feeds: any[], feed
         />
       )}
     </ThemeProvider>
-  )
+  );
 }

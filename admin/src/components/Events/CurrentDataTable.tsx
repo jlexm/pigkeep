@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import {
   Box,
   Grid2,
@@ -7,32 +7,35 @@ import {
   TextField,
   ThemeProvider,
   Typography,
-} from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteIcon from '@mui/icons-material/Delete'
-import ReusableDialogBox from '../../modals/ReusableDialogBox' // Adjust the import path as needed
-import theme from '../../Theme'
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ReusableDialogBox from '../../modals/ReusableDialogBox'; // Adjust the import path as needed
+import theme from '../../Theme';
+import { useEffect } from 'react';
+import { formatDate } from '../../services/utils.service';
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
-    field: 'evName',
+    field: 'eventType',
     headerName: 'Event Name',
     flex: 1,
     minWidth: 160,
     resizable: false,
   },
   {
-    field: 'date',
+    field: 'eventDate',
     headerName: 'Date',
     flex: 1,
     minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell: (params) => <>{formatDate(new Date(params.value))}</>,
   },
   {
-    field: 'pigNum',
+    field: 'pigNumber',
     headerName: 'Pig Number',
     flex: 1,
     minWidth: 140,
@@ -49,8 +52,8 @@ const columns: GridColDef[] = [
     headerAlign: 'right',
     align: 'right',
     // Apply green text color when status is 'In Progress'
-    cellClassName: (params) =>
-      params.value === 'In Progress' ? 'green-text' : '',
+    cellClassName: () => 'green-text',
+    renderCell: () => <>In Progress</>,
   },
   // {
   //   field: 'actions',
@@ -145,101 +148,61 @@ const columns: GridColDef[] = [
   //   headerAlign: 'right',
   //   align: 'right',
   // },
-]
-
-// Define the initial rows
-const initialRows = [
-  {
-    id: 1,
-    evName: 'Vaccination',
-    date: 'Jul 2, 2024',
-    pigNum: 5,
-    status: 'In Progress',
-  },
-  {
-    id: 2,
-    evName: 'Artificial Insemination',
-    date: 'Jul 3, 2024',
-    pigNum: 3,
-    status: 'In Progress',
-  },
-  {
-    id: 3,
-    evName: 'Farrow',
-    date: 'Jul 4, 2024',
-    pigNum: 1,
-    status: 'In Progress',
-  },
-  {
-    id: 4,
-    evName: 'Artificial Insemination',
-    date: 'Jul 6, 2024',
-    pigNum: 7,
-    status: 'In Progress',
-  },
-  {
-    id: 5,
-    evName: 'Artificial Insemination',
-    date: 'Jul 21, 2024',
-    pigNum: 8,
-    status: 'In Progress',
-  },
-  {
-    id: 6,
-    evName: 'Vaccination',
-    date: 'Jul 23, 2024',
-    pigNum: 9,
-    status: 'In Progress',
-  },
-]
+];
 
 // Define the pagination model
-const paginationModel = { page: 0, pageSize: 5 }
+const paginationModel = { page: 0, pageSize: 10 };
 
-export default function CurrentDataTable() {
-  const [searchText, setSearchText] = React.useState('')
-  const [filteredRows, setFilteredRows] = React.useState(initialRows)
-  const [openDialog, setOpenDialog] = React.useState(false)
-  const [selectedRow, setSelectedRow] = React.useState<unknown | null>(null)
+export default function CurrentDataTable({
+  currentEvents,
+}: {
+  currentEvents: any[];
+}) {
+  const [searchText, setSearchText] = React.useState('');
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [selectedRow, setSelectedRow] = React.useState<unknown | null>(null);
+
+  useEffect(() => {
+    setFilteredRows(currentEvents);
+  }, [currentEvents]);
 
   // Function to handle filtering based on searchText
   const handleFilter = React.useCallback(() => {
-    const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter((row) => {
+    const lowerSearchText = searchText.toLowerCase();
+    const filtered = currentEvents.filter((row) => {
       return (
-        row.evName.toLowerCase().includes(lowerSearchText) ||
-        row.date.toLowerCase().includes(lowerSearchText) ||
-        row.pigNum.toString().includes(lowerSearchText) || // Convert pigNum to string for filtering
-        row.status.toLowerCase().includes(lowerSearchText)
-      )
-    })
-    setFilteredRows(filtered)
-  }, [searchText])
+        row.eventType.toLowerCase().includes(lowerSearchText) ||
+        row.pigNumber.toLowerCase().includes(lowerSearchText)
+      );
+    });
+    setFilteredRows(filtered);
+  }, [searchText]);
 
   // Trigger filter whenever searchText changes
   React.useEffect(() => {
-    handleFilter()
-  }, [searchText, handleFilter])
+    handleFilter();
+  }, [searchText, handleFilter]);
 
   // Function to handle cell click and open dialog if the "Status" column is clicked
   const handleCellClick = (params: any) => {
     if (params.field === 'status') {
-      setSelectedRow(params.row) // Set the selected row data
-      setOpenDialog(true) // Open dialog
+      setSelectedRow(params.row); // Set the selected row data
+      setOpenDialog(true); // Open dialog
     }
-  }
+  };
 
   // Function to close the dialog
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-    setSelectedRow(null) // Reset selected row data
-  }
+    setOpenDialog(false);
+    setSelectedRow(null); // Reset selected row data
+  };
 
   // Mark as done event code here
   const handleSave = () => {
-    console.log('Saving event data...')
-    handleCloseDialog() // Close dialog after saving
-  }
+    console.log('Saving event data...');
+    handleCloseDialog(); // Close dialog after saving
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -279,8 +242,12 @@ export default function CurrentDataTable() {
             <DataGrid
               rows={filteredRows}
               columns={columns}
-              initialState={{ pagination: { paginationModel } }}
-              pageSizeOptions={[5, 10, 25, 50, 100]}
+              initialState={{
+                pagination: { paginationModel },
+                sorting: { sortModel: [{ field: 'eventDate', sort: 'asc' }] },
+              }}
+              getRowId={(row) => row.uuid}
+              pageSizeOptions={[10, 25, 50, 100]}
               rowSelection={false}
               onCellClick={handleCellClick} // Add cell click event
               getRowClassName={(params) =>
@@ -316,7 +283,7 @@ export default function CurrentDataTable() {
         </Grid2>
 
         {/* ReusableDialogBox to be shown when openDialog is true */}
-        {openDialog && selectedRow && (
+        {/*  {openDialog && selectedRow && (
           <ReusableDialogBox
             title="Accomplished?"
             description="Verify if the event has been accomplished."
@@ -326,8 +293,8 @@ export default function CurrentDataTable() {
             saveButtonText="Mark as Done"
             saveButtonColor="#11703B" // Green color for the save button
           />
-        )}
+        )} */}
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }
