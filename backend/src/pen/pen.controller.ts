@@ -94,4 +94,10 @@ export class PenController {
     await this.penService.syncPens(farmId, pens)
     return { success: true, message: 'Data synced!' }
   }
+
+  @Get('/farm/:farm_id')
+  async getFarmPens(@Param('farm_id') farmId) {
+    return await this.penService.getPensByFarmId(farmId)
+  }
+
 }

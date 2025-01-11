@@ -87,4 +87,8 @@ export class PenService {
       await this.penModel.bulkWrite(bulkOps)
     }
   }
+
+  async getPensByFarmId(farm_id: string) {
+    return this.penModel.find({ farmID: farm_id }).exec()
+  }
 }
