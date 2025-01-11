@@ -92,42 +92,48 @@
 //   )
 // }
 
-import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material'
-import './PigPen.css'
-import AddCircleIcon from '@mui/icons-material/AddCircle'
-import PigpenDataTable from './PigPenDataTable'
-import ReusableDialogBox from '../../../modals/ReusableDialogBox'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
-import { useState } from 'react'
-import theme from '../../../Theme'
+import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material';
+import './PigPen.css';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import PigpenDataTable from './PigPenDataTable';
+import ReusableDialogBox from '../../../modals/ReusableDialogBox';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import { useState } from 'react';
+import theme from '../../../Theme';
 
-export default function AddPenComp() {
+export default function AddPenComp({
+  pens = [],
+  onRowSelect,
+}: {
+  pens?: any[];
+  onRowSelect?: (row: any) => void;
+}) {
   // State to manage the dialog box visibility
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
   // State to hold selected row data
-  const [selectedRow, setSelectedRow] = useState(null)
+  const [selectedRow, setSelectedRow] = useState(null);
 
   // Function to open the dialog
   const handleOpenDialog = () => {
-    setOpenDialog(true)
-  }
+    setOpenDialog(true);
+  };
 
   // Function to close the dialog
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+    setOpenDialog(false);
+  };
 
   // Function to handle save action in the dialog
   const handleSave = () => {
-    console.log('Saving pig data...')
-    handleCloseDialog() // Close dialog after saving
-  }
+    console.log('Saving pig data...');
+    handleCloseDialog(); // Close dialog after saving
+  };
 
   // Function to handle row selection from the data table
-  const handleRowSelect = (rowData) => {
-    setSelectedRow(rowData)
-    console.log('Selected Row:', rowData)
-  }
+  const handleRowSelect = (rowData: any) => {
+    setSelectedRow(rowData);
+    console.log('Selected Row:', rowData);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -150,7 +156,7 @@ export default function AddPenComp() {
                   color="white"
                   sx={{ fontSize: 'clamp(3.2rem, 5.1vw, 4.1rem)' }}
                 >
-                  10
+                  {pens.length}
                 </Typography>
               </Box>
               <Box alignContent={'center'}>
@@ -196,7 +202,7 @@ export default function AddPenComp() {
           </Grid2> */}
         </Grid2>
         <Grid2 size={12}>
-          <PigpenDataTable onRowSelect={undefined} />
+          <PigpenDataTable onRowSelect={onRowSelect} pens={pens} />
         </Grid2>
       </Grid2>
 
@@ -222,5 +228,5 @@ export default function AddPenComp() {
         />
       )}
     </ThemeProvider>
-  )
+  );
 }

@@ -1,18 +1,18 @@
-import { Box, Chip, Grid2, ThemeProvider, Typography } from '@mui/material'
-import PigList_Screen from '../components/Records/PigList_Folder/PigList'
-import FeedInventory_Screen from '../components/Records/FeedInventory_Folder/FeedInventory'
-import MedicalRecords_Screen from '../components/Records/MedicalRecords_Folder/MedicalRecords'
-import Pigpen_Screen from '../components/Records/PigPen_Folder/PigPen'
-import React from 'react'
-import '../components/Records/PigList_Folder/PigList.css'
-import theme from '../Theme'
+import { Box, Chip, Grid2, ThemeProvider, Typography } from '@mui/material';
+import PigList_Screen from '../components/Records/PigList_Folder/PigList';
+import FeedInventory_Screen from '../components/Records/FeedInventory_Folder/FeedInventory';
+import MedicalRecords_Screen from '../components/Records/MedicalRecords_Folder/MedicalRecords';
+import Pigpen_Screen from '../components/Records/PigPen_Folder/PigPen';
+import React from 'react';
+import '../components/Records/PigList_Folder/PigList.css';
+import theme from '../Theme';
 
 const Records = () => {
-  const [selectedChip, setSelectedChip] = React.useState('Feed Inventory'); // Default selected chip
+  const [selectedChip, setSelectedChip] = React.useState('Pigpen'); // Default selected chip
 
   const handleChipClick = (chip: string) => {
-    setSelectedChip(chip)
-  }
+    setSelectedChip(chip);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -210,7 +210,7 @@ const Records = () => {
         </Grid2>
       </Grid2>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Records
+export default Records;

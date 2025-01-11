@@ -119,33 +119,33 @@ import {
   ListItemText,
   ThemeProvider,
   Typography,
-} from '@mui/material'
-import CircleIcon from '@mui/icons-material/Circle'
-import './PigPen.css'
-import theme from '../../../Theme'
-import { clamp } from '@mui/x-data-grid/internals'
+} from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
+import './PigPen.css';
+import theme from '../../../Theme';
+import { clamp } from '@mui/x-data-grid/internals';
 
 const pigs = [
   { number: '001', status: 'alive' },
   { number: '002', status: 'sold' },
   { number: '003', status: 'deceased' },
   // ... other pigs
-]
+];
 
-const getStatusColor = (status) => {
+const getStatusColor = (status: string) => {
   switch (status) {
     case 'alive':
-      return 'blue'
+      return 'blue';
     case 'sold':
-      return 'green'
+      return 'green';
     case 'deceased':
-      return 'red'
+      return 'red';
     default:
-      return 'gray'
+      return 'gray';
   }
-}
+};
 
-export default function PenInfo({ selectedRow }) {
+export default function PenInfo({ selectedRow }: { selectedRow?: any }) {
   return (
     <ThemeProvider theme={theme}>
       <Grid2
@@ -155,92 +155,102 @@ export default function PenInfo({ selectedRow }) {
         sx={{ paddingX: { xs: 3, sm: 4, lg: 5 } }}
         className="penInfoBg"
       >
-        <Grid2
-          container
-          size={12}
-          spacing={0}
-          sx={{ paddingY: 5 }}
-          className="miniPenInfoBg"
-        >
-          <Grid2 size={12}>
-            <Typography
-              sx={{
-                fontSize: 'clamp(4rem, 6vw + 1rem, 7rem)',
-              }}
-              fontWeight={'bold'}
-              color="white"
+        {selectedRow ? (
+          <>
+            <Grid2
+              container
+              size={12}
+              spacing={0}
+              sx={{ paddingY: 5 }}
+              className="miniPenInfoBg"
             >
-              P-05
-              {/* {selectedRow ? selectedRow.number : ''} use this */}
-            </Typography>
-          </Grid2>
-          <Grid2 size={12}>
-            <Typography variant="h6" color="white">
-              Pen Number
-            </Typography>
-          </Grid2>
-        </Grid2>
-        <Grid2 size={12} container sx={{ marginLeft: 4, marginRight: 4 }}>
-          <Grid2 size={6} className="leftSide" spacing={5}>
-            <Grid2 size={12} className="pigInfo">
-              <Typography variant="subtitle1" fontWeight={500}>
-                Pigpen information
-              </Typography>
+              <Grid2 size={12}>
+                <Typography
+                  sx={{
+                    fontSize: 'clamp(4rem, 6vw + 1rem, 7rem)',
+                  }}
+                  fontWeight={'bold'}
+                  color="white"
+                >
+                  {selectedRow.penNumber}
+                </Typography>
+              </Grid2>
+              <Grid2 size={12}>
+                <Typography variant="h6" color="white">
+                  Pen Number
+                </Typography>
+              </Grid2>
             </Grid2>
-            <Grid2 container sx={{ height: 15 }}></Grid2>
-            <Grid2 size={12} sx={{ height: 30 }}>
-              <Typography variant="subtitle1">
-                Type: {''}
-                <span style={{ color: '#11703b', fontWeight: 500 }}>
-                  {selectedRow ? selectedRow.type : 'Placeholder_1'}
-                </span>
-              </Typography>
-            </Grid2>
-
-            <Grid2 size={12} sx={{ height: 30 }}>
-              <Typography variant="subtitle1">
-                Pig Count:{' '}
-                <span style={{ color: '#11703b', fontWeight: 500 }}>
-                  {selectedRow ? selectedRow.type : 'Placeholder_2'}
-                </span>
-              </Typography>
-            </Grid2>
-            <Grid2 size={12} sx={{ height: 30 }}>
-              <Typography variant="subtitle1">
-                Max Pig:{' '}
-                <span style={{ color: '#11703b', fontWeight: 500 }}>
-                  {selectedRow ? selectedRow.type : 'Placeholder_3'}
-                </span>
-              </Typography>
-            </Grid2>
-          </Grid2>
-          <Grid2 size={6} className="rightSide" spacing={5}>
-            <Grid2 size={12} className="pigInfo">
-              <Typography variant="subtitle1" fontWeight={500}>
-                Pigs Contained
-              </Typography>
-            </Grid2>
-            <Grid2 container sx={{ height: 4 }}></Grid2>
-            <Grid2 container spacing={0} className="right">
-              {pigs.map((pig, index) => (
-                <Grid2 size={6} key={index}>
-                  <ListItem sx={{ paddingLeft: 2, paddingRight: 0 }}>
-                    <ListItemIcon sx={{ minWidth: 30 }}>
-                      <CircleIcon
-                        sx={{
-                          color: getStatusColor(pig.status),
-                          fontSize: 'clamp(20px, 2vw, 25px)', // Responsive size
-                        }}
-                      />
-                    </ListItemIcon>
-
-                    <ListItemText primary={pig.number} />
-                  </ListItem>
+            <Grid2 size={12} container sx={{ marginLeft: 4, marginRight: 4 }}>
+              <Grid2 size={6} className="leftSide" spacing={5}>
+                <Grid2 size={12} className="pigInfo">
+                  <Typography variant="subtitle1" fontWeight={500}>
+                    Pigpen information
+                  </Typography>
                 </Grid2>
-              ))}
+                <Grid2 container sx={{ height: 15 }}></Grid2>
+                <Grid2 size={12} sx={{ height: 30 }}>
+                  <Typography variant="subtitle1">
+                    Type: {''}
+                    <span style={{ color: '#11703b', fontWeight: 500 }}>
+                      {selectedRow.penType}
+                    </span>
+                  </Typography>
+                </Grid2>
+
+                <Grid2 size={12} sx={{ height: 30 }}>
+                  <Typography variant="subtitle1">
+                    Pig Count:{' '}
+                    <span style={{ color: '#11703b', fontWeight: 500 }}>
+                      {selectedRow.currentPigCount}
+                    </span>
+                  </Typography>
+                </Grid2>
+                <Grid2 size={12} sx={{ height: 30 }}>
+                  <Typography variant="subtitle1">
+                    Max Pig:{' '}
+                    <span style={{ color: '#11703b', fontWeight: 500 }}>
+                      {selectedRow.maxPigCount}
+                    </span>
+                  </Typography>
+                </Grid2>
+              </Grid2>
+              <Grid2 size={6} className="rightSide" spacing={5}>
+                <Grid2 size={12} className="pigInfo">
+                  <Typography variant="subtitle1" fontWeight={500}>
+                    Pigs Contained
+                  </Typography>
+                </Grid2>
+                <Grid2 container sx={{ height: 4 }}></Grid2>
+                <Grid2 container spacing={0} className="right">
+                  {pigs.map((pig, index) => (
+                    <Grid2 size={6} key={index}>
+                      <ListItem sx={{ paddingLeft: 2, paddingRight: 0 }}>
+                        <ListItemIcon sx={{ minWidth: 30 }}>
+                          <CircleIcon
+                            sx={{
+                              color: getStatusColor(pig.status),
+                              fontSize: 'clamp(20px, 2vw, 25px)', // Responsive size
+                            }}
+                          />
+                        </ListItemIcon>
+
+                        <ListItemText primary={pig.number} />
+                      </ListItem>
+                    </Grid2>
+                  ))}
+                </Grid2>
+              </Grid2>
             </Grid2>
-          </Grid2>
-        </Grid2>
+          </>
+        ) : (
+          <>
+            <Typography variant="h6" color="black">
+              Select a pen to view details.
+            </Typography>
+          </>
+        )}
+
         {/* <Grid2
           size={12}
           container
@@ -295,5 +305,5 @@ export default function PenInfo({ selectedRow }) {
         </Grid2> */}
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }

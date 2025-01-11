@@ -1,38 +1,30 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
-import Grid2 from '@mui/material/Grid2'
-import { Box, TextField, ThemeProvider } from '@mui/material'
-import '../PigList_Folder/PigList.css'
-import theme from '../../../Theme'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import Grid2 from '@mui/material/Grid2';
+import { Box, TextField, ThemeProvider } from '@mui/material';
+import '../PigList_Folder/PigList.css';
+import theme from '../../../Theme';
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
-    field: 'number',
+    field: 'penNumber',
     headerName: 'Number',
     flex: 1,
     minWidth: 115,
     resizable: false,
   },
   {
-    field: 'type',
+    field: 'penType',
     headerName: 'Type',
     flex: 1,
     minWidth: 90,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
-    cellClassName: (params) => {
-      const action = params.row.action
-      return action === 'Add Feed'
-        ? 'green-text'
-        : action === 'Consume Feed'
-        ? 'red-text'
-        : ''
-    },
   },
   {
-    field: 'pigCount',
+    field: 'currentPigCount',
     headerName: 'Pig Count',
     flex: 1,
     minWidth: 125,
@@ -41,7 +33,7 @@ const columns: GridColDef[] = [
     align: 'right',
   },
   {
-    field: 'maxPigs',
+    field: 'maxPigCount',
     headerName: 'Max Pigs',
     flex: 1,
     minWidth: 120,
@@ -49,84 +41,38 @@ const columns: GridColDef[] = [
     headerAlign: 'right',
     align: 'right',
   },
-]
-
-// Define the initial rows with pig arrays (to be passed to another component)
-const initialRows = [
-  {
-    id: 1,
-    number: 'P-01',
-    type: 'Nursery',
-    pigCount: '7',
-    maxPigs: '7',
-    pigs: ['001', '002', '003', '004', '005', '006', '007'],
-  },
-  {
-    id: 2,
-    number: 'P-02',
-    type: 'Stall',
-    pigCount: '3',
-    maxPigs: '5',
-    pigs: ['008', '009', '010'],
-  },
-  {
-    id: 3,
-    number: 'P-03',
-    type: 'Farrowing',
-    pigCount: '1',
-    maxPigs: '1',
-    pigs: ['011'],
-  },
-  {
-    id: 4,
-    number: 'P-04',
-    type: 'Nursery',
-    pigCount: '7',
-    maxPigs: '7',
-    pigs: ['012', '013', '014', '015', '016', '017', '018'],
-  },
-  {
-    id: 5,
-    number: 'P-05',
-    type: 'Stall',
-    pigCount: '3',
-    maxPigs: '6',
-    pigs: ['019', '020', '021'],
-  },
-  {
-    id: 6,
-    number: 'P-06',
-    type: 'Farrowing',
-    pigCount: '1',
-    maxPigs: '2',
-    pigs: ['022'],
-  },
-]
+];
 
 // Define the pagination model
-const paginationModel = { page: 0, pageSize: 5 }
+const paginationModel = { page: 0, pageSize: 5 };
 
-export default function PigpenDataTable({ onRowSelect }) {
-  const [searchText, setSearchText] = React.useState('')
-  const [filteredRows, setFilteredRows] = React.useState(initialRows)
+export default function PigpenDataTable({
+  pens,
+  onRowSelect,
+}: {
+  pens: any[];
+  onRowSelect?: (row: any) => void;
+}) {
+  const [searchText, setSearchText] = React.useState('');
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
+
+  React.useEffect(() => {
+    setFilteredRows(pens);
+  }, [pens]);
 
   // Function to handle filtering based on searchText
   const handleFilter = React.useCallback(() => {
-    const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter(
-      (row) =>
-        row.number.toLowerCase().includes(lowerSearchText) ||
-        row.type.toLowerCase().includes(lowerSearchText) ||
-        row.pigCount.toLowerCase().includes(lowerSearchText) ||
-        row.maxPigs.toLowerCase().includes(lowerSearchText)
-    )
-    setFilteredRows(filtered)
-  }, [searchText])
+    const lowerSearchText = searchText.toLowerCase();
+    const filtered = pens.filter((row) =>
+      row.penNumber.toLowerCase().includes(lowerSearchText)
+    );
+    setFilteredRows(filtered);
+  }, [searchText]);
 
   // Trigger filter whenever searchText changes
   React.useEffect(() => {
-    handleFilter()
-  }, [searchText, handleFilter])
+    handleFilter();
+  }, [searchText, handleFilter]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -162,6 +108,7 @@ export default function PigpenDataTable({ onRowSelect }) {
             rows={filteredRows}
             columns={columns}
             initialState={{ pagination: { paginationModel } }}
+            getRowId={(row) => row.uuid}
             pageSizeOptions={[5, 10, 25, 50, 100]}
             rowSelection={true}
             getRowClassName={(params) =>
@@ -170,7 +117,7 @@ export default function PigpenDataTable({ onRowSelect }) {
                 : 'odd-row'
             }
             onRowClick={(rowData) => {
-              onRowSelect(rowData.row) // Pass clicked row data to parent
+              onRowSelect?.(rowData.row); // Pass clicked row data to parent
             }}
             slotProps={{
               toolbar: {
@@ -193,5 +140,5 @@ export default function PigpenDataTable({ onRowSelect }) {
         </Box>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }
