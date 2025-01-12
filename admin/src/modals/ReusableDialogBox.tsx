@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useRef, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -10,17 +10,27 @@ import {
   InputAdornment,
   ThemeProvider,
   Typography,
-} from '@mui/material' // Import necessary components
-import theme from '../Theme'
+  CircularProgress,
+  IconButton,
+} from '@mui/material'; // Import necessary components
+import theme from '../Theme';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface ReusableDialogBoxProps {
-  title: string // Title must be a string
-  description: string // Description must be a string
-  formFields: { placeholder: string; icon: ReactNode }[] // Array of objects with placeholders and icons
-  onSave: () => void // Callback function for saving
-  onCancel: () => void // Callback function for canceling/closing the dialog
-  saveButtonText?: string // Optional text for the save button (default: "Save")
-  saveButtonColor?: string // Optional color for the save button (default: green)
+  title: string; // Title must be a string
+  description: string; // Description must be a string
+  formFields: {
+    placeholder: string;
+    type: string;
+    icon: ReactNode;
+    value: any;
+    onChange: (v: any) => void;
+  }[]; // Array of objects with placeholders and icons
+  onSave: () => void; // Callback function for saving
+  onCancel: () => void; // Callback function for canceling/closing the dialog
+  saveButtonText?: string; // Optional text for the save button (default: "Save")
+  saveButtonColor?: string; // Optional color for the save button (default: green)
+  loading?: boolean;
 }
 
 const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
@@ -31,6 +41,7 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
   onCancel, // Include onCancel prop
   saveButtonText = 'Save', // Default value if not provided
   saveButtonColor = '#11703b', // Default button color
+  loading,
 }) => {
   return (
     <ThemeProvider theme={theme}>
@@ -73,70 +84,110 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
                   <Typography variant="body1">{description}</Typography>
                 </Box>
               </Grid2>
-              {formFields.map((field, index) => (
-                <Grid2 size={12} key={index}>
-                  <Box
-                    sx={{
-                      width: '99%',
-                      height: 'clamp(35px, 5vw, 60px)',
-                      paddingBottom: '15px',
-                    }}
-                  >
-                    <TextField
-                      placeholder={field.placeholder}
-                      variant="outlined"
-                      fullWidth
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Box
-                              sx={{
-                                color: '#222222',
-                                fontSize: 'clamp(18px, 2vw, 24px)', 
-                              }}
-                            >
-                              {field.icon}
-                            </Box>
-                          </InputAdornment>
-                        ),
-                        sx: {
-                          fontSize: 'clamp(14px, 1.5vw, 18px)',
-                          '& input': {
-                            padding: { xs: 1, sm: 1.2, md: 1.9, lg: 2.2 }, 
-                          },
-                        },
-                      }}
+              {formFields.map((field, index) => {
+                const [valueObscure, setValueObscure] = useState(true);
+                return (
+                  <Grid2 size={12} key={index}>
+                    <Box
                       sx={{
-                        height: '100%', 
-                        border: '1px solid black',
-                        borderRadius: '5px', 
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          border: 'none', 
-                        },
-                        '&:hover .MuiOutlinedInput-notchedOutline': {
-                          border: '2px solid #11703b', 
-                        },
-                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                          border: '2px solid #11703b', 
-                        },
+                        width: '99%',
+                        height: 'clamp(35px, 5vw, 60px)',
+                        paddingBottom: '15px',
                       }}
-                    />
-                  </Box>
-                </Grid2>
-              ))}
+                    >
+                      <TextField
+                        placeholder={field.placeholder}
+                        variant="outlined"
+                        fullWidth
+                        type={
+                          field.type
+                            ? field.type === 'password'
+                              ? valueObscure
+                                ? 'password'
+                                : 'text'
+                              : field.type
+                            : 'text'
+                        }
+                        value={field.value}
+                        onChange={(v) => field.onChange(v.target.value)}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Box
+                                sx={{
+                                  color: '#222222',
+                                  fontSize: 'clamp(18px, 2vw, 24px)',
+                                }}
+                              >
+                                {field.icon}
+                              </Box>
+                            </InputAdornment>
+                          ),
+                          endAdornment:
+                            field.type === 'password' ? (
+                              <InputAdornment position="end">
+                                <Box
+                                  sx={{
+                                    color: '#222222',
+                                    fontSize: 'clamp(18px, 2vw, 24px)',
+                                  }}
+                                >
+                                  <IconButton
+                                    tabIndex={-1}
+                                    aria-label="visibility"
+                                    onClick={() => {
+                                      setValueObscure((prev) => !prev);
+                                    }}
+                                  >
+                                    {valueObscure ? (
+                                      <Visibility />
+                                    ) : (
+                                      <VisibilityOff />
+                                    )}
+                                  </IconButton>
+                                </Box>
+                              </InputAdornment>
+                            ) : undefined,
+                          sx: {
+                            fontSize: 'clamp(14px, 1.5vw, 18px)',
+                            '& input': {
+                              padding: { xs: 1, sm: 1.2, md: 1.9, lg: 2.2 },
+                            },
+                          },
+                        }}
+                        sx={{
+                          height: '100%',
+                          border: '1px solid black',
+                          borderRadius: '5px',
+                          '& .MuiOutlinedInput-notchedOutline': {
+                            border: 'none',
+                          },
+                          '&:hover .MuiOutlinedInput-notchedOutline': {
+                            border: '2px solid #11703b',
+                          },
+                          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            border: '2px solid #11703b',
+                          },
+                        }}
+                      />
+                    </Box>
+                  </Grid2>
+                );
+              })}
               <Grid2 size={12}>
                 <Box
                   sx={{
                     display: 'flex',
-                    marginTop: '15px', 
+                    marginTop: '15px',
                     justifyContent: 'flex-end',
                   }}
                 >
                   <Button
-                    onClick={onCancel} 
+                    onClick={onCancel}
+                    disabled={loading}
                     sx={{
-                      color: '#222222', 
-                      textTransform: 'none', 
+                      color: '#222222',
+                      textTransform: 'none',
                       fontSize: '16px',
                       marginRight: '20px',
                     }}
@@ -151,6 +202,7 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
                     </Typography>
                   </Button>
                   <Button
+                    disabled={loading}
                     onClick={onSave}
                     sx={{
                       color: 'white',
@@ -161,6 +213,12 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
                       padding: '10px 20px',
                     }}
                   >
+                    {loading && (
+                      <CircularProgress
+                        size={20}
+                        sx={{ color: 'white', mr: 2 }}
+                      />
+                    )}
                     <Typography
                       sx={{
                         fontWeight: 500,
@@ -177,7 +235,7 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
         </Box>
       </Dialog>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default ReusableDialogBox
+export default ReusableDialogBox;

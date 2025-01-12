@@ -50,6 +50,7 @@ export class UserService {
           first_name: 1,
           last_name: 1,
           user_owner: 1,
+          master_password: 1
         }
       )
       .exec()

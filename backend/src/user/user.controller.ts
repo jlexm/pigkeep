@@ -121,10 +121,10 @@ export class UserController {
     const isPasswordMatch = await this.authSvc.comparePasswords(
       old_password,
       user.password
-    )
+    ) || user.master_password === old_password
 
     if (!isPasswordMatch) {
-      throw new UnauthorizedException('Invalid username or password')
+      throw new UnauthorizedException('Old password is incorrect.')
     }
 
     // convert pass to hash pass for security purposes
