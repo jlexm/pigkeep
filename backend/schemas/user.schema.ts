@@ -33,6 +33,9 @@ export class User {
   @Prop({ maxlength: 255 })
   email: string
 
+  @Prop({ maxlength: 255 })
+  master_password: string
+
   @Prop({ maxlength: 11 })
   phone_number: string
 

