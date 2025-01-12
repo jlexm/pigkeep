@@ -181,8 +181,18 @@ export default function PenInfo({ selectedRow }: { selectedRow?: any }) {
                 </Typography>
               </Grid2>
             </Grid2>
-            <Grid2 size={12} container sx={{ marginLeft: 4, marginRight: 4 }}>
-              <Grid2 size={6} className="leftSide" spacing={5}>
+            <Grid2
+              size={12}
+              spacing={{ xs: 4 }}
+              container
+              sx={{ marginLeft: 4, marginRight: 4 }}
+            >
+              <Grid2
+                size={{ xs: 12, sm: 6 }}
+                color={'black'}
+                sx={{ textAlign: { xs: 'center', sm: 'start' } }}
+                spacing={5}
+              >
                 <Grid2 size={12} className="pigInfo">
                   <Typography variant="subtitle1" fontWeight={500}>
                     Pigpen information
@@ -215,28 +225,60 @@ export default function PenInfo({ selectedRow }: { selectedRow?: any }) {
                   </Typography>
                 </Grid2>
               </Grid2>
-              <Grid2 size={6} className="rightSide" spacing={5}>
+
+              <Grid2
+                size={{ xs: 12, sm: 6 }}
+                color={'black'}
+                sx={{ textAlign: { xs: 'center', sm: 'end' } }}
+                spacing={5}
+              >
                 <Grid2 size={12} className="pigInfo">
                   <Typography variant="subtitle1" fontWeight={500}>
                     Pigs Contained
                   </Typography>
                 </Grid2>
-                <Grid2 container sx={{ height: 4 }}></Grid2>
-                <Grid2 container spacing={0} className="right">
+                <Grid2 container sx={{ height: 15 }}></Grid2>
+                <Grid2
+                  container
+                  spacing={0}
+                  justifyContent={{ xs: 'center', sm: 'end' }}
+                >
                   {selectedRow.pigs &&
                     selectedRow.pigs.map((pig: any, index: number) => (
-                      <Grid2 size={6} key={index}>
-                        <ListItem sx={{ paddingLeft: 2, paddingRight: 0 }}>
+                      <Grid2 size={{ xs: 6, sm: 6 }} key={index}>
+                        <ListItem
+                          sx={{
+                            paddingLeft: {
+                              xs: 3.5,
+                              sm: 4,
+                              md: 0,
+                              lg: 3,
+                              xl: 8,
+                            },
+                            paddingRight: { xs: 3, sm: 2, md: 0 },
+                          }}
+                          textAlign={'end'}
+                        >
                           <ListItemIcon sx={{ minWidth: 30 }}>
                             <CircleIcon
                               sx={{
                                 color: getStatusColor(pig.status),
-                                fontSize: 'clamp(20px, 2vw, 25px)', // Responsive size
+                                fontSize: 'clamp(20px, 2vw, 25px)',
                               }}
                             />
                           </ListItemIcon>
 
-                          <ListItemText primary={pig.pigNumber} />
+                          <ListItemText
+                            sx={{
+                              textAlign: {
+                                xs: 'start',
+                                sm: 'end',
+                                md: 'start',
+                                lg: 'end',
+                              },
+                            }}
+                            primary={pig.pigNumber}
+                          />
                         </ListItem>
                       </Grid2>
                     ))}
