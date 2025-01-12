@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
-import Grid2 from '@mui/material/Grid2'
-import Button from '@mui/material/Button'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import Grid2 from '@mui/material/Grid2';
+import Button from '@mui/material/Button';
 import {
   Box,
   IconButton,
@@ -12,18 +12,19 @@ import {
   FormControl,
   ThemeProvider,
   Typography,
-} from '@mui/material'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteIcon from '@mui/icons-material/Delete'
-import ReusableDialogBox from '../../../modals/ReusableDialogBox' // Import the reusable dialog box
-import '../PigList_Folder/PigList.css'
-import theme from '../../../Theme'
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ReusableDialogBox from '../../../modals/ReusableDialogBox'; // Import the reusable dialog box
+import '../PigList_Folder/PigList.css';
+import theme from '../../../Theme';
+import { formatCurrency } from '../../../services/utils.service';
 
 const columns: GridColDef[] = [
   {
     field: 'pigNumber',
     headerName: 'Number',
-    flex:1,
+    flex: 1,
     minWidth: 115,
     resizable: false,
     renderCell: (params) => {
@@ -31,7 +32,7 @@ const columns: GridColDef[] = [
         alive: 'blue',
         sold: 'green',
         deceased: 'red',
-      }[params.row.status as string]
+      }[params.row.status as string];
 
       return (
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -46,7 +47,7 @@ const columns: GridColDef[] = [
           />
           {params.row.pigNumber}
         </Box>
-      )
+      );
     },
   },
   {
@@ -59,10 +60,16 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-          <Typography>{new Date(params.row.dob).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</Typography>
+          <Typography>
+            {new Date(params.row.dob).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </Typography>
         </Box>
-      )
-    } 
+      );
+    },
   },
   {
     field: 'age',
@@ -80,19 +87,19 @@ const columns: GridColDef[] = [
     resizable: false,
     headerClassName: 'recorded-weight-header',
   },
-  { 
-    field: 'sex', 
-    headerName: 'Sex', 
+  {
+    field: 'sex',
+    headerName: 'Sex',
     flex: 1,
-    minWidth: 80, 
-    resizable: false, 
+    minWidth: 80,
+    resizable: false,
     renderCell: (params) => {
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
           <Typography>{params.row.sex ? 'Male' : 'Female'}</Typography>
         </Box>
-      )
-    } 
+      );
+    },
   },
   {
     field: 'parentUuid',
@@ -101,6 +108,7 @@ const columns: GridColDef[] = [
     minWidth: 115,
     resizable: false,
     headerClassName: 'recorded-weight-header',
+    renderCell: (params) => <>{params.row.parentPigDetails?.[0]?.pigNumber}</>,
   },
   {
     field: 'feed',
@@ -117,6 +125,7 @@ const columns: GridColDef[] = [
     minWidth: 115,
     resizable: false,
     headerClassName: 'recorded-weight-header',
+    renderCell: (params) => <>{params.row.penDetails?.[0]?.penNumber}</>,
   },
   {
     field: 'weightKG',
@@ -137,7 +146,7 @@ const columns: GridColDef[] = [
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
           <Typography>
-            {params.row.priceSold ? `$${params.row.priceSold}` : 'N/A'}
+            {formatCurrency(params.row.ledgerDetails?.[0]?.priceSold ?? 'N/A')}
           </Typography>
         </Box>
       );
@@ -156,7 +165,7 @@ const columns: GridColDef[] = [
     ),
     headerClassName: 'recorded-weight-header',
     headerAlign: 'right',
-    align: 'right'
+    align: 'right',
   },
   // {
   //   field: 'actions',
@@ -254,7 +263,7 @@ const columns: GridColDef[] = [
   //   headerAlign: 'right',
   //   align: 'right',
   // },
-]
+];
 
 const rows = [
   {
@@ -467,23 +476,23 @@ const rows = [
     priceSold: 21200,
     status: 'sold',
   },
-]
+];
 
-const paginationModel = { page: 0, pageSize: 5 }
+const paginationModel = { page: 0, pageSize: 5 };
 
-export default function PigListDataTable({ data = []}: {data?: any[]}) {
-  const [searchText, setSearchText] = React.useState('')
-  const [statusFilter, setStatusFilter] = React.useState('all')
+export default function PigListDataTable({ data = [] }: { data?: any[] }) {
+  const [searchText, setSearchText] = React.useState('');
+  const [statusFilter, setStatusFilter] = React.useState('all');
 
   const filteredRows = data.filter((row) => {
     const matchesSearchText = Object.values(row).some((value) =>
       value
         ? value.toString().toLowerCase().includes(searchText.toLowerCase())
         : false
-    ) 
-    const matchesStatus = statusFilter === 'all' || row.status === statusFilter
-    return matchesSearchText && matchesStatus
-  })
+    );
+    const matchesStatus = statusFilter === 'all' || row.status === statusFilter;
+    return matchesSearchText && matchesStatus;
+  });
 
   return (
     <ThemeProvider theme={theme}>
@@ -503,7 +512,7 @@ export default function PigListDataTable({ data = []}: {data?: any[]}) {
             size="small"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            sx={{ width: {xs: 150, sm: 250, md: 300, lg: 320, xl: 350} }}
+            sx={{ width: { xs: 150, sm: 250, md: 300, lg: 320, xl: 350 } }}
           />
           <FormControl sx={{ width: 150, marginLeft: 2 }}>
             <InputLabel>Status</InputLabel>
@@ -580,17 +589,16 @@ export default function PigListDataTable({ data = []}: {data?: any[]}) {
             slotProps={{
               toolbar: {
                 showQuickFilter: false,
-                
               },
             }}
             disableColumnMenu
             slots={{ toolbar: GridToolbar }}
             sx={{
               '& .MuiListItemText-root': {
-                color: '#222222', 
+                color: '#222222',
               },
               '& .MuiDataGrid-toolbarContainer .MuiButtonBase-root': {
-                color: '#11703B', 
+                color: '#11703B',
               },
               '& .MuiButton-root:hover': {
                 color: '#222222',
@@ -600,5 +608,5 @@ export default function PigListDataTable({ data = []}: {data?: any[]}) {
         </Box>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }

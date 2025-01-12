@@ -89,6 +89,16 @@ export class PenService {
   }
 
   async getPensByFarmId(farm_id: string) {
-    return this.penModel.find({ farmID: farm_id }).exec()
+    return this.penModel.aggregate([
+      { $match: { farmID: farm_id } },
+      {
+        $lookup: {
+          from: 'pigs',
+          localField: 'uuid',
+          foreignField: 'penUuid',
+          as: 'pigs'
+        }
+      }
+    ]).exec();
   }
 }

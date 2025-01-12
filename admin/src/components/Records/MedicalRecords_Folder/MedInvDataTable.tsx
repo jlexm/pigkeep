@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
-import Grid2 from '@mui/material/Grid2'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import Grid2 from '@mui/material/Grid2';
 import {
   Box,
   TextField,
@@ -9,11 +9,11 @@ import {
   InputLabel,
   FormControl,
   ThemeProvider,
-} from '@mui/material'
+} from '@mui/material';
 
-import '../PigList_Folder/PigList.css'
-import theme from '../../../Theme'
-import { useEffect } from 'react'
+import '../PigList_Folder/PigList.css';
+import theme from '../../../Theme';
+import { useEffect } from 'react';
 
 const columns: GridColDef[] = [
   {
@@ -37,7 +37,7 @@ const columns: GridColDef[] = [
         ? 'blue-text'
         : params.value === 'consumed'
         ? 'red-text'
-        : ''
+        : '';
     },
   },
   {
@@ -49,20 +49,20 @@ const columns: GridColDef[] = [
     headerAlign: 'right',
     align: 'right',
     cellClassName: (params) => {
-      const action = params.row.action
+      const action = params.row.action;
       return action === 'stock'
         ? 'blue-text'
         : action === 'consumed'
         ? 'red-text'
-        : ''
+        : '';
     },
     renderCell(params) {
       return (
         <>
           {params.value} x {params.row.dosage}
         </>
-      )
-    }
+      );
+    },
   },
   {
     field: 'pigUuid',
@@ -72,6 +72,7 @@ const columns: GridColDef[] = [
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell: (params) => <>{params.row.pigDetails?.[0]?.pigNumber}</>,
   },
   {
     field: 'createdAt',
@@ -90,8 +91,8 @@ const columns: GridColDef[] = [
             day: 'numeric',
           })}
         </>
-      )
-    }
+      );
+    },
   },
   {
     field: 'cost',
@@ -105,9 +106,12 @@ const columns: GridColDef[] = [
     renderCell(params) {
       return (
         <>
-          {params.value.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+          {params.value.toLocaleString('en-PH', {
+            style: 'currency',
+            currency: 'PHP',
+          })}
         </>
-      )
+      );
     },
   },
   {
@@ -122,39 +126,47 @@ const columns: GridColDef[] = [
     renderCell(params) {
       return (
         <>
-          {params.value.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+          {params.value.toLocaleString('en-PH', {
+            style: 'currency',
+            currency: 'PHP',
+          })}
         </>
-      )
+      );
     },
   },
-]
+];
 
-const paginationModel = { page: 0, pageSize: 10 }
+const paginationModel = { page: 0, pageSize: 10 };
 
-export default function MedInvDataTable({ medicineHistory }: { medicineHistory: any[] }) {
-  const [searchText, setSearchText] = React.useState('')
-  const [statusFilter, setStatusFilter] = React.useState('all')
-  const [filteredRows, setFilteredRows] = React.useState<any[]>([])
+export default function MedInvDataTable({
+  medicineHistory,
+}: {
+  medicineHistory: any[];
+}) {
+  const [searchText, setSearchText] = React.useState('');
+  const [statusFilter, setStatusFilter] = React.useState('all');
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
 
   useEffect(() => {
-    setFilteredRows(medicineHistory)
-  }, [medicineHistory])
+    setFilteredRows(medicineHistory);
+  }, [medicineHistory]);
 
   const handleFilter = () => {
-    const lowerSearchText = searchText.toLowerCase()
+    const lowerSearchText = searchText.toLowerCase();
     const filtered = medicineHistory.filter((row) => {
-      const matchesSearch =
-        row.medicineName.toLowerCase().includes(lowerSearchText)
+      const matchesSearch = row.medicineName
+        .toLowerCase()
+        .includes(lowerSearchText);
       const matchesStatus =
-        statusFilter === 'all' || row.status === statusFilter
-      return matchesSearch && matchesStatus
-    })
-    setFilteredRows(filtered)
-  }
+        statusFilter === 'all' || row.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+    setFilteredRows(filtered);
+  };
 
   React.useEffect(() => {
-    handleFilter()
-  }, [searchText, statusFilter])
+    handleFilter();
+  }, [searchText, statusFilter]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -168,7 +180,7 @@ export default function MedInvDataTable({ medicineHistory }: { medicineHistory: 
             marginBottom: 2,
             maxWidth: '100%',
             direction: 'row',
-            paddingTop: 2
+            paddingTop: 2,
           }}
         >
           <TextField
@@ -192,9 +204,7 @@ export default function MedInvDataTable({ medicineHistory }: { medicineHistory: 
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>All</Box>
               </MenuItem>
               <MenuItem value="stock">
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                  Stock
-                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>Stock</Box>
               </MenuItem>
               <MenuItem value="consumed">
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -255,5 +265,5 @@ export default function MedInvDataTable({ medicineHistory }: { medicineHistory: 
         </Box>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }

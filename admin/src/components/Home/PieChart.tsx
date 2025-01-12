@@ -1,14 +1,17 @@
-import * as React from 'react'
-import { PieChart } from '@mui/x-charts/PieChart'
-import { Container, Grid2, Typography, Box } from '@mui/material'
-import './HomeScreen.css'
-import { ThemeProvider } from '@emotion/react'
-import theme from '../../Theme'
-import { PieValueType } from '@mui/x-charts'
-import { MakeOptional } from '@mui/x-charts/internals'
+import * as React from 'react';
+import { PieChart } from '@mui/x-charts/PieChart';
+import { Container, Grid2, Typography, Box } from '@mui/material';
+import './HomeScreen.css';
+import { ThemeProvider } from '@emotion/react';
+import theme from '../../Theme';
+import { PieValueType } from '@mui/x-charts';
+import { MakeOptional } from '@mui/x-charts/internals';
 
-export default function BasicPie({ data = [] }: { data?: MakeOptional<PieValueType, "id">[]}) {
-
+export default function BasicPie({
+  data = [],
+}: {
+  data?: MakeOptional<PieValueType, 'id'>[];
+}) {
   const currentDate = new Date().toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -25,7 +28,7 @@ export default function BasicPie({ data = [] }: { data?: MakeOptional<PieValueTy
             textAlign={{ xs: 'center', md: 'start' }}
             color="black"
           >
-            Pig Count
+            Current Pig Count
           </Typography>
         </Grid2>
         <Grid2 size={12}>
@@ -33,11 +36,19 @@ export default function BasicPie({ data = [] }: { data?: MakeOptional<PieValueTy
             variant="body1"
             textAlign={{ xs: 'center', md: 'start' }}
             color="black"
-            marginX={{ xs: 1, sm: 15 , md: 0 }}
+            marginX={{ xs: 1, sm: 15, md: 0 }}
           >
-            As of <span style={{ color: '#11703b' }}>{currentDate}</span>, the
-            largest portion of pigs on your farm are weaners, with mature pigs
-            being the least numerous.
+            As of <span style={{ color: '#11703b' }}>{currentDate}</span>,{' '}
+            {data.length === 0 ? (
+              <>You don't have any pigs</>
+            ) : (
+              <>
+                the largest portion of pigs on your farm are{' '}
+                {data[0]?.label ?? ''}, with{' '}
+                {data[data.length - 1]?.label ?? ''} pigs being the least
+                numerous.
+              </>
+            )}
           </Typography>
         </Grid2>
         <Container>
@@ -46,11 +57,11 @@ export default function BasicPie({ data = [] }: { data?: MakeOptional<PieValueTy
               paddingTop: 1,
               width: '100%',
               height: {
-                xs: 180, 
-                sm: 300, 
+                xs: 180,
+                sm: 300,
                 md: 400,
-                lg: 270, 
-                xl: 350, 
+                lg: 270,
+                xl: 350,
               },
             }}
           >
@@ -91,7 +102,7 @@ export default function BasicPie({ data = [] }: { data?: MakeOptional<PieValueTy
                       color: '#32BE67',
                     },
                   ], */
-                  data
+                  data,
                 },
               ]}
             />
@@ -99,5 +110,5 @@ export default function BasicPie({ data = [] }: { data?: MakeOptional<PieValueTy
         </Container>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }

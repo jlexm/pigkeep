@@ -593,6 +593,7 @@ class DataSyncService {
             ..quantity = apiMedicineHistory['quantity']
             ..cost = apiMedicineHistory['cost']?.toDouble()
             ..status = apiMedicineHistory['status']
+            ..pigUuid = apiMedicineHistory['pigUuid']
             ..createdAt = DateTime.parse(apiMedicineHistory['createdAt'])
             ..updatedAt = DateTime.parse(apiMedicineHistory['updatedAt']);
 

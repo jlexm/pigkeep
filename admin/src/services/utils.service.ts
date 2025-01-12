@@ -1,3 +1,9 @@
+export const formatCurrency = (amount: number) => {
+    return `${amount.toLocaleString('en-PH', {
+      style: 'currency',
+      currency: 'PHP',
+    })}`;
+  };
 
 export const formatDate = (date: Date) => {
     return date.toLocaleString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })

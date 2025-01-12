@@ -202,7 +202,7 @@ export default function PenInfo({ selectedRow }: { selectedRow?: any }) {
                   <Typography variant="subtitle1">
                     Pig Count:{' '}
                     <span style={{ color: '#11703b', fontWeight: 500 }}>
-                      {selectedRow.currentPigCount}
+                      {selectedRow.pigs?.length ?? 0}
                     </span>
                   </Typography>
                 </Grid2>
@@ -223,22 +223,23 @@ export default function PenInfo({ selectedRow }: { selectedRow?: any }) {
                 </Grid2>
                 <Grid2 container sx={{ height: 4 }}></Grid2>
                 <Grid2 container spacing={0} className="right">
-                  {pigs.map((pig, index) => (
-                    <Grid2 size={6} key={index}>
-                      <ListItem sx={{ paddingLeft: 2, paddingRight: 0 }}>
-                        <ListItemIcon sx={{ minWidth: 30 }}>
-                          <CircleIcon
-                            sx={{
-                              color: getStatusColor(pig.status),
-                              fontSize: 'clamp(20px, 2vw, 25px)', // Responsive size
-                            }}
-                          />
-                        </ListItemIcon>
+                  {selectedRow.pigs &&
+                    selectedRow.pigs.map((pig: any, index: number) => (
+                      <Grid2 size={6} key={index}>
+                        <ListItem sx={{ paddingLeft: 2, paddingRight: 0 }}>
+                          <ListItemIcon sx={{ minWidth: 30 }}>
+                            <CircleIcon
+                              sx={{
+                                color: getStatusColor(pig.status),
+                                fontSize: 'clamp(20px, 2vw, 25px)', // Responsive size
+                              }}
+                            />
+                          </ListItemIcon>
 
-                        <ListItemText primary={pig.number} />
-                      </ListItem>
-                    </Grid2>
-                  ))}
+                          <ListItemText primary={pig.pigNumber} />
+                        </ListItem>
+                      </Grid2>
+                    ))}
                 </Grid2>
               </Grid2>
             </Grid2>

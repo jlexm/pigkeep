@@ -31,6 +31,9 @@ const columns: GridColDef[] = [
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell: (params: any) => {
+      return <>{params.row.pigs?.length ?? 0}</>;
+    },
   },
   {
     field: 'maxPigCount',

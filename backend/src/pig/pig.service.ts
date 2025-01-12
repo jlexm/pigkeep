@@ -30,7 +30,33 @@ export class PigService {
   }
 
   async getAllPigs(farm_id: string): Promise<Pig[]> {
-    return this.pigModel.find({ farmID: farm_id }).exec()
+    return this.pigModel.aggregate([
+      { $match: { farmID: farm_id } },
+      {
+        $lookup: {
+          from: 'pens',
+          localField: 'penUuid',
+          foreignField: 'uuid',
+          as: 'penDetails'
+        }
+      },
+      {
+        $lookup: {
+          from: 'pigs',
+          localField: 'parentUuid',
+          foreignField: 'uuid',
+          as: 'parentPigDetails'
+        }
+      },
+      {
+        $lookup: {
+          from: 'legders',
+          localField: 'uuid',
+          foreignField: 'pigUuid',
+          as: 'ledgerDetails'
+        }
+      },
+    ]).exec();
   }
 
   async getAllSyncablePigs(

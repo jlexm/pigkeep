@@ -1,20 +1,26 @@
-import Box from '@mui/material/Box'
-import './HomeScreen.css'
-import hugepig from '../../assets/hugepig.svg'
-import { Grid2, Stack, ThemeProvider, Typography } from '@mui/material'
-import theme from '../../Theme'
+import Box from '@mui/material/Box';
+import './HomeScreen.css';
+import hugepig from '../../assets/hugepig.svg';
+import { Grid2, Stack, ThemeProvider, Typography } from '@mui/material';
+import theme from '../../Theme';
 
 interface SimpleContainerProps {
-  total_pigs: number,
-
+  total_pigs: number;
 }
 
-export default function SimpleContainer({ total_pigs = 0 }: SimpleContainerProps) {
+export default function SimpleContainer({
+  total_pigs = 0,
+}: SimpleContainerProps) {
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} className="homeContainer">
-        <Grid2 container spacing={3} size={{ xs: 12, lg: 6 }} alignContent={'space-evenly'}>
-          <Grid2  size={12}>
+        <Grid2
+          container
+          spacing={3}
+          size={{ xs: 12, lg: 6 }}
+          alignContent={'space-evenly'}
+        >
+          <Grid2 size={12}>
             <Stack
               spacing={2}
               direction={{ xs: 'column', md: 'row' }}
@@ -25,10 +31,10 @@ export default function SimpleContainer({ total_pigs = 0 }: SimpleContainerProps
                 fontWeight={700}
                 color="white"
                 sx={{
-                  fontSize: 'clamp(7rem, 9vw, 13rem)', 
-                  lineHeight: 0.8, 
-                  margin: 0, 
-                  padding: 0, 
+                  fontSize: 'clamp(7rem, 9vw, 13rem)',
+                  lineHeight: 0.8,
+                  margin: 0,
+                  padding: 0,
                 }}
               >
                 {total_pigs}
@@ -40,14 +46,14 @@ export default function SimpleContainer({ total_pigs = 0 }: SimpleContainerProps
                 color="white "
                 alignSelf={{ xs: 'center', md: 'flex-end' }}
               >
-                Total Pigs
+                Total Living Pigs
               </Typography>
             </Stack>
           </Grid2>
 
           <Grid2 size={{ lg: 12, xl: 12 }}>
             <Typography
-              variant='subtitle1'
+              variant="subtitle1"
               color="white"
               fontWeight={100}
               textAlign={{ xs: 'center', md: 'start' }}
@@ -67,11 +73,11 @@ export default function SimpleContainer({ total_pigs = 0 }: SimpleContainerProps
               src={hugepig}
               alt="Huge Pig"
               className="responsiveImage"
-              sx={{ width: { xs: 0, lg: 'clamp(440px, 36vw, 550px)' } ,}}
+              sx={{ width: { xs: 0, lg: 'clamp(440px, 36vw, 550px)' } }}
             />
           </Box>
         </Grid2>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }

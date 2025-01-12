@@ -65,7 +65,18 @@ export class MedicineHistoryService {
   }
 
   async getMedicineHistoryByFarmID(farm_id: string) {
-    return this.medicinesHistory.find({ farmID: farm_id }).exec()
+    return this.medicinesHistory.aggregate([
+      { $match: { farmID: farm_id, status: 'consumed' } },
+      {
+        $lookup: {
+          from: 'pigs',
+          localField: 'pigUuid',
+          foreignField: 'uuid',
+          as: 'pigDetails'
+        }
+      },
+    ]).exec()
+   
   }
 
 }

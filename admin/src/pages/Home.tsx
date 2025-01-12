@@ -65,12 +65,14 @@ const Home: React.FC = () => {
   const fetchPigs = async (farm_id: string) => {
     const pigs: any[] = ((await fetchAllFarmPigs(farm_id)) as any) ?? [];
     setPigs(
-      pigs.map((pig: any) => {
-        return {
-          ...pig,
-          ...determinePigStage(pig.sex, pig.dob),
-        };
-      })
+      pigs
+        .filter((pig) => pig.status === 'alive')
+        .map((pig: any) => {
+          return {
+            ...pig,
+            ...determinePigStage(pig.sex, pig.dob),
+          };
+        })
     );
   };
 

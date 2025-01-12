@@ -14,6 +14,9 @@ export class MedicinesHistory {
   @Prop({ required: true }) // Default value for weight
   dosage: string
 
+  @Prop({ default: 'Enter description'}) // Default value for weight
+  description: string
+
   @Prop({ type: Number, default: 0 }) // Default value for cost
   quantity: number
 
