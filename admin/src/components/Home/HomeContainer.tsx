@@ -1,7 +1,14 @@
+import React from 'react';
 import Box from '@mui/material/Box';
 import './HomeScreen.css';
 import hugepig from '../../assets/hugepig.svg';
-import { Grid2, Stack, ThemeProvider, Typography } from '@mui/material';
+import {
+  Grid2,
+  Stack,
+  ThemeProvider,
+  Typography,
+  useMediaQuery,
+} from '@mui/material';
 import theme from '../../Theme';
 
 interface SimpleContainerProps {
@@ -11,6 +18,8 @@ interface SimpleContainerProps {
 export default function SimpleContainer({
   total_pigs = 0,
 }: SimpleContainerProps) {
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+
   return (
     <ThemeProvider theme={theme}>
       <Grid2 container size={12} className="homeContainer">
@@ -23,7 +32,7 @@ export default function SimpleContainer({
           <Grid2 size={12}>
             <Stack
               spacing={2}
-              direction={{ xs: 'column', md: 'row' }}
+              direction={{ xs: 'column', lg: 'row' }}
               useFlexGap
               sx={{ flexWrap: 'wrap' }}
             >
@@ -36,17 +45,23 @@ export default function SimpleContainer({
                   margin: 0,
                   padding: 0,
                 }}
+                alignContent={'center'}
               >
                 {total_pigs}
               </Typography>
 
               <Typography
-                variant="h3"
+                sx={{
+                  fontSize: 'clamp(2rem, 3vw, 6.5rem)',
+                  lineHeight: 1.1,
+                }}
                 fontWeight={700}
-                color="white "
-                alignSelf={{ xs: 'center', md: 'flex-end' }}
+                color="white"
+                alignSelf={{ xs: 'center', lg: 'flex-end' }}
+                textAlign="justify"
               >
-                Total Living Pigs
+                Total
+                {isLgUp && <br />} Living Pigs
               </Typography>
             </Stack>
           </Grid2>
@@ -56,7 +71,7 @@ export default function SimpleContainer({
               variant="subtitle1"
               color="white"
               fontWeight={100}
-              textAlign={{ xs: 'center', md: 'start' }}
+              textAlign={{ xs: 'center', lg: 'start' }}
             >
               PigKeep web provides a platform for pig farm owners to efficiently
               manage and analyze their pig farm records. Any updates made on the
