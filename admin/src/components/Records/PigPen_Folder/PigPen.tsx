@@ -22,7 +22,12 @@ export default function Pigpen_Screen() {
   async function getPensData(farm_id: string) {
     // Fetch pens data
     const farmPens = ((await getAllPensByFarm(farm_id)) as any) ?? [];
-    setPens(farmPens);
+    setPens(
+      farmPens.map((pen: any) => ({
+        ...pen,
+        pigs: pen.pigs.filter((pig: any) => pig.status === 'alive'),
+      }))
+    );
   }
 
   return (

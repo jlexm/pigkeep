@@ -1,13 +1,21 @@
-import { Download } from '@mui/icons-material'
-import { Button, Grid2, ThemeProvider, Typography } from '@mui/material'
-import theme from '../../../Theme'
+import { Download } from '@mui/icons-material';
+import { Button, Grid2, ThemeProvider, Typography } from '@mui/material';
+import theme from '../../../Theme';
 
-export default function QRCode() {
+export default function QRCode({
+  onDownloadAll,
+}: {
+  onDownloadAll: () => void;
+}) {
   return (
     <ThemeProvider theme={theme}>
-      <Grid2 size={12} sx={{ textAlign: {xs:'center', sm: 'start', md:'end'} }} >
+      <Grid2
+        size={12}
+        sx={{ textAlign: { xs: 'center', sm: 'start', md: 'end' } }}
+      >
         <Button
           variant="contained"
+          onClick={() => onDownloadAll()}
           startIcon={<Download fontSize="large" />}
           sx={{
             width: { xs: 100, sm: 110, md: 120, lg: 130, xl: 140 },
@@ -33,5 +41,5 @@ export default function QRCode() {
         </Button>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }
