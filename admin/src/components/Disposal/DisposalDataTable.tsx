@@ -1,12 +1,13 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
-import { Box, Grid2, TextField, ThemeProvider } from '@mui/material'
-import theme from '../../Theme'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import { Box, Grid2, TextField, ThemeProvider } from '@mui/material';
+import theme from '../../Theme';
+import { formatCurrency, formatDate } from '../../services/utils.service';
 
 // Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
-    field: 'number',
+    field: 'pigNumber',
     headerName: 'Pig Number',
     flex: 1,
     minWidth: 140,
@@ -21,226 +22,87 @@ const columns: GridColDef[] = [
     headerAlign: 'right',
     align: 'right',
     cellClassName: (params) =>
-      params.value === 'Deceased'
+      params.value === 'deceased'
         ? 'red-text'
-        : params.value === 'Sold'
+        : params.value === 'sold'
         ? 'green-text'
         : '',
   },
   {
-    field: 'date',
+    field: 'transactionDate',
     headerName: 'Date',
     flex: 1,
     minWidth: 100,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell: (params) => (
+      <>{formatDate(new Date(params.row.transactionDate))}</>
+    ),
   },
   {
-    field: 'weight',
+    field: 'weightKG',
     headerName: 'Weight',
     flex: 1,
     minWidth: 110,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell: (params) => (
+      <>{params.row.weightKG ? params.row.weightKG + 'KG' : 'N/A'}</>
+    ),
   },
 
   {
-    field: 'price',
+    field: 'priceSold',
     headerName: 'Price',
     flex: 1,
     minWidth: 90,
     resizable: false,
     headerAlign: 'right',
     align: 'right',
+    renderCell: (params) => (
+      <>{formatCurrency(params.row.priceSold || 'N/A')}</>
+    ),
   },
-]
-
-// Define the initial rows with pig arrays (to be passed to another component)
-const initialRows = [
-  // {
-  //   id: 1,
-  //   number: '005',
-  //   status: 'Sold',
-  //   date: 'Jul 2, 2024',
-  //   weight: 105,
-  //   price: 12000,
-  // },
-  // {
-  //   id: 2,
-  //   number: '002',
-  //   status: 'Deceased',
-  //   date: 'Jul 3, 2024',
-  //   weight: null,
-  //   price: null,
-  // },
-  // {
-  //   id: 3,
-  //   number: '006',
-  //   status: 'Sold',
-  //   date: 'Jul 4, 2024',
-  //   weight: 101,
-  //   price: 11000,
-  // },
-  // {
-  //   id: 4,
-  //   number: '001',
-  //   status: 'Deceased',
-  //   date: 'Jul 6, 2024',
-  //   weight: null,
-  //   price: null,
-  // },
-  // {
-  //   id: 5,
-  //   number: '009',
-  //   status: 'Sold',
-  //   date: 'Jul 21, 2024',
-  //   weight: 108,
-  //   price: 10000,
-  // },
-  // {
-  //   id: 6,
-  //   number: '008',
-  //   status: 'Sold',
-  //   date: 'Jul 23, 2024',
-  //   weight: 109,
-  //   price: 9000,
-  // },
-  // {
-  //   id: 1,
-  //   number: '005',
-  //   status: 'Sold',
-  //   date: 'Jul 2, 2024',
-  //   weight: 105,
-  //   price: 12000,
-  // },
-  // {
-  //   id: 2,
-  //   number: '002',
-  //   status: 'Deceased',
-  //   date: 'Jul 3, 2024',
-  //   weight: null,
-  //   price: null,
-  // },
-  // {
-  //   id: 3,
-  //   number: '006',
-  //   status: 'Sold',
-  //   date: 'Jul 4, 2024',
-  //   weight: 101,
-  //   price: 11000,
-  // },
-  // {
-  //   id: 4,
-  //   number: '001',
-  //   status: 'Deceased',
-  //   date: 'Jul 6, 2024',
-  //   weight: null,
-  //   price: null,
-  // },
-  // {
-  //   id: 5,
-  //   number: '009',
-  //   status: 'Sold',
-  //   date: 'Jul 21, 2024',
-  //   weight: 108,
-  //   price: 10000,
-  // },
-  // {
-  //   id: 6,
-  //   number: '008',
-  //   status: 'Sold',
-  //   date: 'Jul 23, 2024',
-  //   weight: 109,
-  //   price: 9000,
-  // },
-  // {
-  //   id: 1,
-  //   number: '005',
-  //   status: 'Sold',
-  //   date: 'Jul 2, 2024',
-  //   weight: 105,
-  //   price: 12000,
-  // },
-  // {
-  //   id: 2,
-  //   number: '002',
-  //   status: 'Deceased',
-  //   date: 'Jul 3, 2024',
-  //   weight: null,
-  //   price: null,
-  // },
-  // {
-  //   id: 3,
-  //   number: '006',
-  //   status: 'Sold',
-  //   date: 'Jul 4, 2024',
-  //   weight: 101,
-  //   price: 11000,
-  // },
-  // {
-  //   id: 4,
-  //   number: '001',
-  //   status: 'Deceased',
-  //   date: 'Jul 6, 2024',
-  //   weight: null,
-  //   price: null,
-  // },
-  // {
-  //   id: 5,
-  //   number: '009',
-  //   status: 'Sold',
-  //   date: 'Jul 21, 2024',
-  //   weight: 108,
-  //   price: 10000,
-  // },
-  // {
-  //   id: 6,
-  //   number: '008',
-  //   status: 'Sold',
-  //   date: 'Jul 23, 2024',
-  //   weight: 109,
-  //   price: 9000,
-  // },
-]
+];
 
 // Define the pagination model
-export default function DisposalDataTable() {
-  const [searchText, setSearchText] = React.useState('')
-  const [filteredRows, setFilteredRows] = React.useState(initialRows)
+export default function DisposalDataTable({ ledgers }: { ledgers: any[] }) {
+  const [searchText, setSearchText] = React.useState('');
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
   const [paginationModel, setPaginationModel] = React.useState({
     page: 0,
     pageSize: 5,
-  })
+  });
+
+  React.useEffect(() => {
+    setFilteredRows(ledgers);
+  }, [ledgers]);
 
   // Function to handle filtering based on searchText
   const handleFilter = React.useCallback(() => {
-    const lowerSearchText = searchText.toLowerCase()
-    const filtered = initialRows.filter((row) => {
+    const lowerSearchText = searchText.toLowerCase();
+    const filtered = ledgers.filter((row) => {
       return (
-        (row.number && row.number.toLowerCase().includes(lowerSearchText)) ||
-        (row.date && row.date.toLowerCase().includes(lowerSearchText)) ||
-        (row.weight !== null &&
-          row.weight.toString().includes(lowerSearchText)) ||
-        (row.status && row.status.toLowerCase().includes(lowerSearchText)) ||
-        (row.price !== null && row.price.toString().includes(lowerSearchText))
-      )
-    })
-    setFilteredRows(filtered)
-  }, [searchText])
+        !lowerSearchText ||
+        (row.pigNumber && row.pigNumber.toLowerCase().includes(lowerSearchText))
+      );
+    });
+    setFilteredRows(filtered);
+  }, [searchText]);
 
   // Trigger filter whenever searchText changes
   React.useEffect(() => {
-    handleFilter()
-  }, [searchText, handleFilter])
+    handleFilter();
+  }, [searchText, handleFilter]);
 
   // Function to handle pagination changes
   const handlePaginationChange = (
     newModel: React.SetStateAction<{ page: number; pageSize: number }>
   ) => {
-    setPaginationModel(newModel)
-  }
+    setPaginationModel(newModel);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -282,7 +144,13 @@ export default function DisposalDataTable() {
             paginationModel={paginationModel}
             onPaginationModelChange={handlePaginationChange}
             pageSizeOptions={[5, 10, 25, 50, 100]}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: 'transactionDate', sort: 'desc' }],
+              },
+            }}
             rowSelection={false}
+            getRowId={(row) => row.uuid}
             getRowClassName={(params) =>
               params.indexRelativeToCurrentPage % 2 === 0
                 ? 'even-row'
@@ -318,5 +186,5 @@ export default function DisposalDataTable() {
         </Box>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }

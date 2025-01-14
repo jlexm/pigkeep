@@ -48,7 +48,7 @@ const Disposal = () => {
             <Typography variant="h4" color="black" textAlign="start">
               Disposal Records
             </Typography>
-            <DisposalDataTable />
+            <DisposalDataTable ledgers={ledgers} />
           </Grid2>
         </Grid2>
       </Grid2>
