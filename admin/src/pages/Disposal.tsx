@@ -23,8 +23,13 @@ const Disposal = () => {
   }, []);
 
   const getLedgers = async (farm_id: string) => {
-    const farmFeeds = ((await fetchLedgers(farm_id)) as any) ?? [];
-    setLedgers(farmFeeds);
+    const ledger = ((await fetchLedgers(farm_id)) as any) ?? [];
+    setLedgers(
+      ledger.map((ledge: any) => ({
+        ...ledge,
+        pigNumber: ledge.pigDetails?.[0]?.pigNumber,
+      }))
+    );
   };
 
   return (

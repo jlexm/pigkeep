@@ -65,6 +65,16 @@ export class LedgerService {
   }
 
   async getFarmLedgers(farm_id: string): Promise<Legder[]> {
-    return this.ledgerModel.find({ farmID: farm_id }).exec()
+    return this.ledgerModel.aggregate([
+      { $match: { farmID: farm_id,} },
+      {
+        $lookup: {
+          from: 'pigs',
+          localField: 'pigUuid',
+          foreignField: 'uuid',
+          as: 'pigDetails'
+        }
+      },
+    ]).exec()
   }
 }
