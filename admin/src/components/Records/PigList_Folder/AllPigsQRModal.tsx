@@ -87,7 +87,7 @@ export const AllPigsQRModal = ({
                 <Box key={pig.uuid}>
                   <PigQR
                     label={pig.pigNumber.replace('P-', '')}
-                    qrValue={pig.uuid}
+                    qrValue={'pigkeep:' + pig.pigNumber + ':' + pig.uuid}
                     widthPX={widthPX}
                     heightPX={heightPX}
                     fontPX={fontPX}

@@ -55,7 +55,7 @@ export const QRPigShowModal = ({
         <PigQR
           ref={qrRef}
           label={selectedPig.pigNumber.replace('P-', '')}
-          qrValue={selectedPig.uuid}
+          qrValue={'pigkeep:' + selectedPig.pigNumber + ':' + selectedPig.uuid}
         />
       </DialogContent>
       <DialogActions>
