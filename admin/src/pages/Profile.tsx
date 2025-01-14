@@ -11,7 +11,7 @@ import '../components/Profile/Profile.css';
 import pfp from '../assets/junmar.png';
 import bottwave from '../assets/pigHead.svg';
 import ReusableDialogBox from '../modals/ReusableDialogBox';
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import theme from '../Theme';
@@ -258,7 +258,7 @@ const Profile = () => {
             {
               placeholder: 'Old Password',
               type: 'password',
-              icon: <DirectionsBikeIcon />,
+              icon: <LockPersonIcon />,
               value: passwordForm.old_password,
               onChange: (v) =>
                 setPasswordForm((prev) => ({ ...prev, old_password: v })),
@@ -266,7 +266,7 @@ const Profile = () => {
             {
               placeholder: 'New Password',
               type: 'password',
-              icon: <DirectionsBikeIcon />,
+              icon: <LockPersonIcon />,
               value: passwordForm.password,
               onChange: (v) =>
                 setPasswordForm((prev) => ({ ...prev, password: v })),
@@ -274,7 +274,7 @@ const Profile = () => {
             {
               placeholder: 'Confirm Password',
               type: 'password',
-              icon: <DirectionsBikeIcon />,
+              icon: <LockPersonIcon />,
               value: passwordForm.confirm_password,
               onChange: (v) =>
                 setPasswordForm((prev) => ({ ...prev, confirm_password: v })),

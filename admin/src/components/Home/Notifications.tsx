@@ -60,7 +60,7 @@ export default function PigEventsNotification({ pigEvents } : { pigEvents: any[]
     const event = pigEvents[index];
 
     // Define alternating colors
-    const backgroundColor = index % 2 === 0 ? '#f1f1f1' : '#ffffff'; 
+    const backgroundColor = index % 2 === 0 ? '#f1f1f1' : '#ffffff';
 
     const eventDateString = formatEventDate(event.eventDate)
     const eventStatus = eventDateString === 'Today' ? 'In Progress' : event.status
@@ -71,8 +71,8 @@ export default function PigEventsNotification({ pigEvents } : { pigEvents: any[]
           style={{
             ...style,
             paddingBottom: 15,
-            backgroundColor: backgroundColor, 
-            borderRadius: '3px', 
+            backgroundColor: backgroundColor,
+            borderRadius: '3px',
           }}
           key={event.uuid}
           component="div"
@@ -108,10 +108,10 @@ export default function PigEventsNotification({ pigEvents } : { pigEvents: any[]
                   }
                   sx={{ flex: '1' }}
                 />
-                <Typography 
-                  variant="body2" 
-                  fontWeight={100} 
-                  color={'green'} 
+                <Typography
+                  variant="body2"
+                  fontWeight={100}
+                  color={'green'}
                   sx={{ textDecoration: 'underline'}}
                   >
                     {eventStatus}
@@ -138,7 +138,7 @@ export default function PigEventsNotification({ pigEvents } : { pigEvents: any[]
           </Typography>
         </Grid2>
         <Grid2 size={6} className="seeEventsLink">
-          <Link style={{ color: 'green' }} href="#" underline="hover">
+          <Link style={{ color: 'green' }} href="\events" underline="hover">
             <Typography variant="body1">{'See Events'}</Typography>
           </Link>
         </Grid2>
