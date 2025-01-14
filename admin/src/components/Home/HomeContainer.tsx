@@ -59,9 +59,9 @@ export default function SimpleContainer({
               textAlign={{ xs: 'center', md: 'start' }}
             >
               PigKeep web provides a platform for pig farm owners to efficiently
-              manage and analyze their pig farm records. Any updates made on the
-              PigKeep mobile app will be integrated into the records on the web
-              platform.
+              analyze their pig farm records and to easily manage their
+              caretakers. Any updates made on the PigKeep mobile app will be
+              integrated into the records on the web platform.
             </Typography>
           </Grid2>
         </Grid2>
