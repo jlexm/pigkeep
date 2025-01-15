@@ -110,12 +110,11 @@ export default function HistoryDataTable({
             <DataGrid
               rows={filteredRows}
               columns={columns}
-              getRowId={(row) => row.uuid}
               initialState={{
-                sorting: { sortModel: [{ field: 'eventDate', sort: 'desc' }] },
+                pagination: { paginationModel },
+                sorting: { sortModel: [{ field: 'eventDate', sort: 'asc' }] },
               }}
-              pagination
-              paginationModel={paginationModel}
+              getRowId={(row) => row.uuid}
               pageSizeOptions={[5, 10, 25, 50, 100]}
               rowSelection={false}
               getRowClassName={(params) =>

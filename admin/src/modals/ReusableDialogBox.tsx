@@ -24,6 +24,8 @@ interface ReusableDialogBoxProps {
     type: string;
     icon: ReactNode;
     value: any;
+    slotProps?: any;
+    disabled?: boolean;
     onChange: (v: any) => void;
   }[]; // Array of objects with placeholders and icons
   onSave: () => void; // Callback function for saving
@@ -97,6 +99,8 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
                     >
                       <TextField
                         placeholder={field.placeholder}
+                        disabled={field.disabled}
+                        slotProps={field.slotProps}
                         variant="outlined"
                         fullWidth
                         type={

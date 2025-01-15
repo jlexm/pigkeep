@@ -8,7 +8,7 @@ import '../components/Records/PigList_Folder/PigList.css';
 import theme from '../Theme';
 
 const Records = () => {
-  const [selectedChip, setSelectedChip] = React.useState('Pig List'); // Default selected chip
+  const [selectedChip, setSelectedChip] = React.useState('Pigpen'); // Default selected chip
 
   const handleChipClick = (chip: string) => {
     setSelectedChip(chip);

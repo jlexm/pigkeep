@@ -145,20 +145,22 @@ export default function AddFeedComp({
         <ReusableDialogBox
           title="Add Feed"
           description="Fill up the necessary information."
-          formFields={[
-            {
-              placeholder: 'Feed Type',
-              icon: <DirectionsBikeIcon />,
-            },
-            {
-              placeholder: 'Weight in kg',
-              icon: <DirectionsBikeIcon />,
-            },
-            {
-              placeholder: 'Cost',
-              icon: <DirectionsBikeIcon />,
-            },
-          ]}
+          formFields={
+            [
+              // {
+              //   placeholder: 'Feed Type',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+              // {
+              //   placeholder: 'Weight in kg',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+              // {
+              //   placeholder: 'Cost',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+            ]
+          }
           onSave={handleSave} // Handle save action
           onCancel={handleCloseDialog} // Handle cancel action
           saveButtonText="Add Feed"

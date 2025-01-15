@@ -92,7 +92,7 @@ export default function Dispose({ ledgers }: { ledgers: any[] }) {
             <Grid2 container size={12} paddingY={2} className="innerBoxBg">
               <Grid2 size={12}>
                 <Typography variant="h5" fontWeight={500} color="black">
-                  Pig Sales
+                  Total Pig Sales
                 </Typography>
               </Grid2>
             </Grid2>
@@ -165,20 +165,22 @@ export default function Dispose({ ledgers }: { ledgers: any[] }) {
         <ReusableDialogBox
           title="Sell Pig"
           description="Fill up the necessary information."
-          formFields={[
-            {
-              placeholder: 'Pig Number',
-              icon: <DirectionsBikeIcon />,
-            },
-            {
-              placeholder: 'Weight in kg',
-              icon: <DirectionsBikeIcon />,
-            },
-            {
-              placeholder: 'Price',
-              icon: <DirectionsBikeIcon />,
-            },
-          ]}
+          formFields={
+            [
+              // {
+              //   placeholder: 'Pig Number',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+              // {
+              //   placeholder: 'Weight in kg',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+              // {
+              //   placeholder: 'Price',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+            ]
+          }
           onSave={handleSave} // Handle save action
           onCancel={handleCloseDialog} // Handle cancel action
           saveButtonText="Sell Pig"
@@ -191,12 +193,14 @@ export default function Dispose({ ledgers }: { ledgers: any[] }) {
         <ReusableDialogBox
           title="Deceased Pig"
           description="Fill up the necessary information."
-          formFields={[
-            {
-              placeholder: 'Pig Number',
-              icon: <DirectionsBikeIcon />,
-            },
-          ]}
+          formFields={
+            [
+              // {
+              //   placeholder: 'Pig Number',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+            ]
+          }
           onSave={handleSaveDeceased} // Handle save action
           onCancel={handleCloseDeceasedDialog} // Handle cancel action
           saveButtonText="Remove"

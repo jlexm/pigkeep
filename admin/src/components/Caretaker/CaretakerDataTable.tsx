@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteIcon from '@mui/icons-material/Delete'
-import VisibilityIcon from '@mui/icons-material/Visibility'
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
   Box,
   Grid2,
@@ -12,241 +12,274 @@ import {
   IconButton,
   TableContainer,
   ThemeProvider,
-} from '@mui/material'
-import ReusableDialogBox from '../../modals/ReusableDialogBox'
-import theme from '../../Theme'
+} from '@mui/material';
+import ReusableDialogBox from '../../modals/ReusableDialogBox';
+import theme from '../../Theme';
+import { Lock, Person, Phone } from '@mui/icons-material';
 
 interface CareTakerTableProps {
-  rows: any[]
+  rows: any[];
+  onCaretakerSave?: (caretaker: any) => Promise<void>;
 }
 
-// Function to generate columns
-const columns: (
-  visiblePasswords: Record<number, boolean>,
-  togglePasswordVisibility: (id: number) => void
-) => GridColDef[] = (visiblePasswords, togglePasswordVisibility) => [
-  {
-    field: 'username',
-    headerName: 'Username',
-    flex: 1,
-    minWidth: 130,
-    resizable: false,
-  },
-  {
-    field: 'first_name',
-    headerName: 'First Name',
-    flex: 1,
-    minWidth: 150,
-    resizable: false,
-    headerAlign: 'left',
-    align: 'left',
-  },
-  {
-    field: 'last_name',
-    headerName: 'Last Name',
-    flex: 1,
-    minWidth: 150,
-    resizable: false,
-    headerAlign: 'left',
-    align: 'left',
-  },
-  {
-    field: 'phone_number',
-    headerName: 'Phone Number',
-    flex: 1,
-    minWidth: 170,
-    resizable: false,
-    headerAlign: 'right',
-    align: 'right',
-  },
-  {
-    field: 'password',
-    headerName: 'Password',
-    flex: 1,
-    minWidth: 130,
-    resizable: false,
-    headerAlign: 'right',
-    align: 'right',
-    renderCell: (params) => {
-      const isPasswordVisible = visiblePasswords[params.row._id] || false
-      return (
-        <>
-          <span>
-            {isPasswordVisible ? params.value : '•'.repeat(Math.min(12, params.value.length))}
-          </span>
-          <IconButton
-            sx={{ paddingRight: 0 }}
-            onClick={() => togglePasswordVisibility(params.row._id)}
-          >
-            {isPasswordVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
-          </IconButton>
-        </>
-      )
-    },
-  },
-  {
-    field: 'actions',
-    headerName: 'Actions',
-    flex: 1,
-    minWidth: 110,
-    resizable: false,
-    renderCell: (params) => {
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [editDialogOpen, setEditDialogOpen] = React.useState(false)
-      // eslint-disable-next-line react-hooks/rules-of-hooks
-      const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false) // State for delete dialog visibility
-      const pigNumber = params.row.number
-
-      const handleEditClick = () => {
-        setEditDialogOpen(true)
-      }
-
-      const handleSave = () => {
-        setEditDialogOpen(false)
-      }
-
-      const handleCancelEdit = () => {
-        setEditDialogOpen(false)
-      }
-
-      const handleDeleteClick = () => {
-        setDeleteDialogOpen(true)
-      }
-
-      const handleConfirmDelete = () => {
-        // Perform delete logic here
-        setDeleteDialogOpen(false)
-      }
-
-      const handleCancelDelete = () => {
-        setDeleteDialogOpen(false)
-      }
-
-      return (
-        <>
-          <IconButton
-            sx={{ color: 'blue' }}
-            size="small"
-            onClick={handleEditClick}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            sx={{ color: 'red' }}
-            size="small"
-            onClick={handleDeleteClick}
-          >
-            <DeleteIcon />
-          </IconButton>
-
-          {editDialogOpen && (
-            <ReusableDialogBox
-              title="Edit Caretaker"
-              description="Fill up the form to edit a caretaker’s information."
-              formFields={[
-                { placeholder: 'Email', icon: <EditIcon /> },
-                { placeholder: 'Username', icon: <EditIcon /> },
-                { placeholder: 'Phone Number', icon: <EditIcon /> },
-                { placeholder: 'Password', icon: <EditIcon /> },
-                { placeholder: 'Confirm Password', icon: <EditIcon /> },
-              ]}
-              onSave={handleSave}
-              onCancel={handleCancelEdit}
-              saveButtonText="Save"
-              saveButtonColor="#3B4DE1"
-            />
-          )}
-
-          {deleteDialogOpen && (
-            <ReusableDialogBox
-              title="Remove Caretaker"
-              description="Confirm that you would like to proceed with the deletion of this caretaker. Note that this action is irreversible."
-              formFields={[]}
-              onSave={handleConfirmDelete}
-              onCancel={handleCancelDelete}
-              saveButtonText="Delete"
-              saveButtonColor="#FF0000"
-            />
-          )}
-        </>
-      )
-    },
-    headerAlign: 'right',
-    align: 'right',
-  },
-]
-
-const initialRows = [
-  {
-    id: 1,
-    username: 'John Shi',
-    email: 'johnshi@gmail.com',
-    phoneNum: '09214356843',
-    password: '123434',
-    phone_number: '123'
-  },
-  {
-    id: 2,
-    username: 'John Dei',
-    email: 'johndei@gmail.com',
-    phoneNum: '09123456789',
-    password: 'wgwagrga',
-  },
-  {
-    id: 3,
-    username: 'John Lee',
-    email: 'johnlee@gmail.com',
-    phoneNum: '09192408183',
-    password: 'owugbjkljklgs',
-  },
-  {
-    id: 4,
-    username: 'Tee Hee',
-    email: 'teehee@gmail.com',
-    phoneNum: '09598374185',
-    password: 'gikpwshnerfgol;wsjkg',
-  },
-]
-
-const paginationModel = { page: 0, pageSize: 5 }
+const paginationModel = { page: 0, pageSize: 5 };
 
 export default function CaretakerDataTable(props: CareTakerTableProps) {
+  const [caretakerForm, setCaretakerForm] = React.useState({
+    username: '',
+    first_name: '',
+    last_name: '',
+    phone_number: '',
+    password: '',
+    confirm_password: '',
+  });
 
-  const [searchText, setSearchText] = React.useState('')
-  const [filteredRows, setFilteredRows] = React.useState<any[]>([])
+  const [searchText, setSearchText] = React.useState('');
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
   const [visiblePasswords, setVisiblePasswords] = React.useState<
     Record<number, boolean>
-  >({})
+  >({});
 
   React.useEffect(() => {
-    setFilteredRows(props.rows)
-  }, [props.rows])
+    setFilteredRows(props.rows);
+  }, [props.rows]);
 
   // Function to toggle password visibility for a specific row
   const togglePasswordVisibility = (id: number) => {
     setVisiblePasswords((prevVisiblePasswords) => ({
       ...prevVisiblePasswords,
       [id]: !prevVisiblePasswords[id],
-    }))
-  }
+    }));
+  };
 
   // Function to handle filtering based on searchText (excluding password)
   const handleFilter = () => {
-    const lowerSearchText = searchText.toLowerCase()
+    const lowerSearchText = searchText.toLowerCase();
     const filtered = props.rows.filter((row: any) => {
       return (
         row.username.toLowerCase().includes(lowerSearchText) ||
         row.phone_number.toLowerCase().includes(lowerSearchText)
-      )
-    })
-    setFilteredRows(filtered)
-  }
+      );
+    });
+    setFilteredRows(filtered);
+  };
 
   React.useEffect(() => {
-    handleFilter()
-  }, [searchText])
+    handleFilter();
+  }, [searchText]);
 
-  
+  // Function to generate columns
+  const columns: (
+    visiblePasswords: Record<number, boolean>,
+    togglePasswordVisibility: (id: number) => void
+  ) => GridColDef[] = (visiblePasswords, togglePasswordVisibility) => [
+    {
+      field: 'username',
+      headerName: 'Username',
+      flex: 1,
+      minWidth: 130,
+      resizable: false,
+    },
+    {
+      field: 'first_name',
+      headerName: 'First Name',
+      flex: 1,
+      minWidth: 150,
+      resizable: false,
+      headerAlign: 'left',
+      align: 'left',
+    },
+    {
+      field: 'last_name',
+      headerName: 'Last Name',
+      flex: 1,
+      minWidth: 150,
+      resizable: false,
+      headerAlign: 'left',
+      align: 'left',
+    },
+    {
+      field: 'phone_number',
+      headerName: 'Phone Number',
+      flex: 1,
+      minWidth: 170,
+      resizable: false,
+      headerAlign: 'right',
+      align: 'right',
+    },
+    // {
+    //   field: 'password',
+    //   headerName: 'Password',
+    //   flex: 1,
+    //   minWidth: 130,
+    //   resizable: false,
+    //   headerAlign: 'right',
+    //   align: 'right',
+    //   renderCell: (params) => {
+    //     const isPasswordVisible = visiblePasswords[params.row._id] || false
+    //     return (
+    //       <>
+    //         <span>
+    //           {isPasswordVisible ? params.value : '•'.repeat(Math.min(12, params.value.length))}
+    //         </span>
+    //         <IconButton
+    //           sx={{ paddingRight: 0 }}
+    //           onClick={() => togglePasswordVisibility(params.row._id)}
+    //         >
+    //           {isPasswordVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
+    //         </IconButton>
+    //       </>
+    //     )
+    //   },
+    // },
+    {
+      field: 'actions',
+      headerName: 'Actions',
+      flex: 1,
+      minWidth: 110,
+      resizable: false,
+      renderCell: (params) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [editDialogOpen, setEditDialogOpen] = React.useState(false);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false); // State for delete dialog visibility
+        const pigNumber = params.row.number;
+
+        const handleEditClick = () => {
+          setCaretakerForm({
+            ...params.row,
+            password: '',
+            confirm_password: '',
+          });
+          setEditDialogOpen(true);
+        };
+
+        const handleSave = async () => {
+          await props.onCaretakerSave?.(caretakerForm);
+          setEditDialogOpen(false);
+        };
+
+        const handleCancelEdit = () => {
+          setEditDialogOpen(false);
+        };
+
+        const handleDeleteClick = () => {
+          setDeleteDialogOpen(true);
+        };
+
+        const handleConfirmDelete = () => {
+          // Perform delete logic here
+          setDeleteDialogOpen(false);
+        };
+
+        const handleCancelDelete = () => {
+          setDeleteDialogOpen(false);
+        };
+
+        return (
+          <>
+            <IconButton
+              sx={{ color: 'blue' }}
+              size="small"
+              onClick={handleEditClick}
+            >
+              <EditIcon />
+            </IconButton>
+            {/*  <IconButton
+              sx={{ color: 'red' }}
+              size="small"
+              onClick={handleDeleteClick}
+            >
+              <DeleteIcon />
+            </IconButton> */}
+
+            {editDialogOpen && (
+              <ReusableDialogBox
+                title="Edit Caretaker"
+                description="Fill up the form to edit a caretaker’s information."
+                formFields={[
+                  {
+                    placeholder: 'Username',
+                    disabled: true,
+                    icon: <Person />,
+                    type: 'text',
+                    value: caretakerForm.username,
+                    onChange: (v) =>
+                      setCaretakerForm((prev) => ({ ...prev, username: v })),
+                  },
+                  {
+                    placeholder: 'First name',
+                    icon: <Person />,
+                    type: 'text',
+                    value: caretakerForm.first_name,
+                    onChange: (v) =>
+                      setCaretakerForm((prev) => ({ ...prev, first_name: v })),
+                  },
+                  {
+                    placeholder: 'Last name',
+                    icon: <Person />,
+                    type: 'text',
+                    value: caretakerForm.last_name,
+                    onChange: (v) =>
+                      setCaretakerForm((prev) => ({ ...prev, last_name: v })),
+                  },
+                  {
+                    placeholder: 'Phone Number',
+                    slotProps: { htmlInput: { maxLength: 11 } },
+                    icon: <Phone />,
+                    type: 'text',
+                    value: caretakerForm.phone_number,
+                    onChange: (v) =>
+                      setCaretakerForm((prev) => ({
+                        ...prev,
+                        phone_number: v,
+                      })),
+                  },
+                  {
+                    placeholder: 'Password',
+                    icon: <Lock />,
+                    type: 'password',
+                    value: caretakerForm.password,
+                    onChange: (v) =>
+                      setCaretakerForm((prev) => ({ ...prev, password: v })),
+                  },
+                  {
+                    placeholder: 'Confirm Password',
+                    icon: <Lock />,
+                    type: 'password',
+                    value: caretakerForm.confirm_password,
+                    onChange: (v) =>
+                      setCaretakerForm((prev) => ({
+                        ...prev,
+                        confirm_password: v,
+                      })),
+                  },
+                ]}
+                onSave={handleSave}
+                onCancel={handleCancelEdit}
+                saveButtonText="Save"
+                saveButtonColor="#3B4DE1"
+              />
+            )}
+
+            {deleteDialogOpen && (
+              <ReusableDialogBox
+                title="Remove Caretaker"
+                description="Confirm that you would like to proceed with the deletion of this caretaker. Note that this action is irreversible."
+                formFields={[]}
+                onSave={handleConfirmDelete}
+                onCancel={handleCancelDelete}
+                saveButtonText="Delete"
+                saveButtonColor="#FF0000"
+              />
+            )}
+          </>
+        );
+      },
+      headerAlign: 'right',
+      align: 'right',
+    },
+  ];
 
   return (
     <ThemeProvider theme={theme}>
@@ -324,5 +357,5 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
         </Grid2>
       </TableContainer>
     </ThemeProvider>
-  )
+  );
 }

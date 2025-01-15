@@ -108,42 +108,59 @@
 
 // export default Caretaker
 
-import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material'
-import CaretakerDataTable from '../components/Caretaker/CaretakerDataTable'
-import ReusableDialogBox from '../modals/ReusableDialogBox'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
-import { useEffect, useState } from 'react'
-import theme from '../Theme'
-import { fetchCaretakers } from '../services/caretaker.service'
+import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material';
+import CaretakerDataTable from '../components/Caretaker/CaretakerDataTable';
+import ReusableDialogBox from '../modals/ReusableDialogBox';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import { useEffect, useState } from 'react';
+import theme from '../Theme';
+import {
+  addCaretaker,
+  fetchCaretakers,
+  updateCaretaker,
+} from '../services/caretaker.service';
+import { toast } from 'react-toastify';
+import { Lock, Person, Phone } from '@mui/icons-material';
 
 const Caretaker = () => {
+  const [addCaretakerForm, setAddCaretakerForm] = useState({
+    username: '',
+    first_name: '',
+    last_name: '',
+    phone_number: '',
+    password: '',
+    confirm_password: '',
+  });
   // State to manage the dialog box visibility
-  const [openDialog, setOpenDialog] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const [ caretakers, setCaretakers] = useState<any[]>([])
+  const [caretakers, setCaretakers] = useState<any[]>([]);
   useEffect(() => {
-    (async () => {
-      const res = await fetchCaretakers() as any
-      setCaretakers(res);
-    })();
-  }, [])
+    loadCaretakers();
+  }, []);
 
+  const loadCaretakers = async () => {
+    const res = (await fetchCaretakers()) as any;
+    setCaretakers(res);
+  };
 
   // Function to open the dialog
   const handleOpenDialog = () => {
-    setOpenDialog(true)
-  }
+    setOpenDialog(true);
+  };
 
   // Function to close the dialog
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+    setOpenDialog(false);
+  };
 
   // Function to handle save action in the dialog
-  const handleSave = () => {
-    console.log('Saving pig data...')
-    handleCloseDialog() // Close dialog after saving
-  }
+  const handleSave = async () => {
+    await addCaretaker(addCaretakerForm);
+    toast.success('Caretaker added successfully!');
+    await loadCaretakers();
+    handleCloseDialog(); // Close dialog after saving
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -160,20 +177,20 @@ const Caretaker = () => {
           container
           size={12}
           alignItems="center"
-          justifyContent={{ xs: 'center', sm: 'start' }} 
-          flexDirection={{ xs: 'column', sm: 'row' }} 
+          justifyContent={{ xs: 'center', sm: 'start' }}
+          flexDirection={{ xs: 'column', sm: 'row' }}
         >
           <Box>
             <Typography
               fontSize={'clamp(2rem, 5vw, 3rem)'}
               fontWeight={700}
               color="Black"
-              textAlign={{ xs: 'center', sm: 'start' }} 
+              textAlign={{ xs: 'center', sm: 'start' }}
             >
               Caretakers
             </Typography>
           </Box>
-          {/* <Box>
+          <Box>
             <Button
               variant="contained"
               sx={{
@@ -182,7 +199,7 @@ const Caretaker = () => {
                 width: { xs: 110, sm: 80, md: 90, lg: 100, xl: 110 },
                 height: { xs: 35, sm: 40, md: 45 },
                 borderRadius: 2,
-                alignSelf: { xs: 'center', sm: 'flex-start' }, 
+                alignSelf: { xs: 'center', sm: 'flex-start' },
               }}
               onClick={handleOpenDialog}
             >
@@ -195,10 +212,17 @@ const Caretaker = () => {
                 Add
               </Typography>
             </Button>
-          </Box> */}
+          </Box>
         </Grid2>
         <Grid2 container size={12} className="responsiveTable">
-          <CaretakerDataTable rows={caretakers} />
+          <CaretakerDataTable
+            rows={caretakers}
+            onCaretakerSave={async (caretaker) => {
+              await updateCaretaker(caretaker);
+              toast.success('Caretaker updated successfully!');
+              await loadCaretakers();
+            }}
+          />
         </Grid2>
       </Grid2>
       {/* ReusableDialogBox to be shown when openDialog is true */}
@@ -208,24 +232,62 @@ const Caretaker = () => {
           description="Fill up the form to add a caretaker to your farm."
           formFields={[
             {
-              placeholder: 'Email',
-              icon: <DirectionsBikeIcon />,
+              placeholder: 'Username',
+              type: 'text',
+              value: addCaretakerForm.username,
+              onChange: (v) => {
+                setAddCaretakerForm({ ...addCaretakerForm, username: v });
+              },
+              icon: <Person />,
             },
             {
-              placeholder: 'Username',
-              icon: <DirectionsBikeIcon />,
+              placeholder: 'First Name',
+              type: 'text',
+              value: addCaretakerForm.first_name,
+              onChange: (v) => {
+                setAddCaretakerForm({ ...addCaretakerForm, first_name: v });
+              },
+              icon: <Person />,
+            },
+            {
+              placeholder: 'Last Name',
+              type: 'text',
+              value: addCaretakerForm.last_name,
+              onChange: (v) => {
+                setAddCaretakerForm({ ...addCaretakerForm, last_name: v });
+              },
+              icon: <Person />,
             },
             {
               placeholder: 'Phone Number',
-              icon: <DirectionsBikeIcon />,
+              type: 'text',
+              value: addCaretakerForm.phone_number,
+              slotProps: { htmlInput: { maxLength: 11 } },
+              onChange: (v) => {
+                setAddCaretakerForm({ ...addCaretakerForm, phone_number: v });
+              },
+              icon: <Phone />,
             },
             {
               placeholder: 'Password',
-              icon: <DirectionsBikeIcon />,
+              type: 'password',
+              value: addCaretakerForm.password,
+              onChange: (v) => {
+                setAddCaretakerForm({ ...addCaretakerForm, password: v });
+              },
+              icon: <Lock />,
             },
             {
               placeholder: 'Confirm Password',
-              icon: <DirectionsBikeIcon />,
+              type: 'password',
+              value: addCaretakerForm.confirm_password,
+              onChange: (v) => {
+                setAddCaretakerForm({
+                  ...addCaretakerForm,
+                  confirm_password: v,
+                });
+              },
+              icon: <Lock />,
             },
           ]}
           onSave={handleSave} // Handle save action
@@ -235,7 +297,7 @@ const Caretaker = () => {
         />
       )}
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Caretaker
+export default Caretaker;

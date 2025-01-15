@@ -56,6 +56,11 @@ const Login = () => {
         usernameRef.current!.value,
         passwordRef.current!.value
       )) as any;
+      if (restOfResponse.role_id > 3) {
+        toast.error('You are not allowed to access this page.');
+        setIsLoginLoading(false);
+        return;
+      }
       setUserToken(token);
       setUserBasicInfo(restOfResponse);
       navigate('/home');

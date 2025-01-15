@@ -215,20 +215,22 @@ const Events = () => {
         <ReusableDialogBox
           title="Set Event"
           description="Fill up the form to set an event for your pig farm."
-          formFields={[
-            {
-              placeholder: 'Date',
-              icon: <DirectionsBikeIcon />,
-            },
-            {
-              placeholder: 'Pig Number',
-              icon: <DirectionsBikeIcon />,
-            },
-            {
-              placeholder: 'Event Name',
-              icon: <DirectionsBikeIcon />,
-            },
-          ]}
+          formFields={
+            [
+              // {
+              //   placeholder: 'Date',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+              // {
+              //   placeholder: 'Pig Number',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+              // {
+              //   placeholder: 'Event Name',
+              //   icon: <DirectionsBikeIcon />,
+              // },
+            ]
+          }
           onSave={handleSave} // Handle save action
           onCancel={handleCloseDialog} // Handle cancel action
           saveButtonText="Set"
