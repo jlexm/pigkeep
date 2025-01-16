@@ -247,7 +247,7 @@ export default function CurrentDataTable({
                 sorting: { sortModel: [{ field: 'eventDate', sort: 'asc' }] },
               }}
               getRowId={(row) => row.uuid}
-              pageSizeOptions={[10, 25, 50, 100]}
+              pageSizeOptions={[5, 10, 25, 50, 100]}
               rowSelection={false}
               onCellClick={handleCellClick} // Add cell click event
               getRowClassName={(params) =>
