@@ -27,7 +27,6 @@ export class FarmController {
   async createFarm(@Req() req: { user: ReqUser }, @Body() createFarmDto: any) {
     try {
       const { _id } = req.user
-      console.log(req.user)
       const newFarm = await this.farmService.createFarm({
         ...createFarmDto,
         owner_id: _id,
@@ -37,7 +36,6 @@ export class FarmController {
       if (error.code === 11000) {
         throw new ConflictException('Farm already exists')
       }
-      throw error
     }
   }
 
@@ -45,8 +43,24 @@ export class FarmController {
   @UseGuards(AuthGuard)
   async createMyFarm(@Req() req: { user: ReqUser }, @Body() body: any) {
     const { _id } = req.user
-    console.log(_id, body)
-    return this.farmService.createFarm({ owner_id: _id, ...body })
+
+    try {
+
+      if(body.farm_name.length < 3) {
+        throw new BadRequestException('Farm name too short.')
+      }
+
+      if(body.farm_address.length < 10) {
+        throw new BadRequestException('Farm address too short.')
+      }
+
+      return await this.farmService.createFarm({ owner_id: _id, ...body })
+    } catch (error) {
+      if (error.code === 11000) {
+        throw new ConflictException('Farm already exists')
+      }
+      throw error
+    }
   }
 
   @Get('my-farms')
