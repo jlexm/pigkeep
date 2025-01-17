@@ -90,8 +90,8 @@ export class MedicineController {
 
   @Post('/syncable/:farm_id')
   //@UseGuards(AuthGuard) // Use to restrict to signed-in users only
-  async syncMeds(@Param('farm_id') farmId, @Body('medicines') feeds: any[]) {
-    await this.medicineService.syncMeds(farmId, feeds)
+  async syncMeds(@Param('farm_id') farmId, @Body('medicines') meds: any[]) {
+    await this.medicineService.syncMeds(farmId, meds)
     return { success: true, message: 'Data synced!' }
   }
 

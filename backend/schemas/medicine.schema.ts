@@ -14,7 +14,7 @@ export class Medicine {
   @Prop({ required: true }) // Default value for weight
   dosage: string
 
-  @Prop({ required: true }) // Default value for weight
+  @Prop({}) // Default value for weight
   description: string
 
   @Prop({ type: Number, default: 0 }) // Default value for cost
