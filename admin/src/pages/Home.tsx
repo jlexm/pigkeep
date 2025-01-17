@@ -7,6 +7,7 @@ import DropdownWithAddButton from '../components/Home/Dropdown';
 import theme from '../Theme';
 import React, { useEffect, useState } from 'react';
 import {
+  addFarm,
   fetchMyFarms,
   getSelectedFarm,
   setSelectedFarm,
@@ -20,6 +21,7 @@ import PigEventsNotification from '../components/Home/Notifications';
 import { fetchLedgers } from '../services/ledger.service';
 import { fetchFeedsHistoryByFarm } from '../services/feed.service';
 import { fetchMedicineHistoryByFarm } from '../services/medicines.service';
+import { toast } from 'react-toastify';
 
 const Home: React.FC = () => {
   const localStorageSelectedFarm = getSelectedFarm();
@@ -129,8 +131,14 @@ const Home: React.FC = () => {
     )
   ).sort((a, b) => b.value - a.value);
 
-  const handleAddNewItem = (newItem: string) => {
-    setOptions((prevOptions) => [...prevOptions, newItem]);
+  const handleAddNewItem = async (newItem: {
+    farm_name: string;
+    farm_address: string;
+  }) => {
+    await addFarm(newItem);
+    const myFarms = (await fetchMyFarms()) as any;
+    setOptions(myFarms);
+    toast.success('Farm added successfully');
   };
 
   return (
