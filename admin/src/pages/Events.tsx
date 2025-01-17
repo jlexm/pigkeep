@@ -46,10 +46,13 @@ const Events = () => {
     const current = farmPigEvents.filter(
       (event: any) =>
         event.status !== 'Completed' &&
+        event.status !== 'Deleted' &&
         formatDateNumeric(new Date(event.eventDate)) <= formatDateNumeric(today)
     );
     const upcoming = farmPigEvents.filter(
       (event: any) =>
+        event.status !== 'Completed' &&
+        event.status !== 'Deleted' &&
         formatDateNumeric(new Date(event.eventDate)) > formatDateNumeric(today)
     );
     const history = farmPigEvents.filter(

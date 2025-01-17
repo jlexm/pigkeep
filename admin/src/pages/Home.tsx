@@ -85,6 +85,7 @@ const Home: React.FC = () => {
         .filter(
           (event: any) =>
             event.status !== 'Completed' &&
+            event.status !== 'Deleted' &&
             new Date(event.eventDate) >= today &&
             new Date(event.eventDate) <= next2Weeks
         )
