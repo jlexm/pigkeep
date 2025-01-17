@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
   Select,
   MenuItem,
@@ -14,16 +14,16 @@ import {
   ThemeProvider,
   Box,
   InputAdornment,
-} from '@mui/material'
-import theme from '../../Theme'
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'
-import { setSelectedFarm } from '../../services/farm.service'
+} from '@mui/material';
+import theme from '../../Theme';
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import { setSelectedFarm } from '../../services/farm.service';
 
 interface DropdownWithAddButtonProps {
-  options: any[]
-  selected: any
-  handleSetSelectedOption: (option: any) => void
-  onAddNewItem: (newItem: string) => void
+  options: any[];
+  selected: any;
+  handleSetSelectedOption: (option: any) => void;
+  onAddNewItem: (data: { farm_name: string; farm_address: string }) => void;
 }
 
 const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
@@ -32,39 +32,35 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
   handleSetSelectedOption,
   onAddNewItem,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<any>(null) // Set default option
-  const [openDialog, setOpenDialog] = useState(false)
-  const [newItem, setNewItem] = useState('')
+  const [selectedOption, setSelectedOption] = useState<any>(null); // Set default option
+  const [openDialog, setOpenDialog] = useState(false);
+  const [newItem, setNewItem] = useState({ farm_name: '', farm_address: '' });
 
   useEffect(() => {
-    setSelectedOption(selected)
-  }, [selected])
+    setSelectedOption(selected);
+  }, [selected]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const value = event.target.value as string
+    const value = event.target.value as string;
 
     if (value === 'add-new') {
-      setOpenDialog(true) // Open the dialog for adding new items
+      setOpenDialog(true); // Open the dialog for adding new items
     } else {
-      setSelectedFarm(value)
-      setSelectedOption(value) // Select the existing option
-      handleSetSelectedOption(value)
+      setSelectedFarm(value);
+      setSelectedOption(value); // Select the existing option
+      handleSetSelectedOption(value);
     }
-  }
+  };
 
   const handleAddNewItem = () => {
-    if (newItem.trim()) {
-      onAddNewItem(newItem)
-      setSelectedOption(newItem) // Set new item as selected
-      setNewItem('') // Reset the new item input
-      setOpenDialog(false) // Close the dialog
-    }
-  }
+    onAddNewItem(newItem);
+    handleCloseDialog();
+  };
 
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-    setNewItem('') // Reset new item input on dialog close
-  }
+    setOpenDialog(false);
+    setNewItem({ farm_name: '', farm_address: '' });
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -72,7 +68,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
         <FormControl fullWidth sx={{ padding: 0 }}>
           <Select
             value={selectedOption}
-            onChange={handleChange}
+            onChange={handleChange as any}
             displayEmpty
             renderValue={(selected) =>
               selected ? (
@@ -104,7 +100,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
               '& .MuiSelect-select': {
                 textAlign: 'left',
                 paddingLeft: 0.5,
-                paddingY: { xs: 0, sm:1, md: 2 },
+                paddingY: { xs: 0, sm: 1, md: 2 },
               },
             }}
           >
@@ -115,7 +111,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                 sx={{
                   textAlign: 'left',
                   fontWeight: 'normal',
-                  fontSize: 'clamp(1rem, 1.5vw, 1.2rem)', 
+                  fontSize: 'clamp(1rem, 1.5vw, 1.2rem)',
                 }}
               >
                 {option.farm_name}
@@ -180,8 +176,13 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                       placeholder="Farm Name"
                       variant="outlined"
                       fullWidth
-                      value={newItem}
-                      onChange={(e) => setNewItem(e.target.value)} // Update new item input
+                      value={newItem.farm_name}
+                      onChange={(e) =>
+                        setNewItem((prev) => ({
+                          ...prev,
+                          farm_name: e.target.value,
+                        }))
+                      } // Update new item input
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -227,6 +228,13 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                       placeholder="Address"
                       variant="outlined"
                       fullWidth
+                      value={newItem.farm_address}
+                      onChange={(e) =>
+                        setNewItem((prev) => ({
+                          ...prev,
+                          farm_address: e.target.value,
+                        }))
+                      } // Update new item input
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -320,7 +328,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
         </Dialog>
       </Grid2>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default DropdownWithAddButton
+export default DropdownWithAddButton;
