@@ -192,12 +192,6 @@ class _FeedInventoryState extends State<FeedInventory> {
                                 labelText: 'Feed Type',
                                 hintText: 'Feed Type',
                                 hintTextSize: 14.sp,
-                                showDropdown: true,
-                                dropdownItems: feeds
-                                    .map((feed) => CustomDropDownItem(
-                                        feed.feedType,
-                                        '${feed.feedType} | ${feed.weightKG}kg'))
-                                    .toList(),
                                 icon: Icons.restaurant,
                                 textSize: 14.sp,
                               ),
@@ -292,6 +286,32 @@ class _FeedInventoryState extends State<FeedInventory> {
             items: feeds,
             farmID: selectedFarm['_id'],
             feedFeedData: fetchFeedData(), // Dynamic list of items
+            onUpdate: (uuid, feedType, weightKG, cost) async {
+              try {
+                await feedService.updateFeed(uuid, feedType, weightKG, cost);
+                ToastService().showSuccessToast('Updated succesfully.');
+                context.pop();
+                await fetchFeedData();
+              } catch (err) {
+                ToastService().showErrorToast(err.toString());
+              }
+            },
+            onFeedStock: (feedType, weightKG, cost) async {
+              try {
+                await feedService.addFeed(
+                  false,
+                  selectedFarm['_id'],
+                  'stock',
+                  feedType,
+                  weightKG,
+                  cost,
+                );
+                await fetchFeedData();
+                context.pop();
+              } catch (err) {
+                ToastService().showErrorToast(err.toString());
+              }
+            },
           ),
         ),
         SizedBox(

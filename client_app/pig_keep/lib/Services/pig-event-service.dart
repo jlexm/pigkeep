@@ -178,6 +178,7 @@ class PigEventService {
       throw 'Event does not exist or deleted.';
     }
     pigEvent.status = 'Deleted';
+    pigEvent.updatedAt = DateTime.now();
     await db.writeTxn(() async {
       await db.pigEvents.put(pigEvent);
     });

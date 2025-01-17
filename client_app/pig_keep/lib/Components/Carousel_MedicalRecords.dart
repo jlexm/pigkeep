@@ -96,7 +96,7 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              '${item.medicineName.length > 16 ? item.medicineName.substring(0, 16) + '...' : item.medicineName}\n${item.dosage}',
+                              '${item.medicineName.length > 16 ? '${item.medicineName.substring(0, 16)}...' : item.medicineName}\n${item.dosage}',
                               style: TextStyle(fontSize: 12.0.sp),
                               textAlign: TextAlign.center, // Center the text
                             ),
@@ -164,7 +164,7 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                                   labelText: 'Cost Per Qty',
                                   hintText: 'Cost Per Qty',
                                   hintTextSize: 14.sp,
-                                  icon: Icons.php,
+                                  icon: Icons.price_change_rounded,
                                   textSize: 14.sp,
                                   keyboardType: TextInputType.number,
                                 ),

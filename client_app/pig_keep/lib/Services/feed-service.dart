@@ -81,4 +81,30 @@ class FeedService {
         .findAll();
     return feedH;
   }
+
+  Future<void> updateFeed(
+      String uuid, String feedType, double weightKG, double cost) async {
+    Feed? feed = await db.feeds.filter().uuidEqualTo(uuid).findFirst();
+
+    if (feed == null) {
+      throw 'Feed not found.';
+    }
+    if (feedType == '') {
+      throw 'Invalid feed type';
+    }
+    if (weightKG < 1) {
+      throw 'Invalid weight';
+    }
+    if (cost < 1) {
+      throw 'Invalid cost';
+    }
+    feed.feedType = feedType;
+    feed.weightKG = weightKG;
+    feed.cost = cost;
+    feed.updatedAt = DateTime.now();
+
+    await db.writeTxn(() async {
+      await db.feeds.put(feed);
+    });
+  }
 }
