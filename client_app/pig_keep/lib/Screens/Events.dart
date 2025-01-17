@@ -79,6 +79,14 @@ class _EventsState extends State<Events> {
     getEventHistory();
   }
 
+  Future<void> markEventDelete(String eventUuid) async {
+    await pigEventService.deletePigEventSoft(eventUuid);
+    getSelectedMonthEvents();
+    getWIPEvents();
+    getUpcomingEvents();
+    getEventHistory();
+  }
+
   Future<void> updateEvent(String eventUuid, DateTime eventDate, String pigUuid,
       String eventType) async {
     await pigEventService.updateEvent(eventUuid, eventDate, pigUuid, eventType);
@@ -438,6 +446,8 @@ class _EventsState extends State<Events> {
                         events: upcomingEvents, // Pass the toggle function
                         pigs: pigs,
                         updatePigEvent: updateEvent,
+                        markAsDelete: (pigEventUuid) =>
+                            markEventDelete(pigEventUuid),
                       )
                     else if (showEventsHistory)
                       EventsHistory(
@@ -609,6 +619,8 @@ class _EventsState extends State<Events> {
                                         isSameDay(event.eventDate, selectedDay))
                                     .toList(),
                                 markAsDone: markEventDone,
+                                markAsDelete: (pigEventUuid) =>
+                                    markEventDelete(pigEventUuid),
                               ),
                             ],
                             SizedBox(
@@ -650,11 +662,16 @@ class _EventsState extends State<Events> {
                               UpcomingEvents(
                                 onReturn: _toggleView,
                                 events: upcomingEvents,
+                                updatePigEvent: updateEvent,
+                                markAsDelete: (pigEventUuid) =>
+                                    markEventDelete(pigEventUuid),
                               )
                             else
                               CurrentEvents(
                                 events: currentWIPEvents,
                                 markAsDone: markEventDone,
+                                markAsDelete: (pigEventUuid) =>
+                                    markEventDelete(pigEventUuid),
                               ),
                           ],
                         ),

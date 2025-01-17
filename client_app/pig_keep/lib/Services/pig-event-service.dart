@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:isar/isar.dart';
 import 'package:pig_keep/Models/pig-event.dart';
 import 'package:pig_keep/Models/pig.dart';
 import 'package:pig_keep/Services/database-service.dart';
 import 'package:pig_keep/Services/medicine-service.dart';
 import 'package:pig_keep/Services/pig-helper.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 
 class PigEventService {
@@ -11,6 +14,9 @@ class PigEventService {
 
   Future<void> addNewEvent(String farmID, DateTime eventDate, String pigUuid,
       String eventType, String status) async {
+    if (eventType == '') {
+      throw 'Event type is required';
+    }
     // set event time to 12:00 AM
     eventDate = PigHelper.setToMidnight(eventDate);
 
@@ -98,11 +104,14 @@ class PigEventService {
     return await db.pigEvents
         .filter()
         .farmIDEqualTo(farmID)
-        .eventDateGreaterThan(startOfDay)
-        .or()
-        .eventDateEqualTo(startOfDay)
+        .group((q) => q
+            .eventDateGreaterThan(startOfDay)
+            .or()
+            .eventDateEqualTo(startOfDay))
         .not()
         .statusEqualTo('Completed')
+        .not()
+        .statusEqualTo('Deleted')
         .findAll();
   }
 
@@ -116,6 +125,8 @@ class PigEventService {
         .eventDateLessThan(startOfDay)
         .not()
         .statusEqualTo('Completed')
+        .not()
+        .statusEqualTo('Deleted')
         .findAll();
   }
 
@@ -130,6 +141,8 @@ class PigEventService {
         .filter()
         .farmIDEqualTo(farmID)
         .eventDateBetween(startOfMonth, endOfMonth)
+        .not()
+        .statusEqualTo('Deleted')
         .findAll();
   }
 
@@ -148,10 +161,26 @@ class PigEventService {
         .farmIDEqualTo(farmID)
         .not()
         .statusEqualTo('Completed')
+        .not()
+        .statusEqualTo('Deleted')
         .group(
             (q) => q.eventDateGreaterThan(today).or().eventDateEqualTo(today))
         .eventDateLessThan(today.add(Duration(days: 14)))
         .sortByEventDate()
         .findAll();
+  }
+
+  Future<void> deletePigEventSoft(String pigEventUuid) async {
+    final pigEvent =
+        await db.pigEvents.filter().uuidEqualTo(pigEventUuid).findFirst();
+    if (pigEvent == null || pigEvent.status == 'Deleted') {
+      ToastService().showErrorToast("Event does not exists or deleted.");
+      throw 'Event does not exist or deleted.';
+    }
+    pigEvent.status = 'Deleted';
+    await db.writeTxn(() async {
+      await db.pigEvents.put(pigEvent);
+    });
+    ToastService().showWarningToast("Event deleted.");
   }
 }

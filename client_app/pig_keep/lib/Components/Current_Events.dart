@@ -12,7 +12,9 @@ import 'package:pig_keep/main.dart';
 class CurrentEvents extends StatefulWidget {
   final List<PigEvent> events;
   final Future<void> Function(String)? markAsDone;
-  const CurrentEvents({super.key, required this.events, this.markAsDone});
+  final void Function(String)? markAsDelete;
+  const CurrentEvents(
+      {super.key, required this.events, this.markAsDone, this.markAsDelete});
 
   @override
   State<CurrentEvents> createState() => _CurrentEventsState();
@@ -44,9 +46,6 @@ class _CurrentEventsState extends State<CurrentEvents> {
 
   @override
   Widget build(BuildContext context) {
-// services
-    final pigEventService = globalLocator.get<PigEventService>();
-
     final double itemHeight = 80.h;
     final double containerHeight = widget.events.length * itemHeight;
 
@@ -124,8 +123,11 @@ class _CurrentEventsState extends State<CurrentEvents> {
                 );
               },
               onDismissed: (direction) {
+                if (widget.markAsDelete != null) {
+                  widget.markAsDelete!(event.uuid);
+                }
                 setState(() {
-                  //currentEvents.removeAt(index);
+                  widget.events.removeAt(index);
                 });
               },
               child: InkWell(

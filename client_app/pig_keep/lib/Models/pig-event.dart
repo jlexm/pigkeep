@@ -16,7 +16,7 @@ class PigEvent {
   late String pigUuid;
   late String pigNumber;
 
-  // In Progress, Completed
+  // Pending, In Progress, Completed, Deleted
   late String? status;
 
   // Vaccination, Farrow

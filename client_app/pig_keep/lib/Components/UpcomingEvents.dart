@@ -13,6 +13,7 @@ class UpcomingEvents extends StatefulWidget {
   final VoidCallback onReturn;
   final List<PigEvent> events;
   final Future<void> Function(String, DateTime, String, String)? updatePigEvent;
+  final void Function(String)? markAsDelete;
   final List<Map<String, dynamic>>? pigs;
 
   const UpcomingEvents(
@@ -20,7 +21,8 @@ class UpcomingEvents extends StatefulWidget {
       required this.onReturn,
       required this.events,
       this.pigs,
-      this.updatePigEvent});
+      this.updatePigEvent,
+      this.markAsDelete});
 
   @override
   State<UpcomingEvents> createState() => _UpcomingEventsState();
@@ -192,8 +194,11 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
                     );
                   },
                   onDismissed: (direction) {
+                    if (widget.markAsDelete != null) {
+                      widget.markAsDelete!(event.uuid);
+                    }
                     setState(() {
-                      //UpcomingEvents.removeAt(index);
+                      widget.events.removeAt(index);
                     });
                   },
                   child: InkWell(
