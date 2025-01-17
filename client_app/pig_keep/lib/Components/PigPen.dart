@@ -42,7 +42,7 @@ class _PigPenState extends State<PigPen> {
   Future<void> addPigPen(int penNumber, String penType, int maxNumber) async {
     print(userOwner);
     // convert penNumber to readable text format
-    String penNum = 'P-${penNumber.toString().padLeft(2, '0')}';
+    String penNum = 'PEN-${penNumber.toString().padLeft(2, '0')}';
     await pigPenService.addPigPen(
         penNum, penType, maxNumber, selectedFarm['_id'], userOwner);
     await getPigPens();
