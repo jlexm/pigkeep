@@ -12,10 +12,11 @@ class ToastService {
   void showToast(String message,
       {ToastGravity gravity = ToastGravity.BOTTOM,
       Color? backgroundColor,
-      Color? textColor}) {
+      Color? textColor,
+      Toast toastLength = Toast.LENGTH_SHORT}) {
     Fluttertoast.showToast(
       msg: message,
-      toastLength: Toast.LENGTH_SHORT,
+      toastLength: toastLength,
       gravity: gravity,
       timeInSecForIosWeb: 1,
       backgroundColor: backgroundColor ?? Colors.black,
@@ -44,19 +45,17 @@ class ToastService {
 
   // Show warning toast
   void showWarningToast(String message) {
-    showToast(
-      message,
-      backgroundColor: Colors.orange, // Warning color
-      textColor: Colors.white,
-    );
+    showToast(message,
+        backgroundColor: Colors.orange, // Warning color
+        textColor: Colors.white,
+        toastLength: Toast.LENGTH_LONG);
   }
 
   // Show neutral toast
   void showNeutralToast(String message) {
-    showToast(
-      message,
-      backgroundColor: Colors.grey, // Neutral color
-      textColor: Colors.white,
-    );
+    showToast(message,
+        backgroundColor: Colors.grey, // Neutral color
+        textColor: Colors.white,
+        gravity: ToastGravity.TOP);
   }
 }

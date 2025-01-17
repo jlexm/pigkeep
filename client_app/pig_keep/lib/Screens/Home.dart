@@ -15,6 +15,7 @@ import 'package:pig_keep/Services/local-notification-service.dart';
 import 'package:pig_keep/Services/pig-event-service.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
+import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 import 'package:provider/provider.dart';
 
@@ -68,6 +69,9 @@ class _HomeState extends State<Home> {
 
     // count all pigs
     fetchPigs.forEach((pig) {
+      if (pig['status'] != 'alive') {
+        return;
+      }
       ctotalPigs += 1;
       switch (pig['ageCategory']) {
         case 'Weaner':
@@ -106,6 +110,13 @@ class _HomeState extends State<Home> {
     setState(() {
       eventNotifications = pEvents;
     });
+    ToastService()
+        .showNeutralToast('You have ${pEvents.length} notifications!');
+  }
+
+  Future<void> markEventDone(String eventUuid) async {
+    await pigEventService.markEventAsCompleted(eventUuid);
+    await getPigEventNotifications();
   }
 
   @override
@@ -205,7 +216,7 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Total Pigs',
+                            'Total Living Pigs',
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 16.sp,
@@ -335,6 +346,7 @@ class _HomeState extends State<Home> {
                     ),
                     CurrentEvents(
                       events: eventNotifications,
+                      markAsDone: markEventDone,
                     ),
                   ],
                 ),
