@@ -3,13 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class SearchBar_PigList extends StatelessWidget {
-  const SearchBar_PigList({super.key});
+  final void Function(String) onSearch;
+  const SearchBar_PigList({super.key, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 185.w, 
-      height: 34.h, 
+      width: 185.w,
+      height: 34.h,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -34,6 +35,7 @@ class SearchBar_PigList extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
               ),
               style: TextStyle(fontSize: 12.sp),
+              onChanged: onSearch,
             ),
           ),
         ],

@@ -156,8 +156,7 @@ class _QRCodeStatusState extends State<PigView> {
                 padding: EdgeInsets.only(left: 25),
                 child: InkWell(
                   onTap: () {
-                    Navigator.pop(
-                        context); 
+                    context.go('/records/pigs');
                   },
                   child: Row(
                     children: [
@@ -165,8 +164,7 @@ class _QRCodeStatusState extends State<PigView> {
                         Icons.arrow_back,
                         color: appTertiary,
                       ),
-                      SizedBox(
-                          width: 5), 
+                      SizedBox(width: 5),
                       Text(
                         'Return',
                         style: TextStyle(

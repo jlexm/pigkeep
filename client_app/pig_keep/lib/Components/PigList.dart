@@ -9,6 +9,7 @@ import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Models/pig-pen.dart';
 import 'package:pig_keep/Providers/global_provider.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
 import 'package:pig_keep/Services/pig-pen-service.dart';
 import 'package:pig_keep/Services/pig-service.dart';
 import 'package:pig_keep/Services/toast-service.dart';
@@ -342,7 +343,10 @@ class _PigListState extends State<PigList> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      ToastService().showWarningToast(
+                          'Please use pigkeep web admin dashboard to perform this action. Remember to sync first!');
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -368,16 +372,12 @@ class _PigListState extends State<PigList> {
               ],
             ),
             const Spacer(),
-            SearchBar_PigList(), // SearchBar_PigList.dart
-            InkWell(
-              // Filter
-              onTap: () {},
-              child: Icon(
-                Icons.filter_alt_outlined,
-                size: 35,
-                color: appTertiary,
-              ),
-            ),
+            SearchBar_PigList(
+                onSearch: (keyword) => {
+                      setState(() {
+                        searchValue = keyword;
+                      })
+                    }), // SearchBar_PigList.dart
             SizedBox(
               width: 18.w,
             ),
@@ -389,7 +389,12 @@ class _PigListState extends State<PigList> {
               onRowSelected: (Map<String, dynamic> pigData) {
                 context.push('/records/pigs/${pigData['uuid']}');
               },
-              pigs: pigs,
+              pigs: pigs
+                  .where((pig) => pig['pigNumber']
+                      .toLowerCase()
+                      .replaceAll(',', '')
+                      .contains(searchValue.toLowerCase()))
+                  .toList(),
             ),
           ],
         ),

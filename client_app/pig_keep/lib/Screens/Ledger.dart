@@ -53,6 +53,12 @@ class _LedgerState extends State<Ledger> {
   List<PigPen> pigPens = [];
   String searchValue = '';
 
+  void onSearch(String keyword) {
+    setState(() {
+      searchValue = keyword;
+    });
+  }
+
   // fns
   Future<void> getLedgerDetails() async {
     final ledgerDets = await ledgerService.getLedgers(selectedFarm['_id']);
@@ -270,7 +276,8 @@ class _LedgerState extends State<Ledger> {
                                                 labelText: 'Price',
                                                 hintText: 'Price',
                                                 hintTextSize: 14.sp,
-                                                icon: Icons.price_change_rounded,
+                                                icon:
+                                                    Icons.price_change_rounded,
                                                 textSize: 14.sp,
                                                 keyboardType:
                                                     TextInputType.phone,
@@ -448,7 +455,9 @@ class _LedgerState extends State<Ledger> {
                     left: 20.w,
                     right: 20.w,
                   ),
-                  child: SearchBar_DisposalLedger(),
+                  child: SearchBar_DisposalLedger(
+                    onSearch: onSearch,
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -474,7 +483,13 @@ class _LedgerState extends State<Ledger> {
                 Column(
                   children: [
                     DisposalLedger(
-                      ledgers: ledgerHistory,
+                      ledgers: ledgerHistory
+                          .where((ledge) =>
+                              PigHelper.formatDate(ledge['transactionDate'])
+                                  .toLowerCase()
+                                  .replaceAll(',', '')
+                                  .contains(searchValue.toLowerCase()))
+                          .toList(),
                     ),
                   ],
                 )
