@@ -50,7 +50,8 @@ export class UserService {
           first_name: 1,
           last_name: 1,
           user_owner: 1,
-          master_password: 1
+          master_password: 1,
+          profile_pic: 1
         }
       )
       .exec()
@@ -87,7 +88,8 @@ export class UserService {
       role_id: 1,
       first_name: 1,
       last_name: 1,
-      phone_number: 1
+      phone_number: 1,
+      profile_pic: 1
     }).exec()
   }
 

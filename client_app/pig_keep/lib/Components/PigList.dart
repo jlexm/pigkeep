@@ -343,9 +343,51 @@ class _PigListState extends State<PigList> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: InkWell(
-                    onTap: () {
-                      ToastService().showWarningToast(
-                          'Please use pigkeep web admin dashboard to perform this action. Remember to sync first!');
+                    onTap: () async {
+                      return await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            title: Text(
+                              "Download all QR?",
+                              style: TextStyle(
+                                fontSize: 25.sp,
+                                fontWeight: FontWeight.w700,
+                                color: appTertiary,
+                              ),
+                            ),
+                            content: Text(
+                              "Please use PigKeep's website for convinient downloading of QR codes.",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                color: appTertiary,
+                              ),
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(true);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: appBlue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.r),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Return',
+                                  style: TextStyle(
+                                    color: appSecondary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

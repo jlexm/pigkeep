@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Api/user_api.dart';
@@ -8,6 +10,7 @@ import 'package:pig_keep/Components/BottomNav.dart';
 import 'package:pig_keep/Components/MyUsernameField.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 import 'package:pig_keep/Services/toast-service.dart';
+import 'package:pig_keep/Store/auth_storage.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -23,6 +26,31 @@ class _ChangePasswordState extends State<ChangePassword> {
   final TextEditingController _newpasswordController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
+
+  String profile_pic = 'assets/icons/Farmer.png';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadName();
+  }
+
+  Future<void> _loadName() async {
+    final currUserJSON = await AuthStorage.getUser();
+    // throw error if user does not exists in storage
+    if (currUserJSON == null) {
+      throw 'Current user not found.';
+    }
+    // decode currUser json string
+    final currUser = jsonDecode(currUserJSON);
+    String? pic = currUser['profile_pic'];
+    if (pic != null) {
+      setState(() {
+        profile_pic = pic;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +80,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                             child: Opacity(
                               opacity: 0.7,
                               child: Image.asset(
-                                'assets/icons/Farmer.png',
+                                profile_pic,
                                 fit: BoxFit.cover,
                                 width: 133,
                                 height: 133,

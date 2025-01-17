@@ -29,6 +29,17 @@ class _ProfileDetailsState extends State<ProfileDetails> {
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _phonenumberController = TextEditingController();
 
+  // add more options here
+  List<String> profileOptions = [
+    'assets/icons/Farmer.png',
+    'assets/userIcons/female.png',
+    'assets/userIcons/male.png',
+    'assets/userIcons/neutral.png'
+  ];
+
+  int currentOptionIndex = 0;
+  int role_id = 3;
+
   Future<void> getInitialData() async {
     var user = await UserApi.getMyDetails();
     _emailController.text = user['email'] ?? '';
@@ -36,6 +47,18 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     _firstnameController.text = user['first_name'] ?? '';
     _lastnameController.text = user['last_name'] ?? '';
     _phonenumberController.text = user['phone_number'] ?? '';
+    String? pic = user['profile_pic'];
+    print(user);
+    if (pic != null) {
+      int idx = profileOptions.indexOf(pic);
+      if (idx == -1) {
+        idx = 0; // default pic
+      }
+      setState(() {
+        currentOptionIndex = idx;
+        role_id = user['role_id'];
+      });
+    }
   }
 
   @override
@@ -62,37 +85,78 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     ),
                     Column(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            border: Border.all(color: appPrimary, width: 1.5),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Opacity(
-                              opacity: 0.7,
-                              child: Image.asset(
-                                'assets/icons/Farmer.png',
-                                fit: BoxFit.cover,
-                                width: 133,
-                                height: 133,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                int idx = currentOptionIndex - 1;
+                                if (idx < 0) {
+                                  idx = profileOptions.length - 1;
+                                }
+                                setState(() {
+                                  currentOptionIndex = idx;
+                                });
+                              },
+                              child: Icon(
+                                Icons.chevron_left,
+                                size: 50,
+                                color: appPrimary,
                               ),
                             ),
-                          ),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(100),
+                                border:
+                                    Border.all(color: appPrimary, width: 1.5),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Opacity(
+                                  opacity: 0.7,
+                                  child: Image.asset(
+                                    profileOptions[currentOptionIndex],
+                                    fit: BoxFit.cover,
+                                    width: 133,
+                                    height: 133,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                int idx = currentOptionIndex + 1;
+                                if (idx > profileOptions.length - 1) {
+                                  idx = 0;
+                                }
+                                setState(() {
+                                  currentOptionIndex = idx;
+                                });
+                              },
+                              child: Icon(
+                                Icons.chevron_right,
+                                size: 50,
+                                color: appPrimary,
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
-                          height: 5.h,
+                          height: 10.h,
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            'Change Profile Picture',
-                            style: TextStyle(
-                              color: appTertiary,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w300,
-                            ),
+                        Text(
+                          'Choose Profile Picture',
+                          style: TextStyle(
+                            color: appTertiary,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                       ],
@@ -141,39 +205,39 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                           SizedBox(
                             height: 15.h,
                           ),
-                                  SizedBox(
-                                    height: 40.h,
-                                    child: ImageInputForm(
-                                      labelText: 'First Name',
-                                      controller: _firstnameController,
-                                      prefixIcon: Image.asset(
-                                        'assets/icons/Farmer.png',
-                                        scale: 13,
-                                        color: appTertiary,
-                                      ),
-                                      textStyle: TextStyle(
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                  ),
+                          SizedBox(
+                            height: 40.h,
+                            child: ImageInputForm(
+                              labelText: 'First Name',
+                              controller: _firstnameController,
+                              prefixIcon: Image.asset(
+                                'assets/icons/Farmer.png',
+                                scale: 13,
+                                color: appTertiary,
+                              ),
+                              textStyle: TextStyle(
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             height: 15.h,
                           ),
-                                  SizedBox(
-                                    height: 40.h,
-                                    child: ImageInputForm(
-                                      labelText: 'Last Name',
-                                      controller: _lastnameController,
-                                      prefixIcon: Image.asset(
-                                        'assets/icons/Farmer.png',
-                                        scale: 13,
-                                        color: appTertiary,
-                                      ),
-                                      textStyle: TextStyle(
-                                        fontSize: 12.sp,
-                                      ),
-                                    ),
-                                  ),
+                          SizedBox(
+                            height: 40.h,
+                            child: ImageInputForm(
+                              labelText: 'Last Name',
+                              controller: _lastnameController,
+                              prefixIcon: Image.asset(
+                                'assets/icons/Farmer.png',
+                                scale: 13,
+                                color: appTertiary,
+                              ),
+                              textStyle: TextStyle(
+                                fontSize: 12.sp,
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             height: 15.h,
                           ),
@@ -192,7 +256,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                               }
                               return null;
                             },
-                            
                           ),
                           SizedBox(
                             height: 15.h,
@@ -209,13 +272,18 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                                   'phone_number': _phonenumberController.text,
                                   'first_name': _firstnameController.text,
                                   'last_name': _lastnameController.text,
+                                  'profile_pic':
+                                      profileOptions[currentOptionIndex]
                                 });
 
                                 // update localStorage username that was rcved from login api
                                 await AuthStorage.setUser(jsonEncode({
                                   "username": _usernameController.text,
+                                  "role_id": role_id,
                                   "first_name": _firstnameController.text,
-                                  "last_name": _lastnameController.text
+                                  "last_name": _lastnameController.text,
+                                  "profile_pic":
+                                      profileOptions[currentOptionIndex]
                                 }));
 
                                 ToastService().showSuccessToast(

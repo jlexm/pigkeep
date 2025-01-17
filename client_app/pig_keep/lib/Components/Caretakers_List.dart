@@ -177,9 +177,13 @@ class _CaretakersListState extends State<CaretakersList> {
               padding: EdgeInsets.symmetric(vertical: 8.h),
               child: Row(
                 children: [
-                  Image.asset(
-                    'assets/icons/Farmer.png',
-                    scale: 10.w,
+                  ClipOval(
+                    child: Image.asset(
+                      caretaker['profile_pic'] ?? 'assets/icons/Farmer.png',
+                      width: 30.w,
+                      height: 30.w,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   SizedBox(width: 8.w),
                   Text(

@@ -17,6 +17,7 @@ class Hamburger extends StatefulWidget {
 
 class _HamburgerState extends State<Hamburger> {
   String name = '';
+  String profile_pic = 'assets/icons/Farmer.png';
 
   @override
   void initState() {
@@ -33,9 +34,13 @@ class _HamburgerState extends State<Hamburger> {
     // decode currUser json string
     final currUser = jsonDecode(currUserJSON);
     String? fetchedName = '${currUser['first_name']} ${currUser['last_name']}';
+    String? pic = currUser['profile_pic'];
     if (fetchedName != null) {
       setState(() {
         name = fetchedName;
+        if (pic != null) {
+          profile_pic = pic;
+        }
       });
     }
   }
@@ -57,8 +62,8 @@ class _HamburgerState extends State<Hamburger> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(width: 16.w),
-                    const CircleAvatar(
-                      backgroundImage: AssetImage('assets/icons/Farmer.png'),
+                    CircleAvatar(
+                      backgroundImage: AssetImage(profile_pic),
                       radius: 25.0,
                     ),
                     SizedBox(width: 11.w),

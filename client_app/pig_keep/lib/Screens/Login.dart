@@ -7,6 +7,7 @@ import 'package:pig_keep/Components/IconInputForm.dart';
 import 'package:pig_keep/Components/ImageInputForm.dart';
 import 'package:pig_keep/Components/myButton.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
+import 'package:pig_keep/Modals/ReusableDialogBox.dart';
 import 'package:pig_keep/Services/navigation-service.dart';
 import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/Store/auth_storage.dart';
@@ -115,7 +116,74 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 5.h,
+                                    height: 10.h,
+                                  ),
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          return await showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.r),
+                                                ),
+                                                title: Text(
+                                                  "Forgot your password?",
+                                                  style: TextStyle(
+                                                    fontSize: 25.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: appTertiary,
+                                                  ),
+                                                ),
+                                                content: Text(
+                                                  "Don't worry we got you covered. \nPlease contact us at pigkeepdevs@gmail.com!",
+                                                  style: TextStyle(
+                                                    fontSize: 12.sp,
+                                                    color: appTertiary,
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop(true);
+                                                    },
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      backgroundColor: appBlue,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.r),
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      'Return',
+                                                      style: TextStyle(
+                                                        color: appSecondary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        child: Text(
+                                          'Forgot Password?',
+                                          style: TextStyle(
+                                            fontSize: 11.sp,
+                                            fontWeight: FontWeight.w300,
+                                            color: appTertiary,
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                   SizedBox(
                                     height: 15.h,
@@ -151,7 +219,8 @@ class _LoginState extends State<Login> {
                                           "username": body['username'],
                                           "first_name": body['first_name'],
                                           "last_name": body['last_name'],
-                                          "role_id": body['role_id']
+                                          "role_id": body['role_id'],
+                                          "profile_pic": body['profile_pic']
                                         }));
 
                                         WidgetsBinding.instance
