@@ -5,7 +5,7 @@ import 'package:pig_keep/Constants/color.constants.dart';
 Widget MyGreenBtn({
   required String name,
   required VoidCallback onPressed,
-  double borderRadius = 8.0, // Add borderRadius parameter with a default value
+  double borderRadius = 8.0,
 }) {
   return SizedBox(
     width: double.infinity,
@@ -18,7 +18,7 @@ Widget MyGreenBtn({
         ),
         shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadius), // Apply borderRadius
+            borderRadius: BorderRadius.circular(borderRadius),
           ),
         ),
       ),

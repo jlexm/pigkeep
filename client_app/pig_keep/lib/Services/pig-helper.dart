@@ -117,7 +117,7 @@ class PigHelper {
 
   static String formatToWeekDay(DateTime date) {
     int day = date.day;
-    // Determine the suffix based on the day
+    // determine the suffix based on the day
     String suffix = 'th';
     if (day == 1 || day == 21 || day == 31) {
       suffix = 'st';

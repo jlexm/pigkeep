@@ -16,9 +16,7 @@ class EventsHistory extends StatefulWidget {
 }
 
 class _EventsHistoryState extends State<EventsHistory> {
-  void _onNotificationTap(String id, String event) {
-    // Implement routing logic here
-  }
+  void _onNotificationTap(String id, String event) {}
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,7 @@ class _EventsHistoryState extends State<EventsHistory> {
           children: [
             SizedBox(width: 15.w),
             InkWell(
-              onTap: widget.onReturn, // Trigger return to the original state
+              onTap: widget.onReturn,
               child: Row(
                 children: [
                   Icon(Icons.chevron_left, color: appPrimary),

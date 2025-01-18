@@ -58,7 +58,6 @@ class PigPenView extends State<PigPenPenNumber> {
 
   @override
   Widget build(BuildContext context) {
-    // Determine the number of rows needed
     int itemsPerRow = 3;
     int numRows = (pigs.length / itemsPerRow).ceil();
 
@@ -187,12 +186,10 @@ class PigPenView extends State<PigPenPenNumber> {
                 ],
               ),
               SizedBox(height: 20.h),
-              // Pigs List Matrix
               Column(
                 children: rows.map((row) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    // crossAxisAlignment: CrossAxisAlignment.start,
                     children: row.map((pig) {
                       return InkWell(
                           onTap: () {
@@ -353,7 +350,6 @@ class PigPenView extends State<PigPenPenNumber> {
                       title: 'Delete Pigpen',
                       description: 'Confirm to delete pigpen.',
                       onSave: () {
-                        // Define what should happen when the save button is pressed
                         Navigator.of(context).pop();
                       },
                       saveButtonText: 'Delete',

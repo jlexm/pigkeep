@@ -30,7 +30,7 @@ class _CaretakersState extends State<Caretakers> {
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        FarmName(), //FarmName.dart
+                        FarmName(),
                       ],
                     ),
                     Container(

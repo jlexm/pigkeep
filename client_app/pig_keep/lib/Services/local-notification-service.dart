@@ -35,8 +35,8 @@ class LocalNotificationService {
       Priority prio = Priority.defaultPriority}) async {
     try {
       AndroidNotificationDetails androidDetails = AndroidNotificationDetails(
-        DEFAULT_CHANNEL_ID, // Channel ID
-        DEFAULT_CHANNEL, // Channel name
+        DEFAULT_CHANNEL_ID,
+        DEFAULT_CHANNEL,
         importance: importance,
         priority: prio,
       );
@@ -48,19 +48,12 @@ class LocalNotificationService {
       print(scheduleTime);
       int notificationId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
       await flutterLocalNotificationsPlugin.zonedSchedule(
-          notificationId, // Notification ID
-          'Test 123', // Notification Title
-          body, // Notification Body
-          scheduleTime,
-          notificationDetails,
+          notificationId, 'Test 123', body, scheduleTime, notificationDetails,
           uiLocalNotificationDateInterpretation:
               UILocalNotificationDateInterpretation.wallClockTime,
           androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle);
       await flutterLocalNotificationsPlugin.show(
-          notificationId, // Notification ID
-          'Test 123', // Notification Title
-          body, // Notification Body
-          notificationDetails);
+          notificationId, 'Test 123', body, notificationDetails);
     } catch (e) {
       print(e.toString());
     }

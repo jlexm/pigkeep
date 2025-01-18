@@ -4,7 +4,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final String? labelText;
   final String? hintText;
-  final bool obscureText; // Determines if the text should be obscured
+  final bool obscureText;
   final TextInputType keyboardType;
   final String? Function(String?)? validator;
   final void Function(String?)? onSaved;
@@ -12,7 +12,7 @@ class RecyclableTextFormField extends StatelessWidget {
   final int maxLines;
   final int minLines;
   final IconData? icon;
-  final String? imagePath; // Use a string to pass the image path
+  final String? imagePath;
   final double? textSize;
   final double? height;
   final double? iconSize;
@@ -22,7 +22,7 @@ class RecyclableTextFormField extends StatelessWidget {
     required this.controller,
     this.labelText,
     this.hintText,
-    this.obscureText = false, // Set default to false for non-obscured text
+    this.obscureText = false,
     this.keyboardType = TextInputType.text,
     this.validator,
     this.onSaved,
@@ -30,7 +30,7 @@ class RecyclableTextFormField extends StatelessWidget {
     this.maxLines = 1,
     this.minLines = 1,
     this.icon,
-    this.imagePath, // Initialize imagePath
+    this.imagePath,
     this.textSize,
     this.height,
     this.iconSize,
@@ -52,16 +52,16 @@ class RecyclableTextFormField extends StatelessWidget {
               ? Icon(icon, size: iconSize)
               : imagePath != null
                   ? SizedBox(
-                      width: iconSize, // Set width based on iconSize
-                      height: iconSize, // Set height based on iconSize
+                      width: iconSize,
+                      height: iconSize,
                       child: Image.asset(
                         imagePath!,
-                        fit: BoxFit.contain, // Ensure the image fits within the box
+                        fit: BoxFit.contain,
                       ),
                     )
                   : null,
         ),
-        obscureText: obscureText, // Apply the obscureText parameter
+        obscureText: obscureText,
         keyboardType: keyboardType,
         validator: validator,
         onSaved: onSaved,

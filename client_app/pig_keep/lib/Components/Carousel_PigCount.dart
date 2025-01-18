@@ -14,16 +14,6 @@ class CarouselPigCount extends StatefulWidget {
 }
 
 class _CarouselPigCountState extends State<CarouselPigCount> {
-  // Define the array for numbers and texts
-  /* final List<Map<String, dynamic>> data = [
-    {'number': '12', 'text': 'Weaner'},
-    {'number': '2', 'text': 'Piglet'},
-    {'number': '3', 'text': 'Grower'},
-    {'number': '4', 'text': 'Sow'},
-    {'number': '1', 'text': 'Boar'},
-    {'number': '3', 'text': 'Matured'},
-  ];
- */
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,17 +33,14 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
         items: widget.data.map((item) {
           return Builder(
             builder: (BuildContext context) {
-              final isMatured =
-                  item['text'] == 'Matured'; // Check "Matured"
+              final isMatured = item['text'] == 'Matured'; // Check "Matured"
 
               return Container(
                 width: MediaQuery.of(context).size.width * 0.30.w,
                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: appPrimary, width: 1.5.w),
-                  color: isMatured
-                      ? appPrimary
-                      : appSecondary, 
+                  color: isMatured ? appPrimary : appSecondary,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
@@ -65,9 +52,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
                         style: TextStyle(
                           height: 0.9.h,
                           fontSize: 70.h,
-                          color: isMatured
-                              ? appSecondary
-                              : appPrimary, 
+                          color: isMatured ? appSecondary : appPrimary,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -75,9 +60,7 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
                         item['text']!,
                         style: TextStyle(
                           fontSize: 16.sp,
-                          color: isMatured
-                              ? appSecondary
-                              : Colors.black, 
+                          color: isMatured ? appSecondary : Colors.black,
                         ),
                       ),
                     ],

@@ -271,7 +271,6 @@ class _PigListState extends State<PigList> {
                                     ],
                                     onSave: () async {
                                       try {
-                                        // Handle the save action, e.g., validate and save data
                                         await addPig();
                                         Navigator.of(context).pop();
                                         _pigDOBController.clear();
@@ -327,7 +326,6 @@ class _PigListState extends State<PigList> {
           height: 11.h,
         ),
         Row(
-          // QR code & Search
           children: [
             SizedBox(
               width: 20.w,

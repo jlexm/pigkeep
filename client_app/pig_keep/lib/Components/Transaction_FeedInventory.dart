@@ -14,9 +14,7 @@ class TransactionFeedInventory extends StatefulWidget {
 }
 
 class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
-  void _onNotificationTap(String id, String textId) {
-    // Routing logic here
-  }
+  void _onNotificationTap(String id, String textId) {}
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +40,6 @@ class _TransactionFeedInventoryState extends State<TransactionFeedInventory> {
           return Padding(
             padding: EdgeInsets.only(bottom: 21.h),
             child: InkWell(
-              /*  onTap: () => _onNotificationTap(
-                transaction['id']!,
-                transaction['textId']!,
-              ), */
               child: Container(
                 decoration: BoxDecoration(
                   color: appSecondary,

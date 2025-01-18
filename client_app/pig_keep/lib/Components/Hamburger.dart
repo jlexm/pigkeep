@@ -89,7 +89,6 @@ class _HamburgerState extends State<Hamburger> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                  //FARM
                   leading: Image.asset(
                     'assets/icons/Farm_white.png',
                     width: 30.w,
@@ -109,7 +108,6 @@ class _HamburgerState extends State<Hamburger> {
                   },
                 ),
                 ListTile(
-                  //Caretakers
                   leading: Image.asset(
                     'assets/icons/Caretaker.png',
                     width: 30.w,
@@ -135,9 +133,9 @@ class _HamburgerState extends State<Hamburger> {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.settings, // Replace with the desired icon
-                    color: appSecondary, // Match the color to your theme
-                    size: 30.sp, // Adjust the size to your preference
+                    Icons.settings,
+                    color: appSecondary,
+                    size: 30.sp,
                   ),
                   title: Text(
                     "Pig Age Category",
@@ -156,7 +154,6 @@ class _HamburgerState extends State<Hamburger> {
                   height: 50.h,
                 ),
                 ListTile(
-                  //Profile Details
                   leading: Image.asset(
                     'assets/icons/Profile_Details.png',
                     width: 30.w,
@@ -182,7 +179,6 @@ class _HamburgerState extends State<Hamburger> {
                   },
                 ),
                 ListTile(
-                  //Change Password
                   leading: Image.asset(
                     'assets/icons/Change_Password.png',
                     width: 30.w,
@@ -210,7 +206,6 @@ class _HamburgerState extends State<Hamburger> {
                   height: 250.h,
                 ),
                 ListTile(
-                  //Logout
                   leading: Image.asset(
                     'assets/icons/Logout.png',
                     width: 29.w,

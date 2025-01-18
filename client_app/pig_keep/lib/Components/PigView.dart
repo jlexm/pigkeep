@@ -280,7 +280,6 @@ class _QRCodeStatusState extends State<PigView> {
                                 ),
                               ],
                               onSave: () async {
-                                // Handle the save action, e.g., validate and save data
                                 try {
                                   await ledgerService.ledgePig(
                                       'sold',
@@ -334,7 +333,6 @@ class _QRCodeStatusState extends State<PigView> {
                                 ),
                               ],
                               onSave: () async {
-                                // Handle the save action, e.g., validate and save data
                                 print('Form saved');
                                 try {
                                   await ledgerService.ledgePig(
@@ -414,7 +412,6 @@ class _QRCodeStatusState extends State<PigView> {
                               ],
                               onSave: () async {
                                 try {
-                                  // perform consume mode
                                   await medService.addMedicine(
                                       false,
                                       selectedFarm['_id'],
@@ -466,9 +463,8 @@ class _QRCodeStatusState extends State<PigView> {
                           saveButtonIcon: Icons.download,
                           saveButtonColor: appOrange,
                           pigNumber: pigData['pigNumber'],
-                          uuid: pigData['uuid'], //QR code
+                          uuid: pigData['uuid'],
                           onSave: () {
-                            // Perform your save action here
                             Navigator.of(context).pop();
                           },
                         );
@@ -557,7 +553,6 @@ class _QRCodeStatusState extends State<PigView> {
                           ),
                         ],
                         onSave: () async {
-                          // Handle the save action, e.g., validate and save data
                           try {
                             await pigService.updatePigDetails(
                                 widget.pigUUID,
@@ -649,7 +644,6 @@ class _QRCodeStatusState extends State<PigView> {
     );
   }
 
-  // Widget for status containers
   Widget _StatusContainer({
     required String text,
     required Color color,

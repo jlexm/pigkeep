@@ -31,10 +31,8 @@ class _CurrentEventsState extends State<CurrentEvents> {
           actions: [
             TextButton(
               onPressed: () {
-                setState(() {
-                  //events.removeAt(index);
-                });
-                Navigator.of(context).pop(); // Dismiss the dialog
+                setState(() {});
+                Navigator.of(context).pop();
               },
               child: const Text("Delete"),
             ),

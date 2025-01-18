@@ -24,14 +24,6 @@ import 'package:pig_keep/Services/toast-service.dart';
 import 'package:pig_keep/main.dart';
 
 class DataSyncService {
-  /* 
-    Main sync logic:
-     - Sync identifier using date such as lastSyncReadDate, lasySyncWriteData
-     - models that it points to eg pig-pens, pigs, etc...
-     - 10 rows at a time (sync batching)
-     - data conflict resolver: which ever's the latest updatedAt
-     - if model's local UUID matches from api, then merge to local
-   */
   Isar db = globalLocator.get<DatabaseService>().db;
 
   Future<void> syncAllData(String farmID, String userOwner) async {
@@ -77,7 +69,6 @@ class DataSyncService {
         for (int i = 0; i < pigPenBatch.length; i++) {
           final apiPen = pigPenBatch[i];
           // check if pen exists
-          /* TODO data */
           PigPen? pen =
               await db.pigPens.filter().uuidEqualTo(apiPen['uuid']).findFirst();
 
@@ -278,7 +269,6 @@ class DataSyncService {
       final DateTime? lastSyncWriteDate = localUserMeta.lastSuccesfulWriteSync;
       final DateTime now = DateTime.now();
 
-      // Get all pigs from API greater than local last sync date
       final List<dynamic> apiFeeds =
           await FeedApi.getSyncableFeed(farmID, lastSyncReadDate);
 
@@ -288,7 +278,6 @@ class DataSyncService {
         List<Feed> feeds = [];
         for (int i = 0; i < feedBatch.length; i++) {
           final apiFeed = feedBatch[i];
-          // Check if pig exists in local DB
           Feed? feed =
               await db.feeds.filter().uuidEqualTo(apiFeed['uuid']).findFirst();
 
@@ -325,7 +314,6 @@ class DataSyncService {
         await db.localUserMetas.put(localUserMeta!);
       });
 
-      // Get all feeds from local DB greater than last sync date and less than now (to prevent uploading newly updated data from pull)
       var feedQuery = db.feeds.filter().farmIDEqualTo(farmID);
       if (lastSyncWriteDate != null) {
         feedQuery = feedQuery.updatedAtGreaterThan(lastSyncWriteDate);
@@ -368,7 +356,6 @@ class DataSyncService {
       final DateTime? lastSyncWriteDate = localUserMeta.lastSuccesfulWriteSync;
       final DateTime now = DateTime.now();
 
-      // Get all pigs from API greater than local last sync date
       final List<dynamic> apiFeedsHistory =
           await FeedHistoryApi.getSyncableFeedHistory(farmID, lastSyncReadDate);
 
@@ -379,7 +366,6 @@ class DataSyncService {
         List<FeedHistory> feedsHistory = [];
         for (int i = 0; i < feedHistoryBatch.length; i++) {
           final apiFeedHistory = feedHistoryBatch[i];
-          // Check if pig exists in local DB
           FeedHistory? feedHistory = await db.feedHistorys
               .filter()
               .uuidEqualTo(apiFeedHistory['uuid'])
@@ -421,7 +407,6 @@ class DataSyncService {
         await db.localUserMetas.put(localUserMeta!);
       });
 
-      // Get all pigs from local DB greater than last sync date and less than now (to prevent uploading newly updated data from pull)
       var feedHistoryQuery = db.feedHistorys.filter().farmIDEqualTo(farmID);
       if (lastSyncWriteDate != null) {
         feedHistoryQuery =
@@ -521,7 +506,6 @@ class DataSyncService {
         await db.localUserMetas.put(localUserMeta!);
       });
 
-      // Get all pigs from local DB greater than last sync date and less than now (to prevent uploading newly updated data from pull)
       var medicineQuery = db.medicines.filter().farmIDEqualTo(farmID);
       if (lastSyncWriteDate != null) {
         medicineQuery = medicineQuery.updatedAtGreaterThan(lastSyncWriteDate);
@@ -565,7 +549,6 @@ class DataSyncService {
       final DateTime? lastSyncWriteDate = localUserMeta.lastSuccesfulWriteSync;
       final DateTime now = DateTime.now();
 
-      // Get all pigs from API greater than local last sync date
       final List<dynamic> apiMedicinesHistory =
           await MedicineHistoryApi.getSyncableMedicineHistory(
               farmID, lastSyncReadDate);
@@ -577,7 +560,6 @@ class DataSyncService {
         List<MedicineHistory> medicinesHistory = [];
         for (int i = 0; i < medicineHistoryBatch.length; i++) {
           final apiMedicineHistory = medicineHistoryBatch[i];
-          // Check if pig exists in local DB
           MedicineHistory? medicineHistory = await db.medicineHistorys
               .filter()
               .uuidEqualTo(apiMedicineHistory['uuid'])
@@ -622,7 +604,6 @@ class DataSyncService {
         await db.localUserMetas.put(localUserMeta!);
       });
 
-      // Get all pigs from local DB greater than last sync date and less than now (to prevent uploading newly updated data from pull)
       var medicineHistoryQuery =
           db.medicineHistorys.filter().farmIDEqualTo(farmID);
       if (lastSyncWriteDate != null) {
@@ -669,7 +650,6 @@ class DataSyncService {
       final DateTime? lastSyncWriteDate = localUserMeta.lastSuccesfulWriteSync;
       final DateTime now = DateTime.now();
 
-      // Get all pigs from API greater than local last sync date
       final List<dynamic> apiPigEvents =
           await PigEventApi.getSyncablePigEvent(farmID, lastSyncReadDate);
 
@@ -680,7 +660,6 @@ class DataSyncService {
         List<PigEvent> pigEvents = [];
         for (int i = 0; i < pigEventBatch.length; i++) {
           final apiPigEvent = pigEventBatch[i];
-          // Check if pig exists in local DB
           PigEvent? pigEvent = await db.pigEvents
               .filter()
               .uuidEqualTo(apiPigEvent['uuid'])
@@ -724,7 +703,6 @@ class DataSyncService {
         await db.localUserMetas.put(localUserMeta!);
       });
 
-      // Get all pigs from local DB greater than last sync date and less than now (to prevent uploading newly updated data from pull)
       var pigEventQuery = db.pigEvents.filter().farmIDEqualTo(farmID);
       if (lastSyncWriteDate != null) {
         pigEventQuery = pigEventQuery.updatedAtGreaterThan(lastSyncWriteDate);
@@ -768,7 +746,6 @@ class DataSyncService {
       final DateTime? lastSyncWriteDate = localUserMeta.lastSuccesfulWriteSync;
       final DateTime now = DateTime.now();
 
-      // Get all pigs from API greater than local last sync date
       final List<dynamic> apiLedgers =
           await LedgerApi.getSyncableLedger(farmID, lastSyncReadDate);
 
@@ -778,7 +755,6 @@ class DataSyncService {
         List<Ledger> ledgers = [];
         for (int i = 0; i < ledgerBatch.length; i++) {
           final apiLedger = ledgerBatch[i];
-          // Check if pig exists in local DB
           Ledger? ledger = await db.ledgers
               .filter()
               .uuidEqualTo(apiLedger['uuid'])
@@ -824,7 +800,6 @@ class DataSyncService {
         await db.localUserMetas.put(localUserMeta!);
       });
 
-      // Get all pigs from local DB greater than last sync date and less than now (to prevent uploading newly updated data from pull)
       var ledgerQuery = db.ledgers.filter().farmIDEqualTo(farmID);
       if (lastSyncWriteDate != null) {
         ledgerQuery = ledgerQuery.updatedAtGreaterThan(lastSyncWriteDate);

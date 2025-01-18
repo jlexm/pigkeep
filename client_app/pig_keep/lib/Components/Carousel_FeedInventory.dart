@@ -102,15 +102,14 @@ class _CarouselFeedInventoryState extends State<CarouselFeedInventory> {
                         ],
                       ),
                     ),
-                    // Positioned + button
                     Positioned(
-                      top: 0, // Adjust as necessary
-                      right: 0, // Adjust as necessary
+                      top: 0,
+                      right: 0,
                       child: IconButton(
                         icon: Icon(
                           Icons.add,
                           size: 20.sp,
-                          color: appPrimary, // Customize as needed
+                          color: appPrimary,
                         ),
                         onPressed: () {
                           _feedTypeCtrl.text = item.feedType;

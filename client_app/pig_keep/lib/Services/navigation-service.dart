@@ -3,17 +3,17 @@ import 'package:go_router/go_router.dart';
 class NavigationService {
   late GoRouter _router;
 
-  // Initialize the router
+  // initialize the router
   void setRouter(GoRouter router) {
     _router = router;
   }
 
-  // Navigate to a specific route
+  // navigate to a specific route
   void navigateTo(String path) {
     _router.go(path);
   }
 
-  // Push a route onto the stack
+  // push a route onto the stack
   void pushTo(String path) {
     _router.push(path);
   }
@@ -23,5 +23,4 @@ class NavigationService {
   }
 }
 
-// Create a singleton instance of the NavigationService
 final NavigationService navigationService = NavigationService();

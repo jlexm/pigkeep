@@ -61,7 +61,6 @@ class _RecordsState extends State<Records> {
                     ),
                     SizedBox(height: 10.h),
                     Container(
-                      // Container containing Screens
                       child: widget.currentView,
                     ),
                   ],

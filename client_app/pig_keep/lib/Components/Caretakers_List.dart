@@ -107,7 +107,6 @@ class _CaretakersListState extends State<CaretakersList> {
             ),
           ],
           onSave: () async {
-            // Handle the save action, e.g., valiEmail and save data
             try {
               if (_passController.text != '' &&
                   _confirmPassController.text != _passController.text) {
@@ -164,7 +163,6 @@ class _CaretakersListState extends State<CaretakersList> {
               if (currentUser != null && currentUser['role_id'] != 3) {
                 return;
               }
-              // Handle tap action
               _userNameController.text = caretaker['username'] ?? '';
               _fNameController.text = caretaker['first_name'] ?? '';
               _lNameController.text = caretaker['last_name'] ?? '';

@@ -21,7 +21,7 @@ class FeedInventory extends StatefulWidget {
 }
 
 class _FeedInventoryState extends State<FeedInventory> {
-  //services
+  // services
   final feedService = globalLocator.get<FeedService>();
 
   // controllers
@@ -123,7 +123,6 @@ class _FeedInventoryState extends State<FeedInventory> {
                             ],
                             onSave: () async {
                               try {
-                                // perform consume mode
                                 await feedService.addFeed(
                                   false,
                                   selectedFarm['_id'],
@@ -215,7 +214,6 @@ class _FeedInventoryState extends State<FeedInventory> {
                               ),
                             ],
                             onSave: () async {
-                              // Handle the save action, e.g., validate and save data
                               try {
                                 await feedService.addFeed(
                                   false,
@@ -269,23 +267,15 @@ class _FeedInventoryState extends State<FeedInventory> {
         SizedBox(
           height: 10.h,
         ),
-        /* Container(
-          padding: EdgeInsets.only(
-            left: 20.w,
-            right: 20.w,
-          ),
-          child: SearchBar_FeedInventory(),
-        ), //Searchbar_FeedInventory.dart */
         SizedBox(
           height: 18.h,
         ),
         Container(
           padding: EdgeInsets.only(left: 15.w),
           child: CarouselFeedInventory(
-            //Carousel_FeedIventory.dart
             items: feeds,
             farmID: selectedFarm['_id'],
-            feedFeedData: fetchFeedData(), // Dynamic list of items
+            feedFeedData: fetchFeedData(),
             onUpdate: (uuid, feedType, weightKG, cost) async {
               try {
                 await feedService.updateFeed(uuid, feedType, weightKG, cost);
@@ -340,7 +330,7 @@ class _FeedInventoryState extends State<FeedInventory> {
         ),
         TransactionFeedInventory(
           feedHistory: feedHistory,
-        ), //Transaction_FeedInventory.dart
+        ),
       ],
     );
   }

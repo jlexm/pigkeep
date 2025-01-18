@@ -25,10 +25,10 @@ class CarouselMedicalrecords extends StatefulWidget {
 }
 
 class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
-  //services
+  // services
   final medService = globalLocator.get<MedicineService>();
 
-  //controllers
+  // controllers
   // add
   final TextEditingController _medNameController = TextEditingController();
   final TextEditingController _dosageController = TextEditingController();
@@ -69,7 +69,6 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
               ),
               child: Stack(
                 children: [
-                  // Main content of the container
                   Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -98,23 +97,21 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                             Text(
                               '${item.medicineName.length > 16 ? '${item.medicineName.substring(0, 16)}...' : item.medicineName}\n${item.dosage}',
                               style: TextStyle(fontSize: 12.0.sp),
-                              textAlign: TextAlign.center, // Center the text
+                              textAlign: TextAlign.center,
                             ),
                           ],
                         )
                       ],
                     ),
                   ),
-
-                  // Positioned + button
                   Positioned(
-                    top: 0, // Adjust as necessary
-                    right: 0, // Adjust as necessary
+                    top: 0,
+                    right: 0,
                     child: IconButton(
                       icon: Icon(
                         Icons.add,
                         size: 20.sp,
-                        color: appBlue, // Customize as needed
+                        color: appBlue,
                       ),
                       onPressed: () {
                         _medNameController.text = item.medicineName;
@@ -170,7 +167,6 @@ class _CarouselMedicalrecordsState extends State<CarouselMedicalrecords> {
                                 ),
                               ],
                               onSave: () async {
-                                // Handle the save action, e.g., validate and save data
                                 try {
                                   await medService.addMedicine(
                                       false,

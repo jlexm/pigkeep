@@ -11,14 +11,15 @@ class IconInputForm extends StatefulWidget {
   final int? maxLength;
   final TextInputType keyboardType;
 
-  IconInputForm({super.key, 
+  IconInputForm({
+    super.key,
     required this.prefixIcon,
     required this.labelText,
     this.suffixIcon,
     required this.controller,
     this.obscureText = false,
     this.maxLength,
-    this.keyboardType =TextInputType.text,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -103,8 +104,6 @@ class _IconInputFormState extends State<IconInputForm> {
           color: _isFocused ? appPrimary : appGray,
         ),
       ),
-
-      // Update the focus state when the user submits the text field
       onFieldSubmitted: (_) {
         setState(() {
           _isFocused = false;
