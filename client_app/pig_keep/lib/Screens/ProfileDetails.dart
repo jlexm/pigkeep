@@ -258,10 +258,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             },
                           ),
                           SizedBox(
-                            height: 15.h,
-                          ),
-                          SizedBox(
-                            height: 40.h,
+                            height: 30.h,
                           ),
                           MyGreenBtn(
                             name: "Save",
