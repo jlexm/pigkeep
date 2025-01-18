@@ -50,7 +50,7 @@ class _PigPenState extends State<PigPen> {
 
   Future<void> getPigPens() async {
     final fetchPens =
-        await pigPenService.fetchPigPens(selectedFarm['_id'], userOwner);
+        await pigPenService.getPensWithPigs(selectedFarm['_id'], userOwner);
     setState(() {
       pigPens = fetchPens;
     });
@@ -255,12 +255,12 @@ class _PigPenState extends State<PigPen> {
             children: [
               MyDataTable_Pigpen(
                 pigPens: pigPens
-                    .where((pen) => pen.penNumber
+                    .where((pen) => pen['penNumber']
                         .toLowerCase()
                         .contains(searchValue.toLowerCase()))
                     .toList(),
                 onRowSelected: (row) {
-                  context.push('/records/pens/${row.uuid}');
+                  context.push('/records/pens/${row['uuid']}');
                 },
               )
             ],

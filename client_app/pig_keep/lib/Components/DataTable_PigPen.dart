@@ -88,7 +88,7 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                   DataCell(
                     Center(
                       child: Text(
-                        row.penNumber!,
+                        row['penNumber']!,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -99,7 +99,7 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                   DataCell(
                     Center(
                       child: Text(
-                        row.penType!,
+                        row['penType']!,
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -110,7 +110,7 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                   DataCell(
                     Center(
                       child: Text(
-                        row.currentPigCount!.toString(),
+                        row['pigs'].length.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,
@@ -121,7 +121,7 @@ class _MyDataTable_PigpenState extends State<MyDataTable_Pigpen> {
                   DataCell(
                     Center(
                       child: Text(
-                        row.maxPigCount!.toString(),
+                        row['maxPigCount']!.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: 11.5.sp,

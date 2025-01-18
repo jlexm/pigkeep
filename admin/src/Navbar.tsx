@@ -216,10 +216,11 @@ const Navbar = () => {
                 <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
                   <Avatar
                     alt="Profile"
-                    src="src/assets/ProfileIcon.png"
+                    src={`src/${currUser?.profile_pic ?? 'assets/icons/Farmer.png'}`}
                     sx={{
                       width: { xs: 18, sm: 25, md: 30 },
                       height: { xs: 20, sm: 27, md: 32 },
+                      backgroundColor: 'white'
                     }}
                   />
                 </IconButton>

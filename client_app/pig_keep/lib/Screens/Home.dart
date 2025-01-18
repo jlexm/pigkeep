@@ -110,8 +110,10 @@ class _HomeState extends State<Home> {
     setState(() {
       eventNotifications = pEvents;
     });
-    ToastService()
-        .showNeutralToast('You have ${pEvents.length} notifications!');
+    if (pEvents.isNotEmpty) {
+      ToastService()
+          .showNeutralToast('You have ${pEvents.length} notifications!');
+    }
   }
 
   Future<void> markEventDone(String eventUuid) async {

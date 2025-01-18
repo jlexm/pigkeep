@@ -3,12 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pig_keep/Constants/color.constants.dart';
 
 class SearchBar_Events extends StatelessWidget {
-  const SearchBar_Events({super.key});
+  final void Function(String) onSearch;
+  const SearchBar_Events({super.key, required this.onSearch});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 34.h, 
+      height: 34.h,
       width: 275.w,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -26,15 +27,15 @@ class SearchBar_Events extends StatelessWidget {
           ),
           Expanded(
             child: TextField(
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Search by Event Name',
-                iconColor: appTertiary,
-                isDense: true,
-                contentPadding: EdgeInsets.zero,
-              ),
-              style: TextStyle(fontSize: 12.sp),
-            ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search by Event Name',
+                  iconColor: appTertiary,
+                  isDense: true,
+                  contentPadding: EdgeInsets.zero,
+                ),
+                style: TextStyle(fontSize: 12.sp),
+                onChanged: onSearch),
           ),
         ],
       ),

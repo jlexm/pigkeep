@@ -7,6 +7,7 @@ import { FixedSizeList, ListChildComponentProps } from 'react-window'
 import { Grid2, Link, ThemeProvider, Typography } from '@mui/material'
 import './HomeScreen.css'
 import theme from '../../Theme'
+import { getTodayMidnight } from '../../services/utils.service'
 
 const generateEvents = (count: number) => {
   const events = []
@@ -52,15 +53,16 @@ function formatEventDate(dateString: string) {
 }
 
 export default function PigEventsNotification({ pigEvents } : { pigEvents: any[] }) {
+  const today = getTodayMidnight();
 
   const RenderRow = React.memo(({ index, style }: ListChildComponentProps) => {
     const event = pigEvents[index];
 
     // alternating bg colors
     const backgroundColor = index % 2 === 0 ? '#f1f1f1' : '#ffffff';
+    const eventDateString = formatEventDate(event.eventDate);
 
-    const eventDateString = formatEventDate(event.eventDate)
-    const eventStatus = eventDateString === 'Today' ? 'In Progress' : event.status
+    const eventStatus =  new Date(event.eventDate) <= today ? 'In Progress' : event.status
 
     return (
       <ThemeProvider theme={theme}>

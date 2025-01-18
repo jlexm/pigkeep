@@ -24,9 +24,9 @@ export class MedicineHistoryController {
   //@UseGuards(AuthGuard) // Use to restrict to signed-in users only
   async syncFeeds(
     @Param('farm_id') farmId,
-    @Body('medicinesHistory') feeds: any[]
+    @Body('medicinesHistory') meds: any[]
   ) {
-    await this.medicineHistoryService.syncMedsHistory(farmId, feeds)
+    await this.medicineHistoryService.syncMedsHistory(farmId, meds)
     return { success: true, message: 'Data synced!' }
   }
 

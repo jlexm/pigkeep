@@ -55,6 +55,8 @@ class _EventsState extends State<Events> {
   List<PigEvent> upcomingEvents = [];
   List<PigEvent> eventHistory = [];
 
+  String search = "";
+
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       selectedDay = day == selectedDay ? null : day;
@@ -476,7 +478,11 @@ class _EventsState extends State<Events> {
                                   ],
                                 ),
                                 const Spacer(),
-                                SearchBar_Events(),
+                                SearchBar_Events(onSearch: (keyword) {
+                                  setState(() {
+                                    search = keyword;
+                                  });
+                                }),
                                 SizedBox(
                                   width: 20.w,
                                 ),
@@ -668,7 +674,12 @@ class _EventsState extends State<Events> {
                               )
                             else
                               CurrentEvents(
-                                events: currentWIPEvents,
+                                events: currentWIPEvents
+                                    .where((event) => event.eventType
+                                        .toLowerCase()
+                                        .replaceAll(',', '')
+                                        .contains(search.toLowerCase()))
+                                    .toList(),
                                 markAsDone: markEventDone,
                                 markAsDelete: (pigEventUuid) =>
                                     markEventDelete(pigEventUuid),

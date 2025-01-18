@@ -45,6 +45,10 @@ const Caretaker = () => {
 
   //save action in  dialog
   const handleSave = async () => {
+    if (addCaretakerForm.phone_number.length !== 11) {
+      toast.error('Phone number is invalid');
+      return;
+    }
     await addCaretaker(addCaretakerForm);
     toast.success('Caretaker added successfully!');
     await loadCaretakers();
@@ -107,6 +111,11 @@ const Caretaker = () => {
           <CaretakerDataTable
             rows={caretakers}
             onCaretakerSave={async (caretaker) => {
+              console.log('hey', caretaker);
+              if (caretaker.phone_number.length !== 11) {
+                toast.error('Phone number is invalid');
+                throw new Error('Phone number is invalid');
+              }
               await updateCaretaker(caretaker);
               toast.success('Caretaker updated successfully!');
               await loadCaretakers();
@@ -183,7 +192,7 @@ const Caretaker = () => {
           onSave={handleSave}
           onCancel={handleCloseDialog}
           saveButtonText="Add"
-          saveButtonColor="#11703b" 
+          saveButtonColor="#11703b"
         />
       )}
     </ThemeProvider>

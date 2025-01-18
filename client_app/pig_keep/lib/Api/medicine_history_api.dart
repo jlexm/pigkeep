@@ -24,6 +24,7 @@ class MedicineHistoryApi {
         'farmID': medicineHistory.farmID,
         'uuid': medicineHistory.uuid,
         'medicineName': medicineHistory.medicineName,
+        'pigUuid': medicineHistory.pigUuid,
         'dosage': medicineHistory.dosage,
         'quantity': medicineHistory.quantity,
         'cost': medicineHistory.cost,

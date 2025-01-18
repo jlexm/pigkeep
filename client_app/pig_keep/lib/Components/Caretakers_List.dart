@@ -85,6 +85,7 @@ class _CaretakersListState extends State<CaretakersList> {
               controller: _phoneController,
               labelText: 'Phone Number',
               hintText: 'Phone Number',
+              maxLength: 11,
               hintTextSize: 14.sp,
               icon: Icons.phone,
               textSize: 14.sp,
@@ -111,6 +112,10 @@ class _CaretakersListState extends State<CaretakersList> {
               if (_passController.text != '' &&
                   _confirmPassController.text != _passController.text) {
                 throw 'Password does not match';
+              }
+
+              if (_phoneController.text.length != 11) {
+                throw 'Phone number is invalid';
               }
 
               if (!editMode) {

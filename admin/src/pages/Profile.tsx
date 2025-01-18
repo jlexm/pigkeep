@@ -3,6 +3,9 @@ import {
   Box,
   Button,
   Grid2,
+  IconButton,
+  Modal,
+  Stack,
   ThemeProvider,
   Typography,
 } from '@mui/material';
@@ -22,6 +25,7 @@ import {
 } from '../services/user.service';
 import { getUserBasicInfo, setUserBasicInfo } from '../services/auth.service';
 import { toast } from 'react-toastify';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -34,6 +38,15 @@ const Profile = () => {
     old_password: string;
     confirm_password: string;
   }>({ password: '', old_password: '', confirm_password: '' });
+
+  const [selectedProfile, setSelectedProfile] = useState<string>();
+  const [isProfileSelectOpen, setIsProfileSelectOpen] = useState(false);
+  const profileOptions = [
+    'assets/icons/Farmer.png',
+    'assets/userIcons/female.png',
+    'assets/userIcons/male.png',
+    'assets/userIcons/neutral.png',
+  ];
 
   // State to manage the dialog box visibility
   const [openDialog, setOpenDialog] = useState(false);
@@ -55,10 +68,14 @@ const Profile = () => {
   }) => {
     setSavingUserLoading(true);
     try {
-      await new Promise((resolve) => {
-        setTimeout(resolve, 1000);
+      if (data.phone_number.length !== 11) {
+        throw new Error('Phone number is invalid');
+      }
+      await updateMyDetails({
+        ...data,
+        profile_pic:
+          (selectedProfile ? selectedProfile : userData.profile_pic) ?? null,
       });
-      await updateMyDetails(data);
       const localUserDetails = getUserBasicInfo();
       const { first_name, last_name, email, phone_number } = data;
       setUserBasicInfo({
@@ -70,8 +87,9 @@ const Profile = () => {
       });
       loadUserDetails();
       toast.success('User data updated succesfully.');
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
+      toast.error(err.message);
     }
     setSavingUserLoading(false);
   };
@@ -129,7 +147,10 @@ const Profile = () => {
         >
           <Grid2 size={{ xs: 12, md: 12 }} className="right">
             <Avatar
-              src={pfp}
+              src={`src/${
+                (selectedProfile ? selectedProfile : userData?.profile_pic) ??
+                'assets/icons/Farmer.png'
+              }`}
               alt="Junmar"
               sx={{
                 width: 'clamp(130px, 10vw, 180px)',
@@ -139,14 +160,18 @@ const Profile = () => {
               }}
             />
 
-            <Button variant="text" sx={{ color: '#11703b', marginTop: 1 }}>
+            <Button
+              variant="text"
+              sx={{ color: '#11703b', marginTop: 1 }}
+              onClick={() => setIsProfileSelectOpen(true)}
+            >
               <Typography
                 sx={{
                   fontWeight: 300,
                   fontSize: 'clamp(12px, 1vw + 3px, 16px)',
                 }}
               >
-                Change Profile Picture
+                Choose Profile Picture
               </Typography>
             </Button>
           </Grid2>
@@ -286,6 +311,60 @@ const Profile = () => {
           saveButtonColor="#11703b"
         />
       )}
+      <Modal open={isProfileSelectOpen}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: '16px',
+          }}
+        >
+          <Stack spacing={2} direction="row" justifyContent="center">
+            <Typography variant="h6" component="h2" color="black">
+              Select your new profile
+            </Typography>
+          </Stack>
+          <Stack spacing={2} direction="row" justifyContent="center" p={4}>
+            {profileOptions.map((opt, index) => (
+              <Avatar
+                onClick={() => {
+                  setSelectedProfile(opt);
+                  setIsProfileSelectOpen(false);
+                }}
+                key={index}
+                src={`src/${opt}`}
+                sx={{
+                  width: 72,
+                  height: 72,
+                  cursor: 'pointer',
+                  backgroundColor: 'whitesmoke',
+                  border: `4px solid ${
+                    (selectedProfile && selectedProfile === opt) ||
+                    (!selectedProfile &&
+                      userData &&
+                      userData.profile_pic &&
+                      userData.profile_pic === opt)
+                      ? 'green'
+                      : 'white'
+                  }`,
+                }}
+              />
+            ))}
+          </Stack>
+          <IconButton
+            onClick={() => setIsProfileSelectOpen(false)}
+            sx={{ position: 'absolute', top: 8, right: 8 }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+      </Modal>
     </ThemeProvider>
   );
 };

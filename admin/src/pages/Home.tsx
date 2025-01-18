@@ -79,15 +79,13 @@ const Home: React.FC = () => {
 
   const fetchPigEvents = async (farm_id: string) => {
     const pigEvents: any[] = ((await fetchFarmPigEvents(farm_id)) as any) ?? [];
-    const today = getTodayMidnight();
-    const next2Weeks = getTodayPlusDays(14);
+    const next2Weeks = getTodayPlusDays(2);
     setPigEvents(
       pigEvents
         .filter(
           (event: any) =>
             event.status !== 'Completed' &&
             event.status !== 'Deleted' &&
-            new Date(event.eventDate) >= today &&
             new Date(event.eventDate) <= next2Weeks
         )
         .sort(
@@ -155,7 +153,7 @@ const Home: React.FC = () => {
           <Grid2 size={{ xs: 8, sm: 5, md: 6, lg: 5 }}>
             <DropdownWithAddButton
               options={options}
-              selected={selectedOption} 
+              selected={selectedOption}
               onAddNewItem={handleAddNewItem}
               handleSetSelectedOption={setSelectedOption}
             />

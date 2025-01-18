@@ -6,7 +6,7 @@ export const getMyDetails = () => {
     return apiClient.get(`${USER_BASE}/my-details`)
 }
 
-export const updateMyDetails = (data: { email: string, phone_number: string, first_name: string, last_name: string}) => {
+export const updateMyDetails = (data: { email: string, phone_number: string, first_name: string, last_name: string, profile_pic: string | null}) => {
     return apiClient.post(`${USER_BASE}/my-details`, data)
 }
 

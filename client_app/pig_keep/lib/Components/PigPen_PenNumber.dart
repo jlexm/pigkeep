@@ -147,9 +147,7 @@ class PigPenView extends State<PigPenPenNumber> {
                 children: [
                   const Text("Pig Count:  "),
                   Text(
-                    penDetails != null
-                        ? penDetails!.currentPigCount.toString()
-                        : '--',
+                    penDetails != null ? pigs.length.toString() : '--',
                     style: TextStyle(
                       fontSize: 14.sp,
                       color: appPrimary,

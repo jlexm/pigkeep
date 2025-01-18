@@ -166,7 +166,7 @@ class _MyDataTableState extends State<MyDataTable> {
                     DataCell(
                       Center(
                         child: Text(
-                          row['penNumber']!,
+                          row['status'] == 'alive' ? row['penNumber']! : '--',
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 11.5.sp,

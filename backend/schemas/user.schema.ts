@@ -53,7 +53,7 @@ export class User {
 
   @Prop({  default: null, ref: 'User', validate: { 
     validator: function (value: string | null) {
-        return this.role_id === 4 && value
+        return this.role_id !== 4 || (this.role_id === 4 && value)
       },
       message: 'Caretaker requires to have user owner.'
     } 
@@ -63,7 +63,6 @@ export class User {
   @Prop({
     enum: [Role.Superadmin, Role.Admin, Role.Owner, Role.Caretaker],
     default: Role.Owner,
-    required: true,
   })
   role_id: number // Reference to Role model
 
