@@ -16,7 +16,8 @@ import {
   InputAdornment,
 } from '@mui/material';
 import theme from '../../Theme';
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
+import HouseSidingIcon from '@mui/icons-material/HouseSiding';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { setSelectedFarm } from '../../services/farm.service';
 
 interface DropdownWithAddButtonProps {
@@ -192,7 +193,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                                 fontSize: 'clamp(18px, 2vw, 24px)',
                               }}
                             >
-                              <DirectionsBikeIcon />
+                              <HouseSidingIcon />
                             </Box>
                           </InputAdornment>
                         ),
@@ -244,7 +245,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                                 fontSize: 'clamp(18px, 2vw, 24px)',
                               }}
                             >
-                              <DirectionsBikeIcon />
+                              <LocationOnIcon />
                             </Box>
                           </InputAdornment>
                         ),
