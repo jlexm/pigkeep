@@ -24,7 +24,7 @@ function App() {
     if(!token) {
       navigate('/login')
     }else {
-      // Fetch all farms and set the default selected farm on first page load
+      // fetch all farms and set the default selected farm on first page load
       (async () => {
         const myFarms = await fetchMyFarms() as any
         const selectedFarm = getSelectedFarm() ?? myFarms[0]

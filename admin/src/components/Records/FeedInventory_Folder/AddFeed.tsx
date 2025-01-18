@@ -1,10 +1,8 @@
-import { Box, Button, Grid2, ThemeProvider, Typography } from '@mui/material';
+import { Box, Grid2, ThemeProvider, Typography } from '@mui/material';
 import './Feed.css';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import MonthPagination from '../../Home/PaginationControl';
 import FeedTable from './FeedTable';
 import ReusableDialogBox from '../../../modals/ReusableDialogBox';
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import { useState } from 'react';
 import theme from '../../../Theme';
 
@@ -23,26 +21,8 @@ export default function AddFeedComp({
   feeds: any[];
   feedHistory: any[];
 }) {
-  // State to manage the dialog box visibility
-  const [openDialog, setOpenDialog] = useState(false);
 
   const [totalCost, setTotalCost] = useState<number>(0);
-
-  // Function to open the dialog
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
-  };
-
-  // Function to close the dialog
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  // Function to handle save action in the dialog
-  const handleSave = () => {
-    console.log('Saving pig data...');
-    handleCloseDialog(); // Close dialog after saving
-  };
 
   const handlePaginationChange = (month: number, year: number) => {
     const totalCost = feedHistory.reduce((acc, feed) => {
@@ -93,35 +73,6 @@ export default function AddFeedComp({
                 </Box>
               </Grid2>
             </Grid2>
-            {/* <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
-              <Button
-                variant="contained"
-                startIcon={<AddCircleIcon fontSize="large" />}
-                sx={{
-                  width: { xs: 95, sm: 115, md: 125 },
-                  height: { xs: 35, sm: 40, md: 45 },
-                  color: 'black',
-                  backgroundColor: 'white',
-                  borderRadius: '10px',
-                  fontWeight: 'bold',
-                  fontSize: '17px',
-                  padding: '9px',
-                  '& .MuiButton-startIcon': {
-                    marginRight: '8px',
-                  },
-                }}
-                onClick={handleOpenDialog}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: 500,
-                    fontSize: 'clamp(11px, 1vw + 5px, 16px)',
-                  }}
-                >
-                  Add Feed
-                </Typography>
-              </Button>
-            </Grid2> */}
           </Grid2>
         </Grid2>
         <Grid2 container size={12} spacing={1}>
@@ -140,33 +91,6 @@ export default function AddFeedComp({
           </Grid2>
         </Grid2>
       </Grid2>
-      {/* ReusableDialogBox to be shown when openDialog is true */}
-      {openDialog && (
-        <ReusableDialogBox
-          title="Add Feed"
-          description="Fill up the necessary information."
-          formFields={
-            [
-              // {
-              //   placeholder: 'Feed Type',
-              //   icon: <DirectionsBikeIcon />,
-              // },
-              // {
-              //   placeholder: 'Weight in kg',
-              //   icon: <DirectionsBikeIcon />,
-              // },
-              // {
-              //   placeholder: 'Cost',
-              //   icon: <DirectionsBikeIcon />,
-              // },
-            ]
-          }
-          onSave={handleSave} // Handle save action
-          onCancel={handleCloseDialog} // Handle cancel action
-          saveButtonText="Add Feed"
-          saveButtonColor="#11703b" // Green color for the save button
-        />
-      )}
     </ThemeProvider>
   );
 }

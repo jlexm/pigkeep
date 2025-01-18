@@ -5,7 +5,6 @@ import { Box, TextField, ThemeProvider } from '@mui/material';
 import '../PigList_Folder/PigList.css';
 import theme from '../../../Theme';
 
-// Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
     field: 'penNumber',
@@ -46,7 +45,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-// Define the pagination model
+// pagination model
 const paginationModel = { page: 0, pageSize: 5 };
 
 export default function PigpenDataTable({
@@ -63,7 +62,7 @@ export default function PigpenDataTable({
     setFilteredRows(pens);
   }, [pens]);
 
-  // Function to handle filtering based on searchText
+  // filtering searchText
   const handleFilter = React.useCallback(() => {
     const lowerSearchText = searchText.toLowerCase();
     const filtered = pens.filter((row) =>
@@ -72,7 +71,6 @@ export default function PigpenDataTable({
     setFilteredRows(filtered);
   }, [searchText]);
 
-  // Trigger filter whenever searchText changes
   React.useEffect(() => {
     handleFilter();
   }, [searchText, handleFilter]);
@@ -98,7 +96,6 @@ export default function PigpenDataTable({
             sx={{ width: { xs: 200, sm: 250, md: 300, lg: 320, xl: 350 } }}
           />
         </Box>
-
         <Box
           sx={{
             width: '100%',
@@ -120,7 +117,7 @@ export default function PigpenDataTable({
                 : 'odd-row'
             }
             onRowClick={(rowData) => {
-              onRowSelect?.(rowData.row); // Pass clicked row data to parent
+              onRowSelect?.(rowData.row);
             }}
             slotProps={{
               toolbar: {

@@ -115,7 +115,7 @@ export default function FinancialReport({
           <MonthPagination yearChange={setYear} />
         </Grid2>
 
-        {/* Pig Sales Section */}
+        {/* pig sales section */}
 
         <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
           <Grid2 container size={{ xs: 9.5 }} className="pigSalesBox">
@@ -167,7 +167,7 @@ export default function FinancialReport({
           />
         </Grid2>
 
-        {/* Feed Expense Section */}
+        {/* feed expense section */}
 
         <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
           <Grid2 container size={{ xs: 9.5 }} className="pigSalesBox">
@@ -214,7 +214,7 @@ export default function FinancialReport({
           />
         </Grid2>
 
-        {/* Medicine Expense Section */}
+        {/* medicine expense section */}
 
         <Grid2 container size={{ xs: 12, lg: 5 }} className="boxCenter">
           <Grid2

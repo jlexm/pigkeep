@@ -3,17 +3,12 @@ import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
 import {
   Box,
   Grid2,
-  IconButton,
   TextField,
   ThemeProvider,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ReusableDialogBox from '../../modals/ReusableDialogBox';
 import theme from '../../Theme';
 import { formatDate } from '../../services/utils.service';
 
-// Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
     field: 'eventType',
@@ -41,102 +36,9 @@ const columns: GridColDef[] = [
     headerAlign: 'right',
     align: 'right',
   },
-  // {
-  //   field: 'actions',
-  //   headerName: 'Actions',
-  //   flex: 1,
-  //   minWidth: 110,
-  //   resizable: false,
-  //   renderCell: (params) => {
-  //     // eslint-disable-next-line react-hooks/rules-of-hooks
-  //     const [editDialogOpen, setEditDialogOpen] = React.useState(false)
-  //     // eslint-disable-next-line react-hooks/rules-of-hooks
-  //     const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false) // State for delete dialog visibility
-  //     const pigNumber = params.row.number
-
-  //     const handleEditClick = () => {
-  //       setEditDialogOpen(true)
-  //     }
-
-  //     const handleSave = () => {
-  //       setEditDialogOpen(false)
-  //     }
-
-  //     const handleCancelEdit = () => {
-  //       setEditDialogOpen(false)
-  //     }
-
-  //     const handleDeleteClick = () => {
-  //       setDeleteDialogOpen(true)
-  //     }
-
-  //     const handleConfirmDelete = () => {
-  //       // Perform delete logic here
-  //       setDeleteDialogOpen(false)
-  //     }
-
-  //     const handleCancelDelete = () => {
-  //       setDeleteDialogOpen(false)
-  //     }
-
-  //     return (
-  //       <>
-  //         <IconButton
-  //           sx={{ color: 'blue' }}
-  //           size="small"
-  //           onClick={handleEditClick}
-  //         >
-  //           <EditIcon />
-  //         </IconButton>
-  //         <IconButton
-  //           sx={{ color: 'red' }}
-  //           size="small"
-  //           onClick={handleDeleteClick}
-  //         >
-  //           <DeleteIcon />
-  //         </IconButton>
-
-  //         {editDialogOpen && (
-  //           <ReusableDialogBox
-  //             title="Update Event"
-  //             description="Fill up the form to update the event."
-  //             formFields={[
-  //               { placeholder: 'Date', icon: <EditIcon /> },
-  //               { placeholder: 'Pig Number', icon: <EditIcon /> },
-  //               { placeholder: 'Event Name', icon: <EditIcon /> },
-  //             ]}
-  //             onSave={handleSave}
-  //             onCancel={handleCancelEdit}
-  //             saveButtonText="Save"
-  //             saveButtonColor="#3B4DE1"
-  //           />
-  //         )}
-
-  //         {deleteDialogOpen && (
-  //           <ReusableDialogBox
-  //             title={
-  //               <>
-  //                 Delete Event{' '}
-  //                 <span style={{ color: '#FF0000' }}>{pigNumber}</span>{' '}
-  //               </>
-  //             }
-  //             description="Confirm that you would like to proceed with the deletion of this event. Note that this action is irreversible."
-  //             formFields={[]}
-  //             onSave={handleConfirmDelete}
-  //             onCancel={handleCancelDelete}
-  //             saveButtonText="Delete"
-  //             saveButtonColor="#FF0000"
-  //           />
-  //         )}
-  //       </>
-  //     )
-  //   },
-  //   headerAlign: 'right',
-  //   align: 'right',
-  // },
 ];
 
-// Define the pagination model
+// pagination model
 const paginationModel = { page: 0, pageSize: 5 };
 
 export default function UpcomingDataTable({
@@ -151,7 +53,7 @@ export default function UpcomingDataTable({
     setFilteredRows(upcomingEvents);
   }, [upcomingEvents]);
 
-  // Function to handle filtering based on searchText
+  // handle filtering searchText
   const handleFilter = React.useCallback(() => {
     const lowerSearchText = searchText.toLowerCase();
     const filtered = upcomingEvents.filter((row) => {
@@ -163,7 +65,7 @@ export default function UpcomingDataTable({
     setFilteredRows(filtered);
   }, [searchText]);
 
-  // Trigger filter whenever searchText changes
+  //filter  searchText changes
   React.useEffect(() => {
     handleFilter();
   }, [searchText, handleFilter]);

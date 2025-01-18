@@ -44,7 +44,7 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
     setFilteredRows(props.rows);
   }, [props.rows]);
 
-  // Function to toggle password visibility for a specific row
+  // toggle password visibility
   const togglePasswordVisibility = (id: number) => {
     setVisiblePasswords((prevVisiblePasswords) => ({
       ...prevVisiblePasswords,
@@ -52,7 +52,7 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
     }));
   };
 
-  // Function to handle filtering based on searchText (excluding password)
+  // filtering searchText
   const handleFilter = () => {
     const lowerSearchText = searchText.toLowerCase();
     const filtered = props.rows.filter((row: any) => {
@@ -68,7 +68,7 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
     handleFilter();
   }, [searchText]);
 
-  // Function to generate columns
+  // generate columns
   const columns: (
     visiblePasswords: Record<number, boolean>,
     togglePasswordVisibility: (id: number) => void
@@ -107,31 +107,6 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
       headerAlign: 'right',
       align: 'right',
     },
-    // {
-    //   field: 'password',
-    //   headerName: 'Password',
-    //   flex: 1,
-    //   minWidth: 130,
-    //   resizable: false,
-    //   headerAlign: 'right',
-    //   align: 'right',
-    //   renderCell: (params) => {
-    //     const isPasswordVisible = visiblePasswords[params.row._id] || false
-    //     return (
-    //       <>
-    //         <span>
-    //           {isPasswordVisible ? params.value : '•'.repeat(Math.min(12, params.value.length))}
-    //         </span>
-    //         <IconButton
-    //           sx={{ paddingRight: 0 }}
-    //           onClick={() => togglePasswordVisibility(params.row._id)}
-    //         >
-    //           {isPasswordVisible ? <VisibilityOffIcon /> : <VisibilityIcon />}
-    //         </IconButton>
-    //       </>
-    //     )
-    //   },
-    // },
     {
       field: 'actions',
       headerName: 'Actions',
@@ -142,7 +117,7 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const [editDialogOpen, setEditDialogOpen] = React.useState(false);
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false); // State for delete dialog visibility
+        const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
         const pigNumber = params.row.number;
 
         const handleEditClick = () => {
@@ -168,7 +143,7 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
         };
 
         const handleConfirmDelete = () => {
-          // Perform delete logic here
+          // delete logic
           setDeleteDialogOpen(false);
         };
 
@@ -185,14 +160,6 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
             >
               <EditIcon />
             </IconButton>
-            {/*  <IconButton
-              sx={{ color: 'red' }}
-              size="small"
-              onClick={handleDeleteClick}
-            >
-              <DeleteIcon />
-            </IconButton> */}
-
             {editDialogOpen && (
               <ReusableDialogBox
                 title="Edit Caretaker"
@@ -307,7 +274,6 @@ export default function CaretakerDataTable(props: CareTakerTableProps) {
               sx={{ width: { xs: 150, sm: 250, md: 300, lg: 320, xl: 350 } }}
             />
           </Box>
-
           <Box
             sx={{
               width: '100%',

@@ -4,7 +4,6 @@ import Grid2 from '@mui/material/Grid2';
 import Button from '@mui/material/Button';
 import {
   Box,
-  IconButton,
   TextField,
   MenuItem,
   Select,
@@ -13,109 +12,9 @@ import {
   ThemeProvider,
   Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ReusableDialogBox from '../../../modals/ReusableDialogBox'; // Import the reusable dialog box
 import '../PigList_Folder/PigList.css';
 import theme from '../../../Theme';
 import { formatCurrency } from '../../../services/utils.service';
-
-// {
-//   field: 'actions',
-//   headerName: 'Actions',
-//   minWidth: 110,
-//   resizable: false,
-//   renderCell: (params) => {
-//     const [editDialogOpen, setEditDialogOpen] = React.useState(false)
-//     const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false) // State for delete dialog visibility
-//     const pigNumber = params.row.number
-
-//     const handleEditClick = () => {
-//       setEditDialogOpen(true)
-//     }
-
-//     const handleSave = () => {
-//       setEditDialogOpen(false)
-//     }
-
-//     const handleCancelEdit = () => {
-//       setEditDialogOpen(false)
-//     }
-
-//     const handleDeleteClick = () => {
-//       setDeleteDialogOpen(true)
-//     }
-
-//     const handleConfirmDelete = () => {
-//       // Perform delete logic here
-//       setDeleteDialogOpen(false)
-//     }
-
-//     const handleCancelDelete = () => {
-//       setDeleteDialogOpen(false)
-//     }
-
-//     return (
-//       <>
-//         <IconButton
-//           sx={{ color: 'blue' }}
-//           size="small"
-//           onClick={handleEditClick}
-//         >
-//           <EditIcon />
-//         </IconButton>
-//         <IconButton
-//           sx={{ color: 'red' }}
-//           size="small"
-//           onClick={handleDeleteClick}
-//         >
-//           <DeleteIcon />
-//         </IconButton>
-
-//         {editDialogOpen && (
-//           <ReusableDialogBox
-//             title={
-//               <Typography variant="h4" fontWeight={700}>
-//                 Edit Pig <span style={{ color: '#11703b' }}>{pigNumber}</span>{' '}
-//               </Typography>
-//             }
-//             description="Fill up the form to update the pig’s information."
-//             formFields={[
-//               { placeholder: 'Date of Birth', icon: <EditIcon /> },
-//               { placeholder: 'Parent Number', icon: <EditIcon /> },
-//               { placeholder: 'Sex', icon: <EditIcon /> },
-//               { placeholder: 'Pen Number', icon: <EditIcon /> },
-//               { placeholder: 'Weight in kg', icon: <EditIcon /> },
-//             ]}
-//             onSave={handleSave}
-//             onCancel={handleCancelEdit}
-//             saveButtonText="Update"
-//             saveButtonColor="#3B4DE1"
-//           />
-//         )}
-
-//         {deleteDialogOpen && (
-//           <ReusableDialogBox
-//             title={
-//               <>
-//                 Delete Pig{' '}
-//                 <span style={{ color: '#FF0000' }}>{pigNumber}</span>{' '}
-//               </>
-//             }
-//             description="Confirm that you would like to proceed with the deletion of the pig. Note that this action is irreversible."
-//             formFields={[]}
-//             onSave={handleConfirmDelete}
-//             onCancel={handleCancelDelete}
-//             saveButtonText="Delete"
-//             saveButtonColor="#FF0000"
-//           />
-//         )}
-//       </>
-//     )
-//   },
-//   headerAlign: 'right',
-//   align: 'right',
-// },
 
 const paginationModel = { page: 0, pageSize: 5 };
 

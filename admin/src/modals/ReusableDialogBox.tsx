@@ -1,4 +1,4 @@
-import React, { ReactNode, useRef, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -12,13 +12,13 @@ import {
   Typography,
   CircularProgress,
   IconButton,
-} from '@mui/material'; // Import necessary components
+} from '@mui/material';
 import theme from '../Theme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 interface ReusableDialogBoxProps {
-  title: string; // Title must be a string
-  description: string; // Description must be a string
+  title: string;
+  description: string;
   formFields: {
     placeholder: string;
     type: string;
@@ -27,11 +27,11 @@ interface ReusableDialogBoxProps {
     slotProps?: any;
     disabled?: boolean;
     onChange: (v: any) => void;
-  }[]; // Array of objects with placeholders and icons
-  onSave: () => void; // Callback function for saving
-  onCancel: () => void; // Callback function for canceling/closing the dialog
-  saveButtonText?: string; // Optional text for the save button (default: "Save")
-  saveButtonColor?: string; // Optional color for the save button (default: green)
+  }[];
+  onSave: () => void; // function for saving
+  onCancel: () => void; // function for canceling/closing dialog
+  saveButtonText?: string; // changeable text for save button
+  saveButtonColor?: string; // changeable color for save button
   loading?: boolean;
 }
 
@@ -40,9 +40,9 @@ const ReusableDialogBox: React.FC<ReusableDialogBoxProps> = ({
   description,
   formFields,
   onSave,
-  onCancel, // Include onCancel prop
-  saveButtonText = 'Save', // Default value if not provided
-  saveButtonColor = '#11703b', // Default button color
+  onCancel,
+  saveButtonText = 'Save', // default value
+  saveButtonColor = '#11703b', // default button color
   loading,
 }) => {
   return (

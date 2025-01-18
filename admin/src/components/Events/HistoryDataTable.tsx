@@ -4,7 +4,6 @@ import { Box, Grid2, TextField, ThemeProvider } from '@mui/material';
 import theme from '../../Theme';
 import { formatDate } from '../../services/utils.service';
 
-// Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
     field: 'eventType',
@@ -49,7 +48,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-// Define the pagination model
+// pagination model
 const paginationModel = { page: 0, pageSize: 5 };
 
 export default function HistoryDataTable({
@@ -60,7 +59,7 @@ export default function HistoryDataTable({
   const [searchText, setSearchText] = React.useState('');
   const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
 
-  // Function to handle filtering based on searchText
+  // handle filtering searchText
   const handleFilter = React.useCallback(() => {
     const lowerSearchText = searchText.toLowerCase();
     const filtered = eventHistory.filter((row) => {
@@ -72,7 +71,7 @@ export default function HistoryDataTable({
     setFilteredRows(filtered);
   }, [searchText]);
 
-  // Trigger filter whenever searchText changes
+  // filter searchText changes
   React.useEffect(() => {
     handleFilter();
   }, [searchText, handleFilter]);

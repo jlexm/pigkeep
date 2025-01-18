@@ -1,24 +1,19 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import {
   Box,
-  Button,
   Chip,
   Grid2,
   ThemeProvider,
   Typography,
 } from '@mui/material';
 import '../components/Events/Events.css';
-import EventIcon from '@mui/icons-material/Event';
 import CurrentDataTable from '../components/Events/CurrentDataTable';
 import UpcomingDataTable from '../components/Events/UpcomingDataTable';
 import HistoryDataTable from '../components/Events/HistoryDataTable';
-import ReusableDialogBox from '../modals/ReusableDialogBox';
-import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike';
 import theme from '../Theme';
 import { getSelectedFarm } from '../services/farm.service';
 import { fetchFarmPigEvents } from '../services/pig-events.service';
 import {
-  formatDate,
   formatDateNumeric,
   getTodayMidnight,
 } from '../services/utils.service';
@@ -65,25 +60,6 @@ const Events = () => {
     setSelectedChip(chip);
   };
 
-  // State to manage the dialog box visibility
-  const [openDialog, setOpenDialog] = useState(false);
-
-  // Function to open the dialog
-  const handleOpenDialog = () => {
-    setOpenDialog(true);
-  };
-
-  // Function to close the dialog
-  const handleCloseDialog = () => {
-    setOpenDialog(false);
-  };
-
-  // Function to handle save action in the dialog
-  const handleSave = () => {
-    console.log('Saving pig data...');
-    handleCloseDialog(); // Close dialog after saving
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <Grid2
@@ -120,35 +96,6 @@ const Events = () => {
                 </Box>
               </Grid2>
             </Grid2>
-            {/* <Grid2 size={5} sx={{ alignContent: 'center', textAlign: 'end' }}>
-              <Button
-                variant="contained"
-                startIcon={<EventIcon fontSize="large" />}
-                sx={{
-                  width: { xs: 110, sm: 115, md: 130 },
-                  height: { xs: 35, sm: 40, md: 45 },
-                  color: 'black',
-                  backgroundColor: 'white',
-                  borderRadius: '10px',
-                  fontWeight: 'bold',
-                  fontSize: '17px',
-                  padding: '9px',
-                  '& .MuiButton-startIcon': {
-                    marginRight: '8px',
-                  },
-                }}
-                onClick={handleOpenDialog}
-              >
-                <Typography
-                  sx={{
-                    fontWeight: 500,
-                    fontSize: 'clamp(11px, 1vw + 5px, 16px)',
-                  }}
-                >
-                  Add Event
-                </Typography>
-              </Button>
-            </Grid2> */}
           </Grid2>
         </Grid2>
         <Grid2 container size={12}>
@@ -212,34 +159,6 @@ const Events = () => {
           </Grid2>
         </Grid2>
       </Grid2>
-
-      {/* ReusableDialogBox to be shown when openDialog is true */}
-      {openDialog && (
-        <ReusableDialogBox
-          title="Set Event"
-          description="Fill up the form to set an event for your pig farm."
-          formFields={
-            [
-              // {
-              //   placeholder: 'Date',
-              //   icon: <DirectionsBikeIcon />,
-              // },
-              // {
-              //   placeholder: 'Pig Number',
-              //   icon: <DirectionsBikeIcon />,
-              // },
-              // {
-              //   placeholder: 'Event Name',
-              //   icon: <DirectionsBikeIcon />,
-              // },
-            ]
-          }
-          onSave={handleSave} // Handle save action
-          onCancel={handleCloseDialog} // Handle cancel action
-          saveButtonText="Set"
-          saveButtonColor="#11703b" // Green color for the save button
-        />
-      )}
     </ThemeProvider>
   );
 };

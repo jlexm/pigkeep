@@ -26,7 +26,7 @@ import { toast } from 'react-toastify';
 const Home: React.FC = () => {
   const localStorageSelectedFarm = getSelectedFarm();
 
-  // Default selected farm
+  // default selected farm
   const [selectedOption, setSelectedOption] = useState<any>(
     localStorageSelectedFarm
   );
@@ -38,7 +38,7 @@ const Home: React.FC = () => {
   const [feedHistory, setFeedHistory] = useState<any[]>([]);
   const [medicineHistory, setMedicineHistory] = useState<any[]>([]);
 
-  // Fetch all farms and set the default selected farm
+  // fetch all farms and set the default selected farm
   useEffect(() => {
     (async () => {
       const myFarms = (await fetchMyFarms()) as any;
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
     })();
   }, []);
 
-  // Fetch api data when selected farm changes
+  // fetch api data when selected farm changes
   useEffect(() => {
     if (selectedOption) {
       const farm_id = selectedOption['_id'];
@@ -63,7 +63,6 @@ const Home: React.FC = () => {
     }
   }, [selectedOption]);
 
-  // Fetch pigs from the selected farm
   const fetchPigs = async (farm_id: string) => {
     const pigs: any[] = ((await fetchAllFarmPigs(farm_id)) as any) ?? [];
     setPigs(
@@ -117,7 +116,7 @@ const Home: React.FC = () => {
     );
   };
 
-  //  Pie chart data
+  // pie chart data
   const pigsPieData: MakeOptional<PieValueType, 'id'>[] = Object.values(
     pigs.reduce(
       (acc: Record<string, MakeOptional<PieValueType, 'id'>>, pig: any) => {
@@ -156,7 +155,7 @@ const Home: React.FC = () => {
           <Grid2 size={{ xs: 8, sm: 5, md: 6, lg: 5 }}>
             <DropdownWithAddButton
               options={options}
-              selected={selectedOption} // Pass the selected option
+              selected={selectedOption} 
               onAddNewItem={handleAddNewItem}
               handleSetSelectedOption={setSelectedOption}
             />

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Card, Grid2, ThemeProvider, Typography } from '@mui/material';
 import theme from '../../../Theme';
 
-// Define the props type for the data
+// props type for data
 export interface CardData {
   number: number;
   text: string;
@@ -24,8 +24,8 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ data, onCardClick }) => {
               onClick={() => onCardClick(item.text)}
               sx={{
                 textAlign: 'center',
-                width: 'clamp(60px, 4vw + 35px, 110px)', // Responsive width
-                height: 'clamp(65px, 5vw + 15px, 140px)', // Responsive height
+                width: 'clamp(60px, 4vw + 35px, 110px)',
+                height: 'clamp(65px, 5vw + 15px, 140px)', 
                 borderRadius: '10px',
                 borderColor: '#000',
                 borderWidth: '1px',
@@ -51,8 +51,8 @@ const DynamicCards: React.FC<DynamicCardsProps> = ({ data, onCardClick }) => {
 export default function Cards( { data = [] } : { data?: CardData[] }) {
   const [sortCategory, setSortCategory] = React.useState<string | null>(null);
   return (
-    <DynamicCards 
-      data={data} 
+    <DynamicCards
+      data={data}
       onCardClick={(category) => setSortCategory(category)}
     />
   );

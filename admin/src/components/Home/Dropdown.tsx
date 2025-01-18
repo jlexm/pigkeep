@@ -33,7 +33,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
   handleSetSelectedOption,
   onAddNewItem,
 }) => {
-  const [selectedOption, setSelectedOption] = useState<any>(null); // Set default option
+  const [selectedOption, setSelectedOption] = useState<any>(null); // default option
   const [openDialog, setOpenDialog] = useState(false);
   const [newItem, setNewItem] = useState({ farm_name: '', farm_address: '' });
 
@@ -45,10 +45,10 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
     const value = event.target.value as string;
 
     if (value === 'add-new') {
-      setOpenDialog(true); // Open the dialog for adding new items
+      setOpenDialog(true);
     } else {
       setSelectedFarm(value);
-      setSelectedOption(value); // Select the existing option
+      setSelectedOption(value);
       handleSetSelectedOption(value);
     }
   };
@@ -183,7 +183,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                           ...prev,
                           farm_name: e.target.value,
                         }))
-                      } // Update new item input
+                      } 
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -235,7 +235,7 @@ const DropdownWithAddButton: React.FC<DropdownWithAddButtonProps> = ({
                           ...prev,
                           farm_address: e.target.value,
                         }))
-                      } // Update new item input
+                      }
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">

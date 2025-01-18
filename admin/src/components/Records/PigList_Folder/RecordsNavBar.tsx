@@ -5,7 +5,7 @@ import * as React from 'react';
 
 export default function RecordsNavBar() {
 
-  const [selectedChip, setSelectedChip] = React.useState('Pig List'); // Default selected chip
+  const [selectedChip, setSelectedChip] = React.useState('Pig List'); // default selected chip
 
   const handleChipClick = (chip: React.SetStateAction<string>) => {
     setSelectedChip(chip);

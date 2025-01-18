@@ -95,12 +95,12 @@ const Profile = () => {
     setPasswordLoading(false);
   };
 
-  // Function to open the dialog
+  // open the dialog
   const handleOpenDialog = () => {
     setOpenDialog(true);
   };
 
-  // Function to close the dialog
+  // close the dialog
   const handleCloseDialog = () => {
     setOpenDialog(false);
   };
@@ -248,7 +248,7 @@ const Profile = () => {
         />
       </Grid2>
 
-      {/* ReusableDialogBox to be shown when openDialog is true */}
+      {/* when openDialog is true */}
       {openDialog && (
         <ReusableDialogBox
           title="Change Password"
@@ -280,10 +280,10 @@ const Profile = () => {
                 setPasswordForm((prev) => ({ ...prev, confirm_password: v })),
             },
           ]}
-          onSave={updatePassword} // Handle save action
-          onCancel={handleCloseDialog} // Handle cancel action
+          onSave={updatePassword}
+          onCancel={handleCloseDialog}
           saveButtonText="Save"
-          saveButtonColor="#11703b" // Green color for the save button
+          saveButtonColor="#11703b"
         />
       )}
     </ThemeProvider>

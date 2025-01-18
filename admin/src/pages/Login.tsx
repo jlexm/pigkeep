@@ -8,8 +8,6 @@ import {
   Button,
   IconButton,
   InputAdornment,
-  FormControlLabel,
-  Checkbox,
   ThemeProvider,
   CircularProgress,
 } from '@mui/material';
@@ -35,18 +33,11 @@ const Login = () => {
   const passwordRef = useRef<any>();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
   const [isLoginLoading, setIsLoginLoading] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
-  };
-
-  const handleRememberMeChange = (event: {
-    target: { checked: boolean | ((prevState: boolean) => boolean) };
-  }) => {
-    setRememberMe(event.target.checked);
   };
 
   const handeLogIn = async () => {
@@ -130,7 +121,7 @@ const Login = () => {
             className="container"
             sx={{ pointerEvents: isLoginLoading ? 'none' : 'auto' }}
           >
-            {/* Username TextField */}
+            {/* username */}
             <TextField
               inputRef={usernameRef}
               fullWidth
@@ -156,7 +147,7 @@ const Login = () => {
               }}
             />
 
-            {/* Password TextField with Eye Icon */}
+            {/* password */}
             <TextField
               inputRef={passwordRef}
               fullWidth
@@ -193,8 +184,7 @@ const Login = () => {
                 ),
               }}
             />
-
-            {/* Login Button */}
+            
             <Button
               variant="contained"
               color="primary"

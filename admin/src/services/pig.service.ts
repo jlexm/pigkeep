@@ -7,31 +7,13 @@ export const fetchAllFarmPigs = (farm_id: string) => {
 }
 
 export const determinePigStage = (isMale: boolean, pigDOB: string) => {
-  // get current user age global settings
-  // const settings = GlobalProvider.getUserAgeCategorySettings(); // Ignored as per request
 
   const daysOld = Math.abs(Math.floor((new Date().getTime() - new Date(pigDOB).getTime()) / (1000 * 60 * 60 * 24)));
-  // const weeksOld = Math.abs(Math.floor(daysOld / 7));
 
   let pigletDays = 35;
   let weanerDays = 80;
   let growerDays = 123;
   let maturedDays = 182;
-
-  // if (settings != null) {
-  //   if (settings['piglet'] != null) {
-  //     pigletDays = settings['piglet'];
-  //   }
-  //   if (settings['weaner'] != null) {
-  //     weanerDays = settings['weaner'];
-  //   }
-  //   if (settings['grower'] != null) {
-  //     growerDays = settings['grower'];
-  //   }
-  //   if (settings['matured'] != null) {
-  //     maturedDays = settings['matured'];
-  //   }
-  // }
 
   let stage = 'Piglet';
   let feed = 'Booster';

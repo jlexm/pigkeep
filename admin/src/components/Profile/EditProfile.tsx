@@ -10,7 +10,6 @@ import {
 import theme from '../../Theme';
 
 interface ProfileEditFormProps {
-  // Add any necessary props here (optional)
   userData?: {
     username: string;
     email: string;
@@ -32,11 +31,11 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
   savingUserLoading,
   onSave,
 }) => {
-  const [email, setEmail] = React.useState(''); // Default email
-  const [userName, setUserName] = React.useState(''); // Default username
-  const [firstName, setFirstName] = React.useState(''); // Default first name
-  const [lastName, setLastName] = React.useState(''); // Default last name
-  const [phoneNumber, setPhoneNumber] = React.useState(''); // Default phone number
+  const [email, setEmail] = React.useState(''); // default email
+  const [userName, setUserName] = React.useState(''); // default username
+  const [firstName, setFirstName] = React.useState(''); // default first name
+  const [lastName, setLastName] = React.useState(''); // default last name
+  const [phoneNumber, setPhoneNumber] = React.useState(''); // default phone number
 
   React.useEffect(() => {
     if (!userData) return;

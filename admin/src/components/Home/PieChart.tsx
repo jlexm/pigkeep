@@ -76,32 +76,6 @@ export default function BasicPie({
               ]}
               series={[
                 {
-                  /* data: [
-                    {
-                      id: 1,
-                      value: 15,
-                      label: '15 series B',
-                      color: '#11703B',
-                    },
-                    {
-                      id: 0,
-                      value: 10,
-                      label: '10 series A',
-                      color: '#208849',
-                    },
-                    {
-                      id: 2,
-                      value: 20,
-                      label: '20 series C',
-                      color: '#29A358',
-                    },
-                    {
-                      id: 3,
-                      value: 20,
-                      label: '20 series D',
-                      color: '#32BE67',
-                    },
-                  ], */
                   data,
                 },
               ]}

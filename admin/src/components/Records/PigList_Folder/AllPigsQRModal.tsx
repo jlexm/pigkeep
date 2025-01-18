@@ -8,7 +8,7 @@ import {
   TextField,
 } from '@mui/material';
 import { PigQR } from './PigQR';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 export const AllPigsQRModal = ({
   pigs,

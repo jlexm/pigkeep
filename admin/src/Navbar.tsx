@@ -33,7 +33,7 @@ const Navbar = () => {
   const [currUser, setCurrUser] = React.useState<any>()
 
   React.useEffect(() => {
-    // Redirect to /home if no route matches
+    // redirect to /home if no route matches
     if (location.pathname === '/') {
       navigate('/home')
     }

@@ -4,7 +4,6 @@ import { Box, Grid2, TextField, ThemeProvider } from '@mui/material';
 import theme from '../../Theme';
 import { formatCurrency, formatDate } from '../../services/utils.service';
 
-// Define the columns for the DataGrid
 const columns: GridColDef[] = [
   {
     field: 'pigNumber',
@@ -67,7 +66,7 @@ const columns: GridColDef[] = [
   },
 ];
 
-// Define the pagination model
+// pagination model
 export default function DisposalDataTable({ ledgers }: { ledgers: any[] }) {
   const [searchText, setSearchText] = React.useState('');
   const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
@@ -80,7 +79,7 @@ export default function DisposalDataTable({ ledgers }: { ledgers: any[] }) {
     setFilteredRows(ledgers);
   }, [ledgers]);
 
-  // Function to handle filtering based on searchText
+  // filtering searchText
   const handleFilter = React.useCallback(() => {
     const lowerSearchText = searchText.toLowerCase();
     const filtered = ledgers.filter((row) => {
@@ -92,12 +91,11 @@ export default function DisposalDataTable({ ledgers }: { ledgers: any[] }) {
     setFilteredRows(filtered);
   }, [searchText]);
 
-  // Trigger filter whenever searchText changes
   React.useEffect(() => {
     handleFilter();
   }, [searchText, handleFilter]);
 
-  // Function to handle pagination changes
+  // handle pagination changes
   const handlePaginationChange = (
     newModel: React.SetStateAction<{ page: number; pageSize: number }>
   ) => {

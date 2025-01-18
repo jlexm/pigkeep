@@ -5,29 +5,27 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import { FixedSizeList, ListChildComponentProps } from 'react-window'
 import { Grid2, Link, ThemeProvider, Typography } from '@mui/material'
-import './HomeScreen.css' // Ensure this file includes the scrollbar styling
+import './HomeScreen.css'
 import theme from '../../Theme'
 
-// Generate a list of example events with dates and other data
 const generateEvents = (count: number) => {
   const events = []
   const today = new Date()
 
   for (let i = 0; i < count; i++) {
     const date = new Date(today)
-    date.setDate(today.getDate() - i) // Make each event date progressively earlier
+    date.setDate(today.getDate() - i)
     events.push({
-      date: date.toISOString().split('T')[0], // Convert date to YYYY-MM-DD format
+      date: date.toISOString().split('T')[0], // yyyy-mm-dd format
       name: `Event ${i + 1}`,
-      pigNumber: String(i + 1).padStart(3, '0'), // Starting from 001
+      pigNumber: String(i + 1).padStart(3, '0'),
     })
   }
 
   return events
 }
 
-// Generate a larger set of events
-const allEvents = generateEvents(50) // Generate 50 example events
+const allEvents = generateEvents(50)
 const events = allEvents.slice(0, 20)
 
 function formatEventDate(dateString: string) {
@@ -55,11 +53,10 @@ function formatEventDate(dateString: string) {
 
 export default function PigEventsNotification({ pigEvents } : { pigEvents: any[] }) {
 
-  // Memoized row component to avoid unnecessary re-renders
   const RenderRow = React.memo(({ index, style }: ListChildComponentProps) => {
     const event = pigEvents[index];
 
-    // Define alternating colors
+    // alternating bg colors
     const backgroundColor = index % 2 === 0 ? '#f1f1f1' : '#ffffff';
 
     const eventDateString = formatEventDate(event.eventDate)
@@ -147,15 +144,15 @@ export default function PigEventsNotification({ pigEvents } : { pigEvents: any[]
             width: '100%',
             height: 580,
             overflowY: 'auto',
-            overflowX: { xs: 'auto', md: 'hidden' }, // Add horizontal scroll on xs, sm sizes
-            whiteSpace: { xs: 'nowrap', md: 'normal' }, // Prevent wrapping on smaller screens
+            overflowX: { xs: 'auto', md: 'hidden' },
+            whiteSpace: { xs: 'nowrap', md: 'normal' },
           }}
         >
           <FixedSizeList
             height={560}
             itemSize={82}
             itemCount={pigEvents.length}
-            overscanCount={5} // Adds some buffer to prevent flickering
+            overscanCount={5} // buffer to prevent flickering
           >
             {RenderRow}
           </FixedSizeList>

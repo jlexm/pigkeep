@@ -20,7 +20,7 @@ export const PigQR = forwardRef<
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundColor: 'white', // Ensure background is white for the image
+          backgroundColor: 'white', 
           padding: 2,
         }}
       >

@@ -123,7 +123,7 @@ export default function FeedInvDataTable( { feedHistory }: { feedHistory: any[] 
   const [statusFilter, setStatusFilter] = React.useState('all')
   const [filteredRows, setFilteredRows] = React.useState<any[]>([])
 
-  useEffect(() => { 
+  useEffect(() => {
     setFilteredRows(feedHistory)
   }, [feedHistory])
 
@@ -193,7 +193,6 @@ export default function FeedInvDataTable( { feedHistory }: { feedHistory: any[] 
             </Select>
           </FormControl>
         </Box>
-
         <Box
           sx={{
             width: '100%',
