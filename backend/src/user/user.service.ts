@@ -15,9 +15,9 @@ export class UserService {
     return newUser.toObject()
   }
 
-  registerUser(registerUserDto: RegisterUserDto) {
+  async registerUser(registerUserDto: RegisterUserDto) {
     const newUser = new this.userModel(registerUserDto)
-    newUser.save()
+    await newUser.save()
     return newUser.toObject()
   }
 
