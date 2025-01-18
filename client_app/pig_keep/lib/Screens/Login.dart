@@ -119,6 +119,7 @@ class _LoginState extends State<Login> {
                                     height: 10.h,
                                   ),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       InkWell(
                                         onTap: () async {
