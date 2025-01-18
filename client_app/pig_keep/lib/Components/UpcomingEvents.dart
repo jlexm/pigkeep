@@ -45,9 +45,7 @@ class _UpcomingEventsState extends State<UpcomingEvents> {
           actions: [
             TextButton(
               onPressed: () {
-                setState(() {
-                  //UpcomingEvents.removeAt(index);
-                });
+                setState(() {});
                 Navigator.of(context).pop();
               },
               child: const Text("Delete"),

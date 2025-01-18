@@ -171,7 +171,6 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                                 if (pigUuidHidden == null) {
                                   throw 'Please select pig.';
                                 }
-                                // perform consume mode
                                 await medService.addMedicine(
                                     false,
                                     selectedFarm['_id'],
@@ -286,7 +285,6 @@ class _MedicalRecordsState extends State<Medicalrecords> {
                             ),
                           ],
                           onSave: () async {
-                            // Handle the save action, e.g., validate and save data
                             try {
                               await medService.addMedicine(
                                   false,
@@ -345,23 +343,15 @@ class _MedicalRecordsState extends State<Medicalrecords> {
         SizedBox(
           height: 10.h,
         ),
-        /* Container(
-            padding: EdgeInsets.only(
-              left: 20.w,
-              right: 20.w,
-            ),
-            child: SearchBar_MedicalRecords()), */ //Searchbar_MedicalRecords.dart
         SizedBox(
           height: 18.h,
         ),
         Container(
           padding: EdgeInsets.only(left: 15.w),
           child: CarouselMedicalrecords(
-              //Carousel_MedicalRecords.dart
               farmID: selectedFarm['_id'],
               fetchMedData: fetchMedData(),
-              items: medicines // Dynamic list of items
-              ),
+              items: medicines),
         ),
         SizedBox(
           height: 17.h,
@@ -389,7 +379,7 @@ class _MedicalRecordsState extends State<Medicalrecords> {
         ),
         TransactionMedicalrecords(
           medHistory: medHistory,
-        ), //Transaction_Medicalrecords.dart
+        ),
       ],
     );
   }

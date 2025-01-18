@@ -48,52 +48,46 @@ class _ScanQRState extends State<ScanQR> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'QR Scanner',
-          style: TextStyle(
-            color: appSecondary,
-            fontSize: 18.r,
-            fontWeight: FontWeight.w600,
+        appBar: AppBar(
+          title: Text(
+            'QR Scanner',
+            style: TextStyle(
+              color: appSecondary,
+              fontSize: 18.r,
+              fontWeight: FontWeight.w600,
+            ),
           ),
+          centerTitle: true,
+          backgroundColor: appPrimary,
         ),
-        centerTitle: true,
-        backgroundColor: appPrimary,
-      ),
-      body: MobileScanner(
-        controller: camcontroller,
-        onDetect: (capture) async {
-          final List<Barcode> barcodes = capture.barcodes;
-          for (final barcode in barcodes) {
-            final String? code = barcode.rawValue;
-            if (code != null) {
-              // Show a snackbar with the scanned QR code data
-              /*  ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Scanned Code: $code')),
-              ); */
-              List<String> qrParts = code.split(':');
-              if (qrParts.length == 3) {
-                String uuid = qrParts[2];
-                var existingPig = await pigService.fetchPigByUuid(uuid, selectedFarm['_id']);
-                if(existingPig != null) {
-                  context.replace('/records/pigs/${uuid}');
-                  // Optionally, you can stop scanning after the first successful scan
-                  camcontroller.stop();
-                }else {
-                  ToastService().showWarningToast('Pig not found in this farm');
-                  context.replace('/home');
-                  // Optionally, you can stop scanning after the first successful scan
-                  camcontroller.stop();
+        body: MobileScanner(
+          controller: camcontroller,
+          onDetect: (capture) async {
+            final List<Barcode> barcodes = capture.barcodes;
+            for (final barcode in barcodes) {
+              final String? code = barcode.rawValue;
+              if (code != null) {
+                List<String> qrParts = code.split(':');
+                if (qrParts.length == 3) {
+                  String uuid = qrParts[2];
+                  var existingPig = await pigService.fetchPigByUuid(
+                      uuid, selectedFarm['_id']);
+                  if (existingPig != null) {
+                    context.replace('/records/pigs/${uuid}');
+                    camcontroller.stop();
+                  } else {
+                    ToastService()
+                        .showWarningToast('Pig not found in this farm');
+                    context.replace('/home');
+                    camcontroller.stop();
+                  }
                 }
-             
-              }
 
-              break; // Stop after the first successful scan
+                break;
+              }
             }
-          }
-        },
-      )
-    );
+          },
+        ));
   }
 
   @override

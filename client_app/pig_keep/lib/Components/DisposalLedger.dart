@@ -55,8 +55,6 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                       SizedBox(
                         height: 3.h,
                       ),
-
-                      // Second Row
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -91,8 +89,6 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                       SizedBox(
                         height: 3.h,
                       ),
-
-                      // Third Row
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

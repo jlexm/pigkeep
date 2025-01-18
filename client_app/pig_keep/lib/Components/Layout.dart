@@ -21,7 +21,7 @@ class Layout extends StatefulWidget {
 }
 
 class _LayoutState extends State<Layout> {
-  //services
+  // services
   final syncService = globalLocator.get<DataSyncService>();
 
   // vars
@@ -49,8 +49,7 @@ class _LayoutState extends State<Layout> {
 
   @override
   Widget build(BuildContext context) {
-    final isScanQrRoute =
-        widget.currentRoute == '/scan-qr'; // Check current route
+    final isScanQrRoute = widget.currentRoute == '/scan-qr';
 
     return Scaffold(
       backgroundColor: appSecondary,
@@ -74,27 +73,22 @@ class _LayoutState extends State<Layout> {
                       syncService
                           .syncAllData(selectedFarm['_id'], userOwner)
                           .then((_) async {
-                        // Wait for 3 seconds after syncAllData is complete
                         await Future.delayed(Duration(milliseconds: 1));
 
-                        // Ensure the widget is still mounted before accessing the context
                         if (mounted) {
                           context.read<GlobalProvider>().reloadCurrentFarm();
                         }
                       }).catchError((err) {
-                        // Handle any errors during syncAllData
                         ToastService().showErrorToast(err.toString());
                       });
                     },
                     child: AnimatedRotation(
                       turns: isSyncLoading ? 3.0 : 0.0,
-                      duration:
-                          Duration(seconds: 3), // Duration of one full rotation
-
+                      duration: Duration(seconds: 3),
                       child: Image.asset(
                         'assets/icons/Sync.png',
-                        width: 25, // Adjust width as needed
-                        height: 25, // Adjust height as needed
+                        width: 25,
+                        height: 25,
                       ),
                     ),
                   ),
@@ -117,7 +111,7 @@ class _LayoutState extends State<Layout> {
               ),
             ),
       drawer: const Hamburger(),
-      body: widget.child, // This should only be set once
+      body: widget.child,
       bottomNavigationBar: BottomNav(currentRoute: widget.currentRoute),
     );
   }

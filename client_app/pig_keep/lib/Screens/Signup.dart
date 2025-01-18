@@ -238,7 +238,6 @@ class _SignupState extends State<Signup> {
                                           }
                                         });
                                       } catch (e) {
-                                        // Handle the error properly here, e.g., show an error message
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) {
                                           ScaffoldMessenger.of(context)

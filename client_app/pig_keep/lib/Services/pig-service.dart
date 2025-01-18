@@ -196,8 +196,6 @@ class PigService {
       }
     }
 
-    // todo get ledger details
-
     final pigStage = PigHelper.determinePigStage(pig.sex, pig.dob);
 
     return {

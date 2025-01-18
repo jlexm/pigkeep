@@ -97,8 +97,7 @@ class _LoginState extends State<Login> {
                                         scale: 12.w,
                                       ),
                                       textStyle: TextStyle(
-                                        fontSize: 14
-                                            .sp, // Adjust the font size as needed
+                                        fontSize: 14.sp,
                                       ),
                                     ),
                                   ),
@@ -227,7 +226,6 @@ class _LoginState extends State<Login> {
                                         WidgetsBinding.instance
                                             .addPostFrameCallback((_) {
                                           if (mounted) {
-                                            //context.go('/home');
                                             navigationService
                                                 .replaceTo('/home');
                                           }

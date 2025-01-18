@@ -20,7 +20,7 @@ class FarmName extends StatefulWidget {
 }
 
 class _FarmNameState extends State<FarmName> {
-  // variable
+  //variable
   dynamic currentUser;
 
   void createFarm(String farmName, String farmAdress) async {
@@ -70,7 +70,6 @@ class _FarmNameState extends State<FarmName> {
             ),
           ],
           onSave: () {
-            // Handle the save action, e.g., validate and save data
             createFarm(farmNameController.text, farmAddressController.text);
           },
           saveButtonText: 'Add',

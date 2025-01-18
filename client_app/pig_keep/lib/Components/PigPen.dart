@@ -88,7 +88,6 @@ class _PigPenState extends State<PigPen> {
     return Column(
       children: [
         Row(
-          // Green box
           children: [
             SizedBox(width: 20.w),
             Expanded(
@@ -197,7 +196,6 @@ class _PigPenState extends State<PigPen> {
                                       ),
                                     ],
                                     onSave: () async {
-                                      // Handle the save action, e.g., validate and save data
                                       print('Form saved');
                                       await addPigPen(
                                           int.parse(_penNumberController.text),
@@ -249,11 +247,10 @@ class _PigPenState extends State<PigPen> {
           padding: EdgeInsets.only(left: 20.w, right: 20.w),
           child: SearchBarPigPen(
             onSearchValueChange: onSearch,
-          ), // SearchBar_PigPen.dart
+          ),
         ),
         SizedBox(height: 10.h),
         Container(
-          // changable to PigPen
           child: Column(
             children: [
               MyDataTable_Pigpen(

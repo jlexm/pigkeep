@@ -38,7 +38,7 @@ import 'package:pig_keep/Store/auth_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart';
 
-// This is our global ServiceLocator
+// this is our global ServiceLocator
 GetIt globalLocator = GetIt.instance;
 
 void main() async {
@@ -77,7 +77,6 @@ class MyApp extends StatelessWidget {
   Future<String?> init(BuildContext context) async {
     String? token = await AuthStorage.getToken();
     if (token != null) {
-      //await globalProvider.fetchFarms();
       await context.read<GlobalProvider>().fetchFarms();
     }
     return token;
@@ -130,14 +129,12 @@ class MyApp extends StatelessWidget {
                             NoTransitionPage(child: const PigPen()),
                       ),
                       GoRoute(
-                        path: '/records/pens/:uuid', // Use a named parameter
+                        path: '/records/pens/:uuid',
                         pageBuilder: (context, state) {
-                          // Get the UUID from the route parameters
                           final String uuid =
                               state.pathParameters['uuid'] ?? '';
                           return NoTransitionPage(
-                            child: PigPenPenNumber(
-                                penUUID: uuid), // Pass the UUID to the widget
+                            child: PigPenPenNumber(penUUID: uuid),
                           );
                         },
                       ),
@@ -147,14 +144,12 @@ class MyApp extends StatelessWidget {
                             NoTransitionPage(child: const PigList()),
                       ),
                       GoRoute(
-                        path: '/records/pigs/:uuid', // Use a named parameter
+                        path: '/records/pigs/:uuid',
                         pageBuilder: (context, state) {
-                          // Get the UUID from the route parameters
                           final String uuid =
                               state.pathParameters['uuid'] ?? '';
                           return NoTransitionPage(
-                            child: PigView(
-                                pigUUID: uuid), // Pass the UUID to the widget
+                            child: PigView(pigUUID: uuid),
                           );
                         },
                       ),

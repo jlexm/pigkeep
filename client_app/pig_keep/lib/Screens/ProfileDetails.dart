@@ -52,7 +52,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
     if (pic != null) {
       int idx = profileOptions.indexOf(pic);
       if (idx == -1) {
-        idx = 0; // default pic
+        idx = 0;
       }
       setState(() {
         currentOptionIndex = idx;
@@ -176,7 +176,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             icon: Icons.person,
                             readOnly: true,
                             enabled: false,
-                            //iconSize: 20,
                             textSize: 14.sp,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -189,7 +188,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             height: 15.h,
                           ),
                           RecyclableTextFormField(
-                            //email
                             controller: _emailController,
                             labelText: 'Email',
                             hintText: 'Enter your Email',
@@ -242,7 +240,6 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                             height: 15.h,
                           ),
                           RecyclableTextFormField(
-                            //phonenumber
                             controller: _phonenumberController,
                             labelText: 'Phone Number',
                             hintText: 'Enter your Phone Number',

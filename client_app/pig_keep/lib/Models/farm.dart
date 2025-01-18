@@ -2,8 +2,6 @@ import 'package:isar/isar.dart';
 
 part 'farm.g.dart';
 
-/* unused now huhu */
-
 @Collection()
 class Farm {
   Id isarID = Isar.autoIncrement;
