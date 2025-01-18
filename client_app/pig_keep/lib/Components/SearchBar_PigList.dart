@@ -9,7 +9,7 @@ class SearchBar_PigList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 185.w,
+      width: 210.w,
       height: 34.h,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -29,7 +29,7 @@ class SearchBar_PigList extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: 'Search',
+                hintText: 'Search by Pig Number',
                 iconColor: appTertiary,
                 isDense: true,
                 contentPadding: EdgeInsets.zero,
