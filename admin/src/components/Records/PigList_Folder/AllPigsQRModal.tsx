@@ -21,7 +21,7 @@ export const AllPigsQRModal = ({
 }) => {
   const [widthPX, setWidthPX] = useState(192);
   const [heightPX, setHeightPX] = useState(144);
-  const [fontPX, setFontPX] = useState(40);
+  const [fontPX, setFontPX] = useState(45);
 
   const handlePrint = () => {
     window.print();
@@ -52,14 +52,14 @@ export const AllPigsQRModal = ({
         <Box p={3}>
           <Box p={3} display="flex" gap={2}>
             <TextField
-              label="QR Width"
+              label="QR Width (px)"
               size="small"
               value={widthPX}
               type="number"
               onChange={(v) => setWidthPX(parseInt(v.target.value))}
             />
             <TextField
-              label="QR Height"
+              label="QR Height (px)"
               size="small"
               value={heightPX}
               type="number"
