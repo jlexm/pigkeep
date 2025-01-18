@@ -38,7 +38,6 @@ class _DisposalLedgerState extends State<DisposalLedger> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // First Row
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
