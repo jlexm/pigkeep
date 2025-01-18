@@ -1,22 +1,27 @@
-import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import Typography from '@mui/material/Typography'
-import Menu from '@mui/material/Menu'
-import MenuIcon from '@mui/icons-material/Menu'
-import Container from '@mui/material/Container'
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import './Navbar.css'
-import { MenuItem } from '@mui/material'
-import { ThemeProvider } from '@emotion/react'
-import theme from './Theme'
-import { getUserBasicInfo } from './services/auth.service'
-import greenLogo from './assets/GreenLogo.png'
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import './Navbar.css';
+import { MenuItem } from '@mui/material';
+import { ThemeProvider } from '@emotion/react';
+import theme from './Theme';
+import { getUserBasicInfo } from './services/auth.service';
+import greenLogo from './assets/GreenLogo.png';
+
+import farmerIcon from './assets/icons/Farmer.png';
+import femaleIcon from './assets/userIcons/female.png';
+import maleIcon from './assets/userIcons/male.png';
+import neutralIcon from './assets/userIcons/neutral.png';
 
 const pages = [
   { name: 'Home', path: '/home' },
@@ -24,37 +29,46 @@ const pages = [
   { name: 'Events', path: '/events' },
   { name: 'Disposal', path: '/disposal' },
   { name: 'Caretaker', path: '/caretaker' },
-]
+];
 
 const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
-  const location = useLocation()
-  const navigate = useNavigate()
-  const [currUser, setCurrUser] = React.useState<any>()
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [currUser, setCurrUser] = React.useState<any>();
+
+  const profileIconMap = {
+    'assets/icons/Farmer.png': farmerIcon,
+    'assets/userIcons/female.png': femaleIcon,
+    'assets/userIcons/male.png': maleIcon,
+    'assets/userIcons/neutral.png': neutralIcon,
+  };
 
   React.useEffect(() => {
     // redirect to /home if no route matches
     if (location.pathname === '/') {
-      navigate('/home')
+      navigate('/home');
     }
-  }, [location.pathname, navigate])
+  }, [location.pathname, navigate]);
 
   React.useEffect(() => {
-    const user = getUserBasicInfo()
+    const user = getUserBasicInfo();
     setCurrUser(user);
-  }, [])
+  }, []);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElNav(event.currentTarget)
-  }
+    setAnchorElNav(event.currentTarget);
+  };
 
   const handleCloseNavMenu = () => {
-    setAnchorElNav(null)
-  }
+    setAnchorElNav(null);
+  };
 
   const handleProfileClick = () => {
-    navigate('/profile')
-  }
+    navigate('/profile');
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,7 +78,7 @@ const Navbar = () => {
         elevation={0}
       >
         <Container
-          maxWidth='xxl'
+          maxWidth="xxl"
           sx={{
             paddingX: { xs: '16px', sm: 5 },
             marginLeft: 0,
@@ -216,11 +230,16 @@ const Navbar = () => {
                 <IconButton onClick={handleProfileClick} sx={{ p: 0 }}>
                   <Avatar
                     alt="Profile"
-                    src={`src/${currUser?.profile_pic ?? 'assets/icons/Farmer.png'}`}
+                    src={
+                      profileIconMap[
+                        (currUser?.profile_pic ??
+                          'assets/icons/Farmer.png') as keyof typeof profileIconMap
+                      ]
+                    }
                     sx={{
                       width: { xs: 18, sm: 25, md: 30 },
                       height: { xs: 20, sm: 27, md: 32 },
-                      backgroundColor: 'white'
+                      backgroundColor: 'white',
                     }}
                   />
                 </IconButton>
@@ -230,7 +249,7 @@ const Navbar = () => {
         </Container>
       </AppBar>
     </ThemeProvider>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

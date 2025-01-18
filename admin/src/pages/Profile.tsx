@@ -27,6 +27,11 @@ import { getUserBasicInfo, setUserBasicInfo } from '../services/auth.service';
 import { toast } from 'react-toastify';
 import CloseIcon from '@mui/icons-material/Close';
 
+import farmerIcon from '../assets/icons/Farmer.png';
+import femaleIcon from '../assets/userIcons/female.png';
+import maleIcon from '../assets/userIcons/male.png';
+import neutralIcon from '../assets/userIcons/neutral.png';
+
 const Profile = () => {
   const navigate = useNavigate();
 
@@ -38,6 +43,13 @@ const Profile = () => {
     old_password: string;
     confirm_password: string;
   }>({ password: '', old_password: '', confirm_password: '' });
+
+  const profileIconMap = {
+    'assets/icons/Farmer.png': farmerIcon,
+    'assets/userIcons/female.png': femaleIcon,
+    'assets/userIcons/male.png': maleIcon,
+    'assets/userIcons/neutral.png': neutralIcon,
+  };
 
   const [selectedProfile, setSelectedProfile] = useState<string>();
   const [isProfileSelectOpen, setIsProfileSelectOpen] = useState(false);
@@ -147,11 +159,14 @@ const Profile = () => {
         >
           <Grid2 size={{ xs: 12, md: 12 }} className="right">
             <Avatar
-              src={`src/${
-                (selectedProfile ? selectedProfile : userData?.profile_pic) ??
-                'assets/icons/Farmer.png'
-              }`}
-              alt="Junmar"
+              src={
+                profileIconMap[
+                  ((selectedProfile
+                    ? selectedProfile
+                    : userData?.profile_pic) ??
+                    'assets/icons/Farmer.png') as keyof typeof profileIconMap
+                ]
+              }
               sx={{
                 width: 'clamp(130px, 10vw, 180px)',
                 height: 'clamp(130px, 10vw, 180px)',
@@ -338,7 +353,7 @@ const Profile = () => {
                   setIsProfileSelectOpen(false);
                 }}
                 key={index}
-                src={`src/${opt}`}
+                src={profileIconMap[opt as keyof typeof profileIconMap]}
                 sx={{
                   width: 72,
                   height: 72,
