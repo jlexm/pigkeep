@@ -163,8 +163,6 @@ class PigEventService {
         .statusEqualTo('Completed')
         .not()
         .statusEqualTo('Deleted')
-        .group(
-            (q) => q.eventDateGreaterThan(today).or().eventDateEqualTo(today))
         .eventDateLessThan(today.add(Duration(days: 2)))
         .sortByEventDate()
         .findAll();
