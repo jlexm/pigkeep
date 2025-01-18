@@ -43,12 +43,17 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
         items: widget.data.map((item) {
           return Builder(
             builder: (BuildContext context) {
+              final isMatured =
+                  item['text'] == 'Matured'; // Check "Matured"
+
               return Container(
                 width: MediaQuery.of(context).size.width * 0.30.w,
                 margin: const EdgeInsets.symmetric(horizontal: 5.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: appPrimary, width: 1.5.w),
-                  color: appSecondary,
+                  color: isMatured
+                      ? appPrimary
+                      : appSecondary, 
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
@@ -58,14 +63,22 @@ class _CarouselPigCountState extends State<CarouselPigCount> {
                       Text(
                         item['number']!,
                         style: TextStyle(
-                            height: 0.9.h,
-                            fontSize: 70.h,
-                            color: appPrimary,
-                            fontWeight: FontWeight.w700),
+                          height: 0.9.h,
+                          fontSize: 70.h,
+                          color: isMatured
+                              ? appSecondary
+                              : appPrimary, 
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                       Text(
                         item['text']!,
-                        style: TextStyle(fontSize: 16.sp),
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: isMatured
+                              ? appSecondary
+                              : Colors.black, 
+                        ),
                       ),
                     ],
                   ),
