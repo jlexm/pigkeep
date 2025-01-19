@@ -132,7 +132,12 @@ export default function PigListDataTable({
       minWidth: 115,
       resizable: false,
       headerClassName: 'recorded-weight-header',
-      renderCell: (params) => <>{params.row.penDetails?.[0]?.penNumber}</>,
+      renderCell: (params) => {
+        if (params.row.status !== 'alive') {
+          return <>--</>;
+        }
+        return <>{params.row.penDetails?.[0]?.penNumber}</>;
+      },
     },
     {
       field: 'weightKG',
