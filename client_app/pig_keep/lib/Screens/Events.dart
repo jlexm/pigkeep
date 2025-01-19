@@ -276,7 +276,7 @@ class _EventsState extends State<Events> {
                                             style: TextStyle(
                                                 height: 1.0,
                                                 color: appSecondary,
-                                                fontSize: 50.sp,
+                                                fontSize: 45.sp,
                                                 fontWeight: FontWeight.w700),
                                           ),
                                         )

@@ -221,7 +221,7 @@ class _CaretakersListState extends State<CaretakersList> {
                 },
                 child: Container(
                   height: 32.h,
-                  width: 106.w,
+                  padding: EdgeInsets.symmetric(horizontal: 15.w),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(
                       Radius.circular(10),
