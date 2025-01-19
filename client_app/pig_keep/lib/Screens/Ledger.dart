@@ -284,7 +284,7 @@ class _LedgerState extends State<Ledger> {
                                               ),
                                             ],
                                             onSave: () async {
-                                              // Handle the save action, e.g., validate and save data
+                                              // validate and save data
                                               try {
                                                 await ledgerService.ledgePig(
                                                     'sold',
@@ -392,7 +392,7 @@ class _LedgerState extends State<Ledger> {
                                               ),
                                             ],
                                             onSave: () async {
-                                              // Handle the save action, e.g., validate and save data
+                                              // validate and save data
                                               print('Form saved');
                                               try {
                                                 await ledgerService.ledgePig(

@@ -231,8 +231,7 @@ class _LoginState extends State<Login> {
                                           }
                                         });
                                       } catch (e) {
-                                        // Handle the error properly here, e.g., show an error message
-
+                                        // show error message
                                         ToastService()
                                             .showErrorToast(e.toString());
                                       }

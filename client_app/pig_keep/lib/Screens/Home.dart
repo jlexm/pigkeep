@@ -206,13 +206,6 @@ class _HomeState extends State<Home> {
                         ],
                       ),
                     ),
-                    /* ElevatedButton(
-                      onPressed: () async {
-                        await LocalNotificationService.showSingle(
-                            title: 'Test', body: 'Hello world!');
-                      },
-                      child: Text('Show Notification'),
-                    ), */
                     Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

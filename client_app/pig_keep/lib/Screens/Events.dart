@@ -445,7 +445,7 @@ class _EventsState extends State<Events> {
                     if (showUpcomingEvents)
                       UpcomingEvents(
                         onReturn: _toggleView,
-                        events: upcomingEvents, // Pass the toggle function
+                        events: upcomingEvents, // toggle function
                         pigs: pigs,
                         updatePigEvent: updateEvent,
                         markAsDelete: (pigEventUuid) =>
@@ -454,7 +454,7 @@ class _EventsState extends State<Events> {
                     else if (showEventsHistory)
                       EventsHistory(
                         onReturn: _toggleHistoryView,
-                        events: eventHistory, // Pass the toggle function
+                        events: eventHistory, // toggle function
                       )
                     else
                       Container(
@@ -575,7 +575,7 @@ class _EventsState extends State<Events> {
                                             color: isAllDone
                                                 ? Colors.blue
                                                 : Colors
-                                                    .red, // Background color for the event number
+                                                    .red, 
                                             shape: BoxShape.circle,
                                           ),
                                           child: Text(
@@ -590,7 +590,7 @@ class _EventsState extends State<Events> {
                                       );
                                     }
                                     return SizedBox
-                                        .shrink(); // If no events, return an empty widget
+                                        .shrink(); // If no events, return empty widget
                                   },
                                 ),
                               ),
@@ -600,7 +600,7 @@ class _EventsState extends State<Events> {
                             ),
                             if (selectedDay != null &&
                                 _getEventsForDay(selectedDay!).isNotEmpty) ...[
-                              // Check if events exist
+                              // if events exist
                               Row(
                                 children: [
                                   SizedBox(

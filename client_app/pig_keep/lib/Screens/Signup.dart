@@ -249,7 +249,6 @@ class _SignupState extends State<Signup> {
                                           );
                                         });
                                       } finally {
-                                        // set loading state to false.
                                         isRegisterAPILoading = false;
                                       }
                                     },
