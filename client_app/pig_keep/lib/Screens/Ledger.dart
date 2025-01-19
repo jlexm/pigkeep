@@ -180,7 +180,7 @@ class _LedgerState extends State<Ledger> {
                                 Row(
                                   children: [
                                     Text(
-                                      'As of ${PigHelper.getCurrentMonthYear()}',
+                                      'For ${PigHelper.getCurrentMonthYear()}',
                                       style: TextStyle(
                                         color: appSecondary,
                                         fontSize: 12.sp,
