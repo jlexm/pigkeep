@@ -8,7 +8,9 @@ import {
   TextField,
 } from '@mui/material';
 import { PigQR } from './PigQR';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 export const AllPigsQRModal = ({
   pigs,
@@ -19,12 +21,28 @@ export const AllPigsQRModal = ({
   isOpen: boolean;
   onClose?: () => void;
 }) => {
+  const printRef = useRef<any>(null);
   const [widthPX, setWidthPX] = useState(192);
   const [heightPX, setHeightPX] = useState(144);
   const [fontPX, setFontPX] = useState(45);
 
-  const handlePrint = () => {
-    window.print();
+  const handlePrint = async () => {
+    if (printRef.current) {
+      const element = printRef.current;
+      const canvas = await html2canvas(element);
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+      pdf.save('pigs_qr_codes.pdf');
+    } else {
+      console.error('printRef is not assigned');
+    }
   };
 
   return (
@@ -75,6 +93,7 @@ export const AllPigsQRModal = ({
           </Box>
           <Box
             className="print_content"
+            ref={printRef}
             display="flex"
             flexWrap="wrap"
             justifyContent="space-evenly"

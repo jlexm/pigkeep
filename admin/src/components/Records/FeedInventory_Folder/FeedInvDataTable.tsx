@@ -1,6 +1,6 @@
-import * as React from 'react'
-import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid'
-import Grid2 from '@mui/material/Grid2'
+import * as React from 'react';
+import { DataGrid, GridColDef, GridToolbar } from '@mui/x-data-grid';
+import Grid2 from '@mui/material/Grid2';
 import {
   Box,
   TextField,
@@ -9,10 +9,10 @@ import {
   InputLabel,
   FormControl,
   Typography,
-} from '@mui/material'
-import { ThemeProvider } from '@emotion/react'
-import theme from '../../../Theme'
-import { useEffect } from 'react'
+} from '@mui/material';
+import { ThemeProvider } from '@emotion/react';
+import theme from '../../../Theme';
+import { useEffect } from 'react';
 
 const columns: GridColDef[] = [
   {
@@ -35,7 +35,7 @@ const columns: GridColDef[] = [
         ? 'green-text'
         : params.value === 'consumed'
         ? 'red-text'
-        : ''
+        : '';
     },
   },
   {
@@ -47,11 +47,7 @@ const columns: GridColDef[] = [
     headerAlign: 'right',
     align: 'right',
     renderCell(params) {
-      return (
-        <>
-          {params.value} KG
-        </>
-      )
+      return <>{params.value} KG</>;
     },
   },
   {
@@ -65,9 +61,13 @@ const columns: GridColDef[] = [
     renderCell(params) {
       return (
         <>
-          {new Date(params.value).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          {new Date(params.value).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
         </>
-      )
+      );
     },
   },
   {
@@ -81,12 +81,16 @@ const columns: GridColDef[] = [
     renderCell(params) {
       return (
         <>
-          {params.value.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' })}
+          {params.value.toLocaleString('en-PH', {
+            style: 'currency',
+            currency: 'PHP',
+          })}
         </>
-      )
+      );
     },
   },
-]
+];
+console.log('hey', columns);
 
 const initialRows = [
   {
@@ -113,39 +117,42 @@ const initialRows = [
     date: 'Jun 18, 2024',
     cost: 'Php75',
   },
-]
+];
 
-const paginationModel = { page: 0, pageSize: 10 }
+const paginationModel = { page: 0, pageSize: 10 };
 
-export default function FeedInvDataTable( { feedHistory }: { feedHistory: any[] }) {
-
-  const [searchText, setSearchText] = React.useState('')
-  const [statusFilter, setStatusFilter] = React.useState('all')
-  const [filteredRows, setFilteredRows] = React.useState<any[]>([])
+export default function FeedInvDataTable({
+  feedHistory,
+}: {
+  feedHistory: any[];
+}) {
+  const [searchText, setSearchText] = React.useState('');
+  const [statusFilter, setStatusFilter] = React.useState('all');
+  const [filteredRows, setFilteredRows] = React.useState<any[]>([]);
 
   useEffect(() => {
-    setFilteredRows(feedHistory)
-  }, [feedHistory])
+    setFilteredRows(feedHistory);
+  }, [feedHistory]);
 
   const handleFilter = () => {
-    const lowerSearchText = searchText.toLowerCase()
+    const lowerSearchText = searchText.toLowerCase();
     const filtered = feedHistory.filter((row) => {
       const matchesSearch =
         row.feedType.toLowerCase().includes(lowerSearchText) ||
         row.status.toLowerCase().includes(lowerSearchText) ||
         row.weightKG.toString().toLowerCase().includes(lowerSearchText) ||
         row.createdAt.toLowerCase().includes(lowerSearchText) ||
-        row.cost.toString().toLowerCase().includes(lowerSearchText)
+        row.cost.toString().toLowerCase().includes(lowerSearchText);
       const matchesStatus =
-        statusFilter === 'all' || row.status === statusFilter
-      return matchesSearch && matchesStatus
-    })
-    setFilteredRows(filtered)
-  }
+        statusFilter === 'all' || row.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    });
+    setFilteredRows(filtered);
+  };
 
   React.useEffect(() => {
-    handleFilter()
-  }, [searchText, statusFilter])
+    handleFilter();
+  }, [searchText, statusFilter]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -241,5 +248,5 @@ export default function FeedInvDataTable( { feedHistory }: { feedHistory: any[] 
         </Box>
       </Grid2>
     </ThemeProvider>
-  )
+  );
 }
