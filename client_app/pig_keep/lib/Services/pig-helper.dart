@@ -138,9 +138,11 @@ class PigHelper {
   }
 
   static bool isSameDay(DateTime date1, DateTime date2) {
-    return date1.year == date2.year &&
-        date1.month == date2.month &&
-        date1.day == date2.day;
+    return isSameMonth(date1, date2) && date1.day == date2.day;
+  }
+
+  static bool isSameMonth(DateTime date1, DateTime date2) {
+    return date1.year == date2.year && date1.month == date2.month;
   }
 
   static List<List<T>> splitArrayIntoBatches<T>(List<T> array, int batchSize) {

@@ -3,6 +3,7 @@ import 'package:pig_keep/Models/ledger.dart';
 import 'package:pig_keep/Models/pig-pen.dart';
 import 'package:pig_keep/Models/pig.dart';
 import 'package:pig_keep/Services/database-service.dart';
+import 'package:pig_keep/Services/pig-helper.dart';
 import 'package:pig_keep/main.dart';
 
 class LedgerService {
@@ -74,7 +75,8 @@ class LedgerService {
         continue;
       }
 
-      if (ledger.status == 'sold') {
+      if (ledger.status == 'sold' &&
+          PigHelper.isSameMonth(ledger.transactionDate, DateTime.now())) {
         totalEarned += ledger.priceSold ?? 0;
       }
 
