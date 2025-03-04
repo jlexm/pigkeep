@@ -1,6 +1,9 @@
 <div align="center">
+<img src="assets/GreenLogo.png" width="50" height="50">
 
-## (CAPSTONE PROJECT) PigKeep: A QR-Enabled Pig Farm Monitoring and Management System
+# CAPSTONE PROJECT
+
+### PigKeep: A QR-Enabled Pig Farm Monitoring and Management System
 
 [View Live Demo](https://pigkeep.web.app/login)
 
@@ -19,6 +22,8 @@
    - [Prerequisites](/README.md#prerequisites)
    - [Installation](/README.md#installation)
    - [Running Locally](/README.md#running-locally)
+
+3. [Contributors](/README.md#gcontributors)
 
 </details>
 
@@ -126,3 +131,14 @@ Before running the application, make sure to install the following:
       ```bash
       npm run start:dev
       ```
+
+## License 📋
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## **Contributors**
+
+We greatly appreciate contributions to this project. Special thanks to the following contributors for their valuable input and efforts:
+
+- [Alex Maravilla](https://github.com/jlexm)
+- [Mathew Talagtag](https://github.com/mathewwww)
