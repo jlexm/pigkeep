@@ -5,7 +5,8 @@
 
 ### PigKeep: A QR-Enabled Pig Farm Monitoring and Management System
 
-[View Live Demo](https://pigkeep.web.app/login)
+[View Live Demo](https://pigkeep.web.app/login) ~
+[Download APK](https://drive.google.com/file/d/1-87PbhiFnFcIMTAy61vWOcDG6OZ2PDYH/view?usp=sharing)
 
 </div>
 
