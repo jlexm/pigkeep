@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Firebase App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #ff6f00;
+        }
+        p {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to My Firebase App!</h1>
+    <p>This is a static site hosted on Firebase Hosting.</p>
+    <p>API Status: <span id="api-status">Checking...</span></p>
+
+    <script>
+        fetch('/api/status')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('api-status').textContent = data.status;
+            })
+            .catch(() => {
+                document.getElementById('api-status').textContent = "Failed to connect.";
+            });
+    </script>
+</body>
+</html>

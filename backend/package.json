@@ -17,7 +17,7 @@
     "start:prod": "node dist/main",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
-    "deploy": "firebase deploy",
+    "deploy": "firebase deploy --region=asia-southeast1",
     "logs": "firebase functions:log"
   },
   "dependencies": {
