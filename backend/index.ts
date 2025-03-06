@@ -14,33 +14,41 @@ setGlobalOptions({
   memory: '2GiB',
 });
 
-const expressServer = express();
-const createFunction = async (expressInstance): Promise<void> => {
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(expressInstance)
-  );
+// Store the NestJS app globally to prevent reinitialization
+let cachedNestApp = null;
 
-  // Enable CORS for all origins
-  const corsOptions: CorsOptions = {
-    origin: '*',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
-    optionsSuccessStatus: 204,
-  };
-  app.enableCors(corsOptions);
+const createNestServer = async () => {
+  if (!cachedNestApp) {
+    const expressInstance = express();
+    const app = await NestFactory.create(
+      AppModule,
+      new ExpressAdapter(expressInstance)
+    );
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true, // Strips properties that are not defined in the DTO
-      forbidNonWhitelisted: true, // Throws an error if non-whitelisted properties are found
-      transform: true, // Automatically transform payloads to DTO instances
-    })
-  );
+    // Enable CORS
+    const corsOptions: CorsOptions = {
+      origin: '*',
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204,
+    };
+    app.enableCors(corsOptions);
 
-  await app.init();
+    app.useGlobalPipes(
+      new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      })
+    );
+
+    await app.init();
+    cachedNestApp = expressInstance;
+  }
+  return cachedNestApp;
 };
+
 export const api = functions.https.onRequest(async (request, response) => {
-  await createFunction(expressServer);
-  expressServer(request, response);
+  const appInstance = await createNestServer();
+  appInstance(request, response);
 });
